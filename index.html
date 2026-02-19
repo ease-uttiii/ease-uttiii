@@ -16,26 +16,20 @@
             --text-sub: #a89e9e;
             --shadow: 0 8px 25px rgba(179,146,146,0.12);
             --tile-shadow: 0 4px 12px rgba(0,0,0,0.05);
-            /* デフォルトサイズ（JSで上書きされます） */
+            /* 可変変数 */
             --pref-font-size: 15px; 
+            --pref-grid-cols: repeat(3, 1fr);
+            --pref-padding: 16px 2px;
         }
 
-        body { 
-            font-family: 'Noto Sans JP', sans-serif; 
-            margin: 0; background: var(--soft-bg); color: var(--text-main); 
-            -webkit-font-smoothing: antialiased;
-        }
+        body { font-family: 'Noto Sans JP', sans-serif; margin: 0; background: var(--soft-bg); color: var(--text-main); -webkit-font-smoothing: antialiased; }
         
-        /* ヘッダー：グラスモーフィズム */
+        /* ヘッダー */
         header { 
-            background: rgba(179, 146, 146, 0.95);
-            backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px);
-            color: white; padding: 1.2rem 1.2rem 1rem; 
-            position: sticky; top: 0; z-index: 100; 
-            display: flex; flex-direction: column; gap: 14px;
-            box-shadow: 0 4px 25px rgba(0,0,0,0.1);
+            background: rgba(179, 146, 146, 0.95); backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px);
+            color: white; padding: 1.2rem 1.2rem 1rem; position: sticky; top: 0; z-index: 100; 
+            display: flex; flex-direction: column; gap: 14px; box-shadow: 0 4px 25px rgba(0,0,0,0.1);
         }
-
         header h1 { margin: 0; font-size: 1.7rem; letter-spacing: 0.25em; font-family: 'Lora', serif; text-align: center; }
 
         .header-action-row { display: flex; justify-content: flex-end; width: 100%; }
@@ -57,45 +51,43 @@
         
         /* エリア選択セクション */
         .region-section { background: #ffffff; border-radius: 28px; margin-bottom: 40px; box-shadow: var(--shadow); overflow: hidden; }
-        
         .region-header { 
-            background: var(--mauve-light); padding: 15px 20px; font-weight: 700; 
-            font-size: 14px; color: var(--mauve-deep); letter-spacing: 0.1em;
-            border-bottom: 1px solid #f0eded;
-            display: flex; justify-content: space-between; align-items: center;
+            background: var(--mauve-light); padding: 15px 20px; font-weight: 700; font-size: 14px; color: var(--mauve-deep); 
+            border-bottom: 1px solid #f0eded; display: flex; justify-content: space-between; align-items: center;
         }
 
         /* サイズ切り替えスイッチ */
         .size-selector { display: flex; background: #eeebe9; border-radius: 10px; padding: 3px; gap: 2px; }
         .size-btn {
             border: none; background: transparent; padding: 5px 10px; font-size: 11px;
-            font-weight: bold; color: var(--text-sub); border-radius: 8px; cursor: pointer;
-            transition: 0.2s;
+            font-weight: bold; color: var(--text-sub); border-radius: 8px; cursor: pointer; transition: 0.2s;
         }
         .size-btn.active { background: white; color: var(--mauve-deep); box-shadow: 0 2px 5px rgba(0,0,0,0.1); }
 
-        .region-group-title { 
-            padding: 20px 20px 8px; font-weight: 700; font-size: 12px; 
-            color: var(--mauve); display: flex; align-items: center;
-        }
+        .region-group-title { padding: 20px 20px 8px; font-weight: 700; font-size: 12px; color: var(--mauve); display: flex; align-items: center; }
         .region-group-title::before { content: ""; display: inline-block; width: 4px; height: 14px; background: var(--mauve); margin-right: 8px; border-radius: 2px; }
 
-        /* 都道府県タイル：文字サイズ可変 */
-        .pref-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; padding: 10px 15px 25px; }
+        /* 都道府県タイル：小のときは4列、他は3列 */
+        .pref-grid { 
+            display: grid; 
+            grid-template-columns: var(--pref-grid-cols); 
+            gap: 8px; 
+            padding: 10px 12px 25px; 
+            transition: all 0.3s ease;
+        }
         .pref-btn { 
             background: linear-gradient(180deg, #ffffff 0%, #f9f7f6 100%); 
-            border: 1px solid #eeebe9; padding: 16px 2px;
+            border: 1px solid #eeebe9; 
+            padding: var(--pref-padding);
             font-size: var(--pref-font-size); 
-            font-weight: 700; border-radius: 16px; color: var(--text-main);
+            font-weight: 700; border-radius: 12px; color: var(--text-main);
             box-shadow: var(--tile-shadow); transition: all 0.2s;
             cursor: pointer;
+            text-align: center;
         }
         .pref-btn:active { background: var(--mauve); color: white; transform: scale(0.92); }
 
-        #current-filter-label { 
-            margin: 35px 0 20px; font-size: 1.15rem; font-weight: 700; color: var(--mauve-deep); 
-            display: flex; align-items: center; 
-        }
+        #current-filter-label { margin: 35px 0 20px; font-size: 1.15rem; font-weight: 700; color: var(--mauve-deep); display: flex; align-items: center; }
         #current-filter-label::after { content: ""; flex: 1; height: 1px; background: #e0d8d5; margin-left: 15px; }
 
         /* 案件カード */
@@ -131,9 +123,9 @@
         <div class="region-header">
             <span>FIND BY AREA</span>
             <div class="size-selector">
-                <button class="size-btn" onclick="changeFontSize('12px', this)">小</button>
-                <button class="size-btn" id="size-mid" onclick="changeFontSize('15px', this)">中</button>
-                <button class="size-btn" onclick="changeFontSize('19px', this)">大</button>
+                <button class="size-btn" id="btn-small" onclick="changeFontSize('small', this)">小</button>
+                <button class="size-btn" id="btn-mid" onclick="changeFontSize('mid', this)">中</button>
+                <button class="size-btn" id="btn-large" onclick="changeFontSize('large', this)">大</button>
             </div>
         </div>
         <div id="pref-container"></div>
@@ -143,7 +135,7 @@
 </div>
 
 <script>
-// --- 初期設定とデータ ---
+// --- 初期データ ---
 let recruitmentItems = [
     { id: 1, title: "東京都内のプレミアム特別案件", area: "東京都全域", date: "2024-05-20" },
     { id: 2, title: "大阪・関西エリア合同一斉募集", area: "大阪府", date: "2024-05-25" },
@@ -160,33 +152,41 @@ const regions = {
     "【九州・沖縄】": ["福岡県", "佐賀県", "長崎県", "熊本県", "大分県", "宮崎県", "鹿児島県", "沖縄県全域"]
 };
 
-// --- フォントサイズ記憶機能 ---
+// --- フォントサイズ & レイアウト変更機能 ---
 window.onload = function() {
-    const savedSize = localStorage.getItem('prefFontSize');
-    if (savedSize) {
-        applyFontSize(savedSize);
-    } else {
-        // 保存がなければ「中」をアクティブに
-        document.getElementById('size-mid').classList.add('active');
-    }
+    const savedMode = localStorage.getItem('prefFontSizeMode') || 'mid';
+    applyFontSize(savedMode);
     createPrefButtons();
     displayRecruits();
 };
 
-function applyFontSize(size) {
-    document.documentElement.style.setProperty('--pref-font-size', size);
+function applyFontSize(mode) {
+    const root = document.documentElement;
+    // モードによって列数とサイズを切り替え
+    if (mode === 'small') {
+        root.style.setProperty('--pref-font-size', '12px');
+        root.style.setProperty('--pref-grid-cols', 'repeat(4, 1fr)'); // 4列に！
+        root.style.setProperty('--pref-padding', '12px 1px');         // 詰め詰め！
+    } else if (mode === 'mid') {
+        root.style.setProperty('--pref-font-size', '15px');
+        root.style.setProperty('--pref-grid-cols', 'repeat(3, 1fr)');
+        root.style.setProperty('--pref-padding', '16px 2px');
+    } else if (mode === 'large') {
+        root.style.setProperty('--pref-font-size', '19px');
+        root.style.setProperty('--pref-grid-cols', 'repeat(2, 1fr)'); // 大きく2列に！
+        root.style.setProperty('--pref-padding', '20px 2px');
+    }
+
+    // ボタンの見た目更新
     document.querySelectorAll('.size-btn').forEach(btn => {
-        if (btn.getAttribute('onclick').includes(size)) {
-            btn.classList.add('active');
-        } else {
-            btn.classList.remove('active');
-        }
+        if (btn.id === `btn-${mode}`) btn.classList.add('active');
+        else btn.classList.remove('active');
     });
 }
 
-function changeFontSize(size, btn) {
-    applyFontSize(size);
-    localStorage.setItem('prefFontSize', size);
+function changeFontSize(mode, btn) {
+    applyFontSize(mode);
+    localStorage.setItem('prefFontSizeMode', mode);
 }
 
 // --- リロードとナビゲーション ---
@@ -197,7 +197,6 @@ async function fastUpdate() {
 
 function createPrefButtons() {
     const container = document.getElementById('pref-container');
-    if(!container) return;
     container.innerHTML = '';
     for (const [regionName, prefs] of Object.entries(regions)) {
         const title = document.createElement('div');
@@ -220,7 +219,6 @@ function createPrefButtons() {
 function displayRecruits(filter = 'すべて') {
     const list = document.getElementById('recruit-list');
     const label = document.getElementById('current-filter-label');
-    if(!list || !label) return;
     list.innerHTML = '';
     label.innerText = filter === 'すべて' ? '表示中: すべての募集' : `表示中: ${filter}`;
     const filtered = filter === 'すべて' ? recruitmentItems : recruitmentItems.filter(item => item.area === filter);
@@ -240,14 +238,12 @@ function displayRecruits(filter = 'すべて') {
 }
 
 function scrollToSection(id) { 
-    const target = document.getElementById(id);
-    if(target) window.scrollTo({ top: target.offsetTop - 180, behavior: 'smooth' }); 
+    window.scrollTo({ top: document.getElementById(id).offsetTop - 180, behavior: 'smooth' }); 
 }
 
 function filterByArea(area) { 
     displayRecruits(area); 
-    const label = document.getElementById('current-filter-label');
-    if(label) window.scrollTo({ top: label.offsetTop - 200, behavior: 'smooth' }); 
+    window.scrollTo({ top: document.getElementById('current-filter-label').offsetTop - 200, behavior: 'smooth' }); 
 }
 </script>
 </body>
