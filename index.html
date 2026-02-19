@@ -4,6 +4,10 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
     <title>Circle Ease</title>
+    <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
+    <meta http-equiv="Pragma" content="no-cache">
+    <meta http-equiv="Expires" content="0">
+    
     <link rel="manifest" href="manifest.json">
     <meta name="theme-color" content="#ff6b9d">
     <style>
@@ -24,7 +28,6 @@
             transition: transform 0.1s linear;
         }
 
-        /* 全体：優しく清潔感のあるピンクベージュの背景 */
         body { 
             font-family: 'Helvetica Neue', Arial, sans-serif; 
             margin: 0; 
@@ -48,7 +51,7 @@
         
         .pref-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px; padding: 12px 18px 18px; }
         
-        /* 都道府県ボタン：太字に変更しました */
+        /* 都道府県ボタン：太字設定のまま */
         .pref-btn { 
             background: #fff; 
             border: 1px solid #ffd1e1; 
@@ -98,18 +101,14 @@
 </div>
 
 <script>
+// データ部分は省略せずにそのまま保持
 const regions = {
-    "【北海道】": ["北海道全域"],
-    "【東北地方】": ["青森県", "岩手県", "宮城県", "秋田県", "山形県", "福島県"],
+    "【北海道】": ["北海道全域"], "【東北地方】": ["青森県", "岩手県", "宮城県", "秋田県", "山形県", "福島県"],
     "【関東地方】": ["茨城県", "栃木県", "群馬県", "埼玉県", "千葉県", "東京都全域", "神奈川県"],
-    "【甲信越地方】": ["新潟県", "山梨県", "長野県"],
-    "【東海地方】": ["岐阜県", "静岡県", "愛知県", "三重県"],
-    "【北陸地方】": ["富山県", "石川県", "福井県"],
-    "【関西地方】": ["滋賀県", "京都府", "大阪府", "兵庫県", "奈良県", "和歌山県"],
-    "【中国地方】": ["鳥取県", "島根県", "岡山県", "広島県", "山口県"],
-    "【四国地方】": ["徳島県", "香川県", "愛媛県", "高知県"],
-    "【九州地方】": ["福岡県", "佐賀県", "長崎県", "熊本県", "大分県", "宮崎県", "鹿児島県"],
-    "【沖縄】": ["沖縄県全域"]
+    "【甲信越地方】": ["新潟県", "山梨県", "長野県"], "【東海地方】": ["岐阜県", "静岡県", "愛知県", "三重県"],
+    "【北陸地方】": ["富山県", "石川県", "福井県"], "【関西地方】": ["滋賀県", "京都府", "大阪府", "兵庫県", "奈良県", "和歌山県"],
+    "【中国地方】": ["鳥取県", "島根県", "岡山県", "広島県", "山口県"], "【四国地方】": ["徳島県", "香川県", "愛媛県", "高知県"],
+    "【九州地方】": ["福岡県", "佐賀県", "長崎県", "熊本県", "大分県", "宮崎県", "鹿児島県"], "【沖縄】": ["沖縄県全域"]
 };
 
 const recruitmentItems = [
@@ -122,6 +121,7 @@ const recruitmentItems = [
 
 function createPrefButtons() {
     const container = document.getElementById('pref-container');
+    container.innerHTML = ''; // 重複防止
     for (const [regionName, prefs] of Object.entries(regions)) {
         const title = document.createElement('div');
         title.className = 'region-group-title';
@@ -149,14 +149,7 @@ function displayRecruits(filter = 'すべて') {
     filtered.forEach(item => {
         const card = document.createElement('div');
         card.className = 'recruit-card';
-        card.innerHTML = `
-            <div class="recruit-title">${item.title}</div>
-            <div class="recruit-info">
-                <span>📍 エリア: ${item.area}</span>
-                <span>📅 掲載日: ${item.date}</span>
-            </div>
-            <button class="apply-btn">詳細・応募はこちら</button>
-        `;
+        card.innerHTML = `<div class="recruit-title">${item.title}</div><div class="recruit-info"><span>📍 エリア: ${item.area}</span><span>📅 掲載日: ${item.date}</span></div><button class="apply-btn">詳細・応募はこちら</button>`;
         list.appendChild(card);
     });
 }
@@ -166,17 +159,15 @@ function filterByArea(area) {
     window.scrollTo({ top: document.getElementById('current-filter-label').offsetTop - 80, behavior: 'smooth' });
 }
 
-function quickFilter(type) {
-    displayRecruits(type);
-}
+function quickFilter(type) { displayRecruits(type); }
 
-// --- 更新の仕組み（強制更新モード） ---
+// --- 【最重要】最強の更新ロジック ---
 let startY = 0;
 const banner = document.getElementById('ptr-banner');
 
 window.addEventListener('touchstart', (e) => {
     if (window.scrollY === 0) startY = e.touches[0].pageY;
-});
+}, {passive: true});
 
 window.addEventListener('touchmove', (e) => {
     const y = e.touches[0].pageY;
@@ -190,17 +181,24 @@ window.addEventListener('touchmove', (e) => {
             banner.innerText = "✨ 離して更新！";
         }
     }
-});
+}, {passive: true});
 
 window.addEventListener('touchend', (e) => {
     const y = e.changedTouches[0].pageY;
     if (window.scrollY === 0 && y - startY > 80) {
-        banner.innerText = "🔄 最新を取得中...";
-        // URLを書き換えて強制リロードさせる
-        const url = new URL(window.location.href);
-        url.searchParams.set('t', Date.now()); 
+        banner.innerText = "🔄 強制読み込み中...";
+        
+        // 1. サービスワーカー（キャッシュ）を全削除
+        if ('serviceWorker' in navigator) {
+            navigator.serviceWorker.getRegistrations().then(registrations => {
+                for(let registration of registrations) { registration.unregister(); }
+            });
+        }
+        
+        // 2. URLを完全に新しくして強制ジャンプ
         setTimeout(() => {
-            window.location.replace(url.toString());
+            const cleanUrl = window.location.origin + window.location.pathname + '?update=' + Date.now();
+            window.location.replace(cleanUrl);
         }, 300);
     } else {
         banner.style.transform = `translateY(0)`;
@@ -210,6 +208,5 @@ window.addEventListener('touchend', (e) => {
 createPrefButtons();
 displayRecruits();
 </script>
-
 </body>
 </html>
