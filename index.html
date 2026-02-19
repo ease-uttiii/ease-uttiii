@@ -13,15 +13,15 @@
             --soft-bg: #f5f1ef;
             --card-bg: #ffffff;
             
-            /* ボタン背景色：画像のような濃いモーブ系 */
-            --tile-bg: #c9b4b4; 
-            /* ボタンの文字色：少し薄くして背景に馴染ませる */
-            --text-main: #fcfafa; 
+            /* 都道府県ボタンの調整 */
+            --tile-bg-top: #dbcccc; /* 少し薄くしたグラデーション開始色 */
+            --tile-bg-bottom: #c9b4b4; /* 落ち着いたモーブの終了色 */
+            --tile-text: #5a4d4d; /* 文字は少し薄めの濃いブラウン */
+            --tile-border: #b8a0a0; /* 枠線を復活 */
             
             --text-sub: #a89e9e;
             --shadow: 0 8px 25px rgba(179,146,146,0.12);
-            --tile-border: #b8a0a0;
-            --tile-shadow: 0 4px 10px rgba(0,0,0,0.1);
+            --tile-shadow: 0 4px 10px rgba(0,0,0,0.06);
             
             /* 可変変数 */
             --pref-font-size: 17px; 
@@ -38,6 +38,8 @@
         header h1 { margin: 0; font-size: 1.7rem; letter-spacing: 0.25em; font-family: 'Lora', serif; text-align: center; }
 
         .header-action-row { display: flex; justify-content: flex-end; width: 100%; }
+        
+        /* リロードボタン：アイコンを両端に配置 */
         #force-reload-btn {
             background: rgba(255, 255, 255, 0.15); border: 1px solid rgba(255, 255, 255, 0.4); 
             border-radius: 30px; padding: 6px 14px; font-size: 10px; font-weight: bold; color: white;
@@ -51,6 +53,14 @@
         .reload-icon::after { 
             content: ''; position: absolute; top: -2.8px; left: 4.5px; border-left: 3.5px solid transparent; 
             border-right: 3.5px solid transparent; border-bottom: 4.5px solid white; transform: rotate(45deg); 
+        }
+
+        /* ヘッダーボタンを復活 */
+        .header-nav-row { display: flex; gap: 10px; width: 100%; }
+        .nav-btn { 
+            flex: 1; padding: 12px; border-radius: 14px; border: none; background: white; 
+            color: var(--mauve-deep); font-weight: bold; font-size: 13px;
+            box-shadow: 0 6px 15px rgba(0,0,0,0.08); display: flex; align-items: center; justify-content: center; gap: 6px;
         }
 
         .container { padding: 1.5rem 1rem; max-width: 500px; margin: 0 auto; }
@@ -73,15 +83,15 @@
 
         .pref-grid { display: grid; grid-template-columns: var(--pref-grid-cols); gap: 10px; padding: 10px 15px 25px; transition: all 0.3s ease; }
         
-        /* 都道府県ボタン：背景を濃く、文字を少し薄く */
+        /* 都道府県ボタン：グラデーションと枠線、少し薄めの背景 */
         .pref-btn { 
-            background: linear-gradient(135deg, var(--tile-bg) 0%, #bca4a4 100%); 
+            background: linear-gradient(180deg, var(--tile-bg-top) 0%, var(--tile-bg-bottom) 100%); 
             border: 1px solid var(--tile-border); 
             padding: 14px 2px;
             font-size: var(--pref-font-size); 
             font-weight: 700; 
             border-radius: 12px; 
-            color: var(--text-main); 
+            color: var(--tile-text); 
             box-shadow: var(--tile-shadow); 
             transition: all 0.2s ease; 
             cursor: pointer; 
@@ -89,7 +99,7 @@
             display: flex; align-items: center; justify-content: center;
         }
         .pref-btn:active { 
-            background: var(--mauve-deep);
+            background: var(--mauve-deep); color: white;
             transform: translateY(1px); 
             box-shadow: none; 
         }
@@ -116,7 +126,12 @@
         <button id="force-reload-btn" onclick="fastUpdate()">
             <span class="reload-icon sync-target"></span>
             最新にリロード
+            <span class="reload-icon sync-target"></span>
         </button>
+    </div>
+    <div class="header-nav-row">
+        <button class="nav-btn" onclick="scrollToSection('region-section')">📍 エリアで絞る</button>
+        <button class="nav-btn" onclick="filterByArea('すべて')">📋 すべて表示</button>
     </div>
 </header>
 
@@ -221,9 +236,14 @@ function displayRecruits(filter = 'すべて') {
     });
 }
 
+function scrollToSection(id) { 
+    const el = document.getElementById(id);
+    if(el) window.scrollTo({ top: el.offsetTop - 180, behavior: 'smooth' }); 
+}
+
 function filterByArea(area) { 
     displayRecruits(area); 
-    window.scrollTo({ top: document.getElementById('current-filter-label').offsetTop - 150, behavior: 'smooth' }); 
+    window.scrollTo({ top: document.getElementById('current-filter-label').offsetTop - 200, behavior: 'smooth' }); 
 }
 </script>
 </body>
