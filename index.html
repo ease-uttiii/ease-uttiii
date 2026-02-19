@@ -5,28 +5,67 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
     <title>サークル イーズ</title>
     <style>
+        /* 全体のデザイン */
         body {
             margin: 0;
-            font-family: sans-serif;
-            overscroll-behavior-y: contain; /* ブラウザ標準の更新を止めて自作する設定 */
+            padding: 0;
+            font-family: 'Helvetica Neue', Arial, sans-serif;
+            background-color: #f4f4f4;
+            color: #333;
+            overscroll-behavior-y: contain; /* 標準の更新を無効化 */
         }
-        /* 更新中に表示されるメッセージ */
+
+        /* 引っ張って更新のメッセージエリア */
         #pull-to-refresh {
             position: fixed;
-            top: -50px;
+            top: -60px; /* 普段は隠しておく */
             left: 0;
             width: 100%;
-            height: 50px;
+            height: 60px;
             display: flex;
             align-items: center;
             justify-content: center;
-            background: #f0f0f0;
-            transition: transform 0.2s;
+            background: #ffecf2;
+            color: #ff6699;
+            font-weight: bold;
+            transition: transform 0.1s linear;
             z-index: 1000;
+            border-bottom: 2px solid #ff6699;
         }
-        .content {
-            padding: 20px;
+
+        /* ヘッダーと中身のデザイン */
+        header {
+            background-color: #ff6699;
+            color: white;
+            padding: 3rem 1rem;
             text-align: center;
+        }
+
+        main {
+            padding: 2rem;
+            max-width: 600px;
+            margin: -20px auto 20px;
+            background: white;
+            border-radius: 15px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+            text-align: center;
+        }
+
+        .btn {
+            display: inline-block;
+            background: #ff6699;
+            color: white;
+            padding: 12px 24px;
+            text-decoration: none;
+            border-radius: 25px;
+            font-weight: bold;
+            margin-top: 20px;
+            transition: 0.3s;
+        }
+
+        .btn:active {
+            transform: scale(0.95);
+            background: #e65588;
         }
     </style>
 </head>
@@ -34,15 +73,23 @@
 
     <div id="pull-to-refresh">↓ 引っ張って更新</div>
 
-    <div class="content">
+    <header>
         <h1>サークル イーズ</h1>
-        <p>ここを下にグーッと引っ張ってみてね！</p>
-        <p>（スマホで確認するのが一番わかりやすいです）</p>
-    </div>
+        <p>最新情報をチェック！</p>
+    </header>
+
+    <main>
+        <h2>お知らせ</h2>
+        <p>ここを下にグーッと引っ張ると、ページを更新できます。</p>
+        <p>スマホでの動作に最適化しました！</p>
+        
+        <a href="#" class="btn">お問い合わせ</a>
+    </main>
 
     <script>
         let startY = 0;
         const ptr = document.getElementById('pull-to-refresh');
+        const threshold = 80; // どれくらい引っ張ったら更新するか
 
         window.addEventListener('touchstart', (e) => {
             if (window.scrollY === 0) {
@@ -54,24 +101,9 @@
             const y = e.touches[0].pageY;
             if (window.scrollY === 0 && y > startY) {
                 const diff = y - startY;
-                if (diff < 100) {
+                if (diff < threshold) {
                     ptr.style.transform = `translateY(${diff}px)`;
-                    ptr.innerText = "もっと引っ張って！";
+                    ptr.innerText = "↓ もっと引っ張って！";
                 } else {
-                    ptr.innerText = "離して更新！";
-                }
-            }
-        });
-
-        window.addEventListener('touchend', (e) => {
-            const y = e.changedTouches[0].pageY;
-            if (window.scrollY === 0 && y - startY > 100) {
-                ptr.innerText = "更新中...";
-                location.reload(); // ページを実際に更新する
-            } else {
-                ptr.style.transform = `translateY(0)`;
-            }
-        });
-    </script>
-</body>
-</html>
+                    ptr.style.transform = `translateY(${diff}px)`;
+                    ptr.innerText = "✨ 離して更新！";
