@@ -56,29 +56,32 @@
             padding: 6px 14px; 
             font-size: 10px; font-weight: bold;
             cursor: pointer; display: flex; align-items: center; gap: 6px;
-            transition: 0.2s;
         }
 
-        .header-filter-row {
+        /* 横並びボタンのコンテナ */
+        .header-nav-row {
+            display: flex;
+            gap: 10px;
             width: 100%;
             margin-top: 4px;
         }
 
-        .main-btn { 
-            width: 100%; 
+        .nav-btn { 
+            flex: 1;
             padding: 10px; 
             border-radius: 12px; 
             border: none; 
             background: rgba(255, 255, 255, 0.9); 
             color: var(--mauve); 
             font-weight: bold; 
-            font-size: 0.85rem;
+            font-size: 0.8rem;
             box-shadow: 0 4px 10px rgba(0,0,0,0.1);
             display: flex; align-items: center; justify-content: center; gap: 6px;
             transition: 0.2s;
             cursor: pointer;
+            white-space: nowrap;
         }
-        .main-btn:active { transform: scale(0.98); background: white; }
+        .nav-btn:active { transform: scale(0.95); background: white; }
 
         .reload-icon {
             display: inline-block; width: 10px; height: 10px;
@@ -87,7 +90,7 @@
         }
         .reload-icon::after {
             content: ''; position: absolute; top: -2.5px; left: 4px;
-            border-left: 3px solid transparent; border-right: 3px solid transparent;
+            border-left: 3.5px solid transparent; border-right: 3.5px solid transparent;
             border-bottom: 4px solid white; transform: rotate(45deg);
         }
         .spinning { animation: spin 0.8s linear infinite; }
@@ -149,13 +152,14 @@
             <span class="reload-icon sync-target"></span>
         </button>
     </div>
-    <div class="header-filter-row">
-        <button class="main-btn" onclick="filterByArea('すべて')">📋 全エリアの募集をすべて表示</button>
+    <div class="header-nav-row">
+        <button class="nav-btn" onclick="scrollToSection('region-section')">📍 エリアで絞る</button>
+        <button class="nav-btn" onclick="filterByArea('すべて')">📋 すべて表示</button>
     </div>
 </header>
 
 <div class="container">
-    <div class="region-section">
+    <div id="region-section" class="region-section">
         <div class="region-header">Find by Area</div>
         <div id="pref-container"></div>
     </div>
@@ -236,13 +240,21 @@ function displayRecruits(filter = 'すべて') {
     });
 }
 
-// 共通のフィルタリング＆スクロール関数
+// 特定の場所にジャンプする関数
+function scrollToSection(id) {
+    const target = document.getElementById(id);
+    window.scrollTo({ 
+        top: target.offsetTop - 160, 
+        behavior: 'smooth' 
+    });
+}
+
+// フィルタリングしてジャンプする関数
 function filterByArea(area) {
     displayRecruits(area);
     const target = document.getElementById('current-filter-label');
-    // ラベルの位置まで滑らかにスライド
     window.scrollTo({ 
-        top: target.offsetTop - 140, // ヘッダーが高いので、少し多めに余白を開ける
+        top: target.offsetTop - 160, 
         behavior: 'smooth' 
     });
 }
