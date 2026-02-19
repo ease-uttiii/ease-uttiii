@@ -1,0 +1,202 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+    <title>ease女性用プレイ依頼フォーム</title>
+    <link href="https://fonts.googleapis.com/css2?family=Lora:wght@600&family=Noto+Sans+JP:wght@400;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --pink-main: #d4a5a5;
+            --pink-deep: #b57d7d;
+            --pink-light: #fff5f5;
+            --soft-bg: #fdf8f7;
+            --card-bg: #ffffff;
+            --tile-bg-top: #fceeee; 
+            --tile-bg-bottom: #f2dada;
+            --tile-text: #7a5a5a;
+            --tile-border: #e8cfcf;
+            --text-sub: #b09999;
+            --shadow: 0 10px 30px rgba(212, 165, 165, 0.15);
+        }
+
+        body { font-family: 'Noto Sans JP', sans-serif; margin: 0; background: var(--soft-bg); color: #5a4d4d; line-height: 1.6; }
+        
+        header { 
+            background: linear-gradient(135deg, var(--pink-main) 0%, var(--pink-deep) 100%);
+            color: white; padding: 1.5rem 1rem; text-align: center;
+        }
+        header h1 { margin: 0; font-size: 1.3rem; letter-spacing: 0.1em; }
+
+        .container { padding: 1rem; max-width: 600px; margin: 0 auto; }
+
+        /* 注意事項セクション */
+        .notice-box { 
+            background: #fff; border: 2px solid var(--pink-main); border-radius: 20px; 
+            padding: 20px; margin-bottom: 25px; font-size: 13px; color: #7a5a5a;
+        }
+        .notice-box h2 { font-size: 15px; margin-top: 0; color: var(--pink-deep); border-bottom: 1px solid var(--pink-light); padding-bottom: 10px; }
+        .notice-box ul { padding-left: 18px; margin: 10px 0; }
+        .notice-box li { margin-bottom: 8px; }
+
+        /* フォーム共通スタイル */
+        .form-section { background: var(--card-bg); border-radius: 24px; padding: 25px 20px; box-shadow: var(--shadow); margin-bottom: 25px; }
+        .form-group { margin-bottom: 25px; }
+        .label-row { display: flex; align-items: center; margin-bottom: 12px; gap: 8px; }
+        .label-row span { font-weight: 700; font-size: 14px; color: var(--pink-deep); }
+        .required { background: #e88e8e; color: white; font-size: 9px; padding: 2px 6px; border-radius: 4px; }
+
+        /* 入力パーツ */
+        input[type="text"], input[type="number"], select, textarea {
+            width: 100%; padding: 12px; border-radius: 10px; border: 1px solid var(--tile-border);
+            background: var(--pink-light); color: var(--tile-text); font-size: 15px; box-sizing: border-box; outline: none;
+        }
+
+        /* 日時セレクター（横並び） */
+        .datetime-row { display: flex; flex-wrap: wrap; gap: 8px; align-items: center; }
+        .datetime-row select { width: 70px; }
+
+        /* チェックボックス：管理用ボタンUIを継承 */
+        .check-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 8px; }
+        .check-item {
+            background: linear-gradient(180deg, #ffffff 0%, #fcf3f3 100%);
+            border: 1px solid var(--tile-border); padding: 10px 5px; border-radius: 10px;
+            font-size: 12px; text-align: center; cursor: pointer; color: var(--tile-text);
+            transition: 0.2s; display: flex; align-items: center; justify-content: center; min-height: 44px;
+        }
+        .check-item.active {
+            background: linear-gradient(180deg, var(--pink-main) 0%, var(--pink-deep) 100%);
+            color: white; border-color: var(--pink-deep); font-weight: bold;
+        }
+
+        /* 送信ボタン */
+        .submit-btn {
+            background: linear-gradient(135deg, var(--pink-main) 0%, var(--pink-deep) 100%);
+            color: white; border: none; padding: 20px; border-radius: 20px; width: 100%;
+            font-size: 18px; font-weight: 700; cursor: pointer; box-shadow: 0 8px 25px rgba(212,165,165,0.4);
+        }
+
+        .footer-notice { font-size: 11px; color: #a89e9e; padding: 20px; line-height: 1.8; background: #eee; border-radius: 15px; margin-top: 20px; }
+    </style>
+</head>
+<body>
+
+<header>
+    <h1>ease 女性用プレイ依頼フォーム</h1>
+</header>
+
+<div class="container">
+    <div class="notice-box">
+        <h2>ご理解をお願いします</h2>
+        <ul>
+            <li>前々日の夜依頼は、ほぼ募集期間がなく、男性が決まりにくいです。</li>
+            <li>1対1の当日依頼はお受けできません。前日受付は午前中のみです。</li>
+            <li>複数プレイは「監督探し」が必要なため、お日にちが必要です。</li>
+            <li>キャンセルは前日の確認までなら問題ありません。</li>
+        </ul>
+        <p style="margin-top:10px; font-weight:bold;">《何かあれば森に相談してください》</p>
+    </div>
+
+    <form>
+        <div class="form-section">
+            <div class="form-group">
+                <div class="label-row"><span>IDまたは面談時ニックネーム</span><span class="required">必須</span></div>
+                <input type="text" placeholder="IDまたはニックネームを入力">
+            </div>
+
+            <div class="form-group">
+                <div class="label-row"><span>プレイ日時</span><span class="required">必須</span></div>
+                <div class="datetime-row">
+                    <span>2026年</span>
+                    <select><option>01</option><option selected>02</option></select><span>月</span>
+                    <select><option>01</option><option selected>20</option></select><span>日</span>
+                    <select><option>10</option><option selected>20</option></select><span>時</span>
+                    <select><option>00</option><option selected>30</option></select><span>分</span>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <div class="label-row"><span>開催都道府県</span><span class="required">必須</span></div>
+                <select>
+                    <option>東京都</option>
+                    <option disabled>------</option>
+                    <option>大阪府</option>
+                    <option>神奈川県</option>
+                    <option>愛知県</option>
+                    </select>
+            </div>
+        </div>
+
+        <div class="form-section">
+            <div class="label-row"><span>希望するプレイ項目（複数選択可）</span><span class="required">必須</span></div>
+            <div class="check-grid" id="play-options">
+                <div class="check-item" onclick="toggleSelection(this)">お任せでいいです</div>
+                <div class="check-item" onclick="toggleSelection(this)">攻められたい</div>
+                <div class="check-item" onclick="toggleSelection(this)">攻めたい</div>
+                <div class="check-item" onclick="toggleSelection(this)">刺激的な体験</div>
+                <div class="check-item" onclick="toggleSelection(this)">レイププレイ希望</div>
+                <div class="check-item" onclick="toggleSelection(this)">目隠しされたい</div>
+                <div class="check-item" onclick="toggleSelection(this)">複数人を経験したい</div>
+                <div class="check-item" onclick="toggleSelection(this)">玩具を使って欲しい</div>
+                <div class="check-item" onclick="toggleSelection(this)">恋人のように過ごしたい</div>
+                <div class="check-item" onclick="toggleSelection(this)">3P</div>
+                <div class="check-item" onclick="toggleSelection(this)">アナルセックス</div>
+                <div class="check-item" onclick="toggleSelection(this)">ドMです</div>
+                <div class="check-item" onclick="toggleSelection(this)">ドSです</div>
+                <div class="check-item" onclick="toggleSelection(this)">縛られたい</div>
+            </div>
+            <textarea style="margin-top:15px;" placeholder="その他、プレイに関する希望があれば記入"></textarea>
+        </div>
+
+        <div class="form-section">
+            <div class="form-group">
+                <div class="label-row"><span>相手の希望人数</span><span class="required">必須</span></div>
+                <input type="number" value="1" min="1" style="width: 80px;"> <span>人</span>
+                <p style="font-size:11px; color:var(--text-sub); margin-top:5px;">※複数プレイは監督探しにお時間が必要です。</p>
+            </div>
+
+            <div class="form-group">
+                <div class="label-row"><span>使用して欲しい玩具</span></div>
+                <input type="text" placeholder="バイブ、ローターなど">
+            </div>
+
+            <div class="form-group">
+                <div class="label-row"><span>追加したいNG項目（任意）</span></div>
+                <div class="check-grid">
+                    <div class="check-item" onclick="toggleSelection(this)">タバコ</div>
+                    <div class="check-item" onclick="toggleSelection(this)">香水</div>
+                    <div class="check-item" onclick="toggleSelection(this)">太りすぎ</div>
+                    <div class="check-item" onclick="toggleSelection(this)">髪が薄い方</div>
+                    <div class="check-item" onclick="toggleSelection(this)">刺青(タトゥー)</div>
+                    <div class="check-item" onclick="toggleSelection(this)">言葉が乱暴</div>
+                </div>
+                <textarea style="margin-top:15px;" placeholder="その他NGあれば記入"></textarea>
+            </div>
+        </div>
+
+        <div class="form-section" style="border-left: 5px solid #ccc;">
+            <div class="label-row"><span>非掲載部分（森への伝達事項）</span></div>
+            <p style="font-size:11px; color:var(--text-sub);">※この項目は募集案件には記載されません。</p>
+            <textarea rows="4" placeholder="今回だけ特別な事情があれば記入（エリア変更など）"></textarea>
+        </div>
+
+        <button type="button" class="submit-btn">内容確認画面へ</button>
+    </form>
+
+    <div class="footer-notice">
+        <strong>《女性から男性へのNG行動》</strong><br>
+        ・連絡先の交換を求める行為（禁止）<br>
+        ・恋愛感情を持ち込む行為<br>
+        ・無断キャンセルや当日キャンセル<br>
+        ・秘密保持義務の違反（身バレリスク）
+    </div>
+</div>
+
+<script>
+    function toggleSelection(el) {
+        el.classList.toggle('active');
+    }
+</script>
+
+</body>
+</html>
