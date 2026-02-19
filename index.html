@@ -2,61 +2,76 @@
 <html lang="ja">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>サークル イーズ - 公式サイト</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+    <title>サークル イーズ</title>
     <style>
-        /* ここにデザイン（CSS）を書けます */
         body {
-            font-family: 'Helvetica Neue', Arial, sans-serif;
-            line-height: 1.6;
             margin: 0;
-            padding: 0;
-            background-color: #f4f4f4;
-            color: #333;
+            font-family: sans-serif;
+            overscroll-behavior-y: contain; /* ブラウザ標準の更新を止めて自作する設定 */
+        }
+        /* 更新中に表示されるメッセージ */
+        #pull-to-refresh {
+            position: fixed;
+            top: -50px;
+            left: 0;
+            width: 100%;
+            height: 50px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: #f0f0f0;
+            transition: transform 0.2s;
+            z-index: 1000;
+        }
+        .content {
+            padding: 20px;
             text-align: center;
-        }
-        header {
-            background-color: #ff6699; /* サークルカラーに合わせて変えてね */
-            color: white;
-            padding: 2rem 1rem;
-        }
-        main {
-            padding: 2rem;
-            max-width: 800px;
-            margin: auto;
-            background: white;
-            box-shadow: 0 0 10px rgba(0,0,0,0.1);
-        }
-        .btn {
-            display: inline-block;
-            background: #ff6699;
-            color: white;
-            padding: 10px 20px;
-            text-decoration: none;
-            border-radius: 5px;
-            margin-top: 20px;
         }
     </style>
 </head>
 <body>
 
-    <header>
+    <div id="pull-to-refresh">↓ 引っ張って更新</div>
+
+    <div class="content">
         <h1>サークル イーズ</h1>
-        <p>私たちの活動へようこそ！</p>
-    </header>
+        <p>ここを下にグーッと引っ張ってみてね！</p>
+        <p>（スマホで確認するのが一番わかりやすいです）</p>
+    </div>
 
-    <main>
-        <h2>お知らせ</h2>
-        <p>GitHubとNetlifyの連携に成功しました！これからはここから最新情報を発信します。</p>
-        
-        <p>ここにWSCで書いた自分のコードをどんどん追加していってくださいね。</p>
+    <script>
+        let startY = 0;
+        const ptr = document.getElementById('pull-to-refresh');
 
-        <a href="#" class="btn">お問い合わせはこちら</a>
-    </main>
+        window.addEventListener('touchstart', (e) => {
+            if (window.scrollY === 0) {
+                startY = e.touches[0].pageY;
+            }
+        });
 
-    <footer>
-        <p>&copy; 2026 サークル イーズ</p>
-    </footer>
+        window.addEventListener('touchmove', (e) => {
+            const y = e.touches[0].pageY;
+            if (window.scrollY === 0 && y > startY) {
+                const diff = y - startY;
+                if (diff < 100) {
+                    ptr.style.transform = `translateY(${diff}px)`;
+                    ptr.innerText = "もっと引っ張って！";
+                } else {
+                    ptr.innerText = "離して更新！";
+                }
+            }
+        });
 
+        window.addEventListener('touchend', (e) => {
+            const y = e.changedTouches[0].pageY;
+            if (window.scrollY === 0 && y - startY > 100) {
+                ptr.innerText = "更新中...";
+                location.reload(); // ページを実際に更新する
+            } else {
+                ptr.style.transform = `translateY(0)`;
+            }
+        });
+    </script>
 </body>
 </html>
