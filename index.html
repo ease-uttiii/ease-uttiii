@@ -2,212 +2,61 @@
 <html lang="ja">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
-    <title>Circle Ease</title>
-    <link rel="manifest" href="manifest.json">
-    <meta name="theme-color" content="#ff6b9d">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>サークル イーズ - 公式サイト</title>
     <style>
-        /* --- 引っ張って更新の演出用 --- */
-        #ptr-indicator {
-            position: fixed; top: -60px; left: 0; width: 100%; height: 60px;
-            display: flex; flex-direction: column; align-items: center; justify-content: center;
-            background: transparent; color: #ff6b9d; z-index: 999;
-            transition: transform 0.2s ease-out;
+        /* ここにデザイン（CSS）を書けます */
+        body {
+            font-family: 'Helvetica Neue', Arial, sans-serif;
+            line-height: 1.6;
+            margin: 0;
+            padding: 0;
+            background-color: #f4f4f4;
+            color: #333;
+            text-align: center;
         }
-
-        /* クルクル回るアイコンの作成 */
-        .loader {
-            width: 24px; height: 24px;
-            border: 3px solid #ffe1eb;
-            border-top: 3px solid #ff6b9d;
-            border-radius: 50%;
-            animation: spin 1s linear infinite;
-            margin-bottom: 4px;
-            display: none; /* 最初は隠しておく */
+        header {
+            background-color: #ff6699; /* サークルカラーに合わせて変えてね */
+            color: white;
+            padding: 2rem 1rem;
         }
-
-        @keyframes spin {
-            0% { transform: rotate(0deg); }
-            100% { transform: rotate(360deg); }
+        main {
+            padding: 2rem;
+            max-width: 800px;
+            margin: auto;
+            background: white;
+            box-shadow: 0 0 10px rgba(0,0,0,0.1);
         }
-
-        /* 全体設定 */
-        body { font-family: 'Helvetica Neue', Arial, sans-serif; margin: 0; background: #fff5f8; padding-bottom: 40px; color: #4a4a4a; overflow-y: auto; overscroll-behavior-y: contain; }
-        header { background: #ff6b9d; color: white; padding: 1rem; text-align: center; position: sticky; top: 0; z-index: 100; box-shadow: 0 4px 12px rgba(255,107,157,0.2); }
-        .container { padding: 1.2rem; max-width: 500px; margin: 0 auto; }
-
-        /* デザインパーツ */
-        .main-links { display: flex; gap: 12px; margin-bottom: 20px; }
-        .main-btn { flex: 1; padding: 14px; border-radius: 20px; border: none; background: #ff6b9d; color: white; font-weight: bold; cursor: pointer; transition: all 0.2s; font-size: 0.95rem; box-shadow: 0 4px 10px rgba(255,107,157,0.2); }
-        .main-btn.all { background: #f8bbd0; color: #ad1457; }
-        .region-section { background: white; border-radius: 20px; margin-bottom: 25px; overflow: hidden; box-shadow: 0 2px 10px rgba(0,0,0,0.05); border: 1px solid #ffe1eb; }
-        .region-header { background: #fff0f5; padding: 12px 18px; font-weight: bold; font-size: 0.85rem; color: #d81b60; }
-        .region-group-title { background: #fff; padding: 12px 18px 4px; font-weight: bold; font-size: 0.8rem; color: #ff6b9d; }
-        .pref-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px; padding: 12px 18px 18px; }
-        .pref-btn { background: #fff; border: 1px solid #ffd1e1; padding: 10px 4px; font-size: 0.8rem; border-radius: 12px; cursor: pointer; text-align: center; color: #4a4a4a; }
-        .recruit-card { background: white; padding: 1.5rem; margin-bottom: 1.2rem; border-radius: 20px; box-shadow: 0 4px 15px rgba(255,107,157,0.08); border: 1px solid #ffe1eb; border-left: 6px solid #ff6b9d; }
-        .recruit-title { font-weight: bold; color: #d81b60; font-size: 1.15rem; margin-bottom: 10px; }
-        .recruit-info { font-size: 0.85em; color: #7d7d7d; line-height: 1.6; display: flex; flex-direction: column; gap: 4px; }
-        .apply-btn { margin-top: 18px; background: #ff4081; color: white; border: none; padding: 14px; border-radius: 15px; cursor: pointer; width: 100%; font-size: 1.1rem; font-weight: bold; }
-        #current-filter-label { margin: 25px 0 15px; font-size: 1rem; font-weight: bold; color: #d81b60; display: flex; align-items: center; }
-        #current-filter-label::before { content: "🌸"; margin-right: 8px; }
+        .btn {
+            display: inline-block;
+            background: #ff6699;
+            color: white;
+            padding: 10px 20px;
+            text-decoration: none;
+            border-radius: 5px;
+            margin-top: 20px;
+        }
     </style>
 </head>
 <body>
 
-<div id="ptr-indicator">
-    <div class="loader" id="ptr-loader"></div>
-    <span id="ptr-text" style="font-size: 0.7rem;">引き下げて更新</span>
-</div>
+    <header>
+        <h1>サークル イーズ</h1>
+        <p>私たちの活動へようこそ！</p>
+    </header>
 
-<header>
-    <h1 style="margin:0; font-size:1.3rem; letter-spacing: 0.1em;">CIRCLE EASE</h1>
-</header>
-
-<div class="container">
-    <div class="main-links">
-        <button class="main-btn" onclick="quickFilter('全国')">🌸 全国・オンライン</button>
-        <button class="main-btn all" onclick="quickFilter('すべて')">📋 すべて表示</button>
-    </div>
-
-    <div class="region-section">
-        <div class="region-header">エリアで絞り込む</div>
-        <div id="pref-container"></div>
-    </div>
-
-    <div id="current-filter-label">表示中: すべてのエリア</div>
-    <div id="recruit-list"></div>
-</div>
-
-<script>
-// --- 引っ張って更新のロジック ---
-let touchStart = 0;
-let touchEnd = 0;
-const indicator = document.getElementById('ptr-indicator');
-const loader = document.getElementById('ptr-loader');
-const ptrText = document.getElementById('ptr-text');
-
-window.addEventListener('touchstart', (e) => {
-    touchStart = e.targetTouches[0].pageY;
-}, { passive: true });
-
-window.addEventListener('touchmove', (e) => {
-    touchEnd = e.targetTouches[0].pageY;
-    const distance = touchEnd - touchStart;
-    
-    if (window.scrollY === 0 && distance > 0) {
-        // 動きを少し重くして自然にする
-        const move = Math.min(distance * 0.4, 80); 
-        indicator.style.transform = `translateY(${move}px)`;
+    <main>
+        <h2>お知らせ</h2>
+        <p>GitHubとNetlifyの連携に成功しました！これからはここから最新情報を発信します。</p>
         
-        if (distance > 150) {
-            ptrText.innerText = "放して更新";
-            loader.style.display = "block";
-        } else {
-            ptrText.innerText = "引き下げて更新";
-            loader.style.display = "none";
-        }
-    }
-}, { passive: true });
+        <p>ここにWSCで書いた自分のコードをどんどん追加していってくださいね。</p>
 
-window.addEventListener('touchend', () => {
-    const distance = touchEnd - touchStart;
-    if (window.scrollY === 0 && distance > 150) {
-        ptrText.innerText = "更新中...";
-        loader.style.display = "block";
-        location.reload(true);
-    } else {
-        indicator.style.transform = `translateY(0)`;
-    }
-    touchStart = 0;
-    touchEnd = 0;
-});
+        <a href="#" class="btn">お問い合わせはこちら</a>
+    </main>
 
-// --- 既存のロジック（そのまま） ---
-const regions = {
-    "【北海道】": ["北海道全域"],
-    "【東北地方】": ["青森県", "岩手県", "宮城県", "秋田県", "山形県", "福島県"],
-    "【関東地方】": ["茨城県", "栃木県", "群馬県", "埼玉県", "千葉県", "東京都全域", "神奈川県"],
-    "【甲信越地方】": ["新潟県", "山梨県", "長野県"],
-    "【東海地方】": ["岐阜県", "静岡県", "愛知県", "三重県"],
-    "【北陸地方】": ["富山県", "石川県", "福井県"],
-    "【関西地方】": ["滋賀県", "京都府", "大阪府", "兵庫県", "奈良県", "和歌山県"],
-    "【中国地方】": ["鳥取県", "島根県", "岡山県", "広島県", "山口県"],
-    "【四国地方】": ["徳島県", "香川県", "愛媛県", "高知県"],
-    "【九州地方】": ["福岡県", "佐賀県", "長崎県", "熊本県", "大分県", "宮崎県", "鹿児島県"],
-    "【沖縄】": ["沖縄県全域"]
-};
-
-const recruitmentItems = [
-    { id: 1, title: "東京都内の特別案件", area: "東京都全域", date: "2024-05-20" },
-    { id: 2, title: "大阪・関西エリア合同募集", area: "大阪府", date: "2024-05-25" },
-    { id: 3, title: "北海道エリア限定イベント", area: "北海道全域", date: "2024-06-01" },
-    { id: 4, title: "沖縄マリンイベント", area: "沖縄県全域", date: "2024-06-10" },
-    { id: 5, title: "全国オンライン募集", area: "全国", date: "2024-06-15" }
-];
-
-function createPrefButtons() {
-    const container = document.getElementById('pref-container');
-    for (const [regionName, prefs] of Object.entries(regions)) {
-        const title = document.createElement('div');
-        title.className = 'region-group-title';
-        title.innerText = regionName;
-        const grid = document.createElement('div');
-        grid.className = 'pref-grid';
-        prefs.forEach(pref => {
-            const btn = document.createElement('button');
-            btn.className = 'pref-btn';
-            btn.innerText = pref;
-            btn.onclick = () => quickFilter(pref);
-            grid.appendChild(btn);
-        });
-        container.appendChild(title);
-        container.appendChild(grid);
-    }
-}
-
-let currentFilter = 'すべて';
-
-function quickFilter(area) {
-    currentFilter = area;
-    document.getElementById('current-filter-label').innerText = "表示中: " + area;
-    renderRecruitments();
-    const labelPos = document.getElementById('current-filter-label').offsetTop;
-    window.scrollTo({ top: labelPos - 80, behavior: 'smooth' });
-}
-
-function renderRecruitments() {
-    const listContainer = document.getElementById('recruit-list');
-    listContainer.innerHTML = '';
-    const filtered = recruitmentItems.filter(item => currentFilter === 'すべて' || item.area === currentFilter);
-    if (filtered.length === 0) {
-        listContainer.innerHTML = `<div style="text-align:center; padding:40px; color:#ffb2cc; background:white; border-radius:20px; border: 2px dashed #ffe1eb;">現在、${currentFilter}の案件はありません。</div>`;
-    } else {
-        filtered.forEach(item => {
-            const card = document.createElement('div');
-            card.className = 'recruit-card';
-            card.innerHTML = `
-                <div class="recruit-title">${item.title}</div>
-                <div class="recruit-info">
-                    <span>📍 <b>エリア:</b> ${item.area}</span>
-                    <span>📅 <b>開催日:</b> ${item.date}</span>
-                </div>
-                <button class="apply-btn" onclick="applyItem(${item.id})">この案件に応募する</button>
-            `;
-            listContainer.appendChild(card);
-        });
-    }
-}
-
-function applyItem(id) {
-    const item = recruitmentItems.find(i => i.id === id);
-    const userName = prompt(`【${item.area}】${item.title}\nにお名前を入力して応募：`);
-    if (userName) alert(`${userName}さん、応募ありがとうございます！`);
-}
-
-createPrefButtons();
-renderRecruitments();
-</script>
+    <footer>
+        <p>&copy; 2026 サークル イーズ</p>
+    </footer>
 
 </body>
 </html>
