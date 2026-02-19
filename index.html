@@ -22,7 +22,7 @@
             -webkit-font-smoothing: antialiased;
         }
         
-        /* --- ヘッダー：3段構成で操作系を集約 --- */
+        /* ヘッダー */
         header { 
             background: var(--mauve); 
             color: white; 
@@ -32,7 +32,6 @@
             box-shadow: 0 4px 20px rgba(179,146,146,0.3);
         }
 
-        /* 1段目：タイトル */
         header h1 { 
             margin: 0; 
             font-size: 1.6rem;
@@ -41,7 +40,6 @@
             text-align: center;
         }
 
-        /* 2段目：リロードボタン（右寄せ） */
         .header-action-row {
             display: flex;
             justify-content: flex-end;
@@ -61,7 +59,6 @@
             transition: 0.2s;
         }
 
-        /* 3段目：メイン操作ボタン（すべて表示） */
         .header-filter-row {
             width: 100%;
             margin-top: 4px;
@@ -79,10 +76,10 @@
             box-shadow: 0 4px 10px rgba(0,0,0,0.1);
             display: flex; align-items: center; justify-content: center; gap: 6px;
             transition: 0.2s;
+            cursor: pointer;
         }
         .main-btn:active { transform: scale(0.98); background: white; }
 
-        /* アイコン類 */
         .reload-icon {
             display: inline-block; width: 10px; height: 10px;
             border: 1.5px solid white; border-top: 1.5px solid transparent; 
@@ -96,7 +93,6 @@
         .spinning { animation: spin 0.8s linear infinite; }
         @keyframes spin { from { transform: rotate(0deg); } to { transform: rotate(360deg); } }
 
-        /* コンテンツエリア */
         .container { padding: 1.5rem 1.2rem; max-width: 500px; margin: 0 auto; }
         
         .region-section { 
@@ -111,6 +107,7 @@
         .pref-btn { 
             background: #fdfcfc; border: 1px solid #f0eded; padding: 10px 2px; font-size: 0.7rem; 
             font-weight: bold; border-radius: 10px; color: var(--text-main);
+            cursor: pointer;
         }
         .pref-btn:active { background: var(--mauve); color: white; }
         
@@ -137,6 +134,7 @@
             margin-top: 15px; 
             background: linear-gradient(135deg, var(--mauve) 0%, var(--mauve-dark) 100%);
             color: white; border: none; padding: 14px; border-radius: 12px; width: 100%; font-size: 0.9rem; font-weight: bold;
+            cursor: pointer;
         }
     </style>
 </head>
@@ -144,7 +142,6 @@
 
 <header>
     <h1>CIRCLE EASE</h1>
-    
     <div class="header-action-row">
         <button id="force-reload-btn" onclick="fastUpdate()">
             <span class="reload-icon sync-target"></span>
@@ -152,9 +149,8 @@
             <span class="reload-icon sync-target"></span>
         </button>
     </div>
-
     <div class="header-filter-row">
-        <button class="main-btn" onclick="quickFilter('すべて')">📋 全エリアの募集をすべて表示</button>
+        <button class="main-btn" onclick="filterByArea('すべて')">📋 全エリアの募集をすべて表示</button>
     </div>
 </header>
 
@@ -163,7 +159,6 @@
         <div class="region-header">Find by Area</div>
         <div id="pref-container"></div>
     </div>
-
     <div id="current-filter-label">表示中: すべての募集</div>
     <div id="recruit-list"></div>
 </div>
@@ -241,13 +236,16 @@ function displayRecruits(filter = 'すべて') {
     });
 }
 
+// 共通のフィルタリング＆スクロール関数
 function filterByArea(area) {
     displayRecruits(area);
     const target = document.getElementById('current-filter-label');
-    window.scrollTo({ top: target.offsetTop - 120, behavior: 'smooth' });
+    // ラベルの位置まで滑らかにスライド
+    window.scrollTo({ 
+        top: target.offsetTop - 140, // ヘッダーが高いので、少し多めに余白を開ける
+        behavior: 'smooth' 
+    });
 }
-
-function quickFilter(type) { displayRecruits(type); }
 
 createPrefButtons();
 displayRecruits();
