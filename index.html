@@ -4,151 +4,125 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
     <title>Circle Ease</title>
-    
     <link rel="manifest" href="manifest.json">
-    <meta name="theme-color" content="#ff6b9d">
+    <meta name="theme-color" content="#b39292">
     <style>
+        /* 全体の雰囲気：くすみカラーと柔らかな背景 */
         body { 
-            font-family: 'Helvetica Neue', Arial, sans-serif; 
+            font-family: 'Hiragino Sans', 'Hiragino Kaku Gothic ProN', sans-serif; 
             margin: 0; 
-            background: #fff5f8; 
-            color: #4a4a4a; 
+            background: #f9f7f6; /* 柔らかいベージュ系 */
+            color: #5d5555; 
         }
         
         header { 
-            background: pink; 
+            background: #b39292; /* くすみピンク */
             color: white; 
-            padding: 1rem; 
+            padding: 1.2rem; 
             text-align: center; 
             position: sticky; 
             top: 0; 
             z-index: 100; 
-            box-shadow: 0 4px 12px rgba(255,107,157,0.2); 
+            box-shadow: 0 2px 15px rgba(179,146,146,0.3); 
             display: flex;
             justify-content: center;
             align-items: center;
         }
 
-        /* 右上の更新ボタン：安全版 */
+        header h1 {
+            margin: 0;
+            font-size: 1.4rem;
+            letter-spacing: 0.15em;
+            font-family: 'Times New Roman', serif; /* タイトルだけ少し大人っぽく */
+        }
+
         #force-reload-btn {
             position: absolute;
             right: 15px;
-            background: rgba(255, 255, 255, 0.3);
+            background: rgba(255, 255, 255, 0.2);
             color: white;
-            border: none;
-            border-radius: 8px;
-            padding: 6px 10px;
-            font-size: 16px;
+            border: 1px solid rgba(255, 255, 255, 0.4);
+            border-radius: 50%;
+            width: 32px;
+            height: 32px;
+            font-size: 14px;
             cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
         }
 
-        .container { padding: 1.2rem; max-width: 500px; margin: 0 auto; }
-        .main-links { display: flex; gap: 12px; margin-bottom: 20px; }
-        .main-btn { flex: 1; padding: 14px; border-radius: 20px; border: none; background: #ff6b9d; color: white; font-weight: bold; cursor: pointer; font-size: 0.95rem; }
-        .main-btn.all { background: #f8bbd0; color: #ad1457; }
-        .region-section { background: white; border-radius: 20px; margin-bottom: 25px; overflow: hidden; box-shadow: 0 2px 10px rgba(0,0,0,0.05); border: 1px solid #ffe1eb; }
-        .region-header { background: #fff0f5; padding: 12px 18px; font-weight: bold; font-size: 0.85rem; color: #d81b60; }
-        .region-group-title { background: #fff; padding: 12px 18px 4px; font-weight: bold; font-size: 0.8rem; color: #ff6b9d; }
-        .pref-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px; padding: 12px 18px 18px; }
-        .pref-btn { background: #fff; border: 1px solid #ffd1e1; padding: 10px 4px; font-size: 0.8rem; font-weight: bold; border-radius: 12px; cursor: pointer; text-align: center; color: #4a4a4a; }
-        .recruit-card { background: white; padding: 1.5rem; margin-bottom: 1.2rem; border-radius: 20px; border-left: 6px solid #ff6b9d; box-shadow: 0 4px 15px rgba(0,0,0,0.05); }
-        .recruit-title { font-weight: bold; color: #d81b60; font-size: 1.15rem; margin-bottom: 10px; }
-        .recruit-info { font-size: 0.85em; color: #7d7d7d; display: flex; flex-direction: column; gap: 4px; }
-        .apply-btn { margin-top: 18px; background: #ff4081; color: white; border: none; padding: 14px; border-radius: 15px; width: 100%; font-size: 1.1rem; font-weight: bold; }
-        #current-filter-label { margin: 25px 0 15px; font-size: 1rem; font-weight: bold; color: #d81b60; display: flex; align-items: center; }
-        #current-filter-label::before { content: "🌸"; margin-right: 8px; }
+        .container { padding: 1.5rem 1rem; max-width: 500px; margin: 0 auto; }
+
+        /* メインリンク：よりボタンらしく */
+        .main-links { display: flex; gap: 10px; margin-bottom: 25px; }
+        .main-btn { 
+            flex: 1; 
+            padding: 12px; 
+            border-radius: 12px; 
+            border: none; 
+            background: #d9c5c5; 
+            color: #5d5555; 
+            font-weight: bold; 
+            font-size: 0.85rem;
+            box-shadow: 0 4px 0 #bca7a7; /* 押しボタン風 */
+            transition: all 0.1s;
+        }
+        .main-btn:active { transform: translateY(2px); box-shadow: 0 2px 0 #bca7a7; }
+        .main-btn.all { background: #eee7e4; color: #8e7d7d; box-shadow: 0 4px 0 #d9cfcb; }
+        .main-btn.all:active { box-shadow: 0 2px 0 #d9cfcb; }
+
+        /* エリアセクション：シンプルに */
+        .region-section { background: white; border-radius: 15px; margin-bottom: 30px; overflow: hidden; box-shadow: 0 5px 20px rgba(0,0,0,0.03); }
+        .region-header { background: #f3eeec; padding: 12px 18px; font-weight: bold; font-size: 0.8rem; color: #8e7d7d; border-bottom: 1px solid #eee; }
+        .region-group-title { padding: 15px 18px 5px; font-weight: bold; font-size: 0.75rem; color: #b39292; }
+        
+        .pref-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 6px; padding: 10px 18px 20px; }
+        .pref-btn { 
+            background: #fdfdfd; 
+            border: 1px solid #f0e9e7; 
+            padding: 10px 2px; 
+            font-size: 0.75rem; 
+            border-radius: 8px; 
+            color: #7a6f6f;
+            transition: 0.2s;
+        }
+        .pref-btn:active { background: #f3eeec; border-color: #b39292; color: #b39292; }
+        
+        /* 募集カード：ここが一番お洒落に見えるポイント */
+        .recruit-card { 
+            background: white; 
+            padding: 1.5rem; 
+            margin-bottom: 1.5rem; 
+            border-radius: 18px; 
+            box-shadow: 0 10px 25px rgba(0,0,0,0.04);
+            border: 1px solid rgba(179,146,146,0.1);
+        }
+        .recruit-title { font-weight: bold; color: #5d5555; font-size: 1.1rem; margin-bottom: 12px; line-height: 1.5; }
+        .recruit-info { font-size: 0.8em; color: #9a8f8f; display: flex; flex-direction: column; gap: 6px; }
+        .recruit-info span::before { content: "•"; margin-right: 8px; color: #b39292; }
+        
+        .apply-btn { 
+            margin-top: 18px; 
+            background: #b39292; 
+            color: white; 
+            border: none; 
+            padding: 14px; 
+            border-radius: 12px; 
+            width: 100%; 
+            font-size: 1rem; 
+            font-weight: bold;
+            letter-spacing: 0.05em;
+        }
+        
+        #current-filter-label { margin: 30px 0 15px; font-size: 0.9rem; font-weight: bold; color: #8e7d7d; display: flex; align-items: center; }
     </style>
 </head>
 <body>
 
 <header>
-    <h1 style="margin:0; font-size:1.2rem; letter-spacing: 0.1em;">CIRCLE EASE</h1>
+    <h1>CIRCLE EASE</h1>
     <button id="force-reload-btn" onclick="safeUpdate()">🔄</button>
 </header>
 
 <div class="container">
-    <div class="main-links">
-        <button class="main-btn" onclick="quickFilter('全国')">🌸 全国</button>
-        <button class="main-btn all" onclick="quickFilter('すべて')">📋 すべて</button>
-    </div>
-    <div class="region-section">
-        <div class="region-header">エリアで絞り込む</div>
-        <div id="pref-container"></div>
-    </div>
-    <div id="current-filter-label">表示中: すべてのエリア</div>
-    <div id="recruit-list"></div>
-</div>
-
-<script>
-const regions = {
-    "【北海道】": ["北海道全域"], "【東北地方】": ["青森県", "岩手県", "宮城県", "秋田県", "山形県", "福島県"],
-    "【関東地方】": ["茨城県", "栃木県", "群馬県", "埼玉県", "千葉県", "東京都全域", "神奈川県"],
-    "【甲信越地方】": ["新潟県", "山梨県", "長野県"], "【東海地方】": ["岐阜県", "静岡県", "愛知県", "三重県"],
-    "【北陸地方】": ["富山県", "石川県", "福井県"], "【関西地方】": ["滋賀県", "京都府", "大阪府", "兵庫県", "奈良県", "和歌山県"],
-    "【中国地方】": ["鳥取県", "島根県", "岡山県", "広島県", "山口県"], "【四国地方】": ["徳島県", "香川県", "愛媛県", "高知県"],
-    "【九州地方】": ["福岡県", "佐賀県", "長崎県", "熊本県", "大分県", "宮崎県", "鹿児島県"], "【沖縄】": ["沖縄県全域"]
-};
-
-const recruitmentItems = [
-    { id: 1, title: "東京都内の特別案件", area: "東京都全域", date: "2024-05-20" },
-    { id: 2, title: "大阪・関西エリア合同募集", area: "大阪府", date: "2024-05-25" },
-    { id: 3, title: "北海道エリア限定イベント", area: "北海道全域", date: "2024-06-01" },
-    { id: 4, title: "沖縄マリンイベント", area: "沖縄県全域", date: "2024-06-10" },
-    { id: 5, title: "全国オンライン募集", area: "全国", date: "2024-06-15" }
-];
-
-function createPrefButtons() {
-    const container = document.getElementById('pref-container');
-    container.innerHTML = ''; 
-    for (const [regionName, prefs] of Object.entries(regions)) {
-        const title = document.createElement('div');
-        title.className = 'region-group-title';
-        title.innerText = regionName;
-        container.appendChild(title);
-        const grid = document.createElement('div');
-        grid.className = 'pref-grid';
-        prefs.forEach(pref => {
-            const btn = document.createElement('button');
-            btn.className = 'pref-btn';
-            btn.innerText = pref;
-            btn.onclick = () => filterByArea(pref);
-            grid.appendChild(btn);
-        });
-        container.appendChild(grid);
-    }
-}
-
-function displayRecruits(filter = 'すべて') {
-    const list = document.getElementById('recruit-list');
-    const label = document.getElementById('current-filter-label');
-    list.innerHTML = '';
-    label.innerText = `表示中: ${filter === 'すべて' ? 'すべてのエリア' : filter}`;
-    const filtered = filter === 'すべて' ? recruitmentItems : recruitmentItems.filter(item => item.area === filter);
-    filtered.forEach(item => {
-        const card = document.createElement('div');
-        card.className = 'recruit-card';
-        card.innerHTML = `<div class="recruit-title">${item.title}</div><div class="recruit-info"><span>📍 エリア: ${item.area}</span><span>📅 掲載日: ${item.date}</span></div><button class="apply-btn">詳細・応募はこちら</button>`;
-        list.appendChild(card);
-    });
-}
-
-function filterByArea(area) {
-    displayRecruits(area);
-    window.scrollTo({ top: document.getElementById('current-filter-label').offsetTop - 80, behavior: 'smooth' });
-}
-
-function quickFilter(type) { displayRecruits(type); }
-
-// --- 安全な更新関数 ---
-function safeUpdate() {
-    // ボタンの見た目を変えるだけにする
-    document.getElementById('force-reload-btn').innerText = "⌛";
-    // 単純なリロードを実行
-    location.reload();
-}
-
-createPrefButtons();
-displayRecruits();
-</script>
-</body>
-</html>
