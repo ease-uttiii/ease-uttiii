@@ -3,69 +3,65 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
-    <title>サークル イーズ</title>
+    <title>CIRCLE EASE</title>
     <style>
-        /* --- 今日スタートした時の青いヘッダーのデザイン --- */
         body {
             margin: 0;
             padding: 0;
             font-family: sans-serif;
-            background-color: #f0f2f5;
+            background-color: #fce4ec; /* 全体の薄いピンク背景 */
             overscroll-behavior-y: contain;
         }
+
+        /* あのピンクのヘッダー */
         header {
-            background-color: #4a90e2; /* あの時の青色 */
+            background-color: #f06292; 
             color: white;
             text-align: center;
             padding: 15px;
-            font-size: 18px;
+            font-size: 14px;
             font-weight: bold;
-            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            letter-spacing: 1px;
         }
 
-        /* --- 全国・地区・個人の切り替えボタン --- */
-        .tab-container {
+        /* 「全国」などの切り替えスイッチ */
+        .tab-menu {
             display: flex;
-            background-color: #707070; /* 暗めのグレー */
-            margin: 0;
-            padding: 0;
+            background-color: #f8bbd0; /* 少し薄いピンク */
+            margin: 10px;
+            border-radius: 8px;
+            overflow: hidden;
         }
         .tab {
             flex: 1;
-            padding: 12px;
+            padding: 10px;
             text-align: center;
-            color: white;
-            font-size: 14px;
-            border-right: 1px solid #888;
-            cursor: pointer;
+            font-size: 12px;
+            color: #888;
         }
         .tab.active {
-            background-color: #505050; /* 選択中の色 */
+            background-color: #fff; /* 「全国」だけ白くなっている状態 */
+            color: #f06292;
             font-weight: bold;
         }
 
-        /* --- 入力エリアの再現 --- */
-        .main-content {
-            padding: 20px;
+        /* 下の白い入力エリア */
+        .content {
+            padding: 0 10px;
         }
-        .input-box {
+        .box {
             background: white;
-            border: 1px solid #ccc;
-            border-radius: 5px;
-            height: 40px;
-            margin-bottom: 10px;
-            width: 100%;
-        }
-        .list-item {
-            background: white;
-            border: 1px solid #ddd;
             border-radius: 8px;
-            height: 60px;
-            margin-bottom: 10px;
+            height: 45px;
+            margin-bottom: 8px;
+            border: none;
+        }
+        .box-large {
+            height: 100px; /* 大きめの枠 */
         }
 
-        /* --- 引っ張って更新のスタイル --- */
-        #ptr-msg {
+        /* 引っ張って更新のメッセージ */
+        #ptr-banner {
             position: fixed;
             top: -50px;
             left: 0;
@@ -74,36 +70,35 @@
             display: flex;
             align-items: center;
             justify-content: center;
-            background: #4a90e2;
+            background: #f06292;
             color: white;
-            z-index: 10000;
+            z-index: 9999;
         }
     </style>
 </head>
 <body>
 
-    <div id="ptr-msg">↓ 引っ張って更新</div>
+    <div id="ptr-banner">↓ 引っ張って更新</div>
 
-    <header>
-        Circle Ease
-    </header>
+    <header>CIRCLE EASE</header>
 
-    <div class="tab-container">
+    <div class="tab-menu">
         <div class="tab">地区</div>
         <div class="tab active">全国</div>
         <div class="tab">個人</div>
     </div>
 
-    <div class="main-content">
-        <div class="input-box"></div>
-        <div class="list-item"></div>
-        <div class="list-item"></div>
-        <div class="list-item"></div>
+    <div class="content">
+        <div class="box"></div>
+        <div class="box box-large"></div>
+        <div class="box"></div>
+        <div class="box"></div>
+        <div class="box"></div>
     </div>
 
     <script>
         let startY = 0;
-        const ptr = document.getElementById('ptr-msg');
+        const banner = document.getElementById('ptr-banner');
 
         window.addEventListener('touchstart', (e) => {
             if (window.scrollY === 0) startY = e.touches[0].pageY;
@@ -113,21 +108,21 @@
             const y = e.touches[0].pageY;
             if (window.scrollY === 0 && y > startY) {
                 const diff = y - startY;
-                if (diff < 70) {
-                    ptr.style.transform = `translateY(${diff}px)`;
+                if (diff < 80) {
+                    banner.style.transform = `translateY(${diff}px)`;
                 } else {
-                    ptr.style.transform = `translateY(${diff}px)`;
-                    ptr.innerText = "✨ 離して更新！";
+                    banner.style.transform = `translateY(${diff}px)`;
+                    banner.innerText = "✨ 離して更新！";
                 }
             }
         });
 
         window.addEventListener('touchend', (e) => {
-            if (window.scrollY === 0 && e.changedTouches[0].pageY - startY > 70) {
-                ptr.innerText = "🔄 更新中...";
+            if (window.scrollY === 0 && e.changedTouches[0].pageY - startY > 80) {
+                banner.innerText = "🔄 更新中...";
                 location.reload();
             } else {
-                ptr.style.transform = `translateY(0)`;
+                banner.style.transform = `translateY(0)`;
             }
         });
     </script>
