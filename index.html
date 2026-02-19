@@ -16,7 +16,7 @@
             --text-sub: #a89e9e;
             --shadow: 0 8px 25px rgba(179,146,146,0.12);
             --tile-shadow: 0 4px 12px rgba(0,0,0,0.05);
-            /* 可変変数 */
+            /* 可変変数：JSで制御 */
             --pref-font-size: 15px; 
             --pref-grid-cols: repeat(3, 1fr);
             --pref-padding: 16px 2px;
@@ -24,7 +24,6 @@
 
         body { font-family: 'Noto Sans JP', sans-serif; margin: 0; background: var(--soft-bg); color: var(--text-main); -webkit-font-smoothing: antialiased; }
         
-        /* ヘッダー */
         header { 
             background: rgba(179, 146, 146, 0.95); backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px);
             color: white; padding: 1.2rem 1.2rem 1rem; position: sticky; top: 0; z-index: 100; 
@@ -49,14 +48,12 @@
 
         .container { padding: 1.5rem 1rem; max-width: 500px; margin: 0 auto; }
         
-        /* エリア選択セクション */
         .region-section { background: #ffffff; border-radius: 28px; margin-bottom: 40px; box-shadow: var(--shadow); overflow: hidden; }
         .region-header { 
             background: var(--mauve-light); padding: 15px 20px; font-weight: 700; font-size: 14px; color: var(--mauve-deep); 
             border-bottom: 1px solid #f0eded; display: flex; justify-content: space-between; align-items: center;
         }
 
-        /* サイズ切り替えスイッチ */
         .size-selector { display: flex; background: #eeebe9; border-radius: 10px; padding: 3px; gap: 2px; }
         .size-btn {
             border: none; background: transparent; padding: 5px 10px; font-size: 11px;
@@ -67,7 +64,6 @@
         .region-group-title { padding: 20px 20px 8px; font-weight: 700; font-size: 12px; color: var(--mauve); display: flex; align-items: center; }
         .region-group-title::before { content: ""; display: inline-block; width: 4px; height: 14px; background: var(--mauve); margin-right: 8px; border-radius: 2px; }
 
-        /* 都道府県タイル：小のときは4列、他は3列 */
         .pref-grid { 
             display: grid; 
             grid-template-columns: var(--pref-grid-cols); 
@@ -84,13 +80,15 @@
             box-shadow: var(--tile-shadow); transition: all 0.2s;
             cursor: pointer;
             text-align: center;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
         }
         .pref-btn:active { background: var(--mauve); color: white; transform: scale(0.92); }
 
         #current-filter-label { margin: 35px 0 20px; font-size: 1.15rem; font-weight: 700; color: var(--mauve-deep); display: flex; align-items: center; }
         #current-filter-label::after { content: ""; flex: 1; height: 1px; background: #e0d8d5; margin-left: 15px; }
 
-        /* 案件カード */
         .recruit-card { background: var(--card-bg); margin-bottom: 2rem; border-radius: 24px; box-shadow: var(--shadow); display: flex; overflow: hidden; animation: slideUp 0.6s both; }
         @keyframes slideUp { from { opacity: 0; transform: translateY(30px); } to { opacity: 1; transform: translateY(0); } }
         .card-accent { width: 44px; background: linear-gradient(180deg, var(--mauve-light), var(--mauve)); display: flex; align-items: center; justify-content: center; writing-mode: vertical-rl; color: var(--mauve-deep); font-size: 11px; font-weight: 700; letter-spacing: 0.4em; }
@@ -152,7 +150,7 @@ const regions = {
     "【九州・沖縄】": ["福岡県", "佐賀県", "長崎県", "熊本県", "大分県", "宮崎県", "鹿児島県", "沖縄県全域"]
 };
 
-// --- フォントサイズ & レイアウト変更機能 ---
+// --- フォントサイズ & レイアウト変更 ---
 window.onload = function() {
     const savedMode = localStorage.getItem('prefFontSizeMode') || 'mid';
     applyFontSize(savedMode);
@@ -162,22 +160,20 @@ window.onload = function() {
 
 function applyFontSize(mode) {
     const root = document.documentElement;
-    // モードによって列数とサイズを切り替え
     if (mode === 'small') {
         root.style.setProperty('--pref-font-size', '12px');
-        root.style.setProperty('--pref-grid-cols', 'repeat(4, 1fr)'); // 4列に！
-        root.style.setProperty('--pref-padding', '12px 1px');         // 詰め詰め！
+        root.style.setProperty('--pref-grid-cols', 'repeat(4, 1fr)');
+        root.style.setProperty('--pref-padding', '12px 1px');
     } else if (mode === 'mid') {
         root.style.setProperty('--pref-font-size', '15px');
         root.style.setProperty('--pref-grid-cols', 'repeat(3, 1fr)');
         root.style.setProperty('--pref-padding', '16px 2px');
     } else if (mode === 'large') {
         root.style.setProperty('--pref-font-size', '19px');
-        root.style.setProperty('--pref-grid-cols', 'repeat(2, 1fr)'); // 大きく2列に！
+        root.style.setProperty('--pref-grid-cols', 'repeat(3, 1fr)'); // 大でも3列をキープ
         root.style.setProperty('--pref-padding', '20px 2px');
     }
 
-    // ボタンの見た目更新
     document.querySelectorAll('.size-btn').forEach(btn => {
         if (btn.id === `btn-${mode}`) btn.classList.add('active');
         else btn.classList.remove('active');
@@ -189,7 +185,7 @@ function changeFontSize(mode, btn) {
     localStorage.setItem('prefFontSizeMode', mode);
 }
 
-// --- リロードとナビゲーション ---
+// --- 基本機能 ---
 async function fastUpdate() {
     document.querySelector('.sync-target').classList.add('spinning');
     setTimeout(() => { location.reload(); }, 600);
