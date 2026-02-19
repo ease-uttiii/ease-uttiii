@@ -5,62 +5,63 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
     <title>サークル イーズ</title>
     <style>
-        /* --- WSCスタイルの再現 --- */
+        /* --- 今日スタートした時の青いヘッダーのデザイン --- */
         body {
             margin: 0;
             padding: 0;
             font-family: sans-serif;
-            background-color: #f9f9f9;
-            overscroll-behavior-y: contain; /* 引っ張って更新用 */
+            background-color: #f0f2f5;
+            overscroll-behavior-y: contain;
         }
         header {
-            background-color: #ff6699;
+            background-color: #4a90e2; /* あの時の青色 */
             color: white;
             text-align: center;
-            padding: 20px 0;
+            padding: 15px;
+            font-size: 18px;
             font-weight: bold;
-            font-size: 20px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
         }
 
-        /* --- 全国ボタンのエリア --- */
-        .nav-buttons {
+        /* --- 全国・地区・個人の切り替えボタン --- */
+        .tab-container {
             display: flex;
-            justify-content: center;
-            gap: 10px;
-            padding: 20px;
-            background: white;
+            background-color: #707070; /* 暗めのグレー */
+            margin: 0;
+            padding: 0;
         }
-        .btn-zenkoku {
-            background-color: #ff6699;
+        .tab {
+            flex: 1;
+            padding: 12px;
+            text-align: center;
             color: white;
-            border: none;
-            padding: 10px 30px;
-            border-radius: 20px;
-            font-size: 16px;
-            font-weight: bold;
-            cursor: pointer;
-            box-shadow: 0 2px 4px rgba(0,0,0,0.2);
-        }
-        .btn-other {
-            background-color: #eee;
-            color: #666;
-            border: none;
-            padding: 10px 20px;
-            border-radius: 20px;
             font-size: 14px;
+            border-right: 1px solid #888;
+            cursor: pointer;
+        }
+        .tab.active {
+            background-color: #505050; /* 選択中の色 */
+            font-weight: bold;
         }
 
-        .content-area {
+        /* --- 入力エリアの再現 --- */
+        .main-content {
             padding: 20px;
-            text-align: center;
         }
-        .info-card {
+        .input-box {
             background: white;
-            border-radius: 10px;
-            padding: 20px;
-            margin-bottom: 20px;
-            border-left: 5px solid #ff6699;
-            text-align: left;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            height: 40px;
+            margin-bottom: 10px;
+            width: 100%;
+        }
+        .list-item {
+            background: white;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            height: 60px;
+            margin-bottom: 10px;
         }
 
         /* --- 引っ張って更新のスタイル --- */
@@ -73,8 +74,8 @@
             display: flex;
             align-items: center;
             justify-content: center;
-            background: #ffecf2;
-            color: #ff6699;
+            background: #4a90e2;
+            color: white;
             z-index: 10000;
         }
     </style>
@@ -84,26 +85,23 @@
     <div id="ptr-msg">↓ 引っ張って更新</div>
 
     <header>
-        サークル イーズ
+        Circle Ease
     </header>
 
-    <div class="nav-buttons">
-        <button class="btn-other">地区</button>
-        <button class="btn-zenkoku">全国</button>
-        <button class="btn-other">個人</button>
+    <div class="tab-container">
+        <div class="tab">地区</div>
+        <div class="tab active">全国</div>
+        <div class="tab">個人</div>
     </div>
 
-    <div class="content-area">
-        <div class="info-card">
-            <strong>お知らせ：</strong>
-            <p>GitHub連携が完了しました！スマホで引っ張って更新を試してみてね。</p>
-        </div>
-        
-        <p>ここにWSCの課題の続きを書いていきましょう！</p>
+    <div class="main-content">
+        <div class="input-box"></div>
+        <div class="list-item"></div>
+        <div class="list-item"></div>
+        <div class="list-item"></div>
     </div>
 
     <script>
-        // --- 引っ張って更新のJavaScript ---
         let startY = 0;
         const ptr = document.getElementById('ptr-msg');
 
@@ -115,9 +113,8 @@
             const y = e.touches[0].pageY;
             if (window.scrollY === 0 && y > startY) {
                 const diff = y - startY;
-                if (diff < 80) {
+                if (diff < 70) {
                     ptr.style.transform = `translateY(${diff}px)`;
-                    ptr.innerText = "↓ もっと引っ張って！";
                 } else {
                     ptr.style.transform = `translateY(${diff}px)`;
                     ptr.innerText = "✨ 離して更新！";
@@ -126,4 +123,13 @@
         });
 
         window.addEventListener('touchend', (e) => {
-            if (window.scrollY === 0 && e.changedTouches[0].pageY - startY >
+            if (window.scrollY === 0 && e.changedTouches[0].pageY - startY > 70) {
+                ptr.innerText = "🔄 更新中...";
+                location.reload();
+            } else {
+                ptr.style.transform = `translateY(0)`;
+            }
+        });
+    </script>
+</body>
+</html>
