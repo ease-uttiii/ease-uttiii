@@ -4,58 +4,70 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
     <title>Circle Ease</title>
-   <style>
-    /* --- 左右にアイコンがある更新ボタン --- */
-    #force-reload-btn {
-        position: absolute;
-        right: 8px;
-        background: rgba(255, 255, 255, 0.15);
-        color: white;
-        border: 1px solid rgba(255, 255, 255, 0.3);
-        border-radius: 20px;
-        padding: 6px 10px;
-        font-size: 10px; /* 文字を少し凝縮してお洒落に */
-        font-weight: bold;
-        cursor: pointer;
-        display: flex;
-        align-items: center;
-        gap: 6px; /* アイコンと文字の間隔 */
-        transition: 0.2s;
-        white-space: nowrap;
-        letter-spacing: 0.05em;
-    }
+    <style>
+        :root {
+            --mauve: #b39292;
+            --soft-bg: #f5f1ef;
+            --card-bg: #ffffff;
+            --text-main: #5d5555;
+            --text-sub: #9a8f8f;
+        }
 
-    /* 自作の矢印マーク（白） */
-    .reload-icon {
-        display: inline-block;
-        width: 10px;
-        height: 10px;
-        border: 1.5px solid white; 
-        border-top: 1.5px solid transparent; 
-        border-radius: 50%;
-        position: relative;
-        flex-shrink: 0;
-    }
-    .reload-icon::after {
-        content: '';
-        position: absolute;
-        top: -2.5px;
-        left: 4px;
-        border-left: 3px solid transparent;
-        border-right: 3px solid transparent;
-        border-bottom: 4px solid white;
-        transform: rotate(45deg);
-    }
+        body { font-family: 'Hiragino Sans', sans-serif; margin: 0; background: var(--soft-bg); color: var(--text-main); }
+        
+        header { 
+            background: var(--mauve); color: white; padding: 1.2rem 1rem; 
+            text-align: center; position: sticky; top: 0; z-index: 100; 
+            display: flex; justify-content: center; align-items: center;
+            box-shadow: 0 4px 12px rgba(179,146,146,0.2);
+        }
 
-    /* 回転アニメーション */
-    .spinning {
-        animation: spin 0.7s linear infinite;
-    }
-    @keyframes spin {
-        from { transform: rotate(0deg); }
-        to { transform: rotate(360deg); }
-    }
-</style>
+        header h1 { margin: 0; font-size: 1.3rem; letter-spacing: 0.1em; font-family: 'Times New Roman', serif; }
+
+        /* --- 修正版：最新にリロードボタン --- */
+        #force-reload-btn {
+            position: absolute; right: 8px;
+            background: rgba(255, 255, 255, 0.15); color: white;
+            border: 1px solid rgba(255, 255, 255, 0.3); border-radius: 20px;
+            padding: 6px 10px; font-size: 10px; font-weight: bold;
+            cursor: pointer; display: flex; align-items: center; gap: 6px;
+            white-space: nowrap; transition: 0.2s;
+        }
+
+        /* 白い矢印アイコンの作成 */
+        .reload-icon {
+            display: inline-block; width: 10px; height: 10px;
+            border: 1.5px solid white; border-top: 1.5px solid transparent; 
+            border-radius: 50%; position: relative; flex-shrink: 0;
+        }
+        .reload-icon::after {
+            content: ''; position: absolute; top: -2.5px; left: 4px;
+            border-left: 3px solid transparent; border-right: 3px solid transparent;
+            border-bottom: 4px solid white; transform: rotate(45deg);
+        }
+
+        .spinning { animation: spin 0.7s linear infinite; }
+        @keyframes spin { from { transform: rotate(0deg); } to { transform: rotate(360deg); } }
+
+        .container { padding: 1.5rem 1.2rem; max-width: 500px; margin: 0 auto; }
+        .main-links { display: flex; gap: 12px; margin-bottom: 25px; }
+        .main-btn { flex: 1; padding: 14px; border-radius: 30px; border: none; background: #d9c5c5; color: white; font-weight: bold; font-size: 0.9rem; }
+        .main-btn.all { background: #e0d8d5; color: #8e7d7d; }
+
+        .region-section { background: rgba(255, 255, 255, 0.5); border-radius: 20px; margin-bottom: 30px; border: 1px solid rgba(255, 255, 255, 0.8); }
+        .region-header { padding: 15px 20px; font-weight: bold; font-size: 0.85rem; color: var(--mauve); }
+        .pref-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px; padding: 10px 15px 15px; }
+        .pref-btn { background: white; border: none; padding: 10px 2px; font-size: 0.75rem; font-weight: bold; border-radius: 10px; color: var(--text-main); }
+
+        .recruit-card { background: var(--card-bg); margin-bottom: 1.5rem; border-radius: 15px; display: flex; overflow: hidden; box-shadow: 0 8px 20px rgba(0,0,0,0.04); }
+        .card-accent { width: 35px; background: #d9c5c5; display: flex; align-items: center; justify-content: center; writing-mode: vertical-rl; color: white; font-size: 0.7rem; font-weight: bold; letter-spacing: 0.2em; }
+        .card-content { padding: 1.2rem; flex: 1; }
+        .recruit-title { font-weight: bold; color: var(--text-main); font-size: 1rem; margin-bottom: 8px; }
+        .recruit-info { font-size: 0.8rem; color: var(--text-sub); display: flex; flex-direction: column; gap: 4px; }
+        .apply-btn { margin-top: 15px; background: var(--mauve); color: white; border: none; padding: 12px; border-radius: 10px; width: 100%; font-size: 0.9rem; font-weight: bold; }
+    </style>
+</head>
+<body>
 
 <header>
     <h1>CIRCLE EASE</h1>
@@ -66,26 +78,79 @@
     </button>
 </header>
 
-<script>
-// 爆速更新 & 左右同時回転
-async function fastUpdate() {
-    const btn = document.getElementById('force-reload-btn');
-    const icons = document.querySelectorAll('.sync-target');
-    
-    btn.style.opacity = "0.7";
-    // 左右のアイコン両方を回す
-    icons.forEach(icon => icon.classList.add('spinning'));
+<div class="container">
+    <div class="main-links">
+        <button class="main-btn" onclick="quickFilter('全国')">🌸 全国・オンライン</button>
+        <button class="main-btn all" onclick="quickFilter('すべて')">📋 すべて表示</button>
+    </div>
+    <div class="region-section">
+        <div class="region-header">エリアで絞り込む</div>
+        <div id="pref-container"></div>
+    </div>
+    <div id="recruit-list"></div>
+</div>
 
+<script>
+const regions = {
+    "【北海道】": ["北海道全域"], "【東北】": ["青森県", "岩手県", "宮城県", "秋田県", "山形県", "福島県"],
+    "【関東】": ["茨城県", "栃木県", "群馬県", "埼玉県", "千葉県", "東京都全域", "神奈川県"],
+    "【中部】": ["新潟県", "山梨県", "長野県", "岐阜県", "静岡県", "愛知県", "三重県", "富山県", "石川県", "福井県"],
+    "【関西】": ["滋賀県", "京都府", "大阪府", "兵庫県", "奈良県", "和歌山県"],
+    "【中国・四国】": ["鳥取県", "島根県", "岡山県", "広島県", "山口県", "徳島県", "香川県", "愛媛県", "高知県"],
+    "【九州・沖縄】": ["福岡県", "佐賀県", "長崎県", "熊本県", "大分県", "宮崎県", "鹿児島県", "沖縄県全域"]
+};
+
+let recruitmentItems = [
+    { id: 1, title: "東京都内の特別案件", area: "東京都全域", date: "2024-05-20" },
+    { id: 2, title: "大阪・関西エリア合同募集", area: "大阪府", date: "2024-05-25" },
+    { id: 3, title: "北海道エリア限定イベント", area: "北海道全域", date: "2024-06-01" },
+    { id: 4, title: "沖縄マリンイベント", area: "沖縄県全域", date: "2024-06-10" },
+    { id: 5, title: "全国オンライン募集", area: "全国", date: "2024-06-15" }
+];
+
+async function fastUpdate() {
+    const icons = document.querySelectorAll('.sync-target');
+    icons.forEach(icon => icon.classList.add('spinning'));
     try {
-        // キャッシュ破り
         await fetch(window.location.href + '?t=' + Date.now());
-        setTimeout(() => {
-            location.reload();
-        }, 400); 
-    } catch (e) {
-        location.reload();
+        setTimeout(() => { location.reload(); }, 400); 
+    } catch (e) { location.reload(); }
+}
+
+function createPrefButtons() {
+    const container = document.getElementById('pref-container');
+    for (const [regionName, prefs] of Object.entries(regions)) {
+        const title = document.createElement('div');
+        title.style.padding = "10px 20px 0"; title.style.fontSize = "0.75rem"; title.innerText = regionName;
+        container.appendChild(title);
+        const grid = document.createElement('div');
+        grid.className = 'pref-grid';
+        prefs.forEach(pref => {
+            const btn = document.createElement('button');
+            btn.className = 'pref-btn'; btn.innerText = pref;
+            btn.onclick = () => displayRecruits(pref);
+            grid.appendChild(btn);
+        });
+        container.appendChild(grid);
     }
 }
+
+function displayRecruits(filter = 'すべて') {
+    const list = document.getElementById('recruit-list');
+    list.innerHTML = '';
+    const filtered = filter === 'すべて' ? recruitmentItems : recruitmentItems.filter(item => item.area === filter);
+    filtered.forEach(item => {
+        const card = document.createElement('div');
+        card.className = 'recruit-card';
+        card.innerHTML = `<div class="card-accent">RECRUIT</div><div class="card-content"><div class="recruit-title">${item.title}</div><div class="recruit-info"><span>📍 エリア: ${item.area}</span><span>📅 掲載日: ${item.date}</span></div><button class="apply-btn">詳細・応募はこちら</button></div>`;
+        list.appendChild(card);
+    });
+}
+
+function quickFilter(type) { displayRecruits(type); }
+
+createPrefButtons();
+displayRecruits();
 </script>
 </body>
 </html>
