@@ -185,4 +185,18 @@ window.addEventListener('touchend', (e) => {
         banner.innerText = "🔄 最新を取得中...";
         // URLにランダムな数字をつけて、ブラウザに「新しいページだ！」と勘違いさせて強制更新させる
         const url = new URL(window.location.href);
-        url.searchParams.set('t', Date.now());
+        url.searchParams.set('t', Date.now()); 
+        setTimeout(() => {
+            window.location.replace(url.toString());
+        }, 300);
+    } else {
+        banner.style.transform = `translateY(0)`;
+    }
+});
+
+createPrefButtons();
+displayRecruits();
+</script>
+
+</body>
+</html>
