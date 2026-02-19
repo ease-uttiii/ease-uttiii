@@ -83,4 +83,146 @@
 
         /* 入力項目 */
         .form-group { margin-bottom: 20px; }
-        .label-row { display: flex; align-items: center; margin-bottom: 10px; gap:
+        .label-row { display: flex; align-items: center; margin-bottom: 10px; gap: 8px; }
+        .label-row span { font-weight: 700; font-size: 13px; color: var(--pink-deep); }
+        .required { background: #e88e8e; color: white; font-size: 9px; padding: 2px 5px; border-radius: 4px; }
+
+        input, select, textarea {
+            width: 100%; padding: 12px; border-radius: 10px; border: 1px solid var(--tile-border);
+            background: var(--pink-light); color: var(--tile-text); font-size: 15px; box-sizing: border-box; outline: none;
+        }
+
+        /* 選択グリッド（大中小対応） */
+        .check-grid { display: grid; grid-template-columns: var(--pref-grid-cols); gap: 8px; }
+        .check-item {
+            background: linear-gradient(180deg, #ffffff 0%, #fcf3f3 100%);
+            border: 1px solid var(--tile-border); padding: 10px 4px; border-radius: 10px;
+            font-size: var(--pref-font-size); text-align: center; cursor: pointer; color: var(--tile-text);
+            transition: 0.2s; display: flex; align-items: center; justify-content: center; min-height: 44px;
+            font-weight: bold; box-shadow: var(--tile-shadow);
+        }
+        .check-item.active {
+            background: linear-gradient(180deg, var(--pink-main) 0%, var(--pink-deep) 100%);
+            color: white; border-color: var(--pink-deep); box-shadow: none;
+        }
+
+        .submit-btn {
+            background: linear-gradient(135deg, var(--pink-main) 0%, var(--pink-deep) 100%);
+            color: white; border: none; padding: 20px; border-radius: 20px; width: 100%;
+            font-size: 18px; font-weight: 700; cursor: pointer; box-shadow: 0 8px 25px rgba(212,165,165,0.4);
+            margin-top: 10px;
+        }
+
+        .spinning { animation: spin 0.8s linear infinite; }
+        @keyframes spin { from { transform: rotate(0deg); } to { transform: rotate(360deg); } }
+    </style>
+</head>
+<body>
+
+<header>
+    <h1>PLAY REQUEST</h1>
+    <div class="header-action-row">
+        <button id="force-reload-btn" onclick="fastUpdate()">
+            <span class="reload-icon sync-target"></span>
+            最新にリロード
+            <span class="reload-icon sync-target"></span>
+        </button>
+    </div>
+</header>
+
+<div class="container">
+    <div class="notice-box">
+        <h2>ご理解をお願いします</h2>
+        <p style="font-size:11px;">※当日依頼不可、前日受付は午前中のみ。複数プレイは監督探しのためお時間が必要です。キャンセルは前日確認まで。</p>
+    </div>
+
+    <form>
+        <div class="form-section">
+            <div class="region-header">
+                <span class="section-title">基本情報</span>
+                <div class="size-selector">
+                    <button type="button" class="size-btn" id="btn-small" onclick="changeFontSize('small')">小</button>
+                    <button type="button" class="size-btn active" id="btn-mid" onclick="changeFontSize('mid')">中</button>
+                    <button type="button" class="size-btn" id="btn-large" onclick="changeFontSize('large')">大</button>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <div class="label-row"><span>ID / ニックネーム</span><span class="required">必須</span></div>
+                <input type="text" placeholder="IDまたは面談時の名前">
+            </div>
+
+            <div class="form-group">
+                <div class="label-row"><span>開催都道府県</span><span class="required">必須</span></div>
+                <select id="pref-select">
+                    <option>東京都</option><option>大阪府</option><option>神奈川県</option>
+                    </select>
+            </div>
+        </div>
+
+        <div class="form-section">
+            <div class="label-row"><span>希望プレイ（複数選択可）</span><span class="required">必須</span></div>
+            <div class="check-grid" id="play-options">
+                <div class="check-item" onclick="toggleSelection(this)">お任せ</div>
+                <div class="check-item" onclick="toggleSelection(this)">攻められたい</div>
+                <div class="check-item" onclick="toggleSelection(this)">攻めたい</div>
+                <div class="check-item" onclick="toggleSelection(this)">刺激体験</div>
+                <div class="check-item" onclick="toggleSelection(this)">レイプ希望</div>
+                <div class="check-item" onclick="toggleSelection(this)">目隠し</div>
+                <div class="check-item" onclick="toggleSelection(this)">複数人</div>
+                <div class="check-item" onclick="toggleSelection(this)">玩具使用</div>
+                <div class="check-item" onclick="toggleSelection(this)">恋人風</div>
+                <div class="check-item" onclick="toggleSelection(this)">3P</div>
+                <div class="check-item" onclick="toggleSelection(this)">アナル</div>
+                <div class="check-item" onclick="toggleSelection(this)">ドM</div>
+            </div>
+        </div>
+
+        <div class="form-section">
+            <div class="label-row"><span>追加NG項目</span></div>
+            <div class="check-grid">
+                <div class="check-item" onclick="toggleSelection(this)">タバコ</div>
+                <div class="check-item" onclick="toggleSelection(this)">香水</div>
+                <div class="check-item" onclick="toggleSelection(this)">太りすぎ</div>
+                <div class="check-item" onclick="toggleSelection(this)">薄毛</div>
+                <div class="check-item" onclick="toggleSelection(this)">刺青</div>
+                <div class="check-item" onclick="toggleSelection(this)">乱暴</div>
+            </div>
+            <textarea style="margin-top:15px;" placeholder="その他NGや要望があれば記入"></textarea>
+        </div>
+
+        <button type="button" class="submit-btn" onclick="alert('確認画面へ進みます')">内容確認画面へ</button>
+    </form>
+</div>
+
+<script>
+    // 文字サイズ切り替え（管理用カラーのロジック継承）
+    function changeFontSize(mode) {
+        const root = document.documentElement;
+        if (mode === 'small') {
+            root.style.setProperty('--pref-font-size', '11px');
+            root.style.setProperty('--pref-grid-cols', 'repeat(4, 1fr)');
+        } else if (mode === 'mid') {
+            root.style.setProperty('--pref-font-size', '14px');
+            root.style.setProperty('--pref-grid-cols', 'repeat(3, 1fr)');
+        } else if (mode === 'large') {
+            root.style.setProperty('--pref-font-size', '17px');
+            root.style.setProperty('--pref-grid-cols', 'repeat(2, 1fr)');
+        }
+        document.querySelectorAll('.size-btn').forEach(btn => {
+            btn.classList.toggle('active', btn.id === `btn-${mode}`);
+        });
+    }
+
+    function toggleSelection(el) {
+        el.classList.toggle('active');
+    }
+
+    async function fastUpdate() {
+        document.querySelectorAll('.sync-target').forEach(icon => { icon.classList.add('spinning'); });
+        setTimeout(() => { location.reload(); }, 600);
+    }
+</script>
+
+</body>
+</html>
