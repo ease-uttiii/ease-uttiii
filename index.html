@@ -24,6 +24,7 @@
 
         body { font-family: 'Noto Sans JP', sans-serif; margin: 0; background: var(--soft-bg); color: var(--text-main); -webkit-font-smoothing: antialiased; }
         
+        /* ヘッダー */
         header { 
             background: rgba(179, 146, 146, 0.95); backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px);
             color: white; padding: 1.2rem 1.2rem 1rem; position: sticky; top: 0; z-index: 100; 
@@ -32,11 +33,15 @@
         header h1 { margin: 0; font-size: 1.7rem; letter-spacing: 0.25em; font-family: 'Lora', serif; text-align: center; }
 
         .header-action-row { display: flex; justify-content: flex-end; width: 100%; }
+        
+        /* リロードボタン：マークを両サイドに配置 */
         #force-reload-btn {
             background: rgba(255, 255, 255, 0.15); border: 1px solid rgba(255, 255, 255, 0.4); 
-            border-radius: 30px; padding: 6px 14px; font-size: 10px; font-weight: bold; color: white;
-            cursor: pointer; display: flex; align-items: center; gap: 6px;
+            border-radius: 30px; padding: 6px 16px; font-size: 10px; font-weight: bold; color: white;
+            cursor: pointer; display: flex; align-items: center; gap: 8px;
+            transition: all 0.2s;
         }
+        #force-reload-btn:active { transform: scale(0.95); background: rgba(255, 255, 255, 0.25); }
 
         .header-nav-row { display: flex; gap: 10px; width: 100%; }
         .nav-btn { 
@@ -48,6 +53,7 @@
 
         .container { padding: 1.5rem 1rem; max-width: 500px; margin: 0 auto; }
         
+        /* エリア選択 */
         .region-section { background: #ffffff; border-radius: 28px; margin-bottom: 40px; box-shadow: var(--shadow); overflow: hidden; }
         .region-header { 
             background: var(--mauve-light); padding: 15px 20px; font-weight: 700; font-size: 14px; color: var(--mauve-deep); 
@@ -65,30 +71,19 @@
         .region-group-title::before { content: ""; display: inline-block; width: 4px; height: 14px; background: var(--mauve); margin-right: 8px; border-radius: 2px; }
 
         .pref-grid { 
-            display: grid; 
-            grid-template-columns: var(--pref-grid-cols); 
-            gap: 8px; 
-            padding: 10px 12px 25px; 
-            transition: all 0.3s ease;
+            display: grid; grid-template-columns: var(--pref-grid-cols); gap: 8px; padding: 10px 12px 25px; transition: all 0.3s ease;
         }
         .pref-btn { 
-            background: linear-gradient(180deg, #ffffff 0%, #f9f7f6 100%); 
-            border: 1px solid #eeebe9; 
-            padding: var(--pref-padding);
-            font-size: var(--pref-font-size); 
+            background: linear-gradient(180deg, #ffffff 0%, #f9f7f6 100%); border: 1px solid #eeebe9; 
+            padding: var(--pref-padding); font-size: var(--pref-font-size); 
             font-weight: 700; border-radius: 12px; color: var(--text-main);
-            box-shadow: var(--tile-shadow); transition: all 0.2s;
-            cursor: pointer;
-            text-align: center;
-            white-space: nowrap;
-            overflow: hidden;
-            text-overflow: ellipsis;
+            box-shadow: var(--tile-shadow); transition: all 0.2s; cursor: pointer; text-align: center;
         }
-        .pref-btn:active { background: var(--mauve); color: white; transform: scale(0.92); }
 
         #current-filter-label { margin: 35px 0 20px; font-size: 1.15rem; font-weight: 700; color: var(--mauve-deep); display: flex; align-items: center; }
         #current-filter-label::after { content: ""; flex: 1; height: 1px; background: #e0d8d5; margin-left: 15px; }
 
+        /* 案件カード */
         .recruit-card { background: var(--card-bg); margin-bottom: 2rem; border-radius: 24px; box-shadow: var(--shadow); display: flex; overflow: hidden; animation: slideUp 0.6s both; }
         @keyframes slideUp { from { opacity: 0; transform: translateY(30px); } to { opacity: 1; transform: translateY(0); } }
         .card-accent { width: 44px; background: linear-gradient(180deg, var(--mauve-light), var(--mauve)); display: flex; align-items: center; justify-content: center; writing-mode: vertical-rl; color: var(--mauve-deep); font-size: 11px; font-weight: 700; letter-spacing: 0.4em; }
@@ -97,6 +92,7 @@
         .recruit-info { font-size: 13px; color: var(--text-sub); display: flex; flex-direction: column; gap: 7px; }
         .apply-btn { margin-top: 22px; background: linear-gradient(135deg, var(--mauve) 0%, var(--mauve-deep) 100%); color: white; border: none; padding: 16px; border-radius: 16px; width: 100%; font-size: 16px; font-weight: 700; box-shadow: 0 8px 25px rgba(179,146,146,0.35); cursor: pointer; }
         
+        /* リロードアイコン（両サイド共通） */
         .reload-icon { display: inline-block; width: 10px; height: 10px; border: 1.8px solid white; border-top: 1.8px solid transparent; border-radius: 50%; position: relative; }
         .reload-icon::after { content: ''; position: absolute; top: -2.8px; left: 4.5px; border-left: 3.5px solid transparent; border-right: 3.5px solid transparent; border-bottom: 4.5px solid white; transform: rotate(45deg); }
         .spinning { animation: spin 0.8s linear infinite; }
@@ -108,7 +104,11 @@
 <header>
     <h1>CIRCLE EASE</h1>
     <div class="header-action-row">
-        <button id="force-reload-btn" onclick="fastUpdate()"><span class="reload-icon sync-target"></span> 最新にリロード</button>
+        <button id="force-reload-btn" onclick="fastUpdate()">
+            <span class="reload-icon sync-target"></span>
+            最新にリロード
+            <span class="reload-icon sync-target"></span>
+        </button>
     </div>
     <div class="header-nav-row">
         <button class="nav-btn" onclick="scrollToSection('region-section')">📍 エリアで絞る</button>
@@ -145,7 +145,7 @@ const regions = {
     "【北海道】": ["北海道全域"], "【東北】": ["青森県", "岩手県", "宮城県", "秋田県", "山形県", "福島県"],
     "【関東】": ["茨城県", "栃木県", "群馬県", "埼玉県", "千葉県", "東京都全域", "神奈川県"],
     "【中部】": ["新潟県", "山梨県", "長野県", "岐阜県", "静岡県", "愛知県", "三重県", "富山県", "石川県", "福井県"],
-    "【関西】": ["滋賀県", "京都府", "大阪府", "兵庫県", "奈良県", "和歌山県"],
+    "|【関西】": ["滋賀県", "京都府", "大阪府", "兵庫県", "奈良県", "和歌山県"],
     "【中国・四国】": ["鳥取県", "島根県", "岡山県", "広島県", "山口県", "徳島県", "香川県", "愛媛県", "高知県"],
     "【九州・沖縄】": ["福岡県", "佐賀県", "長崎県", "熊本県", "大分県", "宮崎県", "鹿児島県", "沖縄県全域"]
 };
@@ -170,10 +170,9 @@ function applyFontSize(mode) {
         root.style.setProperty('--pref-padding', '16px 2px');
     } else if (mode === 'large') {
         root.style.setProperty('--pref-font-size', '19px');
-        root.style.setProperty('--pref-grid-cols', 'repeat(3, 1fr)'); // 大でも3列をキープ
+        root.style.setProperty('--pref-grid-cols', 'repeat(3, 1fr)');
         root.style.setProperty('--pref-padding', '20px 2px');
     }
-
     document.querySelectorAll('.size-btn').forEach(btn => {
         if (btn.id === `btn-${mode}`) btn.classList.add('active');
         else btn.classList.remove('active');
@@ -185,9 +184,12 @@ function changeFontSize(mode, btn) {
     localStorage.setItem('prefFontSizeMode', mode);
 }
 
-// --- 基本機能 ---
+// --- リロード機能（両サイドのアイコンを回す） ---
 async function fastUpdate() {
-    document.querySelector('.sync-target').classList.add('spinning');
+    // 全てのsync-target（両サイドのアイコン）にアニメーションを付与
+    document.querySelectorAll('.sync-target').forEach(icon => {
+        icon.classList.add('spinning');
+    });
     setTimeout(() => { location.reload(); }, 600);
 }
 
@@ -233,14 +235,8 @@ function displayRecruits(filter = 'すべて') {
     });
 }
 
-function scrollToSection(id) { 
-    window.scrollTo({ top: document.getElementById(id).offsetTop - 180, behavior: 'smooth' }); 
-}
-
-function filterByArea(area) { 
-    displayRecruits(area); 
-    window.scrollTo({ top: document.getElementById('current-filter-label').offsetTop - 200, behavior: 'smooth' }); 
-}
+function scrollToSection(id) { window.scrollTo({ top: document.getElementById(id).offsetTop - 180, behavior: 'smooth' }); }
+function filterByArea(area) { displayRecruits(area); window.scrollTo({ top: document.getElementById('current-filter-label').offsetTop - 200, behavior: 'smooth' }); }
 </script>
 </body>
 </html>
