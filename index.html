@@ -12,17 +12,17 @@
             --mauve-light: #fdfaf9;
             --soft-bg: #f5f1ef;
             --card-bg: #ffffff;
-            --text-main: #3d3636; /* タイル文字：さらに濃く */
+            --text-main: #221e1e; /* 都道府県文字：さらに濃く */
             --text-sub: #a89e9e;
             --shadow: 0 8px 25px rgba(179,146,146,0.12);
-            --tile-shadow: 0 4px 12px rgba(0,0,0,0.05);
-            /* 可変変数：JSで制御 */
+            --tile-shadow: 0 4px 10px rgba(0,0,0,0.08), inset 0 1px 0 #fff;
+            /* 可変変数 */
             --pref-font-size: 17px; 
             --pref-grid-cols: repeat(3, 1fr);
             --pref-padding: 16px 2px;
         }
 
-        body { font-family: 'Noto Sans JP', sans-serif; margin: 0; background: var(--soft-bg); color: #524a4a; -webkit-font-smoothing: antialiased; }
+        body { font-family: 'Noto Sans JP', sans-serif; margin: 0; background: var(--soft-bg); color: #443e3e; -webkit-font-smoothing: antialiased; }
         
         header { 
             background: rgba(179, 146, 146, 0.95); backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px);
@@ -32,8 +32,6 @@
         header h1 { margin: 0; font-size: 1.7rem; letter-spacing: 0.25em; font-family: 'Lora', serif; text-align: center; }
 
         .header-action-row { display: flex; justify-content: flex-end; width: 100%; }
-        
-        /* リロードボタン：元の色（白系）に戻しました */
         #force-reload-btn {
             background: rgba(255, 255, 255, 0.15); border: 1px solid rgba(255, 255, 255, 0.4); 
             border-radius: 30px; padding: 6px 14px; font-size: 10px; font-weight: bold; color: white;
@@ -74,16 +72,23 @@
         .region-group-title { padding: 20px 20px 8px; font-weight: 700; font-size: 12px; color: var(--mauve); display: flex; align-items: center; }
         .region-group-title::before { content: ""; display: inline-block; width: 4px; height: 14px; background: var(--mauve); margin-right: 8px; border-radius: 2px; }
 
-        .pref-grid { display: grid; grid-template-columns: var(--pref-grid-cols); gap: 8px; padding: 10px 12px 25px; transition: all 0.3s ease; }
+        .pref-grid { display: grid; grid-template-columns: var(--pref-grid-cols); gap: 10px; padding: 10px 15px 25px; transition: all 0.3s ease; }
         
-        /* 都道府県アイコン：文字色を濃く、サイズを大きく */
+        /* 都道府県ボタン：より「ボタンらしい」濃いデザイン */
         .pref-btn { 
-            background: linear-gradient(180deg, #ffffff 0%, #f9f7f6 100%); border: 1px solid #eeebe9; 
-            padding: var(--pref-padding); font-size: var(--pref-font-size); 
-            font-weight: 700; border-radius: 12px; 
-            color: var(--text-main); /* 濃い茶色に変更 */
-            box-shadow: var(--tile-shadow); transition: all 0.2s; cursor: pointer; text-align: center;
+            background: linear-gradient(180deg, #ffffff 0%, #f2eeed 100%); 
+            border: 1px solid #d6cecc; 
+            padding: var(--pref-padding); 
+            font-size: var(--pref-font-size); 
+            font-weight: 800; /* より太く */
+            border-radius: 12px; 
+            color: var(--text-main); 
+            box-shadow: var(--tile-shadow); 
+            transition: all 0.2s; 
+            cursor: pointer; 
+            text-align: center;
         }
+        .pref-btn:active { background: #e0d8d6; transform: translateY(2px); box-shadow: none; }
 
         #current-filter-label { margin: 35px 0 20px; font-size: 1.15rem; font-weight: 700; color: var(--mauve-deep); display: flex; align-items: center; }
         #current-filter-label::after { content: ""; flex: 1; height: 1px; background: #e0d8d5; margin-left: 15px; }
@@ -92,7 +97,7 @@
         @keyframes slideUp { from { opacity: 0; transform: translateY(30px); } to { opacity: 1; transform: translateY(0); } }
         .card-accent { width: 44px; background: linear-gradient(180deg, var(--mauve-light), var(--mauve)); display: flex; align-items: center; justify-content: center; writing-mode: vertical-rl; color: var(--mauve-deep); font-size: 11px; font-weight: 700; letter-spacing: 0.4em; }
         .card-content { padding: 1.8rem; flex: 1; }
-        .recruit-title { font-weight: 700; color: #524a4a; font-size: 19px; margin-bottom: 12px; }
+        .recruit-title { font-weight: 700; color: #443e3e; font-size: 19px; margin-bottom: 12px; }
         .recruit-info { font-size: 13px; color: var(--text-sub); display: flex; flex-direction: column; gap: 7px; }
         .apply-btn { margin-top: 22px; background: linear-gradient(135deg, var(--mauve) 0%, var(--mauve-deep) 100%); color: white; border: none; padding: 16px; border-radius: 16px; width: 100%; font-size: 16px; font-weight: 700; box-shadow: 0 8px 25px rgba(179,146,146,0.35); cursor: pointer; }
         
@@ -134,7 +139,6 @@
 </div>
 
 <script>
-// --- 初期設定 ---
 let recruitmentItems = [
     { id: 1, title: "東京都内のプレミアム特別案件", area: "東京都全域", date: "2024-05-20" },
     { id: 2, title: "大阪・関西エリア合同一斉募集", area: "大阪府", date: "2024-05-25" },
@@ -151,7 +155,6 @@ const regions = {
     "【九州・沖縄】": ["福岡県", "佐賀県", "長崎県", "熊本県", "大分県", "宮崎県", "鹿児島県", "沖縄県全域"]
 };
 
-// --- フォントサイズ & レイアウト変更（サイズ底上げ版） ---
 window.onload = function() {
     const savedMode = localStorage.getItem('prefFontSizeMode') || 'mid';
     applyFontSize(savedMode);
@@ -162,15 +165,15 @@ window.onload = function() {
 function applyFontSize(mode) {
     const root = document.documentElement;
     if (mode === 'small') {
-        root.style.setProperty('--pref-font-size', '14px'); // 底上げ
+        root.style.setProperty('--pref-font-size', '14px');
         root.style.setProperty('--pref-grid-cols', 'repeat(4, 1fr)');
         root.style.setProperty('--pref-padding', '12px 1px');
     } else if (mode === 'mid') {
-        root.style.setProperty('--pref-font-size', '17px'); // 底上げ
+        root.style.setProperty('--pref-font-size', '17px');
         root.style.setProperty('--pref-grid-cols', 'repeat(3, 1fr)');
         root.style.setProperty('--pref-padding', '16px 2px');
     } else if (mode === 'large') {
-        root.style.setProperty('--pref-font-size', '22px'); // 底上げ
+        root.style.setProperty('--pref-font-size', '20px'); // 20pxに固定
         root.style.setProperty('--pref-grid-cols', 'repeat(3, 1fr)');
         root.style.setProperty('--pref-padding', '20px 2px');
     }
@@ -185,7 +188,6 @@ function changeFontSize(mode, btn) {
     localStorage.setItem('prefFontSizeMode', mode);
 }
 
-// --- 基本機能 ---
 async function fastUpdate() {
     document.querySelectorAll('.sync-target').forEach(icon => { icon.classList.add('spinning'); });
     setTimeout(() => { location.reload(); }, 600);
