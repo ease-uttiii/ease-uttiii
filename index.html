@@ -4,123 +4,126 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
     <title>Circle Ease</title>
+    <link href="https://fonts.googleapis.com/css2?family=Lora:wght@600&family=Noto+Sans+JP:wght@400;700&display=swap" rel="stylesheet">
     <style>
         :root {
             --mauve: #b39292;
-            --soft-bg: #f5f1ef;
+            --mauve-light: #d9c5c5;
+            --mauve-dark: #8e7373;
+            --soft-bg: #f8f5f3;
             --card-bg: #ffffff;
-            --text-main: #5d5555;
-            --text-sub: #9a8f8f;
+            --text-main: #4a4444;
+            --text-sub: #a09595;
         }
 
         body { 
-            font-family: 'Hiragino Sans', 'Hiragino Kaku Gothic ProN', sans-serif; 
+            font-family: 'Noto Sans JP', sans-serif; 
             margin: 0; background: var(--soft-bg); color: var(--text-main); 
+            -webkit-font-smoothing: antialiased;
         }
         
-        /* ヘッダー：2行構成のゆったりレイアウト */
         header { 
             background: var(--mauve); 
             color: white; 
-            padding: 1.2rem 1rem 0.8rem; /* 下に少し余裕を持たせる */
-            position: sticky; 
-            top: 0; 
-            z-index: 100; 
-            box-shadow: 0 4px 15px rgba(179,146,146,0.25);
-            display: flex;
-            flex-direction: column; /* 縦に並べる */
-            align-items: center;    /* 基本は中央寄せ */
-            gap: 12px;              /* タイトルとボタンの隙間 */
+            padding: 1.5rem 1.2rem 1rem; 
+            position: sticky; top: 0; z-index: 100; 
+            display: flex; flex-direction: column; align-items: center; gap: 14px;
+            box-shadow: 0 4px 20px rgba(179,146,146,0.3);
         }
 
         header h1 { 
             margin: 0; 
-            font-size: 1.6rem;      /* タイトルを少し大きく */
-            letter-spacing: 0.15em; 
-            font-family: 'Times New Roman', serif; 
-            font-weight: bold;
+            font-size: 1.8rem;
+            letter-spacing: 0.2em; 
+            font-family: 'Lora', serif;
+            text-shadow: 0 2px 4px rgba(0,0,0,0.1);
         }
 
-        /* 更新ボタン：2行目の右端へ */
         #force-reload-btn {
-            align-self: flex-end;   /* 親が中央寄せでも、これだけは右寄せ */
-            background: rgba(255, 255, 255, 0.18); 
+            align-self: flex-end;
+            background: rgba(255, 255, 255, 0.12);
+            backdrop-filter: blur(5px);
+            -webkit-backdrop-filter: blur(5px);
             color: white;
-            border: 1px solid rgba(255, 255, 255, 0.35); 
-            border-radius: 20px;
-            padding: 7px 14px; 
-            font-size: 10px; 
-            font-weight: bold;
-            cursor: pointer; 
-            display: flex; 
-            align-items: center; 
-            gap: 8px;
-            white-space: nowrap; 
-            transition: 0.2s;
-            box-shadow: 0 2px 6px rgba(0,0,0,0.05);
+            border: 1px solid rgba(255, 255, 255, 0.3); 
+            border-radius: 25px;
+            padding: 8px 16px; 
+            font-size: 10px; font-weight: bold;
+            cursor: pointer; display: flex; align-items: center; gap: 8px;
+            transition: all 0.3s;
         }
 
         .reload-icon {
             display: inline-block; width: 10px; height: 10px;
-            border: 1.5px solid white; border-top: 1.5px solid transparent; 
+            border: 1.8px solid white; border-top: 1.8px solid transparent; 
             border-radius: 50%; position: relative;
         }
         .reload-icon::after {
-            content: ''; position: absolute; top: -2.5px; left: 4px;
-            border-left: 3px solid transparent; border-right: 3px solid transparent;
-            border-bottom: 4px solid white; transform: rotate(45deg);
+            content: ''; position: absolute; top: -2.8px; left: 4px;
+            border-left: 3.5px solid transparent; border-right: 3.5px solid transparent;
+            border-bottom: 4.5px solid white; transform: rotate(45deg);
         }
 
-        .spinning { animation: spin 0.7s linear infinite; }
+        .spinning { animation: spin 0.8s linear infinite; }
         @keyframes spin { from { transform: rotate(0deg); } to { transform: rotate(360deg); } }
 
         .container { padding: 1.5rem 1.2rem; max-width: 500px; margin: 0 auto; }
         
-        /* クイックフィルター */
-        .main-links { display: flex; gap: 12px; margin-bottom: 25px; }
+        /* 「すべて表示」ボタンを中央に配置 */
+        .main-links { display: flex; justify-content: center; margin-bottom: 30px; }
         .main-btn { 
-            flex: 1; padding: 14px; border-radius: 30px; border: none; 
-            background: #d9c5c5; color: white; font-weight: bold; font-size: 0.9rem;
-            box-shadow: 0 4px 10px rgba(0,0,0,0.05);
+            width: 100%; padding: 16px; border-radius: 16px; border: none; 
+            background: white; color: var(--text-sub); font-weight: bold; font-size: 0.9rem;
+            box-shadow: 0 6px 15px rgba(0,0,0,0.05); transition: 0.2s;
+            display: flex; align-items: center; justify-content: center; gap: 8px;
         }
-        .main-btn.all { background: #e0d8d5; color: #8e7d7d; }
+        .main-btn:active { transform: translateY(2px); box-shadow: 0 2px 8px rgba(0,0,0,0.1); }
 
-        /* エリア選択 */
         .region-section { 
-            background: rgba(255, 255, 255, 0.5); border-radius: 20px; 
-            margin-bottom: 30px; border: 1px solid rgba(255, 255, 255, 0.8);
+            background: #ffffff; border-radius: 24px; 
+            margin-bottom: 35px; border: 1px solid rgba(0,0,0,0.02);
+            box-shadow: 0 10px 30px rgba(0,0,0,0.03);
+            overflow: hidden;
         }
-        .region-header { padding: 15px 20px; font-weight: bold; font-size: 0.85rem; color: var(--mauve); }
-        .region-group-title { padding: 10px 20px 0; font-weight: bold; font-size: 0.75rem; color: var(--text-sub); }
-        .pref-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px; padding: 10px 15px 15px; }
+        .region-header { 
+            background: #faf8f7; padding: 18px 22px; font-weight: bold; 
+            font-size: 0.9rem; color: var(--mauve); letter-spacing: 0.1em;
+        }
+        .region-group-title { padding: 15px 22px 5px; font-weight: bold; font-size: 0.75rem; color: var(--text-sub); }
+        .pref-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; padding: 10px 18px 22px; }
         .pref-btn { 
-            background: white; border: none; padding: 10px 2px; font-size: 0.75rem; 
-            font-weight: bold; border-radius: 10px; color: var(--text-main);
-            box-shadow: 0 2px 5px rgba(0,0,0,0.03);
+            background: #fdfcfc; border: 1px solid #f0eded; padding: 12px 2px; font-size: 0.75rem; 
+            font-weight: bold; border-radius: 12px; color: var(--text-main);
+            transition: 0.2s;
         }
+        .pref-btn:active { background: var(--mauve); color: white; }
         
-        #current-filter-label { margin: 20px 0 15px; font-size: 1rem; font-weight: bold; color: var(--mauve); display: flex; align-items: center; }
-        #current-filter-label::before { content: "🌸"; margin-right: 8px; }
+        #current-filter-label { margin: 30px 0 20px; font-size: 1.1rem; font-weight: bold; color: var(--mauve); display: flex; align-items: center; }
+        #current-filter-label::before { content: "●"; font-size: 0.6em; margin-right: 10px; opacity: 0.5; }
 
-        /* 募集カード */
         .recruit-card { 
-            background: var(--card-bg); margin-bottom: 1.5rem; border-radius: 18px; 
-            box-shadow: 0 8px 25px rgba(0,0,0,0.04); display: flex; overflow: hidden;
-            animation: fadeIn 0.4s ease-out;
+            background: var(--card-bg); margin-bottom: 1.8rem; border-radius: 20px; 
+            box-shadow: 0 12px 30px rgba(0,0,0,0.05); display: flex; overflow: hidden;
+            animation: fadeIn 0.5s ease-out;
         }
-        @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(15px); } to { opacity: 1; transform: translateY(0); } }
 
         .card-accent {
-            width: 38px; background: #d9c5c5; display: flex; align-items: center;
-            justify-content: center; writing-mode: vertical-rl; color: white;
-            font-size: 0.7rem; font-weight: bold; letter-spacing: 0.3em;
+            width: 42px; background: linear-gradient(to bottom, #d9c5c5, #b39292); 
+            display: flex; align-items: center; justify-content: center; 
+            writing-mode: vertical-rl; color: white;
+            font-size: 0.75rem; font-weight: bold; letter-spacing: 0.4em;
         }
-        .card-content { padding: 1.4rem; flex: 1; }
-        .recruit-title { font-weight: bold; color: var(--text-main); font-size: 1.1rem; margin-bottom: 10px; }
-        .recruit-info { font-size: 0.85rem; color: var(--text-sub); display: flex; flex-direction: column; gap: 5px; }
+        .card-content { padding: 1.6rem; flex: 1; }
+        .recruit-title { font-weight: 700; color: var(--text-main); font-size: 1.15rem; margin-bottom: 12px; }
+        .recruit-info { font-size: 0.85rem; color: var(--text-sub); display: flex; flex-direction: column; gap: 6px; }
+        
         .apply-btn { 
-            margin-top: 18px; background: var(--mauve); color: white; border: none; 
-            padding: 14px; border-radius: 12px; width: 100%; font-size: 0.95rem; font-weight: bold;
+            margin-top: 20px; 
+            background: linear-gradient(135deg, var(--mauve) 0%, var(--mauve-dark) 100%);
+            color: white; border: none; 
+            padding: 16px; border-radius: 14px; width: 100%; font-size: 1rem; font-weight: bold;
+            box-shadow: 0 8px 20px rgba(179,146,146,0.3);
         }
     </style>
 </head>
@@ -137,27 +140,24 @@
 
 <div class="container">
     <div class="main-links">
-        <button class="main-btn" onclick="quickFilter('全国')">🌸 全国・オンライン</button>
-        <button class="main-btn all" onclick="quickFilter('すべて')">📋 すべて表示</button>
+        <button class="main-btn" onclick="quickFilter('すべて')">📋 募集をすべて表示</button>
     </div>
 
     <div class="region-section">
-        <div class="region-header">エリアで絞り込む</div>
+        <div class="region-header">Find by Area</div>
         <div id="pref-container"></div>
     </div>
 
-    <div id="current-filter-label">表示中: すべてのエリア</div>
+    <div id="current-filter-label">表示中: すべての募集</div>
     <div id="recruit-list"></div>
 </div>
 
 <script>
-// --- データ管理 ---
 let recruitmentItems = [
     { id: 1, title: "東京都内の特別案件", area: "東京都全域", date: "2024-05-20" },
     { id: 2, title: "大阪・関西エリア合同募集", area: "大阪府", date: "2024-05-25" },
     { id: 3, title: "北海道エリア限定イベント", area: "北海道全域", date: "2024-06-01" },
-    { id: 4, title: "沖縄マリンイベント", area: "沖縄県全域", date: "2024-06-10" },
-    { id: 5, title: "全国オンライン募集", area: "全国", date: "2024-06-15" }
+    { id: 4, title: "沖縄マリンイベント", area: "沖縄県全域", date: "2024-06-10" }
 ];
 
 const regions = {
@@ -170,13 +170,12 @@ const regions = {
     "【九州・沖縄】": ["福岡県", "佐賀県", "長崎県", "熊本県", "大分県", "宮崎県", "鹿児島県", "沖縄県全域"]
 };
 
-// --- 更新ロジック ---
 async function fastUpdate() {
     const icons = document.querySelectorAll('.sync-target');
     icons.forEach(icon => icon.classList.add('spinning'));
     try {
         await fetch(window.location.href + '?t=' + Date.now());
-        setTimeout(() => { location.reload(); }, 400); 
+        setTimeout(() => { location.reload(); }, 500); 
     } catch (e) { location.reload(); }
 }
 
@@ -207,7 +206,7 @@ function displayRecruits(filter = 'すべて') {
     const label = document.getElementById('current-filter-label');
     if(!list || !label) return;
     list.innerHTML = '';
-    label.innerText = `表示中: ${filter === 'すべて' ? 'すべてのエリア' : filter}`;
+    label.innerText = `表示中: ${filter === 'すべて' ? 'すべての募集' : filter}`;
     const filtered = filter === 'すべて' ? recruitmentItems : recruitmentItems.filter(item => item.area === filter);
     filtered.forEach(item => {
         const card = document.createElement('div');
@@ -229,7 +228,8 @@ function displayRecruits(filter = 'すべて') {
 
 function filterByArea(area) {
     displayRecruits(area);
-    window.scrollTo({ top: document.getElementById('current-filter-label').offsetTop - 80, behavior: 'smooth' });
+    const target = document.getElementById('current-filter-label');
+    window.scrollTo({ top: target.offsetTop - 100, behavior: 'smooth' });
 }
 
 function quickFilter(type) { displayRecruits(type); }
