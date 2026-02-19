@@ -11,12 +11,12 @@
         body { 
             font-family: 'Hiragino Sans', 'Hiragino Kaku Gothic ProN', sans-serif; 
             margin: 0; 
-            background: #f9f7f6; /* 柔らかいベージュ系 */
+            background: #f9f7f6; 
             color: #5d5555; 
         }
         
         header { 
-            background: #b39292; /* くすみピンク */
+            background: #b39292; 
             color: white; 
             padding: 1.2rem; 
             text-align: center; 
@@ -33,7 +33,7 @@
             margin: 0;
             font-size: 1.4rem;
             letter-spacing: 0.15em;
-            font-family: 'Times New Roman', serif; /* タイトルだけ少し大人っぽく */
+            font-family: 'serif';
         }
 
         #force-reload-btn {
@@ -54,7 +54,6 @@
 
         .container { padding: 1.5rem 1rem; max-width: 500px; margin: 0 auto; }
 
-        /* メインリンク：よりボタンらしく */
         .main-links { display: flex; gap: 10px; margin-bottom: 25px; }
         .main-btn { 
             flex: 1; 
@@ -65,14 +64,12 @@
             color: #5d5555; 
             font-weight: bold; 
             font-size: 0.85rem;
-            box-shadow: 0 4px 0 #bca7a7; /* 押しボタン風 */
+            box-shadow: 0 4px 0 #bca7a7;
             transition: all 0.1s;
         }
         .main-btn:active { transform: translateY(2px); box-shadow: 0 2px 0 #bca7a7; }
         .main-btn.all { background: #eee7e4; color: #8e7d7d; box-shadow: 0 4px 0 #d9cfcb; }
-        .main-btn.all:active { box-shadow: 0 2px 0 #d9cfcb; }
 
-        /* エリアセクション：シンプルに */
         .region-section { background: white; border-radius: 15px; margin-bottom: 30px; overflow: hidden; box-shadow: 0 5px 20px rgba(0,0,0,0.03); }
         .region-header { background: #f3eeec; padding: 12px 18px; font-weight: bold; font-size: 0.8rem; color: #8e7d7d; border-bottom: 1px solid #eee; }
         .region-group-title { padding: 15px 18px 5px; font-weight: bold; font-size: 0.75rem; color: #b39292; }
@@ -85,11 +82,8 @@
             font-size: 0.75rem; 
             border-radius: 8px; 
             color: #7a6f6f;
-            transition: 0.2s;
         }
-        .pref-btn:active { background: #f3eeec; border-color: #b39292; color: #b39292; }
         
-        /* 募集カード：ここが一番お洒落に見えるポイント */
         .recruit-card { 
             background: white; 
             padding: 1.5rem; 
@@ -98,9 +92,8 @@
             box-shadow: 0 10px 25px rgba(0,0,0,0.04);
             border: 1px solid rgba(179,146,146,0.1);
         }
-        .recruit-title { font-weight: bold; color: #5d5555; font-size: 1.1rem; margin-bottom: 12px; line-height: 1.5; }
+        .recruit-title { font-weight: bold; color: #5d5555; font-size: 1.1rem; margin-bottom: 12px; }
         .recruit-info { font-size: 0.8em; color: #9a8f8f; display: flex; flex-direction: column; gap: 6px; }
-        .recruit-info span::before { content: "•"; margin-right: 8px; color: #b39292; }
         
         .apply-btn { 
             margin-top: 18px; 
@@ -112,7 +105,6 @@
             width: 100%; 
             font-size: 1rem; 
             font-weight: bold;
-            letter-spacing: 0.05em;
         }
         
         #current-filter-label { margin: 30px 0 15px; font-size: 0.9rem; font-weight: bold; color: #8e7d7d; display: flex; align-items: center; }
@@ -126,3 +118,4 @@
 </header>
 
 <div class="container">
+    <div class="main-links">
