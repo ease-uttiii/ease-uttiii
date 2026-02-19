@@ -12,10 +12,11 @@
             --mauve-light: #fdfaf9;
             --soft-bg: #f5f1ef;
             --card-bg: #ffffff;
-            --text-main: #221e1e; /* 都道府県文字：さらに濃く */
+            /* タイル文字：漆黒から「濃いブラウン」へ変更 */
+            --text-main: #3d2e2e; 
             --text-sub: #a89e9e;
             --shadow: 0 8px 25px rgba(179,146,146,0.12);
-            --tile-shadow: 0 4px 10px rgba(0,0,0,0.08), inset 0 1px 0 #fff;
+            --tile-shadow: 0 5px 12px rgba(0,0,0,0.15), inset 0 1px 0 #fff;
             /* 可変変数 */
             --pref-font-size: 17px; 
             --pref-grid-cols: repeat(3, 1fr);
@@ -72,23 +73,26 @@
         .region-group-title { padding: 20px 20px 8px; font-weight: 700; font-size: 12px; color: var(--mauve); display: flex; align-items: center; }
         .region-group-title::before { content: ""; display: inline-block; width: 4px; height: 14px; background: var(--mauve); margin-right: 8px; border-radius: 2px; }
 
-        .pref-grid { display: grid; grid-template-columns: var(--pref-grid-cols); gap: 10px; padding: 10px 15px 25px; transition: all 0.3s ease; }
+        .pref-grid { display: grid; grid-template-columns: var(--pref-grid-cols); gap: 12px; padding: 10px 15px 25px; transition: all 0.3s ease; }
         
-        /* 都道府県ボタン：より「ボタンらしい」濃いデザイン */
         .pref-btn { 
-            background: linear-gradient(180deg, #ffffff 0%, #f2eeed 100%); 
-            border: 1px solid #d6cecc; 
+            background: linear-gradient(180deg, #ffffff 0%, #e8e2e0 100%); 
+            border: 1.5px solid #888280; 
             padding: var(--pref-padding); 
             font-size: var(--pref-font-size); 
-            font-weight: 800; /* より太く */
+            font-weight: 900; 
             border-radius: 12px; 
-            color: var(--text-main); 
+            color: var(--text-main); /* 濃いブラウン */
             box-shadow: var(--tile-shadow); 
-            transition: all 0.2s; 
+            transition: all 0.1s; 
             cursor: pointer; 
             text-align: center;
         }
-        .pref-btn:active { background: #e0d8d6; transform: translateY(2px); box-shadow: none; }
+        .pref-btn:active { 
+            background: #d1c8c6; 
+            transform: translateY(3px); 
+            box-shadow: 0 2px 5px rgba(0,0,0,0.2), inset 0 2px 4px rgba(0,0,0,0.1); 
+        }
 
         #current-filter-label { margin: 35px 0 20px; font-size: 1.15rem; font-weight: 700; color: var(--mauve-deep); display: flex; align-items: center; }
         #current-filter-label::after { content: ""; flex: 1; height: 1px; background: #e0d8d5; margin-left: 15px; }
@@ -173,7 +177,7 @@ function applyFontSize(mode) {
         root.style.setProperty('--pref-grid-cols', 'repeat(3, 1fr)');
         root.style.setProperty('--pref-padding', '16px 2px');
     } else if (mode === 'large') {
-        root.style.setProperty('--pref-font-size', '20px'); // 20pxに固定
+        root.style.setProperty('--pref-font-size', '20px'); 
         root.style.setProperty('--pref-grid-cols', 'repeat(3, 1fr)');
         root.style.setProperty('--pref-padding', '20px 2px');
     }
