@@ -5,46 +5,66 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
     <title>サークル イーズ</title>
     <style>
-        /* --- WSC風の基本スタイル --- */
+        /* --- WSCスタイルの再現 --- */
         body {
             margin: 0;
             padding: 0;
-            font-family: "Helvetica Neue", Arial, "Hiragino Kaku Gothic ProN", "Hiragino Sans", Meiryo, sans-serif;
-            background-color: #ffeef4; /* 優しいピンク背景 */
-            color: #333;
+            font-family: sans-serif;
+            background-color: #f9f9f9;
             overscroll-behavior-y: contain; /* 引っ張って更新用 */
         }
         header {
             background-color: #ff6699;
-            color: #fff;
-            padding: 40px 20px;
+            color: white;
+            text-align: center;
+            padding: 20px 0;
+            font-weight: bold;
+            font-size: 20px;
+        }
+
+        /* --- 全国ボタンのエリア --- */
+        .nav-buttons {
+            display: flex;
+            justify-content: center;
+            gap: 10px;
+            padding: 20px;
+            background: white;
+        }
+        .btn-zenkoku {
+            background-color: #ff6699;
+            color: white;
+            border: none;
+            padding: 10px 30px;
+            border-radius: 20px;
+            font-size: 16px;
+            font-weight: bold;
+            cursor: pointer;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.2);
+        }
+        .btn-other {
+            background-color: #eee;
+            color: #666;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 20px;
+            font-size: 14px;
+        }
+
+        .content-area {
+            padding: 20px;
             text-align: center;
         }
-        h1 {
-            margin: 0;
-            font-size: 24px;
-        }
-        .container {
-            padding: 20px;
-            max-width: 500px;
-            margin: 0 auto;
-        }
-        .card {
-            background-color: #fff;
+        .info-card {
+            background: white;
             border-radius: 10px;
             padding: 20px;
             margin-bottom: 20px;
-            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
-        }
-        .footer {
-            text-align: center;
-            font-size: 12px;
-            color: #999;
-            padding: 20px;
+            border-left: 5px solid #ff6699;
+            text-align: left;
         }
 
-        /* --- 引っ張って更新用のスタイル --- */
-        #ptr-message {
+        /* --- 引っ張って更新のスタイル --- */
+        #ptr-msg {
             position: fixed;
             top: -50px;
             left: 0;
@@ -53,42 +73,39 @@
             display: flex;
             align-items: center;
             justify-content: center;
-            background: #ff6699;
-            color: white;
-            font-size: 14px;
-            z-index: 9999;
+            background: #ffecf2;
+            color: #ff6699;
+            z-index: 10000;
         }
     </style>
 </head>
 <body>
 
-    <div id="ptr-message">↓ 引っ張って更新</div>
+    <div id="ptr-msg">↓ 引っ張って更新</div>
 
     <header>
-        <h1>サークル イーズ</h1>
+        サークル イーズ
     </header>
 
-    <div class="container">
-        <div class="card">
-            <h2>お知らせ</h2>
-            <p>WSCのコードをGitHubに移植しました！</p>
-            <p>ここを下に引っ張ると更新できます。</p>
-        </div>
-
-        <div class="card">
-            <h2>活動内容</h2>
-            <p>ここにWSCで習った内容をどんどん書き足していきましょう。</p>
-        </div>
+    <div class="nav-buttons">
+        <button class="btn-other">地区</button>
+        <button class="btn-zenkoku">全国</button>
+        <button class="btn-other">個人</button>
     </div>
 
-    <div class="footer">
-        &copy; ease-uttiii
+    <div class="content-area">
+        <div class="info-card">
+            <strong>お知らせ：</strong>
+            <p>GitHub連携が完了しました！スマホで引っ張って更新を試してみてね。</p>
+        </div>
+        
+        <p>ここにWSCの課題の続きを書いていきましょう！</p>
     </div>
 
     <script>
-        // --- 引っ張って更新の仕組み ---
+        // --- 引っ張って更新のJavaScript ---
         let startY = 0;
-        const ptr = document.getElementById('ptr-message');
+        const ptr = document.getElementById('ptr-msg');
 
         window.addEventListener('touchstart', (e) => {
             if (window.scrollY === 0) startY = e.touches[0].pageY;
@@ -100,22 +117,13 @@
                 const diff = y - startY;
                 if (diff < 80) {
                     ptr.style.transform = `translateY(${diff}px)`;
-                    ptr.innerText = "もっと引っ張って！";
+                    ptr.innerText = "↓ もっと引っ張って！";
                 } else {
                     ptr.style.transform = `translateY(${diff}px)`;
-                    ptr.innerText = "離して更新！";
+                    ptr.innerText = "✨ 離して更新！";
                 }
             }
         });
 
         window.addEventListener('touchend', (e) => {
-            if (window.scrollY === 0 && e.changedTouches[0].pageY - startY > 80) {
-                ptr.innerText = "更新中...";
-                location.reload();
-            } else {
-                ptr.style.transform = `translateY(0)`;
-            }
-        });
-    </script>
-</body>
-</html>
+            if (window.scrollY === 0 && e.changedTouches[0].pageY - startY >
