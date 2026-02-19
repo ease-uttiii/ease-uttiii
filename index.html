@@ -22,108 +22,121 @@
             -webkit-font-smoothing: antialiased;
         }
         
+        /* --- ヘッダー：3段構成で操作系を集約 --- */
         header { 
             background: var(--mauve); 
             color: white; 
-            padding: 1.5rem 1.2rem 1rem; 
+            padding: 1.2rem 1.2rem 1rem; 
             position: sticky; top: 0; z-index: 100; 
-            display: flex; flex-direction: column; align-items: center; gap: 14px;
+            display: flex; flex-direction: column; gap: 12px;
             box-shadow: 0 4px 20px rgba(179,146,146,0.3);
         }
 
+        /* 1段目：タイトル */
         header h1 { 
             margin: 0; 
-            font-size: 1.8rem;
-            letter-spacing: 0.2em; 
+            font-size: 1.6rem;
+            letter-spacing: 0.15em; 
             font-family: 'Lora', serif;
-            text-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            text-align: center;
+        }
+
+        /* 2段目：リロードボタン（右寄せ） */
+        .header-action-row {
+            display: flex;
+            justify-content: flex-end;
+            width: 100%;
         }
 
         #force-reload-btn {
-            align-self: flex-end;
             background: rgba(255, 255, 255, 0.12);
             backdrop-filter: blur(5px);
             -webkit-backdrop-filter: blur(5px);
             color: white;
             border: 1px solid rgba(255, 255, 255, 0.3); 
             border-radius: 25px;
-            padding: 8px 16px; 
+            padding: 6px 14px; 
             font-size: 10px; font-weight: bold;
-            cursor: pointer; display: flex; align-items: center; gap: 8px;
-            transition: all 0.3s;
+            cursor: pointer; display: flex; align-items: center; gap: 6px;
+            transition: 0.2s;
         }
 
+        /* 3段目：メイン操作ボタン（すべて表示） */
+        .header-filter-row {
+            width: 100%;
+            margin-top: 4px;
+        }
+
+        .main-btn { 
+            width: 100%; 
+            padding: 10px; 
+            border-radius: 12px; 
+            border: none; 
+            background: rgba(255, 255, 255, 0.9); 
+            color: var(--mauve); 
+            font-weight: bold; 
+            font-size: 0.85rem;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+            display: flex; align-items: center; justify-content: center; gap: 6px;
+            transition: 0.2s;
+        }
+        .main-btn:active { transform: scale(0.98); background: white; }
+
+        /* アイコン類 */
         .reload-icon {
             display: inline-block; width: 10px; height: 10px;
-            border: 1.8px solid white; border-top: 1.8px solid transparent; 
+            border: 1.5px solid white; border-top: 1.5px solid transparent; 
             border-radius: 50%; position: relative;
         }
         .reload-icon::after {
-            content: ''; position: absolute; top: -2.8px; left: 4px;
-            border-left: 3.5px solid transparent; border-right: 3.5px solid transparent;
-            border-bottom: 4.5px solid white; transform: rotate(45deg);
+            content: ''; position: absolute; top: -2.5px; left: 4px;
+            border-left: 3px solid transparent; border-right: 3px solid transparent;
+            border-bottom: 4px solid white; transform: rotate(45deg);
         }
-
         .spinning { animation: spin 0.8s linear infinite; }
         @keyframes spin { from { transform: rotate(0deg); } to { transform: rotate(360deg); } }
 
+        /* コンテンツエリア */
         .container { padding: 1.5rem 1.2rem; max-width: 500px; margin: 0 auto; }
         
-        /* 「すべて表示」ボタンを中央に配置 */
-        .main-links { display: flex; justify-content: center; margin-bottom: 30px; }
-        .main-btn { 
-            width: 100%; padding: 16px; border-radius: 16px; border: none; 
-            background: white; color: var(--text-sub); font-weight: bold; font-size: 0.9rem;
-            box-shadow: 0 6px 15px rgba(0,0,0,0.05); transition: 0.2s;
-            display: flex; align-items: center; justify-content: center; gap: 8px;
-        }
-        .main-btn:active { transform: translateY(2px); box-shadow: 0 2px 8px rgba(0,0,0,0.1); }
-
         .region-section { 
             background: #ffffff; border-radius: 24px; 
-            margin-bottom: 35px; border: 1px solid rgba(0,0,0,0.02);
+            margin-bottom: 30px; border: 1px solid rgba(0,0,0,0.02);
             box-shadow: 0 10px 30px rgba(0,0,0,0.03);
             overflow: hidden;
         }
-        .region-header { 
-            background: #faf8f7; padding: 18px 22px; font-weight: bold; 
-            font-size: 0.9rem; color: var(--mauve); letter-spacing: 0.1em;
-        }
-        .region-group-title { padding: 15px 22px 5px; font-weight: bold; font-size: 0.75rem; color: var(--text-sub); }
-        .pref-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; padding: 10px 18px 22px; }
+        .region-header { background: #faf8f7; padding: 16px 20px; font-weight: bold; font-size: 0.85rem; color: var(--mauve); }
+        .region-group-title { padding: 12px 20px 4px; font-weight: bold; font-size: 0.7rem; color: var(--text-sub); }
+        .pref-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px; padding: 10px 15px 20px; }
         .pref-btn { 
-            background: #fdfcfc; border: 1px solid #f0eded; padding: 12px 2px; font-size: 0.75rem; 
-            font-weight: bold; border-radius: 12px; color: var(--text-main);
-            transition: 0.2s;
+            background: #fdfcfc; border: 1px solid #f0eded; padding: 10px 2px; font-size: 0.7rem; 
+            font-weight: bold; border-radius: 10px; color: var(--text-main);
         }
         .pref-btn:active { background: var(--mauve); color: white; }
         
-        #current-filter-label { margin: 30px 0 20px; font-size: 1.1rem; font-weight: bold; color: var(--mauve); display: flex; align-items: center; }
+        #current-filter-label { margin: 20px 0 15px; font-size: 1rem; font-weight: bold; color: var(--mauve); display: flex; align-items: center; }
         #current-filter-label::before { content: "●"; font-size: 0.6em; margin-right: 10px; opacity: 0.5; }
 
         .recruit-card { 
-            background: var(--card-bg); margin-bottom: 1.8rem; border-radius: 20px; 
-            box-shadow: 0 12px 30px rgba(0,0,0,0.05); display: flex; overflow: hidden;
+            background: var(--card-bg); margin-bottom: 1.5rem; border-radius: 20px; 
+            box-shadow: 0 10px 25px rgba(0,0,0,0.05); display: flex; overflow: hidden;
             animation: fadeIn 0.5s ease-out;
         }
         @keyframes fadeIn { from { opacity: 0; transform: translateY(15px); } to { opacity: 1; transform: translateY(0); } }
 
         .card-accent {
-            width: 42px; background: linear-gradient(to bottom, #d9c5c5, #b39292); 
+            width: 40px; background: linear-gradient(to bottom, #d9c5c5, #b39292); 
             display: flex; align-items: center; justify-content: center; 
             writing-mode: vertical-rl; color: white;
-            font-size: 0.75rem; font-weight: bold; letter-spacing: 0.4em;
+            font-size: 0.7rem; font-weight: bold; letter-spacing: 0.3em;
         }
-        .card-content { padding: 1.6rem; flex: 1; }
-        .recruit-title { font-weight: 700; color: var(--text-main); font-size: 1.15rem; margin-bottom: 12px; }
-        .recruit-info { font-size: 0.85rem; color: var(--text-sub); display: flex; flex-direction: column; gap: 6px; }
-        
+        .card-content { padding: 1.4rem; flex: 1; }
+        .recruit-title { font-weight: 700; color: var(--text-main); font-size: 1.1rem; margin-bottom: 10px; }
+        .recruit-info { font-size: 0.8rem; color: var(--text-sub); display: flex; flex-direction: column; gap: 5px; }
         .apply-btn { 
-            margin-top: 20px; 
+            margin-top: 15px; 
             background: linear-gradient(135deg, var(--mauve) 0%, var(--mauve-dark) 100%);
-            color: white; border: none; 
-            padding: 16px; border-radius: 14px; width: 100%; font-size: 1rem; font-weight: bold;
-            box-shadow: 0 8px 20px rgba(179,146,146,0.3);
+            color: white; border: none; padding: 14px; border-radius: 12px; width: 100%; font-size: 0.9rem; font-weight: bold;
         }
     </style>
 </head>
@@ -131,18 +144,21 @@
 
 <header>
     <h1>CIRCLE EASE</h1>
-    <button id="force-reload-btn" onclick="fastUpdate()">
-        <span class="reload-icon sync-target"></span>
-        最新にリロード
-        <span class="reload-icon sync-target"></span>
-    </button>
+    
+    <div class="header-action-row">
+        <button id="force-reload-btn" onclick="fastUpdate()">
+            <span class="reload-icon sync-target"></span>
+            最新にリロード
+            <span class="reload-icon sync-target"></span>
+        </button>
+    </div>
+
+    <div class="header-filter-row">
+        <button class="main-btn" onclick="quickFilter('すべて')">📋 全エリアの募集をすべて表示</button>
+    </div>
 </header>
 
 <div class="container">
-    <div class="main-links">
-        <button class="main-btn" onclick="quickFilter('すべて')">📋 募集をすべて表示</button>
-    </div>
-
     <div class="region-section">
         <div class="region-header">Find by Area</div>
         <div id="pref-container"></div>
@@ -161,8 +177,7 @@ let recruitmentItems = [
 ];
 
 const regions = {
-    "【北海道】": ["北海道全域"], 
-    "【東北】": ["青森県", "岩手県", "宮城県", "秋田県", "山形県", "福島県"],
+    "【北海道】": ["北海道全域"], "【東北】": ["青森県", "岩手県", "宮城県", "秋田県", "山形県", "福島県"],
     "【関東】": ["茨城県", "栃木県", "群馬県", "埼玉県", "千葉県", "東京都全域", "神奈川県"],
     "【中部】": ["新潟県", "山梨県", "長野県", "岐阜県", "静岡県", "愛知県", "三重県", "富山県", "石川県", "福井県"],
     "【関西】": ["滋賀県", "京都府", "大阪府", "兵庫県", "奈良県", "和歌山県"],
@@ -229,7 +244,7 @@ function displayRecruits(filter = 'すべて') {
 function filterByArea(area) {
     displayRecruits(area);
     const target = document.getElementById('current-filter-label');
-    window.scrollTo({ top: target.offsetTop - 100, behavior: 'smooth' });
+    window.scrollTo({ top: target.offsetTop - 120, behavior: 'smooth' });
 }
 
 function quickFilter(type) { displayRecruits(type); }
