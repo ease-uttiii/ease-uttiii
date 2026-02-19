@@ -16,8 +16,8 @@
             --text-sub: #a89e9e;
             --shadow: 0 8px 25px rgba(179,146,146,0.12);
             --tile-shadow: 0 4px 12px rgba(0,0,0,0.05);
-            /* デフォルトサイズ */
-            --pref-font-size: 14px; 
+            /* デフォルトサイズ（JSで上書きされます） */
+            --pref-font-size: 15px; 
         }
 
         body { 
@@ -26,6 +26,7 @@
             -webkit-font-smoothing: antialiased;
         }
         
+        /* ヘッダー：グラスモーフィズム */
         header { 
             background: rgba(179, 146, 146, 0.95);
             backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px);
@@ -49,11 +50,12 @@
             flex: 1; padding: 12px; border-radius: 14px; border: none; background: white; 
             color: var(--mauve-deep); font-weight: bold; font-size: 13px;
             box-shadow: 0 6px 15px rgba(0,0,0,0.08); display: flex; align-items: center; justify-content: center; gap: 6px;
+            cursor: pointer;
         }
 
         .container { padding: 1.5rem 1rem; max-width: 500px; margin: 0 auto; }
         
-        /* エリア選択ヘッダー：サイズ切り替えボタンを右に配置 */
+        /* エリア選択セクション */
         .region-section { background: #ffffff; border-radius: 28px; margin-bottom: 40px; box-shadow: var(--shadow); overflow: hidden; }
         
         .region-header { 
@@ -63,7 +65,7 @@
             display: flex; justify-content: space-between; align-items: center;
         }
 
-        /* サイズ切り替えボタンのデザイン */
+        /* サイズ切り替えスイッチ */
         .size-selector { display: flex; background: #eeebe9; border-radius: 10px; padding: 3px; gap: 2px; }
         .size-btn {
             border: none; background: transparent; padding: 5px 10px; font-size: 11px;
@@ -78,16 +80,23 @@
         }
         .region-group-title::before { content: ""; display: inline-block; width: 4px; height: 14px; background: var(--mauve); margin-right: 8px; border-radius: 2px; }
 
-        /* 都道府県ボタン：フォントサイズを可変に */
+        /* 都道府県タイル：文字サイズ可変 */
         .pref-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; padding: 10px 15px 25px; }
         .pref-btn { 
             background: linear-gradient(180deg, #ffffff 0%, #f9f7f6 100%); 
             border: 1px solid #eeebe9; padding: 16px 2px;
-            font-size: var(--pref-font-size); /* ここを動的に変える */
+            font-size: var(--pref-font-size); 
             font-weight: 700; border-radius: 16px; color: var(--text-main);
             box-shadow: var(--tile-shadow); transition: all 0.2s;
+            cursor: pointer;
         }
         .pref-btn:active { background: var(--mauve); color: white; transform: scale(0.92); }
+
+        #current-filter-label { 
+            margin: 35px 0 20px; font-size: 1.15rem; font-weight: 700; color: var(--mauve-deep); 
+            display: flex; align-items: center; 
+        }
+        #current-filter-label::after { content: ""; flex: 1; height: 1px; background: #e0d8d5; margin-left: 15px; }
 
         /* 案件カード */
         .recruit-card { background: var(--card-bg); margin-bottom: 2rem; border-radius: 24px; box-shadow: var(--shadow); display: flex; overflow: hidden; animation: slideUp 0.6s both; }
@@ -96,8 +105,10 @@
         .card-content { padding: 1.8rem; flex: 1; }
         .recruit-title { font-weight: 700; color: var(--text-main); font-size: 19px; margin-bottom: 12px; }
         .recruit-info { font-size: 13px; color: var(--text-sub); display: flex; flex-direction: column; gap: 7px; }
-        .apply-btn { margin-top: 22px; background: linear-gradient(135deg, var(--mauve) 0%, var(--mauve-deep) 100%); color: white; border: none; padding: 16px; border-radius: 16px; width: 100%; font-size: 16px; font-weight: 700; box-shadow: 0 8px 25px rgba(179,146,146,0.35); }
+        .apply-btn { margin-top: 22px; background: linear-gradient(135deg, var(--mauve) 0%, var(--mauve-deep) 100%); color: white; border: none; padding: 16px; border-radius: 16px; width: 100%; font-size: 16px; font-weight: 700; box-shadow: 0 8px 25px rgba(179,146,146,0.35); cursor: pointer; }
         
+        .reload-icon { display: inline-block; width: 10px; height: 10px; border: 1.8px solid white; border-top: 1.8px solid transparent; border-radius: 50%; position: relative; }
+        .reload-icon::after { content: ''; position: absolute; top: -2.8px; left: 4.5px; border-left: 3.5px solid transparent; border-right: 3.5px solid transparent; border-bottom: 4.5px solid white; transform: rotate(45deg); }
         .spinning { animation: spin 0.8s linear infinite; }
         @keyframes spin { from { transform: rotate(0deg); } to { transform: rotate(360deg); } }
     </style>
@@ -121,16 +132,18 @@
             <span>FIND BY AREA</span>
             <div class="size-selector">
                 <button class="size-btn" onclick="changeFontSize('12px', this)">小</button>
-                <button class="size-btn active" onclick="changeFontSize('15px', this)">中</button>
+                <button class="size-btn" id="size-mid" onclick="changeFontSize('15px', this)">中</button>
                 <button class="size-btn" onclick="changeFontSize('19px', this)">大</button>
             </div>
         </div>
         <div id="pref-container"></div>
     </div>
+    <div id="current-filter-label">表示中: すべての募集</div>
     <div id="recruit-list"></div>
 </div>
 
 <script>
+// --- 初期設定とデータ ---
 let recruitmentItems = [
     { id: 1, title: "東京都内のプレミアム特別案件", area: "東京都全域", date: "2024-05-20" },
     { id: 2, title: "大阪・関西エリア合同一斉募集", area: "大阪府", date: "2024-05-25" },
@@ -147,13 +160,36 @@ const regions = {
     "【九州・沖縄】": ["福岡県", "佐賀県", "長崎県", "熊本県", "大分県", "宮崎県", "鹿児島県", "沖縄県全域"]
 };
 
-// フォントサイズ変更関数
-function changeFontSize(size, btn) {
+// --- フォントサイズ記憶機能 ---
+window.onload = function() {
+    const savedSize = localStorage.getItem('prefFontSize');
+    if (savedSize) {
+        applyFontSize(savedSize);
+    } else {
+        // 保存がなければ「中」をアクティブに
+        document.getElementById('size-mid').classList.add('active');
+    }
+    createPrefButtons();
+    displayRecruits();
+};
+
+function applyFontSize(size) {
     document.documentElement.style.setProperty('--pref-font-size', size);
-    document.querySelectorAll('.size-btn').forEach(b => b.classList.remove('active'));
-    btn.classList.add('active');
+    document.querySelectorAll('.size-btn').forEach(btn => {
+        if (btn.getAttribute('onclick').includes(size)) {
+            btn.classList.add('active');
+        } else {
+            btn.classList.remove('active');
+        }
+    });
 }
 
+function changeFontSize(size, btn) {
+    applyFontSize(size);
+    localStorage.setItem('prefFontSize', size);
+}
+
+// --- リロードとナビゲーション ---
 async function fastUpdate() {
     document.querySelector('.sync-target').classList.add('spinning');
     setTimeout(() => { location.reload(); }, 600);
@@ -161,6 +197,8 @@ async function fastUpdate() {
 
 function createPrefButtons() {
     const container = document.getElementById('pref-container');
+    if(!container) return;
+    container.innerHTML = '';
     for (const [regionName, prefs] of Object.entries(regions)) {
         const title = document.createElement('div');
         title.className = 'region-group-title';
@@ -181,7 +219,10 @@ function createPrefButtons() {
 
 function displayRecruits(filter = 'すべて') {
     const list = document.getElementById('recruit-list');
+    const label = document.getElementById('current-filter-label');
+    if(!list || !label) return;
     list.innerHTML = '';
+    label.innerText = filter === 'すべて' ? '表示中: すべての募集' : `表示中: ${filter}`;
     const filtered = filter === 'すべて' ? recruitmentItems : recruitmentItems.filter(item => item.area === filter);
     filtered.forEach(item => {
         const card = document.createElement('div');
@@ -198,11 +239,16 @@ function displayRecruits(filter = 'すべて') {
     });
 }
 
-function scrollToSection(id) { window.scrollTo({ top: document.getElementById(id).offsetTop - 180, behavior: 'smooth' }); }
-function filterByArea(area) { displayRecruits(area); window.scrollTo({ top: document.getElementById('recruit-list').offsetTop - 200, behavior: 'smooth' }); }
+function scrollToSection(id) { 
+    const target = document.getElementById(id);
+    if(target) window.scrollTo({ top: target.offsetTop - 180, behavior: 'smooth' }); 
+}
 
-createPrefButtons();
-displayRecruits();
+function filterByArea(area) { 
+    displayRecruits(area); 
+    const label = document.getElementById('current-filter-label');
+    if(label) window.scrollTo({ top: label.offsetTop - 200, behavior: 'smooth' }); 
+}
 </script>
 </body>
 </html>
