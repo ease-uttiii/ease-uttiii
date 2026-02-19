@@ -3,18 +3,11 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
-    <title>CIRCLE EASE</title>
+    <title>Circle Ease</title>
+    <link rel="manifest" href="manifest.json">
+    <meta name="theme-color" content="#ff6b9d">
     <style>
-        /* --- 1. 全体の設定 --- */
-        body {
-            margin: 0;
-            padding: 0;
-            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
-            background-color: #fce4ec; /* 背景の薄いピンク */
-            overscroll-behavior-y: contain; /* ブラウザ標準の更新を止める */
-        }
-
-        /* --- 2. 引っ張って更新のバー（普段は見えない） --- */
+        /* --- 引っ張って更新のスタイル --- */
         #ptr-banner {
             position: fixed;
             top: -60px;
@@ -24,122 +17,47 @@
             display: flex;
             align-items: center;
             justify-content: center;
-            background: #f06292;
+            background: #ff6b9d;
             color: white;
             font-weight: bold;
             z-index: 9999;
             transition: transform 0.1s linear;
         }
 
-        /* --- 3. ピンクのヘッダー --- */
-        header {
-            background-color: #f06292;
-            color: white;
-            text-align: center;
-            padding: 15px;
-            font-size: 16px;
-            font-weight: bold;
-            letter-spacing: 1px;
-            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        /* 全体：優しく清潔感のあるピンクベージュの背景 */
+        body { 
+            font-family: 'Helvetica Neue', Arial, sans-serif; 
+            margin: 0; 
+            background: #fff5f8; 
+            padding-bottom: 40px; 
+            color: #4a4a4a; 
+            overscroll-behavior-y: contain; /* 引っ張って更新用 */
         }
+        
+        /* ヘッダー：華やかなベリーピンク */
+        header { background: #ff6b9d; color: white; padding: 1rem; text-align: center; position: sticky; top: 0; z-index: 100; box-shadow: 0 4px 12px rgba(255,107,157,0.2); }
+        
+        .container { padding: 1.2rem; max-width: 500px; margin: 0 auto; }
 
-        /* --- 4. タブメニュー（地区・全国・個人） --- */
-        .tab-menu {
-            display: flex;
-            background-color: #f8bbd0;
-            margin: 10px;
-            border-radius: 8px;
-            overflow: hidden;
-        }
-        .tab {
-            flex: 1;
-            padding: 12px;
-            text-align: center;
-            font-size: 13px;
-            color: #888;
-        }
-        .tab.active {
-            background-color: #fff; /* 「全国」を選択状態に */
-            color: #f06292;
-            font-weight: bold;
-        }
+        /* メインボタン：丸みを持たせて可愛く */
+        .main-links { display: flex; gap: 12px; margin-bottom: 20px; }
+        .main-btn { flex: 1; padding: 14px; border-radius: 20px; border: none; background: #ff6b9d; color: white; font-weight: bold; cursor: pointer; transition: all 0.2s; font-size: 0.95rem; box-shadow: 0 4px 10px rgba(255,107,157,0.2); }
+        .main-btn:active { transform: scale(0.96); background: #e85a8b; }
+        .main-btn.all { background: #f8bbd0; color: #ad1457; }
 
-        /* --- 5. メインコンテンツ（白い枠） --- */
-        .content {
-            padding: 0 10px;
-        }
-        .box {
-            background: white;
-            border-radius: 8px;
-            height: 50px;
-            margin-bottom: 10px;
-            box-shadow: 0 1px 3px rgba(0,0,0,0.05);
-        }
-        .box-large {
-            height: 120px; /* 真ん中の大きな枠 */
-        }
-
-    </style>
-</head>
-<body>
-
-    <div id="ptr-banner">↓ 引っ張って更新</div>
-
-    <header>CIRCLE EASE</header>
-
-    <div class="tab-menu">
-        <div class="tab">地区</div>
-        <div class="tab active">全国</div>
-        <div class="tab">個人</div>
-    </div>
-
-    <div class="content">
-        <div class="box"></div>
-        <div class="box box-large"></div>
-        <div class="box"></div>
-        <div class="box"></div>
-        <div class="box"></div>
-        <div class="box"></div>
-    </div>
-
-    <script>
-        let startY = 0;
-        const banner = document.getElementById('ptr-banner');
-        const threshold = 80; // 80px引っ張ったら更新確定
-
-        window.addEventListener('touchstart', (e) => {
-            if (window.scrollY === 0) {
-                startY = e.touches[0].pageY;
-            }
-        });
-
-        window.addEventListener('touchmove', (e) => {
-            const y = e.touches[0].pageY;
-            if (window.scrollY === 0 && y > startY) {
-                const diff = y - startY;
-                if (diff < threshold) {
-                    banner.style.transform = `translateY(${diff}px)`;
-                    banner.innerText = "↓ 引っ張って更新";
-                } else {
-                    banner.style.transform = `translateY(${diff}px)`;
-                    banner.innerText = "✨ 離して更新！";
-                }
-            }
-        });
-
-        window.addEventListener('touchend', (e) => {
-            const y = e.changedTouches[0].pageY;
-            if (window.scrollY === 0 && y - startY > threshold) {
-                banner.innerText = "🔄 更新中...";
-                // 実際にページをリロード
-                setTimeout(() => {
-                    location.reload();
-                }, 300);
-            } else {
-                // 足りなければ元に戻す
-                banner.style.transform = `translateY(0)`;
-            }
-        });
-    </script>
-</body>
-</html>
+        /* エリア選択：白ベースに淡いピンクのアクセント */
+        .region-section { background: white; border-radius: 20px; margin-bottom: 25px; overflow: hidden; box-shadow: 0 2px 10px rgba(0,0,0,0.05); border: 1px solid #ffe1eb; }
+        .region-header { background: #fff0f5; padding: 12px 18px; font-weight: bold; font-size: 0.85rem; color: #d81b60; letter-spacing: 0.05em; }
+        .region-group-title { background: #fff; padding: 12px 18px 4px; font-weight: bold; font-size: 0.8rem; color: #ff6b9d; }
+        
+        .pref-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px; padding: 12px 18px 18px; }
+        .pref-btn { background: #fff; border: 1px solid #ffd1e1; padding: 10px 4px; font-size: 0.8rem; border-radius: 12px; cursor: pointer; text-align: center; transition: all 0.2s; color: #4a4a4a; }
+        .pref-btn:active { background: #fff0f5; color: #ff6b9d; border-color: #ff6b9d; }
+        
+        /* 案件カード：左側にピンクのライン */
+        .recruit-card { background: white; padding: 1.5rem; margin-bottom: 1.2rem; border-radius: 20px; box-shadow: 0 4px 15px rgba(255,107,157,0.08); border: 1px solid #ffe1eb; border-left: 6px solid #ff6b9d; }
+        .recruit-title { font-weight: bold; color: #d81b60; font-size: 1.15rem; margin-bottom: 10px; line-height: 1.4; }
+        .recruit-info { font-size: 0.85em; color: #7d7d7d; line-height: 1.6; display: flex; flex-direction: column; gap: 4px; }
+        
+        /* 応募ボタン：安心感のあるお花のようなピンク */
+        .apply-btn { margin-top: 18px; background: #ff4081; color: white; border: none; padding: 14px; border-radius:
