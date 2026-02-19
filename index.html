@@ -14,65 +14,50 @@
             --card-bg: #ffffff;
             --text-main: #524a4a;
             --text-sub: #a89e9e;
-            --shadow: 0 10px 30px rgba(179,146,146,0.12);
+            --shadow: 0 8px 25px rgba(179,146,146,0.12);
+            --tile-shadow: 0 4px 12px rgba(0,0,0,0.05);
         }
 
         body { 
             font-family: 'Noto Sans JP', sans-serif; 
             margin: 0; background: var(--soft-bg); color: var(--text-main); 
             -webkit-font-smoothing: antialiased;
-            overflow-x: hidden;
         }
         
-        /* --- ヘッダー：グラスモーフィズム仕上げ --- */
+        /* ヘッダー */
         header { 
-            background: rgba(179, 146, 146, 0.95); /* 少しだけ透けさせる */
-            backdrop-filter: blur(10px);
-            -webkit-backdrop-filter: blur(10px);
-            color: white; 
-            padding: 1.2rem 1.2rem 1rem; 
+            background: rgba(179, 146, 146, 0.95);
+            backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px);
+            color: white; padding: 1.2rem 1.2rem 1rem; 
             position: sticky; top: 0; z-index: 100; 
             display: flex; flex-direction: column; gap: 14px;
             box-shadow: 0 4px 25px rgba(0,0,0,0.1);
         }
 
         header h1 { 
-            margin: 0; 
-            font-size: 1.7rem;
-            letter-spacing: 0.25em; 
-            font-family: 'Lora', serif;
-            text-align: center;
-            font-weight: 600;
+            margin: 0; font-size: 1.7rem; letter-spacing: 0.25em; 
+            font-family: 'Lora', serif; text-align: center;
         }
 
-        .header-action-row {
-            display: flex; justify-content: flex-end; width: 100%;
-        }
+        .header-action-row { display: flex; justify-content: flex-end; width: 100%; }
 
         #force-reload-btn {
             background: rgba(255, 255, 255, 0.15);
             border: 1px solid rgba(255, 255, 255, 0.4); 
-            border-radius: 30px;
-            padding: 6px 14px; 
+            border-radius: 30px; padding: 6px 14px; 
             font-size: 10px; font-weight: bold; color: white;
             cursor: pointer; display: flex; align-items: center; gap: 6px;
-            transition: all 0.2s;
         }
-        #force-reload-btn:active { transform: scale(0.9); background: rgba(255, 255, 255, 0.3); }
 
         .header-nav-row { display: flex; gap: 10px; width: 100%; }
-
         .nav-btn { 
             flex: 1; padding: 12px; border-radius: 14px; border: none; 
             background: white; color: var(--mauve-deep); 
             font-weight: bold; font-size: 0.8rem;
             box-shadow: 0 6px 15px rgba(0,0,0,0.08);
             display: flex; align-items: center; justify-content: center; gap: 6px;
-            transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
         }
-        .nav-btn:active { transform: translateY(2px); box-shadow: 0 2px 8px rgba(0,0,0,0.05); }
 
-        /* リロードアイコン */
         .reload-icon {
             display: inline-block; width: 10px; height: 10px;
             border: 1.8px solid white; border-top: 1.8px solid transparent; 
@@ -83,38 +68,54 @@
             border-left: 3.5px solid transparent; border-right: 3.5px solid transparent;
             border-bottom: 4.5px solid white; transform: rotate(45deg);
         }
-        .spinning { animation: spin 0.8s cubic-bezier(0.4, 0, 0.2, 1) infinite; }
+        .spinning { animation: spin 0.8s linear infinite; }
         @keyframes spin { from { transform: rotate(0deg); } to { transform: rotate(360deg); } }
 
-        .container { padding: 1.5rem 1.2rem; max-width: 500px; margin: 0 auto; }
+        .container { padding: 1.5rem 1rem; max-width: 500px; margin: 0 auto; }
         
-        /* エリア選択：モダンデザイン */
+        /* エリア選択：タイルUI強化 */
         .region-section { 
             background: #ffffff; border-radius: 28px; 
-            margin-bottom: 40px; border: 1px solid rgba(0,0,0,0.01);
-            box-shadow: var(--shadow);
+            margin-bottom: 40px; box-shadow: var(--shadow);
             overflow: hidden;
         }
         .region-header { 
             background: var(--mauve-light); padding: 20px 24px; font-weight: 700; 
-            font-size: 0.9rem; color: var(--mauve-deep); letter-spacing: 0.15em;
+            font-size: 0.95rem; color: var(--mauve-deep); letter-spacing: 0.1em;
             border-bottom: 1px solid #f0eded;
         }
         .region-group-title { 
-            padding: 18px 24px 6px; font-weight: 700; font-size: 0.75rem; 
+            padding: 20px 20px 8px; font-weight: 700; font-size: 0.8rem; 
             color: var(--mauve); display: flex; align-items: center;
         }
         .region-group-title::before {
             content: ""; display: inline-block; width: 4px; height: 14px; 
             background: var(--mauve); margin-right: 8px; border-radius: 2px;
         }
-        .pref-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; padding: 10px 18px 24px; }
-        .pref-btn { 
-            background: #fdfcfc; border: 1px solid #f2efef; padding: 12px 2px; font-size: 0.7rem; 
-            font-weight: bold; border-radius: 14px; color: var(--text-main);
-            transition: all 0.2s;
+
+        /* 都道府県ボタン：文字を大きく、アイコン感を出す */
+        .pref-grid { 
+            display: grid; grid-template-columns: repeat(3, 1fr); 
+            gap: 12px; padding: 10px 15px 25px; 
         }
-        .pref-btn:active { background: var(--mauve); color: white; border-color: var(--mauve); transform: scale(0.95); }
+        .pref-btn { 
+            background: linear-gradient(180deg, #ffffff 0%, #f9f7f6 100%); 
+            border: 1px solid #eeebe9; 
+            padding: 16px 2px; /* 高さを出してタイル感を強調 */
+            font-size: 0.85rem; /* 文字を大きく */
+            font-weight: 700; border-radius: 16px; color: var(--text-main);
+            box-shadow: var(--tile-shadow);
+            transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+            cursor: pointer;
+        }
+        /* 選択時・タップ時の演出 */
+        .pref-btn:active { 
+            background: var(--mauve); 
+            color: white; 
+            border-color: var(--mauve);
+            transform: scale(0.92);
+            box-shadow: 0 2px 8px rgba(179,146,146,0.4);
+        }
         
         #current-filter-label { 
             margin: 35px 0 20px; font-size: 1.15rem; font-weight: 700; color: var(--mauve-deep); 
@@ -124,12 +125,11 @@
             content: ""; flex: 1; height: 1px; background: #e0d8d5; margin-left: 15px; 
         }
 
-        /* 募集カード：カード全体の質感をアップ */
+        /* 案件カード */
         .recruit-card { 
             background: var(--card-bg); margin-bottom: 2rem; border-radius: 24px; 
             box-shadow: var(--shadow); display: flex; overflow: hidden;
             animation: slideUp 0.6s cubic-bezier(0.23, 1, 0.32, 1) both;
-            border: 1px solid rgba(0,0,0,0.01);
         }
         @keyframes slideUp { from { opacity: 0; transform: translateY(30px); } to { opacity: 1; transform: translateY(0); } }
 
@@ -138,23 +138,18 @@
             display: flex; align-items: center; justify-content: center; 
             writing-mode: vertical-rl; color: var(--mauve-deep);
             font-size: 0.75rem; font-weight: 700; letter-spacing: 0.4em;
-            border-right: 1px solid #f5f1ef;
         }
         .card-content { padding: 1.8rem; flex: 1; }
-        .recruit-title { font-weight: 700; color: var(--text-main); font-size: 1.2rem; margin-bottom: 12px; line-height: 1.4; }
+        .recruit-title { font-weight: 700; color: var(--text-main); font-size: 1.2rem; margin-bottom: 12px; }
         .recruit-info { font-size: 0.85rem; color: var(--text-sub); display: flex; flex-direction: column; gap: 7px; }
-        .recruit-info span { display: flex; align-items: center; gap: 6px; }
-
-        /* ボタン：押したくなる厚み */
+        
         .apply-btn { 
             margin-top: 22px; 
             background: linear-gradient(135deg, var(--mauve) 0%, var(--mauve-deep) 100%);
             color: white; border: none; padding: 16px; border-radius: 16px; width: 100%; 
             font-size: 1rem; font-weight: 700;
             box-shadow: 0 8px 25px rgba(179,146,146,0.35);
-            transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
         }
-        .apply-btn:active { transform: scale(0.96); box-shadow: 0 4px 12px rgba(179,146,146,0.2); }
     </style>
 </head>
 <body>
@@ -181,7 +176,6 @@
     </div>
     
     <div id="current-filter-label">表示中: すべての募集</div>
-    
     <div id="recruit-list"></div>
 </div>
 
