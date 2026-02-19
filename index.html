@@ -12,18 +12,23 @@
             --mauve-light: #fdfaf9;
             --soft-bg: #f5f1ef;
             --card-bg: #ffffff;
-            /* タイル文字：漆黒から「濃いブラウン」へ変更 */
-            --text-main: #3d2e2e; 
+            
+            /* ボタン背景色：画像のような濃いモーブ系 */
+            --tile-bg: #c9b4b4; 
+            /* ボタンの文字色：少し薄くして背景に馴染ませる */
+            --text-main: #fcfafa; 
+            
             --text-sub: #a89e9e;
             --shadow: 0 8px 25px rgba(179,146,146,0.12);
-            --tile-shadow: 0 5px 12px rgba(0,0,0,0.15), inset 0 1px 0 #fff;
+            --tile-border: #b8a0a0;
+            --tile-shadow: 0 4px 10px rgba(0,0,0,0.1);
+            
             /* 可変変数 */
             --pref-font-size: 17px; 
             --pref-grid-cols: repeat(3, 1fr);
-            --pref-padding: 16px 2px;
         }
 
-        body { font-family: 'Noto Sans JP', sans-serif; margin: 0; background: var(--soft-bg); color: #443e3e; -webkit-font-smoothing: antialiased; }
+        body { font-family: 'Noto Sans JP', sans-serif; margin: 0; background: var(--soft-bg); color: #524a4a; -webkit-font-smoothing: antialiased; }
         
         header { 
             background: rgba(179, 146, 146, 0.95); backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px);
@@ -48,13 +53,6 @@
             border-right: 3.5px solid transparent; border-bottom: 4.5px solid white; transform: rotate(45deg); 
         }
 
-        .header-nav-row { display: flex; gap: 10px; width: 100%; }
-        .nav-btn { 
-            flex: 1; padding: 12px; border-radius: 14px; border: none; background: white; 
-            color: var(--mauve-deep); font-weight: bold; font-size: 13px;
-            box-shadow: 0 6px 15px rgba(0,0,0,0.08); display: flex; align-items: center; justify-content: center; gap: 6px;
-        }
-
         .container { padding: 1.5rem 1rem; max-width: 500px; margin: 0 auto; }
         
         .region-section { background: #ffffff; border-radius: 28px; margin-bottom: 40px; box-shadow: var(--shadow); overflow: hidden; }
@@ -73,37 +71,38 @@
         .region-group-title { padding: 20px 20px 8px; font-weight: 700; font-size: 12px; color: var(--mauve); display: flex; align-items: center; }
         .region-group-title::before { content: ""; display: inline-block; width: 4px; height: 14px; background: var(--mauve); margin-right: 8px; border-radius: 2px; }
 
-        .pref-grid { display: grid; grid-template-columns: var(--pref-grid-cols); gap: 12px; padding: 10px 15px 25px; transition: all 0.3s ease; }
+        .pref-grid { display: grid; grid-template-columns: var(--pref-grid-cols); gap: 10px; padding: 10px 15px 25px; transition: all 0.3s ease; }
         
+        /* 都道府県ボタン：背景を濃く、文字を少し薄く */
         .pref-btn { 
-            background: linear-gradient(180deg, #ffffff 0%, #e8e2e0 100%); 
-            border: 1.5px solid #888280; 
-            padding: var(--pref-padding); 
+            background: linear-gradient(135deg, var(--tile-bg) 0%, #bca4a4 100%); 
+            border: 1px solid var(--tile-border); 
+            padding: 14px 2px;
             font-size: var(--pref-font-size); 
-            font-weight: 900; 
+            font-weight: 700; 
             border-radius: 12px; 
-            color: var(--text-main); /* 濃いブラウン */
+            color: var(--text-main); 
             box-shadow: var(--tile-shadow); 
-            transition: all 0.1s; 
+            transition: all 0.2s ease; 
             cursor: pointer; 
             text-align: center;
+            display: flex; align-items: center; justify-content: center;
         }
         .pref-btn:active { 
-            background: #d1c8c6; 
-            transform: translateY(3px); 
-            box-shadow: 0 2px 5px rgba(0,0,0,0.2), inset 0 2px 4px rgba(0,0,0,0.1); 
+            background: var(--mauve-deep);
+            transform: translateY(1px); 
+            box-shadow: none; 
         }
 
         #current-filter-label { margin: 35px 0 20px; font-size: 1.15rem; font-weight: 700; color: var(--mauve-deep); display: flex; align-items: center; }
         #current-filter-label::after { content: ""; flex: 1; height: 1px; background: #e0d8d5; margin-left: 15px; }
 
-        .recruit-card { background: var(--card-bg); margin-bottom: 2rem; border-radius: 24px; box-shadow: var(--shadow); display: flex; overflow: hidden; animation: slideUp 0.6s both; }
-        @keyframes slideUp { from { opacity: 0; transform: translateY(30px); } to { opacity: 1; transform: translateY(0); } }
+        .recruit-card { background: var(--card-bg); margin-bottom: 2rem; border-radius: 24px; box-shadow: var(--shadow); display: flex; overflow: hidden; }
         .card-accent { width: 44px; background: linear-gradient(180deg, var(--mauve-light), var(--mauve)); display: flex; align-items: center; justify-content: center; writing-mode: vertical-rl; color: var(--mauve-deep); font-size: 11px; font-weight: 700; letter-spacing: 0.4em; }
         .card-content { padding: 1.8rem; flex: 1; }
-        .recruit-title { font-weight: 700; color: #443e3e; font-size: 19px; margin-bottom: 12px; }
+        .recruit-title { font-weight: 700; color: #4a3b3b; font-size: 19px; margin-bottom: 12px; }
         .recruit-info { font-size: 13px; color: var(--text-sub); display: flex; flex-direction: column; gap: 7px; }
-        .apply-btn { margin-top: 22px; background: linear-gradient(135deg, var(--mauve) 0%, var(--mauve-deep) 100%); color: white; border: none; padding: 16px; border-radius: 16px; width: 100%; font-size: 16px; font-weight: 700; box-shadow: 0 8px 25px rgba(179,146,146,0.35); cursor: pointer; }
+        .apply-btn { margin-top: 22px; background: linear-gradient(135deg, var(--mauve) 0%, var(--mauve-deep) 100%); color: white; border: none; padding: 16px; border-radius: 16px; width: 100%; font-size: 16px; font-weight: 700; cursor: pointer; }
         
         .spinning { animation: spin 0.8s linear infinite; }
         @keyframes spin { from { transform: rotate(0deg); } to { transform: rotate(360deg); } }
@@ -117,12 +116,7 @@
         <button id="force-reload-btn" onclick="fastUpdate()">
             <span class="reload-icon sync-target"></span>
             最新にリロード
-            <span class="reload-icon sync-target"></span>
         </button>
-    </div>
-    <div class="header-nav-row">
-        <button class="nav-btn" onclick="scrollToSection('region-section')">📍 エリアで絞る</button>
-        <button class="nav-btn" onclick="filterByArea('すべて')">📋 すべて表示</button>
     </div>
 </header>
 
@@ -171,15 +165,12 @@ function applyFontSize(mode) {
     if (mode === 'small') {
         root.style.setProperty('--pref-font-size', '14px');
         root.style.setProperty('--pref-grid-cols', 'repeat(4, 1fr)');
-        root.style.setProperty('--pref-padding', '12px 1px');
     } else if (mode === 'mid') {
         root.style.setProperty('--pref-font-size', '17px');
         root.style.setProperty('--pref-grid-cols', 'repeat(3, 1fr)');
-        root.style.setProperty('--pref-padding', '16px 2px');
     } else if (mode === 'large') {
         root.style.setProperty('--pref-font-size', '20px'); 
         root.style.setProperty('--pref-grid-cols', 'repeat(3, 1fr)');
-        root.style.setProperty('--pref-padding', '20px 2px');
     }
     document.querySelectorAll('.size-btn').forEach(btn => {
         if (btn.id === `btn-${mode}`) btn.classList.add('active');
@@ -230,8 +221,10 @@ function displayRecruits(filter = 'すべて') {
     });
 }
 
-function scrollToSection(id) { window.scrollTo({ top: document.getElementById(id).offsetTop - 180, behavior: 'smooth' }); }
-function filterByArea(area) { displayRecruits(area); window.scrollTo({ top: document.getElementById('current-filter-label').offsetTop - 200, behavior: 'smooth' }); }
+function filterByArea(area) { 
+    displayRecruits(area); 
+    window.scrollTo({ top: document.getElementById('current-filter-label').offsetTop - 150, behavior: 'smooth' }); 
+}
 </script>
 </body>
 </html>
