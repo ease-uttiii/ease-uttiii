@@ -7,327 +7,244 @@
     <link href="https://fonts.googleapis.com/css2?family=Lora:wght@600&family=Noto+Sans+JP:wght@400;700&display=swap" rel="stylesheet">
     <style>
         :root {
-            --pink-main: #d4a5a5;
-            --pink-deep: #b57d7d;
-            --pink-light: #fff5f5;
-            --soft-bg: #fdf8f7;
+            --mauve: #b39292;
+            --mauve-deep: #967676;
+            --mauve-light: #fdfaf9;
+            --soft-bg: #f5f1ef;
             --card-bg: #ffffff;
-            --tile-bg-top: #fceeee; 
-            --tile-bg-bottom: #f2dada;
-            --tile-text: #7a5a5a;
-            --tile-border: #e8cfcf;
-            --tile-shadow: 0 4px 10px rgba(212, 165, 165, 0.15);
-            --text-sub: #b09999;
-            --shadow: 0 10px 30px rgba(212, 165, 165, 0.15);
-            --pref-font-size: 14px; 
+            
+            /* 都道府県ボタンの調整 */
+            --tile-bg-top: #dbcccc; /* 少し薄くしたグラデーション開始色 */
+            --tile-bg-bottom: #c9b4b4; /* 落ち着いたモーブの終了色 */
+            --tile-text: #5a4d4d; /* 文字は少し薄めの濃いブラウン */
+            --tile-border: #b8a0a0; /* 枠線を復活 */
+            
+            --text-sub: #a89e9e;
+            --shadow: 0 8px 25px rgba(179,146,146,0.12);
+            --tile-shadow: 0 4px 10px rgba(0,0,0,0.06);
+            
+            /* 可変変数 */
+            --pref-font-size: 17px; 
             --pref-grid-cols: repeat(3, 1fr);
         }
 
-        body { 
-            font-family: 'Noto Sans JP', sans-serif; 
-            margin: 0; 
-            background: var(--soft-bg); 
-            color: #5a4d4d; 
-            -webkit-font-smoothing: antialiased; 
-            scroll-behavior: smooth;
-            line-height: 1.6;
-        }
+        body { font-family: 'Noto Sans JP', sans-serif; margin: 0; background: var(--soft-bg); color: #524a4a; -webkit-font-smoothing: antialiased; }
         
         header { 
-            background: rgba(212, 165, 165, 0.95); 
-            backdrop-filter: blur(10px); 
-            -webkit-backdrop-filter: blur(10px);
-            color: white; 
-            padding: 1.2rem; 
-            position: sticky; 
-            top: 0; 
-            z-index: 100; 
-            display: flex; 
-            flex-direction: column; 
-            gap: 14px; 
-            box-shadow: 0 4px 25px rgba(0,0,0,0.1);
+            background: rgba(179, 146, 146, 0.95); backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px);
+            color: white; padding: 1.2rem 1.2rem 1rem; position: sticky; top: 0; z-index: 100; 
+            display: flex; flex-direction: column; gap: 14px; box-shadow: 0 4px 25px rgba(0,0,0,0.1);
         }
-        
-        header h1 { 
-            margin: 0; 
-            font-size: 1.5rem; 
-            letter-spacing: 0.15em; 
-            font-family: 'Lora', serif; 
-            text-align: center; 
-            cursor: pointer; 
-        }
+        header h1 { margin: 0; font-size: 1.7rem; letter-spacing: 0.25em; font-family: 'Lora', serif; text-align: center; }
 
-        .header-action-row { 
-            display: flex; 
-            justify-content: flex-end; 
-            width: 100%; 
-        }
+        .header-action-row { display: flex; justify-content: flex-end; width: 100%; }
         
+        /* リロードボタン：アイコンを両端に配置 */
         #force-reload-btn {
-            background: rgba(255, 255, 255, 0.2); 
-            border: 1px solid rgba(255, 255, 255, 0.4); 
-            border-radius: 30px; 
-            padding: 6px 14px; 
-            font-size: 10px; 
-            font-weight: bold; 
-            color: white;
-            cursor: pointer; 
-            display: flex; 
-            align-items: center; 
-            gap: 8px;
+            background: rgba(255, 255, 255, 0.15); border: 1px solid rgba(255, 255, 255, 0.4); 
+            border-radius: 30px; padding: 6px 14px; font-size: 10px; font-weight: bold; color: white;
+            cursor: pointer; display: flex; align-items: center; gap: 8px;
         }
 
         .reload-icon { 
-            display: inline-block; 
-            width: 10px; 
-            height: 10px; 
-            border: 1.8px solid white; 
-            border-top: 1.8px solid transparent; 
-            border-radius: 50%; 
-            position: relative; 
+            display: inline-block; width: 10px; height: 10px; border: 1.8px solid white; 
+            border-top: 1.8px solid transparent; border-radius: 50%; position: relative; 
         }
-        
         .reload-icon::after { 
-            content: ''; 
-            position: absolute; 
-            top: -2.8px; 
-            left: 4.5px; 
-            border-left: 3.5px solid transparent; 
-            border-right: 3.5px solid transparent; 
-            border-bottom: 4.5px solid white; 
-            transform: rotate(45deg); 
+            content: ''; position: absolute; top: -2.8px; left: 4.5px; border-left: 3.5px solid transparent; 
+            border-right: 3.5px solid transparent; border-bottom: 4.5px solid white; transform: rotate(45deg); 
         }
 
-        .spinning { animation: spin 0.8s linear infinite; }
-        @keyframes spin { from { transform: rotate(0deg); } to { transform: rotate(360deg); } }
-
-        .container { padding: 1rem; max-width: 550px; margin: 0 auto; }
-
-        .region-section { 
-            background: var(--card-bg); 
-            border-radius: 24px; 
-            margin-bottom: 30px; 
-            box-shadow: var(--shadow); 
-            overflow: hidden; 
+        /* ヘッダーボタンを復活 */
+        .header-nav-row { display: flex; gap: 10px; width: 100%; }
+        .nav-btn { 
+            flex: 1; padding: 12px; border-radius: 14px; border: none; background: white; 
+            color: var(--mauve-deep); font-weight: bold; font-size: 13px;
+            box-shadow: 0 6px 15px rgba(0,0,0,0.08); display: flex; align-items: center; justify-content: center; gap: 6px;
         }
+
+        .container { padding: 1.5rem 1rem; max-width: 500px; margin: 0 auto; }
         
+        .region-section { background: #ffffff; border-radius: 28px; margin-bottom: 40px; box-shadow: var(--shadow); overflow: hidden; }
         .region-header { 
-            background: var(--pink-light); 
-            padding: 12px 20px; 
-            font-weight: bold; 
-            color: var(--pink-deep);
-            display: flex; 
-            justify-content: space-between; 
-            align-items: center; 
-            border-bottom: 1px solid #f2e2e2;
+            background: var(--mauve-light); padding: 15px 20px; font-weight: 700; font-size: 14px; color: var(--mauve-deep); 
+            border-bottom: 1px solid #f0eded; display: flex; justify-content: space-between; align-items: center;
         }
 
-        .size-selector { 
-            display: flex; 
-            background: #eeebe9; 
-            border-radius: 10px; 
-            padding: 3px; 
-            gap: 2px; 
+        .size-selector { display: flex; background: #eeebe9; border-radius: 10px; padding: 3px; gap: 2px; }
+        .size-btn {
+            border: none; background: transparent; padding: 5px 10px; font-size: 11px;
+            font-weight: bold; color: var(--text-sub); border-radius: 8px; cursor: pointer; transition: 0.2s;
         }
-        
-        .size-btn { 
-            border: none; 
-            background: transparent; 
-            padding: 5px 10px; 
-            font-size: 11px; 
-            font-weight: bold; 
-            color: var(--text-sub); 
-            border-radius: 8px; 
-            cursor: pointer; 
-        }
-        
-        .size-btn.active { 
-            background: white; 
-            color: var(--pink-deep); 
-            box-shadow: 0 2px 5px rgba(0,0,0,0.1); 
-        }
+        .size-btn.active { background: white; color: var(--mauve-deep); box-shadow: 0 2px 5px rgba(0,0,0,0.1); }
 
-        .region-group-title { 
-            padding: 15px 20px 5px; 
-            font-weight: bold; 
-            color: var(--pink-deep); 
-            font-size: 0.9em; 
-            display: flex; 
-            align-items: center; 
-        }
-        
-        .region-group-title::before { 
-            content: ""; 
-            display: inline-block; 
-            width: 3px; 
-            height: 12px; 
-            background: var(--pink-main); 
-            margin-right: 8px; 
-            border-radius: 2px; 
-        }
+        .region-group-title { padding: 20px 20px 8px; font-weight: 700; font-size: 12px; color: var(--mauve); display: flex; align-items: center; }
+        .region-group-title::before { content: ""; display: inline-block; width: 4px; height: 14px; background: var(--mauve); margin-right: 8px; border-radius: 2px; }
 
-        .pref-grid { 
-            display: grid; 
-            grid-template-columns: var(--pref-grid-cols); 
-            gap: 8px; 
-            padding: 10px 15px 25px; 
-        }
+        .pref-grid { display: grid; grid-template-columns: var(--pref-grid-cols); gap: 10px; padding: 10px 15px 25px; transition: all 0.3s ease; }
         
+        /* 都道府県ボタン：グラデーションと枠線、少し薄めの背景 */
         .pref-btn { 
-            background: linear-gradient(180deg, #ffffff 0%, #fcf3f3 100%); 
+            background: linear-gradient(180deg, var(--tile-bg-top) 0%, var(--tile-bg-bottom) 100%); 
             border: 1px solid var(--tile-border); 
-            padding: 12px 2px;
+            padding: 14px 2px;
             font-size: var(--pref-font-size); 
-            font-weight: bold; 
+            font-weight: 700; 
             border-radius: 12px; 
             color: var(--tile-text); 
-            cursor: pointer; 
-            text-align: center; 
             box-shadow: var(--tile-shadow); 
-            transition: all 0.1s;
+            transition: all 0.2s ease; 
+            cursor: pointer; 
+            text-align: center;
+            display: flex; align-items: center; justify-content: center;
         }
-        
         .pref-btn:active { 
-            transform: translateY(3px); 
-            box-shadow: 0 1px 0 var(--tile-border); 
+            background: var(--mauve-deep); color: white;
+            transform: translateY(1px); 
+            box-shadow: none; 
         }
 
-        #search-results { 
-            min-height: 100vh; 
-            padding: 20px 10px; 
-            border-top: 1px dashed var(--pink-main); 
-            margin-top: 20px; 
-        }
+        #current-filter-label { margin: 35px 0 20px; font-size: 1.15rem; font-weight: 700; color: var(--mauve-deep); display: flex; align-items: center; }
+        #current-filter-label::after { content: ""; flex: 1; height: 1px; background: #e0d8d5; margin-left: 15px; }
 
-        .result-card {
-            background: white;
-            border-radius: 15px;
-            padding: 20px;
-            margin-bottom: 20px;
-            box-shadow: var(--shadow);
-            border-left: 5px solid var(--pink-main);
-        }
-
-        .result-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 10px;
-            color: var(--pink-deep);
-            font-weight: bold;
-        }
+        .recruit-card { background: var(--card-bg); margin-bottom: 2rem; border-radius: 24px; box-shadow: var(--shadow); display: flex; overflow: hidden; }
+        .card-accent { width: 44px; background: linear-gradient(180deg, var(--mauve-light), var(--mauve)); display: flex; align-items: center; justify-content: center; writing-mode: vertical-rl; color: var(--mauve-deep); font-size: 11px; font-weight: 700; letter-spacing: 0.4em; }
+        .card-content { padding: 1.8rem; flex: 1; }
+        .recruit-title { font-weight: 700; color: #4a3b3b; font-size: 19px; margin-bottom: 12px; }
+        .recruit-info { font-size: 13px; color: var(--text-sub); display: flex; flex-direction: column; gap: 7px; }
+        .apply-btn { margin-top: 22px; background: linear-gradient(135deg, var(--mauve) 0%, var(--mauve-deep) 100%); color: white; border: none; padding: 16px; border-radius: 16px; width: 100%; font-size: 16px; font-weight: 700; cursor: pointer; }
+        
+        .spinning { animation: spin 0.8s linear infinite; }
+        @keyframes spin { from { transform: rotate(0deg); } to { transform: rotate(360deg); } }
     </style>
 </head>
 <body>
 
 <header>
-    <h1 onclick="window.scrollTo(0,0)">CIRCLE EASE</h1>
+    <h1>CIRCLE EASE</h1>
     <div class="header-action-row">
         <button id="force-reload-btn" onclick="fastUpdate()">
-            <span class="reload-icon sync-target"></span>更新<span class="reload-icon sync-target"></span>
+            <span class="reload-icon sync-target"></span>
+            最新にリロード
+            <span class="reload-icon sync-target"></span>
         </button>
+    </div>
+    <div class="header-nav-row">
+        <button class="nav-btn" onclick="scrollToSection('region-section')">📍 エリアで絞る</button>
+        <button class="nav-btn" onclick="filterByArea('すべて')">📋 すべて表示</button>
     </div>
 </header>
 
 <div class="container">
-    <div class="region-section">
+    <div id="region-section" class="region-section">
         <div class="region-header">
             <span>FIND BY AREA</span>
             <div class="size-selector">
-                <button class="size-btn" id="btn-small" onclick="changeSize('small')">小</button>
-                <button class="size-btn active" id="btn-mid" onclick="changeSize('mid')">中</button>
-                <button class="size-btn" id="btn-large" onclick="changeSize('large')">大</button>
+                <button class="size-btn" id="btn-small" onclick="changeFontSize('small', this)">小</button>
+                <button class="size-btn" id="btn-mid" onclick="changeFontSize('mid', this)">中</button>
+                <button class="size-btn" id="btn-large" onclick="changeFontSize('large', this)">大</button>
             </div>
         </div>
         <div id="pref-container"></div>
     </div>
-
-    <div id="search-results">
-        <p style="text-align:center; color:var(--text-sub); padding-top: 50px;">エリアを選択すると募集が表示されます</p>
-    </div>
+    <div id="current-filter-label">表示中: すべての募集</div>
+    <div id="recruit-list"></div>
 </div>
 
 <script>
-    const allRegions = {
-        "北海道・東北": ["北海道", "青森県", "岩手県", "宮城県", "秋田県", "山形県", "福島県"],
-        "関東": ["茨城県", "栃木県", "群馬県", "埼玉県", "千葉県", "東京都", "神奈川県"],
-        "甲信越・北陸": ["新潟県", "富山県", "石川県", "福井県", "山梨県", "長野県"],
-        "東海": ["岐阜県", "静岡県", "愛知県", "三重県"],
-        "近畿": ["滋賀県", "京都府", "大阪府", "兵庫県", "奈良県", "和歌山県"],
-        "中国": ["鳥取県", "島根県", "岡山県", "広島県", "山口県"],
-        "四国": ["徳島県", "香川県", "愛媛県", "高知県"],
-        "九州・沖縄": ["福岡県", "佐賀県", "長崎県", "熊本県", "大分県", "宮崎県", "鹿児島県", "沖縄県"]
-    };
+let recruitmentItems = [
+    { id: 1, title: "東京都内のプレミアム特別案件", area: "東京都全域", date: "2024-05-20" },
+    { id: 2, title: "大阪・関西エリア合同一斉募集", area: "大阪府", date: "2024-05-25" },
+    { id: 3, title: "北海道エリア限定・特別イベント", area: "北海道全域", date: "2024-06-01" },
+    { id: 4, title: "沖縄マリンリゾート・サマー案件", area: "沖縄県全域", date: "2024-06-10" }
+];
 
-    function render() {
-        const container = document.getElementById('pref-container');
-        container.innerHTML = '';
-        for (const [region, prefs] of Object.entries(allRegions)) {
-            const t = document.createElement('div');
-            t.className = 'region-group-title';
-            t.innerText = region;
-            container.appendChild(t);
-            const g = document.createElement('div');
-            g.className = 'pref-grid';
-            prefs.forEach(p => {
-                const b = document.createElement('div');
-                b.className = 'pref-btn';
-                b.innerText = p;
-                b.onclick = () => search(p);
-                g.appendChild(b);
-            });
-            container.appendChild(g);
-        }
+const regions = {
+    "【北海道】": ["北海道全域"], "【東北】": ["青森県", "岩手県", "宮城県", "秋田県", "山形県", "福島県"],
+    "【関東】": ["茨城県", "栃木県", "群馬県", "埼玉県", "千葉県", "東京都全域", "神奈川県"],
+    "【中部】": ["新潟県", "山梨県", "長野県", "岐阜県", "静岡県", "愛知県", "三重県", "富山県", "石川県", "福井県"],
+    "【関西】": ["滋賀県", "京都府", "大阪府", "兵庫県", "奈良県", "和歌山県"],
+    "【中国・四国】": ["鳥取県", "島根県", "岡山県", "広島県", "山口県", "徳島県", "香川県", "愛媛県", "高知県"],
+    "【九州・沖縄】": ["福岡県", "佐賀県", "長崎県", "熊本県", "大分県", "宮崎県", "鹿児島県", "沖縄県全域"]
+};
+
+window.onload = function() {
+    const savedMode = localStorage.getItem('prefFontSizeMode') || 'mid';
+    applyFontSize(savedMode);
+    createPrefButtons();
+    displayRecruits();
+};
+
+function applyFontSize(mode) {
+    const root = document.documentElement;
+    if (mode === 'small') {
+        root.style.setProperty('--pref-font-size', '14px');
+        root.style.setProperty('--pref-grid-cols', 'repeat(4, 1fr)');
+    } else if (mode === 'mid') {
+        root.style.setProperty('--pref-font-size', '17px');
+        root.style.setProperty('--pref-grid-cols', 'repeat(3, 1fr)');
+    } else if (mode === 'large') {
+        root.style.setProperty('--pref-font-size', '20px'); 
+        root.style.setProperty('--pref-grid-cols', 'repeat(3, 1fr)');
     }
+    document.querySelectorAll('.size-btn').forEach(btn => {
+        if (btn.id === `btn-${mode}`) btn.classList.add('active');
+        else btn.classList.remove('active');
+    });
+}
 
-    function search(pref) {
-        const target = document.getElementById('search-results');
-        target.scrollIntoView({behavior:'smooth'});
-        target.innerHTML = `
-            <div style="text-align:center; margin-bottom:30px;">
-                <h3 style="color:var(--pink-deep); border-bottom:2px solid var(--pink-main); display:inline-block; padding:0 15px; letter-spacing:0.1em;">${pref}の募集一覧</h3>
-            </div>
-            <div class="result-card">
-                <div class="result-header">
-                    <span>本日 10:00 掲載</span>
-                    <span style="background:var(--pink-light); padding:2px 8px; border-radius:5px; font-size:10px;">募集中</span>
-                </div>
-                <p style="font-weight:bold; font-size:1.1em; margin:10px 0;">[${pref}] 1対1プレイ案件</p>
-                <p style="font-size:13px; color:#666;">詳細な情報はログイン後に確認いただけます。</p>
-            </div>
-            <div style="text-align:center; padding:40px 0;">
-                <p style="color:var(--text-sub); font-size:12px;">これ以上の募集はありません</p>
-            </div>
-        `;
+function changeFontSize(mode, btn) {
+    applyFontSize(mode);
+    localStorage.setItem('prefFontSizeMode', mode);
+}
+
+async function fastUpdate() {
+    document.querySelectorAll('.sync-target').forEach(icon => { icon.classList.add('spinning'); });
+    setTimeout(() => { location.reload(); }, 600);
+}
+
+function createPrefButtons() {
+    const container = document.getElementById('pref-container');
+    container.innerHTML = '';
+    for (const [regionName, prefs] of Object.entries(regions)) {
+        const title = document.createElement('div');
+        title.className = 'region-group-title'; title.innerText = regionName;
+        container.appendChild(title);
+        const grid = document.createElement('div');
+        grid.className = 'pref-grid';
+        prefs.forEach(pref => {
+            const btn = document.createElement('button');
+            btn.className = 'pref-btn'; btn.innerText = pref;
+            btn.onclick = () => filterByArea(pref);
+            grid.appendChild(btn);
+        });
+        container.appendChild(grid);
     }
+}
 
-    function changeSize(mode) {
-        const root = document.documentElement;
-        document.querySelectorAll('.size-btn').forEach(b => b.classList.remove('active'));
-        document.getElementById(`btn-${mode}`).classList.add('active');
-        if (mode === 'small') {
-            root.style.setProperty('--pref-font-size', '11px');
-            root.style.setProperty('--pref-grid-cols', 'repeat(4, 1fr)');
-        } else if (mode === 'mid') {
-            root.style.setProperty('--pref-font-size', '14px');
-            root.style.setProperty('--pref-grid-cols', 'repeat(3, 1fr)');
-        } else if (mode === 'large') {
-            root.style.setProperty('--pref-font-size', '17px');
-            root.style.setProperty('--pref-grid-cols', 'repeat(2, 1fr)');
-        }
-    }
+function displayRecruits(filter = 'すべて') {
+    const list = document.getElementById('recruit-list');
+    const label = document.getElementById('current-filter-label');
+    list.innerHTML = '';
+    label.innerText = filter === 'すべて' ? '表示中: すべての募集' : `表示中: ${filter}`;
+    const filtered = filter === 'すべて' ? recruitmentItems : recruitmentItems.filter(item => item.area === filter);
+    filtered.forEach(item => {
+        const card = document.createElement('div');
+        card.className = 'recruit-card';
+        card.innerHTML = `<div class="card-accent">RECRUIT</div><div class="card-content"><div class="recruit-title">${item.title}</div><div class="recruit-info"><span>📍 エリア: ${item.area}</span><span>📅 掲載日: ${item.date}</span></div><button class="apply-btn">詳細・応募はこちら</button></div>`;
+        list.appendChild(card);
+    });
+}
 
-    async function fastUpdate() {
-        const icons = document.querySelectorAll('.sync-target');
-        icons.forEach(icon => icon.classList.add('spinning'));
-        setTimeout(() => {
-            location.reload();
-        }, 600);
-    }
+function scrollToSection(id) { 
+    const el = document.getElementById(id);
+    if(el) window.scrollTo({ top: el.offsetTop - 180, behavior: 'smooth' }); 
+}
 
-    window.onload = () => {
-        render();
-    };
+function filterByArea(area) { 
+    displayRecruits(area); 
+    window.scrollTo({ top: document.getElementById('current-filter-label').offsetTop - 200, behavior: 'smooth' }); 
+}
 </script>
 </body>
 </html>
