@@ -7,180 +7,111 @@
     <link href="https://fonts.googleapis.com/css2?family=Lora:wght@600&family=Noto+Sans+JP:wght@400;700&display=swap" rel="stylesheet">
     <style>
         :root {
-            /* 管理用カラー：上品なモーブカラーと直感的なボタン感 */
-            --mauve: #b39292;
-            --mauve-deep: #967676;
-            --mauve-light: #fdfaf9;
-            --soft-bg: #f5f1ef;
+            --pink-main: #d4a5a5;
+            --pink-deep: #b57d7d;
+            --pink-light: #fff5f5;
+            --soft-bg: #fdf8f7;
             --card-bg: #ffffff;
-            --tile-bg-top: #dbcccc;
-            --tile-bg-bottom: #c9b4b4;
-            --tile-text: #5a4d4d;
-            --tile-border: #b8a0a0;
-            --text-sub: #a89e9e;
-            --shadow: 0 8px 25px rgba(179,146,146,0.12);
-
+            --tile-text: #7a5a5a;
+            --tile-border: #e8cfcf;
+            --shadow: 0 10px 30px rgba(212, 165, 165, 0.15);
             --base-font-size: 14px;
-            --pref-font-size: 17px; 
             --pref-grid-cols: repeat(3, 1fr);
         }
 
-        body { 
-            font-family: 'Noto Sans JP', sans-serif; margin: 0; background: var(--soft-bg); color: #524a4a; 
-            font-size: var(--base-font-size); transition: font-size 0.2s; 
-        }
+        body { font-family: 'Noto Sans JP', sans-serif; margin: 0; background: var(--soft-bg); color: #5a4d4d; line-height: 1.6; font-size: var(--base-font-size); transition: font-size 0.2s; scroll-behavior: smooth; }
+        header { background: linear-gradient(135deg, var(--pink-main) 0%, var(--pink-deep) 100%); color: white; padding: 1.2rem; position: sticky; top: 0; z-index: 100; display: flex; flex-direction: column; gap: 12px; box-shadow: 0 4px 20px rgba(0,0,0,0.1); }
+        header h1 { margin: 0; font-size: 1.5rem; letter-spacing: 0.1em; text-align: center; font-family: 'Lora', serif; cursor: pointer; }
         
-        header { 
-            background: rgba(179, 146, 146, 0.95); backdrop-filter: blur(10px); color: white; padding: 1.2rem; 
-            position: sticky; top: 0; z-index: 100; display: flex; flex-direction: column; gap: 14px; box-shadow: 0 4px 25px rgba(0,0,0,0.1);
-        }
-        header h1 { margin: 0; font-size: 1.8em; letter-spacing: 0.2em; font-family: 'Lora', serif; text-align: center; }
-
         .header-action-row { display: flex; justify-content: flex-end; }
+        #force-reload-btn { background: rgba(255, 255, 255, 0.2); border: 1px solid rgba(255, 255, 255, 0.4); border-radius: 30px; padding: 6px 14px; font-size: 10px; font-weight: bold; color: white; cursor: pointer; display: flex; align-items: center; gap: 8px; }
 
-        #force-reload-btn {
-            background: rgba(255, 255, 255, 0.15); border: 1px solid rgba(255, 255, 255, 0.4); 
-            border-radius: 30px; padding: 8px 18px; font-size: 11px; font-weight: bold; color: white;
-            cursor: pointer; display: flex; align-items: center; gap: 8px;
-        }
-        .reload-icon { 
-            display: inline-block; width: 10px; height: 10px; border: 1.8px solid white; 
-            border-top: 1.8px solid transparent; border-radius: 50%; position: relative; 
-        }
-        .reload-icon::after { 
-            content: ''; position: absolute; top: -2.8px; left: 4.5px; border-left: 3.5px solid transparent; 
-            border-right: 3.5px solid transparent; border-bottom: 4.5px solid white; transform: rotate(45deg); 
-        }
-        .spinning { animation: spin 0.8s linear infinite; }
-        @keyframes spin { from { transform: rotate(0deg); } to { transform: rotate(360deg); } }
-
-        .container { padding: 1.5rem 1rem; max-width: 500px; margin: 0 auto; }
+        .container { padding: 1rem; max-width: 550px; margin: 0 auto; }
+        .region-section { background: var(--card-bg); border-radius: 24px; margin-bottom: 20px; box-shadow: var(--shadow); overflow: hidden; }
+        .region-header { background: var(--pink-light); padding: 12px 20px; font-weight: bold; color: var(--pink-deep); display: flex; justify-content: space-between; align-items: center; }
         
-        .region-section { background: #ffffff; border-radius: 28px; margin-bottom: 40px; box-shadow: var(--shadow); overflow: hidden; }
-        .region-header { 
-            background: var(--mauve-light); padding: 15px 20px; font-weight: 700; font-size: 1.1em; color: var(--mauve-deep); 
-            display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid #f0eded;
-        }
+        .size-selector { display: flex; background: #eee; border-radius: 8px; padding: 3px; gap: 2px; }
+        .size-btn { border: none; background: transparent; padding: 6px 12px; font-size: 11px; border-radius: 6px; cursor: pointer; font-weight: bold; color: #888; }
+        .size-btn.active { background: white; color: var(--pink-deep); box-shadow: 0 2px 4px rgba(0,0,0,0.1); }
 
-        .size-selector { display: flex; background: #eeebe9; border-radius: 10px; padding: 3px; gap: 2px; }
-        .size-btn { border: none; background: transparent; padding: 5px 12px; font-size: 11px; font-weight: bold; color: var(--text-sub); border-radius: 8px; cursor: pointer; }
-        .size-btn.active { background: white; color: var(--mauve-deep); box-shadow: 0 2px 5px rgba(0,0,0,0.1); }
-
-        .region-group-title { padding: 20px 20px 8px; font-weight: 700; font-size: 1em; color: var(--mauve); display: flex; align-items: center; }
-        .region-group-title::before { content: ""; display: inline-block; width: 4px; height: 14px; background: var(--mauve); margin-right: 8px; border-radius: 2px; }
-
-        .pref-grid { display: grid; grid-template-columns: var(--pref-grid-cols); gap: 10px; padding: 10px 15px 25px; }
+        .region-group-title { padding: 15px 20px 5px; font-weight: bold; color: var(--pink-deep); font-size: 0.9em; }
+        .pref-grid { display: grid; grid-template-columns: var(--pref-grid-cols); gap: 10px; padding: 10px 15px 20px; }
         
         .pref-btn { 
-            background: linear-gradient(180deg, var(--tile-bg-top) 0%, var(--tile-bg-bottom) 100%); 
-            border: 1px solid var(--tile-border); padding: 14px 2px;
-            font-size: var(--pref-font-size); font-weight: 700; border-radius: 12px; color: var(--tile-text); 
-            cursor: pointer; text-align: center; box-shadow: 0 4px 0 var(--mauve-deep); 
-            transition: all 0.1s; display: block; text-decoration: none;
+            background: #fff; border: 1px solid var(--tile-border); padding: 12px 2px;
+            font-size: 15px; font-weight: bold; border-radius: 12px; color: var(--tile-text); 
+            cursor: pointer; text-align: center; box-shadow: 0 4px 0 var(--tile-border); 
+            transition: all 0.1s;
         }
-        .pref-btn:active { transform: translateY(3px); box-shadow: 0 1px 0 var(--mauve-deep); }
+        .pref-btn:active { transform: translateY(3px); box-shadow: 0 1px 0 var(--tile-border); }
 
-        .recruit-card { background: var(--card-bg); margin-bottom: 2rem; border-radius: 24px; box-shadow: var(--shadow); display: flex; overflow: hidden; }
-        .card-accent { width: 44px; background: linear-gradient(180deg, var(--mauve-light), var(--mauve)); display: flex; align-items: center; justify-content: center; writing-mode: vertical-rl; color: var(--mauve-deep); font-size: 11px; font-weight: 700; letter-spacing: 0.4em; }
-        .card-content { padding: 1.8rem; flex: 1; }
-        .apply-btn { margin-top: 22px; background: linear-gradient(135deg, var(--mauve) 0%, var(--mauve-deep) 100%); color: white; border: none; padding: 16px; border-radius: 16px; width: 100%; font-size: 1.1em; font-weight: 700; cursor: pointer; }
+        #search-results { min-height: 100vh; padding-top: 20px; }
     </style>
 </head>
 <body>
 
 <header>
-    <h1>CIRCLE EASE</h1>
+    <h1 onclick="window.scrollTo(0,0)">CIRCLE EASE</h1>
     <div class="header-action-row">
-        <button id="force-reload-btn" onclick="executeRefresh()">
-            <span class="reload-icon" id="rl-l"></span>最新にリロード<span class="reload-icon" id="rl-r"></span>
-        </button>
+        <button id="force-reload-btn" onclick="location.reload()">更新</button>
     </div>
 </header>
 
 <div class="container">
     <div class="region-section">
         <div class="region-header">
-            <span>FIND BY AREA</span>
+            <span>エリア選択</span>
             <div class="size-selector">
-                <button class="size-btn" id="s-btn" onclick="updateViewSize('small')">小</button>
-                <button class="size-btn active" id="m-btn" onclick="updateViewSize('mid')">中</button>
-                <button class="size-btn" id="l-btn" onclick="updateViewSize('large')">大</button>
+                <button class="size-btn" id="s-btn" onclick="updateSize('small')">小</button>
+                <button class="size-btn active" id="m-btn" onclick="updateSize('mid')">中</button>
+                <button class="size-btn" id="l-btn" onclick="updateSize('large')">大</button>
             </div>
         </div>
-        <div id="pref-master-container"></div>
+        <div id="pref-container"></div>
     </div>
-
-    <div id="recruit-list">
-        <div class="recruit-card">
-            <div class="card-accent">RECRUIT</div>
-            <div class="card-content">
-                <div style="font-weight:700; font-size:1.2em; margin-bottom:10px;">滋賀県 / 20代女性</div>
-                <div style="color:var(--text-sub); font-size:0.9em;">希望プレイ：お任せ、恋人風...</div>
-                <button class="apply-btn" onclick="location.href='woman.html'">依頼フォームへ</button>
-            </div>
-        </div>
-    </div>
+    <div id="search-results"></div>
 </div>
 
 <script>
-    const allRegions = {
-        "北海道・東北": ["北海道", "青森県", "岩手県", "宮城県", "秋田県", "山形県", "福島県"],
-        "関東": ["茨城県", "栃木県", "群馬県", "埼玉県", "千葉県", "東京都", "神奈川県"],
-        "中部": ["新潟県", "富山県", "石川県", "福井県", "山梨県", "長野県", "岐阜県", "静岡県", "愛知県"],
-        "近畿": ["三重県", "滋賀県", "京都府", "大阪府", "兵庫県", "奈良県", "和歌山県"],
-        "中国・四国": ["鳥取県", "島根県", "岡山県", "広島県", "山口県", "徳島県", "香川県", "愛媛県", "高知県"],
-        "九州・沖縄": ["福岡県", "佐賀県", "長崎県", "熊本県", "大分県", "宮崎県", "鹿児島県", "沖縄県"]
+    const regions = {
+        "近畿": ["滋賀県", "京都府", "大阪府", "兵庫県", "奈良県", "和歌山県", "三重県"],
+        "関東": ["東京都", "神奈川県", "埼玉県", "千葉県", "茨城県", "栃木県", "群馬県"]
+        // (他、昨日の全データ)
     };
 
-    function updateViewSize(size) {
-        const root = document.documentElement;
-        document.querySelectorAll('.size-btn').forEach(b => b.classList.remove('active'));
-        document.getElementById(size + '-btn').classList.add('active');
-        if (size === 'small') {
-            root.style.setProperty('--base-font-size', '12px');
-            root.style.setProperty('--pref-grid-cols', 'repeat(4, 1fr)');
-        } else if (size === 'mid') {
-            root.style.setProperty('--base-font-size', '14px');
-            root.style.setProperty('--pref-grid-cols', 'repeat(3, 1fr)');
-        } else {
-            root.style.setProperty('--base-font-size', '18px');
-            root.style.setProperty('--pref-grid-cols', 'repeat(2, 1fr)');
-        }
-    }
-
-    function renderPrefs() {
-        const container = document.getElementById('pref-master-container');
-        container.innerHTML = ''; 
-        for (const [regionName, prefs] of Object.entries(allRegions)) {
-            const title = document.createElement('div');
-            title.className = 'region-group-title';
-            title.innerText = `【${regionName}】`;
-            container.appendChild(title);
-
-            const grid = document.createElement('div');
-            grid.className = 'pref-grid';
+    function render() {
+        const container = document.getElementById('pref-container');
+        for (const [reg, prefs] of Object.entries(regions)) {
+            const t = document.createElement('div');
+            t.className = 'region-group-title';
+            t.innerText = reg;
+            container.appendChild(t);
+            const g = document.createElement('div');
+            g.className = 'pref-grid';
             prefs.forEach(p => {
-                const btn = document.createElement('a');
-                btn.className = 'pref-btn';
-                btn.innerText = p;
-                // ここを本来の検索・遷移ロジックに修正（例：?pref=滋賀県）
-                btn.href = `search.html?pref=${encodeURIComponent(p)}`;
-                grid.appendChild(btn);
+                const b = document.createElement('div');
+                b.className = 'pref-btn';
+                b.innerText = p;
+                b.onclick = () => {
+                    document.getElementById('search-results').scrollIntoView({behavior:'smooth'});
+                    document.getElementById('search-results').innerHTML = `<p style="text-align:center; padding:20px;">${p}の情報を読み込み中...</p>`;
+                };
+                g.appendChild(b);
             });
-            container.appendChild(grid);
+            container.appendChild(g);
         }
     }
 
-    function executeRefresh() {
-        document.getElementById('rl-l').classList.add('spinning');
-        document.getElementById('rl-r').classList.add('spinning');
-        setTimeout(() => { location.reload(); }, 600);
+    function updateSize(s) {
+        const r = document.documentElement;
+        document.querySelectorAll('.size-btn').forEach(b => b.classList.remove('active'));
+        document.getElementById(s + '-btn').classList.add('active');
+        if(s==='small'){ r.style.setProperty('--pref-grid-cols','repeat(4,1fr)'); }
+        else if(s==='mid'){ r.style.setProperty('--pref-grid-cols','repeat(3,1fr)'); }
+        else{ r.style.setProperty('--pref-grid-cols','repeat(2,1fr)'); }
     }
 
-    window.onload = () => {
-        renderPrefs();
-        updateViewSize('mid');
-    };
+    window.onload = render;
 </script>
 </body>
 </html>
