@@ -12,34 +12,46 @@
             --mauve-light: #fdfaf9;
             --soft-bg: #f5f1ef;
             --card-bg: #ffffff;
-            
-            /* 都道府県ボタンの調整 */
-            --tile-bg-top: #dbcccc; /* 少し薄くしたグラデーション開始色 */
-            --tile-bg-bottom: #c9b4b4; /* 落ち着いたモーブの終了色 */
-            --tile-text: #5a4d4d; /* 文字は少し薄めの濃いブラウン */
-            --tile-border: #b8a0a0; /* 枠線を復活 */
-            
+            --tile-bg-top: #dbcccc;
+            --tile-bg-bottom: #c9b4b4;
+            --tile-text: #5a4d4d;
+            --tile-border: #b8a0a0;
             --text-sub: #a89e9e;
             --shadow: 0 8px 25px rgba(179,146,146,0.12);
             --tile-shadow: 0 4px 10px rgba(0,0,0,0.06);
-            
-            /* 可変変数 */
-            --pref-font-size: 17px; 
+
+            /* --- フォントサイズ可変用変数 --- */
+            --base-font-size: 16px;       /* 全体の基本サイズ */
+            --pref-font-size: 17px;       /* 都道府県ボタン */
             --pref-grid-cols: repeat(3, 1fr);
+            --title-font-size: 1.7rem;    /* ヘッダーロゴ */
+            --card-title-size: 19px;      /* カードタイトル */
         }
 
-        body { font-family: 'Noto Sans JP', sans-serif; margin: 0; background: var(--soft-bg); color: #524a4a; -webkit-font-smoothing: antialiased; }
+        body { 
+            font-family: 'Noto Sans JP', sans-serif; 
+            margin: 0; 
+            background: var(--soft-bg); 
+            color: #524a4a; 
+            -webkit-font-smoothing: antialiased; 
+            font-size: var(--base-font-size); /* 全体に適用 */
+        }
         
         header { 
             background: rgba(179, 146, 146, 0.95); backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px);
             color: white; padding: 1.2rem 1.2rem 1rem; position: sticky; top: 0; z-index: 100; 
             display: flex; flex-direction: column; gap: 14px; box-shadow: 0 4px 25px rgba(0,0,0,0.1);
         }
-        header h1 { margin: 0; font-size: 1.7rem; letter-spacing: 0.25em; font-family: 'Lora', serif; text-align: center; }
+        header h1 { 
+            margin: 0; 
+            font-size: var(--title-font-size); 
+            letter-spacing: 0.25em; 
+            font-family: 'Lora', serif; 
+            text-align: center; 
+        }
 
         .header-action-row { display: flex; justify-content: flex-end; width: 100%; }
         
-        /* リロードボタン：アイコンを両端に配置 */
         #force-reload-btn {
             background: rgba(255, 255, 255, 0.15); border: 1px solid rgba(255, 255, 255, 0.4); 
             border-radius: 30px; padding: 6px 14px; font-size: 10px; font-weight: bold; color: white;
@@ -55,11 +67,10 @@
             border-right: 3.5px solid transparent; border-bottom: 4.5px solid white; transform: rotate(45deg); 
         }
 
-        /* ヘッダーボタンを復活 */
         .header-nav-row { display: flex; gap: 10px; width: 100%; }
         .nav-btn { 
             flex: 1; padding: 12px; border-radius: 14px; border: none; background: white; 
-            color: var(--mauve-deep); font-weight: bold; font-size: 13px;
+            color: var(--mauve-deep); font-weight: bold; font-size: 0.8em;
             box-shadow: 0 6px 15px rgba(0,0,0,0.08); display: flex; align-items: center; justify-content: center; gap: 6px;
         }
 
@@ -67,7 +78,7 @@
         
         .region-section { background: #ffffff; border-radius: 28px; margin-bottom: 40px; box-shadow: var(--shadow); overflow: hidden; }
         .region-header { 
-            background: var(--mauve-light); padding: 15px 20px; font-weight: 700; font-size: 14px; color: var(--mauve-deep); 
+            background: var(--mauve-light); padding: 15px 20px; font-weight: 700; font-size: 0.9em; color: var(--mauve-deep); 
             border-bottom: 1px solid #f0eded; display: flex; justify-content: space-between; align-items: center;
         }
 
@@ -78,12 +89,11 @@
         }
         .size-btn.active { background: white; color: var(--mauve-deep); box-shadow: 0 2px 5px rgba(0,0,0,0.1); }
 
-        .region-group-title { padding: 20px 20px 8px; font-weight: 700; font-size: 12px; color: var(--mauve); display: flex; align-items: center; }
+        .region-group-title { padding: 20px 20px 8px; font-weight: 700; font-size: 0.8em; color: var(--mauve); display: flex; align-items: center; }
         .region-group-title::before { content: ""; display: inline-block; width: 4px; height: 14px; background: var(--mauve); margin-right: 8px; border-radius: 2px; }
 
         .pref-grid { display: grid; grid-template-columns: var(--pref-grid-cols); gap: 10px; padding: 10px 15px 25px; transition: all 0.3s ease; }
         
-        /* 都道府県ボタン：グラデーションと枠線、少し薄めの背景 */
         .pref-btn { 
             background: linear-gradient(180deg, var(--tile-bg-top) 0%, var(--tile-bg-bottom) 100%); 
             border: 1px solid var(--tile-border); 
@@ -104,15 +114,15 @@
             box-shadow: none; 
         }
 
-        #current-filter-label { margin: 35px 0 20px; font-size: 1.15rem; font-weight: 700; color: var(--mauve-deep); display: flex; align-items: center; }
+        #current-filter-label { margin: 35px 0 20px; font-size: 1.15em; font-weight: 700; color: var(--mauve-deep); display: flex; align-items: center; }
         #current-filter-label::after { content: ""; flex: 1; height: 1px; background: #e0d8d5; margin-left: 15px; }
 
         .recruit-card { background: var(--card-bg); margin-bottom: 2rem; border-radius: 24px; box-shadow: var(--shadow); display: flex; overflow: hidden; }
-        .card-accent { width: 44px; background: linear-gradient(180deg, var(--mauve-light), var(--mauve)); display: flex; align-items: center; justify-content: center; writing-mode: vertical-rl; color: var(--mauve-deep); font-size: 11px; font-weight: 700; letter-spacing: 0.4em; }
+        .card-accent { width: 44px; background: linear-gradient(180deg, var(--mauve-light), var(--mauve)); display: flex; align-items: center; justify-content: center; writing-mode: vertical-rl; color: var(--mauve-deep); font-size: 0.7em; font-weight: 700; letter-spacing: 0.4em; }
         .card-content { padding: 1.8rem; flex: 1; }
-        .recruit-title { font-weight: 700; color: #4a3b3b; font-size: 19px; margin-bottom: 12px; }
-        .recruit-info { font-size: 13px; color: var(--text-sub); display: flex; flex-direction: column; gap: 7px; }
-        .apply-btn { margin-top: 22px; background: linear-gradient(135deg, var(--mauve) 0%, var(--mauve-deep) 100%); color: white; border: none; padding: 16px; border-radius: 16px; width: 100%; font-size: 16px; font-weight: 700; cursor: pointer; }
+        .recruit-title { font-weight: 700; color: #4a3b3b; font-size: var(--card-title-size); margin-bottom: 12px; }
+        .recruit-info { font-size: 0.8em; color: var(--text-sub); display: flex; flex-direction: column; gap: 7px; }
+        .apply-btn { margin-top: 22px; background: linear-gradient(135deg, var(--mauve) 0%, var(--mauve-deep) 100%); color: white; border: none; padding: 16px; border-radius: 16px; width: 100%; font-size: 1em; font-weight: 700; cursor: pointer; }
         
         .spinning { animation: spin 0.8s linear infinite; }
         @keyframes spin { from { transform: rotate(0deg); } to { transform: rotate(360deg); } }
@@ -140,9 +150,9 @@
         <div class="region-header">
             <span>FIND BY AREA</span>
             <div class="size-selector">
-                <button class="size-btn" id="btn-small" onclick="changeFontSize('small', this)">小</button>
-                <button class="size-btn" id="btn-mid" onclick="changeFontSize('mid', this)">中</button>
-                <button class="size-btn" id="btn-large" onclick="changeFontSize('large', this)">大</button>
+                <button class="size-btn" id="btn-small" onclick="changeFontSize('small')">小</button>
+                <button class="size-btn" id="btn-mid" onclick="changeFontSize('mid')">中</button>
+                <button class="size-btn" id="btn-large" onclick="changeFontSize('large')">大</button>
             </div>
         </div>
         <div id="pref-container"></div>
@@ -178,22 +188,30 @@ window.onload = function() {
 function applyFontSize(mode) {
     const root = document.documentElement;
     if (mode === 'small') {
+        root.style.setProperty('--base-font-size', '13px');
         root.style.setProperty('--pref-font-size', '14px');
+        root.style.setProperty('--title-font-size', '1.4rem');
+        root.style.setProperty('--card-title-size', '16px');
         root.style.setProperty('--pref-grid-cols', 'repeat(4, 1fr)');
     } else if (mode === 'mid') {
+        root.style.setProperty('--base-font-size', '16px');
         root.style.setProperty('--pref-font-size', '17px');
+        root.style.setProperty('--title-font-size', '1.7rem');
+        root.style.setProperty('--card-title-size', '19px');
         root.style.setProperty('--pref-grid-cols', 'repeat(3, 1fr)');
     } else if (mode === 'large') {
-        root.style.setProperty('--pref-font-size', '20px'); 
+        root.style.setProperty('--base-font-size', '19px');
+        root.style.setProperty('--pref-font-size', '20px');
+        root.style.setProperty('--title-font-size', '2.0rem');
+        root.style.setProperty('--card-title-size', '22px');
         root.style.setProperty('--pref-grid-cols', 'repeat(3, 1fr)');
     }
     document.querySelectorAll('.size-btn').forEach(btn => {
-        if (btn.id === `btn-${mode}`) btn.classList.add('active');
-        else btn.classList.remove('active');
+        btn.classList.toggle('active', btn.id === `btn-${mode}`);
     });
 }
 
-function changeFontSize(mode, btn) {
+function changeFontSize(mode) {
     applyFontSize(mode);
     localStorage.setItem('prefFontSizeMode', mode);
 }
