@@ -7,7 +7,6 @@
     <link href="https://fonts.googleapis.com/css2?family=Lora:wght@600&family=Noto+Sans+JP:wght@400;700&display=swap" rel="stylesheet">
     <style>
         :root {
-            /* 一番いい状態のローズピンクパレット */
             --pink-main: #d4a5a5;
             --pink-deep: #b57d7d;
             --pink-light: #fff5f5;
@@ -20,65 +19,203 @@
             --tile-shadow: 0 4px 10px rgba(212, 165, 165, 0.15);
             --text-sub: #b09999;
             --shadow: 0 10px 30px rgba(212, 165, 165, 0.15);
-
             --pref-font-size: 14px; 
             --pref-grid-cols: repeat(3, 1fr);
         }
 
-        body { font-family: 'Noto Sans JP', sans-serif; margin: 0; background: var(--soft-bg); color: #5a4d4d; -webkit-font-smoothing: antialiased; scroll-behavior: smooth; }
+        body { 
+            font-family: 'Noto Sans JP', sans-serif; 
+            margin: 0; 
+            background: var(--soft-bg); 
+            color: #5a4d4d; 
+            -webkit-font-smoothing: antialiased; 
+            scroll-behavior: smooth;
+            line-height: 1.6;
+        }
         
         header { 
-            background: rgba(212, 165, 165, 0.95); backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px);
-            color: white; padding: 1.2rem; position: sticky; top: 0; z-index: 100; 
-            display: flex; flex-direction: column; gap: 14px; box-shadow: 0 4px 25px rgba(0,0,0,0.1);
+            background: rgba(212, 165, 165, 0.95); 
+            backdrop-filter: blur(10px); 
+            -webkit-backdrop-filter: blur(10px);
+            color: white; 
+            padding: 1.2rem; 
+            position: sticky; 
+            top: 0; 
+            z-index: 100; 
+            display: flex; 
+            flex-direction: column; 
+            gap: 14px; 
+            box-shadow: 0 4px 25px rgba(0,0,0,0.1);
         }
-        header h1 { margin: 0; font-size: 1.5rem; letter-spacing: 0.15em; font-family: 'Lora', serif; text-align: center; cursor: pointer; }
+        
+        header h1 { 
+            margin: 0; 
+            font-size: 1.5rem; 
+            letter-spacing: 0.15em; 
+            font-family: 'Lora', serif; 
+            text-align: center; 
+            cursor: pointer; 
+        }
 
-        .header-action-row { display: flex; justify-content: flex-end; width: 100%; }
+        .header-action-row { 
+            display: flex; 
+            justify-content: flex-end; 
+            width: 100%; 
+        }
         
         #force-reload-btn {
-            background: rgba(255, 255, 255, 0.2); border: 1px solid rgba(255, 255, 255, 0.4); 
-            border-radius: 30px; padding: 6px 14px; font-size: 10px; font-weight: bold; color: white;
-            cursor: pointer; display: flex; align-items: center; gap: 8px;
+            background: rgba(255, 255, 255, 0.2); 
+            border: 1px solid rgba(255, 255, 255, 0.4); 
+            border-radius: 30px; 
+            padding: 6px 14px; 
+            font-size: 10px; 
+            font-weight: bold; 
+            color: white;
+            cursor: pointer; 
+            display: flex; 
+            align-items: center; 
+            gap: 8px;
         }
 
         .reload-icon { 
-            display: inline-block; width: 10px; height: 10px; border: 1.8px solid white; 
-            border-top: 1.8px solid transparent; border-radius: 50%; position: relative; 
+            display: inline-block; 
+            width: 10px; 
+            height: 10px; 
+            border: 1.8px solid white; 
+            border-top: 1.8px solid transparent; 
+            border-radius: 50%; 
+            position: relative; 
         }
+        
         .reload-icon::after { 
-            content: ''; position: absolute; top: -2.8px; left: 4.5px; border-left: 3.5px solid transparent; 
-            border-right: 3.5px solid transparent; border-bottom: 4.5px solid white; transform: rotate(45deg); 
+            content: ''; 
+            position: absolute; 
+            top: -2.8px; 
+            left: 4.5px; 
+            border-left: 3.5px solid transparent; 
+            border-right: 3.5px solid transparent; 
+            border-bottom: 4.5px solid white; 
+            transform: rotate(45deg); 
         }
+
+        .spinning { animation: spin 0.8s linear infinite; }
+        @keyframes spin { from { transform: rotate(0deg); } to { transform: rotate(360deg); } }
 
         .container { padding: 1rem; max-width: 550px; margin: 0 auto; }
 
-        .region-section { background: var(--card-bg); border-radius: 24px; margin-bottom: 30px; box-shadow: var(--shadow); overflow: hidden; }
+        .region-section { 
+            background: var(--card-bg); 
+            border-radius: 24px; 
+            margin-bottom: 30px; 
+            box-shadow: var(--shadow); 
+            overflow: hidden; 
+        }
+        
         .region-header { 
-            background: var(--pink-light); padding: 12px 20px; font-weight: bold; color: var(--pink-deep);
-            display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid #f2e2e2;
+            background: var(--pink-light); 
+            padding: 12px 20px; 
+            font-weight: bold; 
+            color: var(--pink-deep);
+            display: flex; 
+            justify-content: space-between; 
+            align-items: center; 
+            border-bottom: 1px solid #f2e2e2;
         }
 
-        .size-selector { display: flex; background: #eeebe9; border-radius: 10px; padding: 3px; gap: 2px; }
-        .size-btn { border: none; background: transparent; padding: 5px 10px; font-size: 11px; font-weight: bold; color: var(--text-sub); border-radius: 8px; cursor: pointer; }
-        .size-btn.active { background: white; color: var(--pink-deep); box-shadow: 0 2px 5px rgba(0,0,0,0.1); }
+        .size-selector { 
+            display: flex; 
+            background: #eeebe9; 
+            border-radius: 10px; 
+            padding: 3px; 
+            gap: 2px; 
+        }
+        
+        .size-btn { 
+            border: none; 
+            background: transparent; 
+            padding: 5px 10px; 
+            font-size: 11px; 
+            font-weight: bold; 
+            color: var(--text-sub); 
+            border-radius: 8px; 
+            cursor: pointer; 
+        }
+        
+        .size-btn.active { 
+            background: white; 
+            color: var(--pink-deep); 
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1); 
+        }
 
-        .region-group-title { padding: 15px 20px 5px; font-weight: bold; color: var(--pink-deep); font-size: 0.9em; display: flex; align-items: center; }
-        .region-group-title::before { content: ""; display: inline-block; width: 3px; height: 12px; background: var(--pink-main); margin-right: 8px; border-radius: 2px; }
+        .region-group-title { 
+            padding: 15px 20px 5px; 
+            font-weight: bold; 
+            color: var(--pink-deep); 
+            font-size: 0.9em; 
+            display: flex; 
+            align-items: center; 
+        }
+        
+        .region-group-title::before { 
+            content: ""; 
+            display: inline-block; 
+            width: 3px; 
+            height: 12px; 
+            background: var(--pink-main); 
+            margin-right: 8px; 
+            border-radius: 2px; 
+        }
 
-        .pref-grid { display: grid; grid-template-columns: var(--pref-grid-cols); gap: 8px; padding: 10px 15px 25px; }
+        .pref-grid { 
+            display: grid; 
+            grid-template-columns: var(--pref-grid-cols); 
+            gap: 8px; 
+            padding: 10px 15px 25px; 
+        }
+        
         .pref-btn { 
             background: linear-gradient(180deg, #ffffff 0%, #fcf3f3 100%); 
-            border: 1px solid var(--tile-border); padding: 12px 2px;
-            font-size: var(--pref-font-size); font-weight: bold; border-radius: 12px; color: var(--tile-text); 
-            cursor: pointer; text-align: center; box-shadow: var(--tile-shadow); 
+            border: 1px solid var(--tile-border); 
+            padding: 12px 2px;
+            font-size: var(--pref-font-size); 
+            font-weight: bold; 
+            border-radius: 12px; 
+            color: var(--tile-text); 
+            cursor: pointer; 
+            text-align: center; 
+            box-shadow: var(--tile-shadow); 
             transition: all 0.1s;
         }
-        .pref-btn:active { transform: translateY(3px); box-shadow: 0 1px 0 var(--tile-border); }
+        
+        .pref-btn:active { 
+            transform: translateY(3px); 
+            box-shadow: 0 1px 0 var(--tile-border); 
+        }
 
-        #search-results { min-height: 100vh; padding: 20px 10px; }
-        .spinning { animation: spin 0.8s linear infinite; }
-        @keyframes spin { from { transform: rotate(0deg); } to { transform: rotate(360deg); } }
+        #search-results { 
+            min-height: 100vh; 
+            padding: 20px 10px; 
+            border-top: 1px dashed var(--pink-main); 
+            margin-top: 20px; 
+        }
+
+        .result-card {
+            background: white;
+            border-radius: 15px;
+            padding: 20px;
+            margin-bottom: 20px;
+            box-shadow: var(--shadow);
+            border-left: 5px solid var(--pink-main);
+        }
+
+        .result-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 10px;
+            color: var(--pink-deep);
+            font-weight: bold;
+        }
     </style>
 </head>
 <body>
@@ -104,19 +241,27 @@
         </div>
         <div id="pref-container"></div>
     </div>
-    <div id="search-results"></div>
+
+    <div id="search-results">
+        <p style="text-align:center; color:var(--text-sub); padding-top: 50px;">エリアを選択すると募集が表示されます</p>
+    </div>
 </div>
 
 <script>
     const allRegions = {
         "北海道・東北": ["北海道", "青森県", "岩手県", "宮城県", "秋田県", "山形県", "福島県"],
-        "関東": ["東京都", "神奈川県", "埼玉県", "千葉県", "茨城県", "栃木県", "群馬県"],
-        "近畿": ["大阪府", "兵庫県", "京都府", "滋賀県", "奈良県", "和歌山県", "三重県"],
-        // 他地域も同様に保持
+        "関東": ["茨城県", "栃木県", "群馬県", "埼玉県", "千葉県", "東京都", "神奈川県"],
+        "甲信越・北陸": ["新潟県", "富山県", "石川県", "福井県", "山梨県", "長野県"],
+        "東海": ["岐阜県", "静岡県", "愛知県", "三重県"],
+        "近畿": ["滋賀県", "京都府", "大阪府", "兵庫県", "奈良県", "和歌山県"],
+        "中国": ["鳥取県", "島根県", "岡山県", "広島県", "山口県"],
+        "四国": ["徳島県", "香川県", "愛媛県", "高知県"],
+        "九州・沖縄": ["福岡県", "佐賀県", "長崎県", "熊本県", "大分県", "宮崎県", "鹿児島県", "沖縄県"]
     };
 
     function render() {
         const container = document.getElementById('pref-container');
+        container.innerHTML = '';
         for (const [region, prefs] of Object.entries(allRegions)) {
             const t = document.createElement('div');
             t.className = 'region-group-title';
@@ -128,15 +273,32 @@
                 const b = document.createElement('div');
                 b.className = 'pref-btn';
                 b.innerText = p;
-                b.onclick = () => {
-                    const target = document.getElementById('search-results');
-                    target.scrollIntoView({behavior:'smooth'});
-                    target.innerHTML = `<p style="text-align:center; color:var(--pink-deep);">${p}の募集を検索中...</p>`;
-                };
+                b.onclick = () => search(p);
                 g.appendChild(b);
             });
             container.appendChild(g);
         }
+    }
+
+    function search(pref) {
+        const target = document.getElementById('search-results');
+        target.scrollIntoView({behavior:'smooth'});
+        target.innerHTML = `
+            <div style="text-align:center; margin-bottom:30px;">
+                <h3 style="color:var(--pink-deep); border-bottom:2px solid var(--pink-main); display:inline-block; padding:0 15px; letter-spacing:0.1em;">${pref}の募集一覧</h3>
+            </div>
+            <div class="result-card">
+                <div class="result-header">
+                    <span>本日 10:00 掲載</span>
+                    <span style="background:var(--pink-light); padding:2px 8px; border-radius:5px; font-size:10px;">募集中</span>
+                </div>
+                <p style="font-weight:bold; font-size:1.1em; margin:10px 0;">[${pref}] 1対1プレイ案件</p>
+                <p style="font-size:13px; color:#666;">詳細な情報はログイン後に確認いただけます。</p>
+            </div>
+            <div style="text-align:center; padding:40px 0;">
+                <p style="color:var(--text-sub); font-size:12px;">これ以上の募集はありません</p>
+            </div>
+        `;
     }
 
     function changeSize(mode) {
@@ -149,18 +311,23 @@
         } else if (mode === 'mid') {
             root.style.setProperty('--pref-font-size', '14px');
             root.style.setProperty('--pref-grid-cols', 'repeat(3, 1fr)');
-        } else {
+        } else if (mode === 'large') {
             root.style.setProperty('--pref-font-size', '17px');
             root.style.setProperty('--pref-grid-cols', 'repeat(2, 1fr)');
         }
     }
 
     async function fastUpdate() {
-        document.querySelectorAll('.sync-target').forEach(icon => icon.classList.add('spinning'));
-        setTimeout(() => { location.reload(); }, 600);
+        const icons = document.querySelectorAll('.sync-target');
+        icons.forEach(icon => icon.classList.add('spinning'));
+        setTimeout(() => {
+            location.reload();
+        }, 600);
     }
 
-    window.onload = render;
+    window.onload = () => {
+        render();
+    };
 </script>
 </body>
 </html>
