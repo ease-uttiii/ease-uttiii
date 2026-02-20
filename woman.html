@@ -7,7 +7,7 @@
     <link href="https://fonts.googleapis.com/css2?family=Lora:wght@600&family=Noto+Sans+JP:wght@400;700&display=swap" rel="stylesheet">
     <style>
         :root {
-            /* 依頼用カラー */
+            /* 管理用カラー */
             --pink-main: #d4a5a5;
             --pink-deep: #b57d7d;
             --pink-light: #fff5f5;
@@ -17,7 +17,7 @@
             --tile-border: #e8cfcf;
             --shadow: 0 10px 30px rgba(212, 165, 165, 0.15);
 
-            /* フォントサイズ連動用変数 */
+            /* フォントサイズ連動 */
             --base-font-size: 14px;
             --input-font-size: 15px;
             --pref-grid-cols: repeat(3, 1fr);
@@ -39,7 +39,7 @@
         .storage-btns { display: flex; gap: 8px; }
         .storage-btn { background: rgba(255,255,255,0.2); border: 1px solid white; color: white; padding: 6px 12px; border-radius: 8px; font-size: 11px; cursor: pointer; font-weight: bold; }
 
-        /* --- リロードボタン（左右にくるくるアイコン） --- */
+        /* リロードボタン（左右くるくるアイコン） */
         #force-reload-btn {
             background: rgba(255, 255, 255, 0.2); border: 1px solid rgba(255, 255, 255, 0.4); 
             border-radius: 30px; padding: 6px 14px; font-size: 10px; font-weight: bold; color: white;
@@ -58,56 +58,52 @@
 
         .container { padding: 1rem; max-width: 550px; margin: 0 auto; }
 
-        /* --- 注意事項セクション（一言一句漏らさず記載） --- */
+        /* --- 注意事項セクション（完全版テキスト） --- */
         .important-notice {
             background: #fff; border: 2px solid var(--pink-main); border-radius: 20px; 
             padding: 20px; margin-bottom: 25px; box-shadow: var(--shadow);
         }
-        .notice-header-msg { font-weight: bold; font-size: 1.1em; color: var(--pink-deep); display: block; text-align: center; margin-bottom: 15px; line-height: 1.4; }
-        .notice-item { margin-bottom: 18px; }
-        .notice-title { display: block; font-weight: bold; color: var(--pink-deep); border-left: 4px solid var(--pink-main); padding-left: 8px; margin-bottom: 6px; }
-        .notice-content { font-size: 0.9em; color: #7a5a5a; padding-left: 12px; display: block; white-space: pre-wrap; line-height: 1.5; }
-        .contact-mori-box { background: var(--pink-light); text-align: center; padding: 15px; border-radius: 12px; font-weight: bold; color: var(--pink-deep); border: 1px dashed var(--pink-main); margin-top: 10px; }
+        .notice-top-msg { font-weight: bold; font-size: 1.05em; color: var(--pink-deep); display: block; margin-bottom: 20px; text-align: center; line-height: 1.5; }
+        .notice-section { margin-bottom: 20px; }
+        .notice-title { display: block; font-weight: bold; color: var(--pink-deep); border-left: 4px solid var(--pink-main); padding-left: 8px; margin-bottom: 8px; }
+        .notice-desc { font-size: 0.9em; color: #7a5a5a; padding-left: 12px; display: block; white-space: pre-wrap; line-height: 1.6; }
+        .contact-mori { background: var(--pink-light); text-align: center; padding: 18px; border-radius: 14px; font-weight: bold; color: var(--pink-deep); border: 1px dashed var(--pink-main); margin-top: 15px; }
 
-        /* --- フォームセクション共通 --- */
+        /* --- フォームセクション --- */
         .form-section { background: var(--card-bg); border-radius: 24px; padding: 25px 20px; box-shadow: var(--shadow); margin-bottom: 20px; }
         .section-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px; border-bottom: 1px solid var(--pink-light); padding-bottom: 10px; }
         
-        /* サイズ切り替え */
         .size-selector { display: flex; background: #eee; border-radius: 8px; padding: 3px; gap: 2px; }
         .size-btn { border: none; background: transparent; padding: 6px 12px; font-size: 11px; border-radius: 6px; cursor: pointer; font-weight: bold; color: #888; }
         .size-btn.active { background: white; color: var(--pink-deep); box-shadow: 0 2px 4px rgba(0,0,0,0.1); }
 
-        .form-group { margin-bottom: 20px; }
+        .form-group { margin-bottom: 22px; }
         .label-row { display: flex; align-items: center; margin-bottom: 8px; gap: 6px; font-weight: bold; color: var(--pink-deep); }
-        .required-tag { background: #e88e8e; color: white; font-size: 0.7em; padding: 2px 6px; border-radius: 4px; }
+        .required { background: #e88e8e; color: white; font-size: 0.7em; padding: 2px 6px; border-radius: 4px; }
 
         input, select, textarea {
             width: 100%; padding: 14px; border-radius: 12px; border: 1px solid var(--tile-border);
             background: var(--pink-light); color: var(--tile-text); font-size: var(--input-font-size);
-            box-sizing: border-box; outline: none; transition: border 0.2s;
+            box-sizing: border-box; outline: none;
         }
-        input:focus, select:focus, textarea:focus { border: 1px solid var(--pink-main); }
 
         .datetime-row { display: flex; flex-wrap: wrap; gap: 8px; align-items: center; }
-        .datetime-row select { width: auto; min-width: 75px; }
+        .datetime-row select { width: auto; min-width: 70px; }
 
-        /* グリッド選択ボタン */
-        .selection-grid { display: grid; grid-template-columns: var(--pref-grid-cols); gap: 10px; }
-        .grid-button {
+        .check-grid { display: grid; grid-template-columns: var(--pref-grid-cols); gap: 10px; }
+        .check-item {
             background: linear-gradient(180deg, #ffffff 0%, #fcf3f3 100%);
             border: 1px solid var(--tile-border); padding: 12px 4px; border-radius: 12px;
             font-size: var(--input-font-size); text-align: center; cursor: pointer; color: var(--tile-text);
             display: flex; align-items: center; justify-content: center; min-height: 52px; font-weight: bold;
-            transition: all 0.2s;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.05);
         }
-        .grid-button.active { background: linear-gradient(180deg, var(--pink-main) 0%, var(--pink-deep) 100%); color: white; border-color: var(--pink-deep); transform: translateY(-2px); box-shadow: 0 4px 10px rgba(212,165,165,0.3); }
+        .check-item.active { background: linear-gradient(180deg, var(--pink-main) 0%, var(--pink-deep) 100%); color: white; border-color: var(--pink-deep); }
 
-        .submit-container { padding: 0 10px 40px; }
         .submit-btn {
             background: linear-gradient(135deg, var(--pink-main) 0%, var(--pink-deep) 100%);
             color: white; border: none; padding: 20px; border-radius: 18px; width: 100%;
-            font-size: 1.2em; font-weight: 700; cursor: pointer; box-shadow: 0 5px 20px rgba(212,165,165,0.4); margin-top: 20px;
+            font-size: 1.2em; font-weight: 700; cursor: pointer; box-shadow: 0 5px 20px rgba(212,165,165,0.4); margin-bottom: 50px;
         }
     </style>
 </head>
@@ -120,91 +116,88 @@
             <button class="storage-btn" onclick="loadData()">読込</button>
         </div>
         <h1>ease プレイ依頼</h1>
-        <button id="force-reload-btn" onclick="handleReload()">
-            <span class="reload-icon" id="icon-l"></span>
+        <button id="force-reload-btn" onclick="refreshPage()">
+            <span class="reload-icon" id="l-icon"></span>
             更新
-            <span class="reload-icon" id="icon-r"></span>
+            <span class="reload-icon" id="r-icon"></span>
         </button>
     </div>
 </header>
 
 <div class="container">
     <div class="important-notice">
-        <span class="notice-header-msg">申し訳ございませんが、下記のご理解をお願いします。</span>
+        <span class="notice-top-msg">申し訳ございませんが、下記のご理解をお願いします。</span>
         
-        <div class="notice-item">
+        <div class="notice-section">
             <span class="notice-title">■案件の募集期間について</span>
-            <span class="notice-content">案件の募集期間が短いと男性が決まらない場合があります
+            <span class="notice-desc">■案件の募集期間が短いと男性が決まらない場合があります
 前日に男性を決めますので、前々日なら約1日ということになります。
 ※前々日の夜なら、ほぼ募集期間はないということになってしまいます。
 ※正直、地域によって変わってしまいます。すみません。
 ※応募がない場合は、再募集していますが、なかなか難しいと思います。</span>
         </div>
 
-        <div class="notice-item">
+        <div class="notice-section">
             <span class="notice-title">■1対1の前日の受付について</span>
-            <span class="notice-content">※1対1の前日の受付は午前中のみでお願いします。
+            <span class="notice-desc">■1対1の前日の受付は午前中のみでお願いします。
 ※午後からのプレイ依頼は、当日扱いになります。(下記参考)
 ※前日依頼は、お受けしますが男性が決まらない可能性があります。</span>
         </div>
 
-        <div class="notice-item">
+        <div class="notice-section">
             <span class="notice-title">■1対1の当日依頼について</span>
-            <span class="notice-content">※1対1の当日依頼は、お受けできなくなりました
+            <span class="notice-desc">■1対1の当日依頼は、お受けできなくなりました
 ※当日の依頼は、いろいろと問題が多いので、お受けしないことにしました。</span>
         </div>
 
-        <div class="notice-item">
+        <div class="notice-section">
             <span class="notice-title">■複数プレイについて</span>
-            <span class="notice-content">※複数プレイは、監督探しからとなりますので、依頼日に必ず開催されるとは限りません。
+            <span class="notice-desc">■複数プレイは、監督探しからとなりますので、依頼日に必ず開催されるとは限りません。
 ※プレイ依頼受付後に「監督願い」を森が、全監督宛に出して決まりますので、少しお日にちが必要となります。
 ※何日間前に出せば良いということではなく、その日に動ける監督が居るかどうかで決まります。
 ※準備期間が長いほど、監督も都合を合わせやすくなります。
 ※プレイ依頼を出す前に、森に相談してもらうこともできます。</span>
         </div>
 
-        <div class="notice-item">
+        <div class="notice-section">
             <span class="notice-title">■キャンセルについて</span>
-            <span class="notice-content">※キャンセルは前日の確認までなら問題ありません。</span>
+            <span class="notice-desc">■キャンセルは前日の確認までなら問題ありません。</span>
         </div>
 
-        <div class="contact-mori-box">《何かあれば森に相談してください》</div>
+        <div class="contact-mori">《何かあれば森に相談してください》</div>
     </div>
 
-    <form id="mainForm">
+    <form id="requestForm">
         <div class="form-section">
             <div class="section-header">
                 <span style="font-weight:bold; color:var(--pink-deep);">基本情報</span>
                 <div class="size-selector">
-                    <button type="button" class="size-btn" id="s-btn" onclick="updateFontSize('small')">小</button>
-                    <button type="button" class="size-btn active" id="m-btn" onclick="updateFontSize('mid')">中</button>
-                    <button type="button" class="size-btn" id="l-btn" onclick="updateFontSize('large')">大</button>
+                    <button type="button" class="size-btn" id="s-btn" onclick="setFont('small')">小</button>
+                    <button type="button" class="size-btn active" id="m-btn" onclick="setFont('mid')">中</button>
+                    <button type="button" class="size-btn" id="l-btn" onclick="setFont('large')">大</button>
                 </div>
             </div>
-            
             <div class="form-group">
-                <div class="label-row"><span>ID / ニックネーム</span><span class="required-tag">必須</span></div>
-                <input type="text" id="user_id" placeholder="IDまたは面談時のニックネーム">
+                <div class="label-row"><span>ID / ニックネーム</span><span class="required">必須</span></div>
+                <input type="text" id="user_id" placeholder="IDまたはニックネーム">
             </div>
-
             <div class="form-group">
-                <div class="label-row"><span>希望日時</span><span class="required-tag">必須</span></div>
+                <div class="label-row"><span>希望日時</span><span class="required">必須</span></div>
                 <div class="datetime-row">
-                    <select id="date_m"><option>02</option><option>03</option></select>月
-                    <select id="date_d">
+                    <select id="m_select"><option>02</option><option>03</option></select>月
+                    <select id="d_select">
                         <option>21</option><option>22</option><option>23</option><option>24</option>
                         <option>25</option><option>26</option><option>27</option><option>28</option>
                     </select>日
-                    <select id="date_h">
+                    <select id="h_select">
                         <option>10</option><option>12</option><option>14</option><option>16</option>
                         <option>18</option><option>20</option><option>22</option>
                     </select>時頃〜
                 </div>
             </div>
-
             <div class="form-group">
-                <div class="label-row"><span>開催都道府県</span><span class="required-tag">必須</span></div>
-                <select id="location_pref">
+                <div class="label-row"><span>開催都道府県</span><span class="required">必須</span></div>
+                <select id="pref_select">
                     <option value="">選択してください</option>
                     <option>北海道</option><option>青森県</option><option>岩手県</option><option>宮城県</option><option>秋田県</option><option>山形県</option><option>福島県</option>
                     <option>茨城県</option><option>栃木県</option><option>群馬県</option><option>埼玉県</option><option>千葉県</option><option>東京都</option><option>神奈川県</option>
@@ -217,129 +210,41 @@
         </div>
 
         <div class="form-section">
-            <div class="label-row"><span>希望プレイ項目 (複数選択可)</span><span class="required-tag">必須</span></div>
-            <div class="selection-grid" id="play_tags">
-                <div class="grid-button" onclick="itemToggle(this)">お任せ</div>
-                <div class="grid-button" onclick="itemToggle(this)">攻められたい</div>
-                <div class="grid-button" onclick="itemToggle(this)">攻めたい</div>
-                <div class="grid-button" onclick="itemToggle(this)">刺激体験</div>
-                <div class="grid-button" onclick="itemToggle(this)">レイプ希望</div>
-                <div class="grid-button" onclick="itemToggle(this)">目隠し</div>
-                <div class="grid-button" onclick="itemToggle(this)">複数人希望</div>
-                <div class="grid-button" onclick="itemToggle(this)">玩具使用</div>
-                <div class="grid-button" onclick="itemToggle(this)">恋人風</div>
-                <div class="grid-button" onclick="itemToggle(this)">3P</div>
-                <div class="grid-button" onclick="itemToggle(this)">アナル</div>
-                <div class="grid-button" onclick="itemToggle(this)">前戯長め</div>
-                <div class="grid-button" onclick="itemToggle(this)">ドM</div>
-                <div class="grid-button" onclick="itemToggle(this)">ドS</div>
-                <div class="grid-button" onclick="itemToggle(this)">縛られたい</div>
-                <div class="grid-button" onclick="itemToggle(this)">風呂</div>
-                <div class="grid-button" onclick="itemToggle(this)">コスプレ</div>
-                <div class="grid-button" onclick="itemToggle(this)">制服</div>
-                <div class="grid-button" onclick="itemToggle(this)">野外</div>
-                <div class="grid-button" onclick="itemToggle(this)">撮影希望</div>
+            <div class="label-row"><span>希望プレイ項目</span><span class="required">必須</span></div>
+            <div class="check-grid">
+                <div class="check-item" onclick="toggle(this)">お任せ</div>
+                <div class="check-item" onclick="toggle(this)">攻められたい</div>
+                <div class="check-item" onclick="toggle(this)">攻めたい</div>
+                <div class="check-item" onclick="toggle(this)">刺激体験</div>
+                <div class="check-item" onclick="toggle(this)">レイプ希望</div>
+                <div class="check-item" onclick="toggle(this)">目隠し</div>
+                <div class="check-item" onclick="toggle(this)">複数人希望</div>
+                <div class="check-item" onclick="toggle(this)">玩具使用</div>
+                <div class="check-item" onclick="toggle(this)">恋人風</div>
+                <div class="check-item" onclick="toggle(this)">3P</div>
+                <div class="check-item" onclick="toggle(this)">アナル</div>
+                <div class="check-item" onclick="toggle(this)">前戯長め</div>
+                <div class="check-item" onclick="toggle(this)">ドM</div>
+                <div class="check-item" onclick="toggle(this)">ドS</div>
+                <div class="check-item" onclick="toggle(this)">縛られたい</div>
+                <div class="check-item" onclick="toggle(this)">風呂</div>
+                <div class="check-item" onclick="toggle(this)">コスプレ</div>
+                <div class="check-item" onclick="toggle(this)">制服</div>
+                <div class="check-item" onclick="toggle(this)">野外</div>
+                <div class="check-item" onclick="toggle(this)">撮影希望</div>
             </div>
         </div>
 
         <div class="form-section">
             <div class="form-group">
-                <div class="label-row"><span>相手の希望人数</span></div>
-                <input type="number" id="target_count" value="1" style="width:100px;"> 人
-            </div>
-            
-            <div class="form-group">
-                <div class="label-row"><span>これだけはNG</span></div>
-                <div class="selection-grid">
-                    <div class="grid-button" onclick="itemToggle(this)">タバコ</div>
-                    <div class="grid-button" onclick="itemToggle(this)">香水</div>
-                    <div class="grid-button" onclick="itemToggle(this)">肥満</div>
-                    <div class="grid-button" onclick="itemToggle(this)">薄毛</div>
-                    <div class="grid-button" onclick="itemToggle(this)">刺青</div>
+                <div class="label-row"><span>追加NG項目</span></div>
+                <div class="check-grid">
+                    <div class="check-item" onclick="toggle(this)">タバコ</div>
+                    <div class="check-item" onclick="toggle(this)">香水</div>
+                    <div class="check-item" onclick="toggle(this)">肥満</div>
+                    <div class="check-item" onclick="toggle(this)">薄毛</div>
+                    <div class="check-item" onclick="toggle(this)">刺青</div>
                 </div>
             </div>
-
             <div class="form-group">
-                <div class="label-row"><span>掲載用備考（男性が見る内容）</span></div>
-                <textarea id="memo_pub" rows="4" placeholder="具体的な希望やこだわりがあれば教えてください"></textarea>
-            </div>
-
-            <div class="form-group" style="border-top:1px dashed #ddd; padding-top:20px; margin-top:30px;">
-                <div class="label-row"><span>非掲載備考（森への伝達専用）</span></div>
-                <textarea id="memo_priv" rows="2" placeholder="男性には内緒で森に伝えたいこと"></textarea>
-            </div>
-        </div>
-
-        <div class="submit-container">
-            <button type="button" class="submit-btn" onclick="alert('送信システムはGAS作成後に連携します')">プレイ依頼を送信する</button>
-        </div>
-    </form>
-</div>
-
-<script>
-    // フォントサイズ変更（グリッド連動）
-    function updateFontSize(size) {
-        const root = document.documentElement;
-        document.querySelectorAll('.size-btn').forEach(b => b.classList.remove('active'));
-        document.getElementById(size === 'small' ? 's-btn' : size === 'mid' ? 'm-btn' : 'l-btn').classList.add('active');
-
-        if (size === 'small') {
-            root.style.setProperty('--base-font-size', '12px');
-            root.style.setProperty('--input-font-size', '13px');
-            root.style.setProperty('--pref-grid-cols', 'repeat(4, 1fr)');
-        } else if (size === 'mid') {
-            root.style.setProperty('--base-font-size', '14px');
-            root.style.setProperty('--input-font-size', '15px');
-            root.style.setProperty('--pref-grid-cols', 'repeat(3, 1fr)');
-        } else if (size === 'large') {
-            root.style.setProperty('--base-font-size', '18px');
-            root.style.setProperty('--input-font-size', '19px');
-            root.style.setProperty('--pref-grid-cols', 'repeat(2, 1fr)');
-        }
-        localStorage.setItem('font_pref_woman', size);
-    }
-
-    // 項目選択
-    function itemToggle(el) {
-        el.classList.toggle('active');
-    }
-
-    // リロード処理（くるくるアニメーション）
-    function handleReload() {
-        document.getElementById('icon-l').classList.add('spinning');
-        document.getElementById('icon-r').classList.add('spinning');
-        setTimeout(() => {
-            location.reload();
-        }, 600);
-    }
-
-    // データ保存
-    function saveData() {
-        const data = {
-            id: document.getElementById('user_id').value,
-            pref: document.getElementById('location_pref').value,
-            pub: document.getElementById('memo_pub').value
-        };
-        localStorage.setItem('ease_woman_cache', JSON.stringify(data));
-        alert('入力内容を一時保存しました');
-    }
-
-    // データ読込
-    function loadData() {
-        const data = JSON.parse(localStorage.getItem('ease_woman_cache'));
-        if(data) {
-            document.getElementById('user_id').value = data.id || '';
-            document.getElementById('location_pref').value = data.pref || '';
-            document.getElementById('memo_pub').value = data.pub || '';
-            alert('保存データを復元しました');
-        }
-    }
-
-    // 初期化
-    window.onload = () => {
-        const savedSize = localStorage.getItem('font_pref_woman') || 'mid';
-        updateFontSize(savedSize);
-    };
-</script>
-</body>
-</html>
+                <div class="
