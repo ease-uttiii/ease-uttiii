@@ -7,16 +7,20 @@
     <link href="https://fonts.googleapis.com/css2?family=Lora:wght@600&family=Noto+Sans+JP:wght@400;700&display=swap" rel="stylesheet">
     <style>
         :root {
+            /* 女性用：ローズピンクパレット */
             --pink-main: #d4a5a5;
             --pink-deep: #b57d7d;
             --pink-light: #fff5f5;
             --soft-bg: #fdf8f7;
             --card-bg: #ffffff;
+            
+            /* 都道府県・チェックボタン：管理用UI継承（ピンク版） */
             --tile-bg-top: #fceeee; 
             --tile-bg-bottom: #f2dada;
             --tile-text: #7a5a5a;
             --tile-border: #e8cfcf;
             --tile-shadow: 0 4px 10px rgba(212, 165, 165, 0.15);
+            
             --text-sub: #b09999;
             --shadow: 0 10px 30px rgba(212, 165, 165, 0.15);
 
@@ -26,15 +30,7 @@
             --pref-grid-cols: repeat(3, 1fr);
         }
 
-        body { 
-            font-family: 'Noto Sans JP', sans-serif; 
-            margin: 0; 
-            background: var(--soft-bg); 
-            color: #5a4d4d; 
-            -webkit-font-smoothing: antialiased; 
-            line-height: 1.6;
-            font-size: var(--base-font-size);
-        }
+        body { font-family: 'Noto Sans JP', sans-serif; margin: 0; background: var(--soft-bg); color: #5a4d4d; -webkit-font-smoothing: antialiased; line-height: 1.6; font-size: var(--base-font-size); }
         
         header { 
             background: rgba(212, 165, 165, 0.95); backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px);
@@ -62,12 +58,19 @@
 
         .container { padding: 1rem; max-width: 550px; margin: 0 auto; }
 
+        /* 注意事項 */
         .notice-box { 
-            background: #fff; border: 2px solid var(--pink-main); border-radius: 20px; 
-            padding: 20px; margin-bottom: 25px; font-size: 0.8em; color: #7a5a5a;
+            background: #fff; border: 2px solid var(--pink-main); border-radius: 24px; 
+            padding: 25px; margin-bottom: 25px; font-size: 0.85em; color: #7a5a5a;
+            box-shadow: var(--shadow);
         }
-        .notice-box h2 { font-size: 1.15em; margin: 0 0 10px; color: var(--pink-deep); border-bottom: 1px solid var(--pink-light); padding-bottom: 8px; }
+        .notice-box h2 { font-size: 1.1em; margin: 0 0 15px; color: var(--pink-deep); border-bottom: 2px solid var(--pink-light); padding-bottom: 10px; line-height: 1.4; }
+        .notice-content { display: flex; flex-direction: column; gap: 18px; }
+        .notice-item { border-left: 3px solid var(--pink-main); padding-left: 12px; }
+        .notice-item strong { display: block; color: var(--pink-deep); margin-bottom: 5px; font-size: 1.05em; }
+        .notice-sub { font-size: 0.95em; color: #8a6a6a; display: block; margin-top: 3px; line-height: 1.5; }
 
+        /* フォームセクション */
         .form-section { background: var(--card-bg); border-radius: 24px; padding: 25px 20px; box-shadow: var(--shadow); margin-bottom: 25px; overflow: hidden; }
         .region-header { 
             display: flex; justify-content: space-between; align-items: center; margin-bottom: 15px;
@@ -131,8 +134,42 @@
 
 <div class="container">
     <div class="notice-box">
-        <h2>ご理解をお願いします</h2>
-        <p>※当日依頼不可、前日受付は午前中のみ。複数プレイは監督探しのためお時間が必要です。キャンセルは前日確認まで。</p>
+        <h2>申し訳ございませんが、<br>下記のご理解をお願いします。</h2>
+        <div class="notice-content">
+            <div class="notice-item">
+                <strong>■案件の募集期間が短いと男性が決まらない場合があります</strong>
+                前日に男性を決めますので、前々日なら約1日ということになります。
+                <span class="notice-sub">※前々日の夜なら、ほぼ募集期間はないということになってしまいます。</span>
+                <span class="notice-sub">※正直、地域によって変わってしまいます。すみません。</span>
+                <span class="notice-sub">※応募がない場合は、再募集していますが、なかなか難しいと思います。</span>
+            </div>
+            
+            <div class="notice-item">
+                <strong>■1対1の前日の受付は午前中のみでお願いします。</strong>
+                <span class="notice-sub">※午後からのプレイ依頼は、当日扱いになります。</span>
+                <span class="notice-sub">※前日依頼は、お受けしますが男性が決まらない可能性があります。</span>
+            </div>
+
+            <div class="notice-item">
+                <strong>■1対1の当日依頼は、お受けできなくなりました</strong>
+                <span class="notice-sub">※当日の依頼は、いろいろと問題が多いので、お受けしないことにしました。</span>
+            </div>
+
+            <div class="notice-item">
+                <strong>■複数プレイは、監督探しからとなります</strong>
+                依頼日に必ず開催されるとは限りません。
+                <span class="notice-sub">※プレイ依頼受付後に「監督願い」を森が、全監督宛に出して決まりますので、少しお日にちが必要となります。</span>
+                <span class="notice-sub">※何日間前に出せば良いということではなく、その日に動ける監督が居るかどうかで決まります。</span>
+                <span class="notice-sub">※準備期間が長いほど、監督も都合を合わせやすくなります。</span>
+                <span class="notice-sub">※プレイ依頼を出す前に、森に相談してもらうこともできます。</span>
+            </div>
+
+            <div class="notice-item">
+                <strong>■キャンセルは前日の確認までなら問題ありません。</strong>
+            </div>
+
+            <p style="text-align:center; font-weight:bold; color:var(--pink-deep); margin-top:10px; font-size: 1.1em;">《何かあれば森に相談してください》</p>
+        </div>
     </div>
 
     <form>
@@ -154,7 +191,31 @@
             <div class="form-group">
                 <div class="label-row"><span>開催都道府県</span><span class="required">必須</span></div>
                 <select id="pref-select">
-                    <option>東京都</option><option>大阪府</option><option>神奈川県</option>
+                    <option value="" disabled selected>選択してください</option>
+                    <optgroup label="北海道・東北">
+                        <option>北海道</option><option>青森県</option><option>岩手県</option>
+                        <option>宮城県</option><option>秋田県</option><option>山形県</option><option>福島県</option>
+                    </optgroup>
+                    <optgroup label="関東">
+                        <option>茨城県</option><option>栃木県</option><option>群馬県</option>
+                        <option>埼玉県</option><option>千葉県</option><option>東京都</option><option>神奈川県</option>
+                    </optgroup>
+                    <optgroup label="中部">
+                        <option>新潟県</option><option>富山県</option><option>石川県</option><option>福井県</option>
+                        <option>山梨県</option><option>長野県</option><option>岐阜県</option><option>静岡県</option><option>愛知県</option>
+                    </optgroup>
+                    <optgroup label="近畿">
+                        <option>三重県</option><option>滋賀県</option><option>京都府</option>
+                        <option>大阪府</option><option>兵庫県</option><option>奈良県</option><option>和歌山県</option>
+                    </optgroup>
+                    <optgroup label="中国・四国">
+                        <option>鳥取県</option><option>島根県</option><option>岡山県</option><option>広島県</option><option>山口県</option>
+                        <option>徳島県</option><option>香川県</option><option>愛媛県</option><option>高知県</option>
+                    </optgroup>
+                    <optgroup label="九州・沖縄">
+                        <option>福岡県</option><option>佐賀県</option><option>長崎県</option>
+                        <option>熊本県</option><option>大分県</option><option>宮崎県</option><option>鹿児島県</option><option>沖縄県</option>
+                    </optgroup>
                 </select>
             </div>
         </div>
@@ -182,6 +243,7 @@
 </div>
 
 <script>
+    // フォントサイズ・グリッド制御ロジック
     function applyFontSize(mode) {
         const root = document.documentElement;
         if (mode === 'small') {
@@ -213,6 +275,7 @@
     };
 
     function toggleSelection(el) { el.classList.toggle('active'); }
+    
     async function fastUpdate() {
         document.querySelectorAll('.sync-target').forEach(icon => icon.classList.add('spinning'));
         setTimeout(() => location.reload(), 600);
