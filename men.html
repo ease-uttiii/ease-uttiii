@@ -3,51 +3,49 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
-    <title>Circle Ease</title>
+    <title>Circle Ease - Recruitment</title>
     <link href="https://fonts.googleapis.com/css2?family=Lora:wght@600&family=Noto+Sans+JP:wght@400;700&display=swap" rel="stylesheet">
     <style>
         :root {
-            --mauve: #b39292;
-            --mauve-deep: #967676;
-            --mauve-light: #fdfaf9;
-            --soft-bg: #f5f1ef;
+            /* スタイリッシュ・ブルー パレット */
+            --men-blue: #5d7a99;
+            --men-blue-deep: #465d75;
+            --men-blue-light: #f0f4f7;
+            --soft-bg: #f5f7f9;
             --card-bg: #ffffff;
-            --tile-bg-top: #dbcccc;
-            --tile-bg-bottom: #c9b4b4;
-            --tile-text: #5a4d4d;
-            --tile-border: #b8a0a0;
-            --text-sub: #a89e9e;
-            --shadow: 0 8px 25px rgba(179,146,146,0.12);
+            --tile-bg-top: #dee6ed;
+            --tile-bg-bottom: #cfdae3;
+            --tile-text: #465563;
+            --tile-border: #b8c6d1;
+            --text-sub: #8e9ba8;
+            --shadow: 0 8px 25px rgba(93, 122, 153, 0.12);
             --tile-shadow: 0 4px 10px rgba(0,0,0,0.06);
 
             /* --- フォントサイズ可変用変数 --- */
-            --base-font-size: 16px;       /* 全体の基本サイズ */
-            --pref-font-size: 17px;       /* 都道府県ボタン */
+            --base-font-size: 16px;
+            --pref-font-size: 17px;
             --pref-grid-cols: repeat(3, 1fr);
-            --title-font-size: 1.7rem;    /* ヘッダーロゴ */
-            --card-title-size: 19px;      /* カードタイトル */
+            --title-font-size: 1.7rem;
+            --card-title-size: 19px;
         }
 
         body { 
             font-family: 'Noto Sans JP', sans-serif; 
             margin: 0; 
             background: var(--soft-bg); 
-            color: #524a4a; 
+            color: #3e4852; 
             -webkit-font-smoothing: antialiased; 
-            font-size: var(--base-font-size); /* 全体に適用 */
+            font-size: var(--base-font-size);
         }
         
         header { 
-            background: rgba(179, 146, 146, 0.95); backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px);
+            background: rgba(93, 122, 153, 0.95); backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px);
             color: white; padding: 1.2rem 1.2rem 1rem; position: sticky; top: 0; z-index: 100; 
             display: flex; flex-direction: column; gap: 14px; box-shadow: 0 4px 25px rgba(0,0,0,0.1);
         }
         header h1 { 
-            margin: 0; 
-            font-size: var(--title-font-size); 
-            letter-spacing: 0.25em; 
-            font-family: 'Lora', serif; 
-            text-align: center; 
+            margin: 0; font-size: var(--title-font-size); letter-spacing: 0.25em; 
+            font-family: 'Lora', serif; text-align: center; 
         }
 
         .header-action-row { display: flex; justify-content: flex-end; width: 100%; }
@@ -70,7 +68,7 @@
         .header-nav-row { display: flex; gap: 10px; width: 100%; }
         .nav-btn { 
             flex: 1; padding: 12px; border-radius: 14px; border: none; background: white; 
-            color: var(--mauve-deep); font-weight: bold; font-size: 0.8em;
+            color: var(--men-blue-deep); font-weight: bold; font-size: 0.8em;
             box-shadow: 0 6px 15px rgba(0,0,0,0.08); display: flex; align-items: center; justify-content: center; gap: 6px;
         }
 
@@ -78,51 +76,40 @@
         
         .region-section { background: #ffffff; border-radius: 28px; margin-bottom: 40px; box-shadow: var(--shadow); overflow: hidden; }
         .region-header { 
-            background: var(--mauve-light); padding: 15px 20px; font-weight: 700; font-size: 0.9em; color: var(--mauve-deep); 
-            border-bottom: 1px solid #f0eded; display: flex; justify-content: space-between; align-items: center;
+            background: var(--men-blue-light); padding: 15px 20px; font-weight: 700; font-size: 0.9em; color: var(--men-blue-deep); 
+            border-bottom: 1px solid #e1e8ed; display: flex; justify-content: space-between; align-items: center;
         }
 
-        .size-selector { display: flex; background: #eeebe9; border-radius: 10px; padding: 3px; gap: 2px; }
+        .size-selector { display: flex; background: #e2e8ed; border-radius: 10px; padding: 3px; gap: 2px; }
         .size-btn {
             border: none; background: transparent; padding: 5px 10px; font-size: 11px;
             font-weight: bold; color: var(--text-sub); border-radius: 8px; cursor: pointer; transition: 0.2s;
         }
-        .size-btn.active { background: white; color: var(--mauve-deep); box-shadow: 0 2px 5px rgba(0,0,0,0.1); }
+        .size-btn.active { background: white; color: var(--men-blue-deep); box-shadow: 0 2px 5px rgba(0,0,0,0.1); }
 
-        .region-group-title { padding: 20px 20px 8px; font-weight: 700; font-size: 0.8em; color: var(--mauve); display: flex; align-items: center; }
-        .region-group-title::before { content: ""; display: inline-block; width: 4px; height: 14px; background: var(--mauve); margin-right: 8px; border-radius: 2px; }
+        .region-group-title { padding: 20px 20px 8px; font-weight: 700; font-size: 0.8em; color: var(--men-blue); display: flex; align-items: center; }
+        .region-group-title::before { content: ""; display: inline-block; width: 4px; height: 14px; background: var(--men-blue); margin-right: 8px; border-radius: 2px; }
 
         .pref-grid { display: grid; grid-template-columns: var(--pref-grid-cols); gap: 10px; padding: 10px 15px 25px; transition: all 0.3s ease; }
         
         .pref-btn { 
             background: linear-gradient(180deg, var(--tile-bg-top) 0%, var(--tile-bg-bottom) 100%); 
-            border: 1px solid var(--tile-border); 
-            padding: 14px 2px;
-            font-size: var(--pref-font-size); 
-            font-weight: 700; 
-            border-radius: 12px; 
-            color: var(--tile-text); 
-            box-shadow: var(--tile-shadow); 
-            transition: all 0.2s ease; 
-            cursor: pointer; 
-            text-align: center;
-            display: flex; align-items: center; justify-content: center;
+            border: 1px solid var(--tile-border); padding: 14px 2px; font-size: var(--pref-font-size); 
+            font-weight: 700; border-radius: 12px; color: var(--tile-text); 
+            box-shadow: var(--tile-shadow); transition: all 0.2s ease; cursor: pointer; 
+            text-align: center; display: flex; align-items: center; justify-content: center;
         }
-        .pref-btn:active { 
-            background: var(--mauve-deep); color: white;
-            transform: translateY(1px); 
-            box-shadow: none; 
-        }
+        .pref-btn:active { background: var(--men-blue-deep); color: white; transform: translateY(1px); box-shadow: none; }
 
-        #current-filter-label { margin: 35px 0 20px; font-size: 1.15em; font-weight: 700; color: var(--mauve-deep); display: flex; align-items: center; }
-        #current-filter-label::after { content: ""; flex: 1; height: 1px; background: #e0d8d5; margin-left: 15px; }
+        #current-filter-label { margin: 35px 0 20px; font-size: 1.15em; font-weight: 700; color: var(--men-blue-deep); display: flex; align-items: center; }
+        #current-filter-label::after { content: ""; flex: 1; height: 1px; background: #d0d9e0; margin-left: 15px; }
 
         .recruit-card { background: var(--card-bg); margin-bottom: 2rem; border-radius: 24px; box-shadow: var(--shadow); display: flex; overflow: hidden; }
-        .card-accent { width: 44px; background: linear-gradient(180deg, var(--mauve-light), var(--mauve)); display: flex; align-items: center; justify-content: center; writing-mode: vertical-rl; color: var(--mauve-deep); font-size: 0.7em; font-weight: 700; letter-spacing: 0.4em; }
+        .card-accent { width: 44px; background: linear-gradient(180deg, var(--men-blue-light), var(--men-blue)); display: flex; align-items: center; justify-content: center; writing-mode: vertical-rl; color: var(--men-blue-deep); font-size: 0.7em; font-weight: 700; letter-spacing: 0.4em; }
         .card-content { padding: 1.8rem; flex: 1; }
-        .recruit-title { font-weight: 700; color: #4a3b3b; font-size: var(--card-title-size); margin-bottom: 12px; }
+        .recruit-title { font-weight: 700; color: #2c363f; font-size: var(--card-title-size); margin-bottom: 12px; }
         .recruit-info { font-size: 0.8em; color: var(--text-sub); display: flex; flex-direction: column; gap: 7px; }
-        .apply-btn { margin-top: 22px; background: linear-gradient(135deg, var(--mauve) 0%, var(--mauve-deep) 100%); color: white; border: none; padding: 16px; border-radius: 16px; width: 100%; font-size: 1em; font-weight: 700; cursor: pointer; }
+        .apply-btn { margin-top: 22px; background: linear-gradient(135deg, var(--men-blue) 0%, var(--men-blue-deep) 100%); color: white; border: none; padding: 16px; border-radius: 16px; width: 100%; font-size: 1em; font-weight: 700; cursor: pointer; }
         
         .spinning { animation: spin 0.8s linear infinite; }
         @keyframes spin { from { transform: rotate(0deg); } to { transform: rotate(360deg); } }
@@ -179,7 +166,7 @@ const regions = {
 };
 
 window.onload = function() {
-    const savedMode = localStorage.getItem('prefFontSizeMode') || 'mid';
+    const savedMode = localStorage.getItem('menFontSizeMode') || 'mid';
     applyFontSize(savedMode);
     createPrefButtons();
     displayRecruits();
@@ -213,7 +200,7 @@ function applyFontSize(mode) {
 
 function changeFontSize(mode) {
     applyFontSize(mode);
-    localStorage.setItem('prefFontSizeMode', mode);
+    localStorage.setItem('menFontSizeMode', mode);
 }
 
 async function fastUpdate() {
