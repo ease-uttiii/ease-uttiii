@@ -22,37 +22,37 @@
 
         body { font-family: 'Noto Sans JP', sans-serif; margin: 0; background: var(--soft-bg); color: #5a4d4d; line-height: 1.6; font-size: var(--base-font-size); }
         
-        /* --- ヘッダー：men.html形式 --- */
+        /* --- ヘッダー：1列配置（men.html最新仕様） --- */
         header { 
             background: rgba(212, 165, 165, 0.95); backdrop-filter: blur(10px);
             color: white; padding: 1rem 1.2rem; position: sticky; top: 0; z-index: 100; 
             display: flex; justify-content: space-between; align-items: center; box-shadow: 0 4px 25px rgba(0,0,0,0.1);
         }
-        header h1 { margin: 0; font-size: 1.3rem; letter-spacing: 0.15em; font-family: 'Lora', serif; }
+        header h1 { margin: 0; font-size: 1.2rem; letter-spacing: 0.1em; font-family: 'Lora', serif; white-space: nowrap; }
 
-        /* --- リロードボタン：men.htmlと統一 --- */
+        /* --- リロードボタン：men.html最新仕様 --- */
         #force-reload-btn {
             background: rgba(255, 255, 255, 0.2); border: 1px solid rgba(255, 255, 255, 0.4); 
             border-radius: 30px; padding: 6px 12px; font-size: 11px; font-weight: bold; color: white; cursor: pointer;
-            display: flex; align-items: center; gap: 5px; outline: none; -webkit-tap-highlight-color: transparent;
+            display: flex; align-items: center; gap: 4px; outline: none; -webkit-tap-highlight-color: transparent;
         }
         .spin-icon { display: inline-block; font-size: 14px; transition: transform 0.5s ease-in-out; }
 
         .container { padding: 1rem; max-width: 550px; margin: 0 auto; }
 
-        /* --- お知らせボタン（三角を大きく） --- */
+        /* --- お知らせボタン（⚠をさらに大きく） --- */
         .notice-btn {
             background: #fff; border: 3px solid var(--mauve-admin); color: var(--mauve-admin);
             font-size: 1.2rem; font-weight: 800; padding: 16px 20px; border-radius: 50px; cursor: pointer;
             box-shadow: 0 6px 20px rgba(142, 122, 138, 0.15);
             width: 100%; display: inline-flex; align-items: center; justify-content: center; margin: 15px 0 25px; box-sizing: border-box; outline: none;
         }
-        .notice-btn .warn-icon { font-size: 2rem; margin-right: 12px; }
+        .notice-btn .warn-icon { font-size: 2.2rem; margin-right: 12px; }
 
-        /* --- ダイアログ --- */
+        /* --- ダイアログ（青枠なし） --- */
         .notice-modal { border: none; border-radius: 24px; padding: 0; width: 92%; max-width: 550px; box-shadow: 0 20px 60px rgba(0,0,0,0.3); outline: none; }
         .notice-modal::backdrop { background: rgba(0, 0, 0, 0.4); backdrop-filter: blur(4px); }
-        .modal-inner { padding: 30px 25px; background: #fff; font-size: 18px; outline: none; }
+        .modal-inner { padding: 30px 25px; background: #fff; font-size: 18px; outline: none; border: none; }
         .modal-header h2 { color: var(--mauve-admin); font-size: 1.2rem; margin: 0 0 20px; text-align: center; border-bottom: 2px solid var(--pink-light); padding-bottom: 15px; }
         .modal-body { text-align: left; max-height: 60vh; overflow-y: auto; }
         .notice-section { margin-bottom: 25px; }
@@ -60,13 +60,13 @@
         .sub-list { margin: 8px 0 0; padding: 0; list-style: none; font-size: 1rem; color: #8a6a6a; }
         .sub-list li { margin-bottom: 8px; position: relative; padding-left: 1.2em; }
         .sub-list li::before { content: "※"; position: absolute; left: 0; }
-        .modal-close-btn { width: 100%; padding: 18px; background: var(--mauve-admin); color: white; border: none; border-radius: 14px; font-weight: bold; font-size: 1.3rem; cursor: pointer; margin-top: 20px; outline: none; }
+        .modal-close-btn { width: 100%; padding: 18px; background: var(--mauve-admin); color: white; border: none; border-radius: 14px; font-weight: bold; font-size: 1.3rem; cursor: pointer; margin-top: 20px; outline: none; -webkit-tap-highlight-color: transparent; }
 
-        /* --- 大中小ボタン（文字サイズ連動） --- */
+        /* --- 大中小ボタン（文字サイズ連動・アウトラインなし） --- */
         .size-selector { display: flex; background: #eeebe9; border-radius: 10px; padding: 3px; gap: 2px; }
         .size-btn { 
             border: none; background: transparent; padding: 6px 14px; font-weight: bold; color: #b09999; border-radius: 8px; cursor: pointer; outline: none;
-            font-size: var(--base-font-size); 
+            font-size: calc(var(--base-font-size) * 0.8); /* ボタン内の文字もベースサイズに連動 */
         }
         .size-btn.active { background: var(--mauve-admin); color: white; }
 
@@ -82,10 +82,10 @@
         .check-item { background: #fff; border: 1px solid var(--tile-border); padding: 12px 4px; border-radius: 12px; font-size: 0.9rem; text-align: center; cursor: pointer; font-weight: bold; display: flex; align-items: center; justify-content: center; min-height: 48px; }
         .check-item.active { background: linear-gradient(180deg, var(--pink-main) 0%, var(--pink-deep) 100%); color: white; border-color: var(--pink-deep); }
 
-        .submit-btn { background: linear-gradient(135deg, var(--pink-main) 0%, var(--pink-deep) 100%); color: white; border: none; padding: 22px; border-radius: 20px; width: 100%; font-size: 1.2rem; font-weight: 700; cursor: pointer; margin-bottom: 30px; outline: none; }
+        .submit-btn { background: linear-gradient(135deg, var(--pink-main) 0%, var(--pink-deep) 100%); color: white; border: none; padding: 22px; border-radius: 20px; width: 100%; font-size: 1.2rem; font-weight: 700; cursor: pointer; margin-bottom: 10px; outline: none; }
 
         .back-link-container { text-align: center; padding: 20px 0 40px; }
-        .back-to-shared-btn { display: inline-block; padding: 12px 30px; background-color: var(--mauve-admin); color: #fff; text-decoration: none; border-radius: 50px; font-weight: bold; font-size: 0.9rem; box-shadow: 0 4px 15px rgba(142, 122, 138, 0.2); }
+        .back-to-shared-btn { display: inline-block; padding: 12px 30px; background-color: var(--mauve-admin); color: #fff; text-decoration: none; border-radius: 50px; font-weight: bold; font-size: 0.9rem; box-shadow: 0 4px 15px rgba(142, 122, 138, 0.2); outline: none; }
     </style>
 </head>
 <body>
@@ -93,7 +93,7 @@
 <header>
     <h1>PLAY REQUEST</h1>
     <button id="force-reload-btn" onclick="animateAndReload()">
-        <span class="spin-icon">↻</span>最新にリロード<span class="spin-icon">↻</span>
+        <span class="spin-icon">↻</span>最新にリロード
     </button>
 </header>
 
@@ -183,8 +183,8 @@
 
 <script>
     function animateAndReload() {
-        const icons = document.querySelectorAll('.spin-icon');
-        icons.forEach(icon => icon.style.transform = 'rotate(360deg)');
+        const icon = document.querySelector('.spin-icon');
+        icon.style.transform = 'rotate(360deg)';
         setTimeout(() => {
             location.reload(true);
         }, 500);
