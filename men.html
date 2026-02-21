@@ -1,0 +1,285 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+    <title>ease女性用プレイ依頼フォーム</title>
+    <link href="https://fonts.googleapis.com/css2?family=Lora:wght@600&family=Noto+Sans+JP:wght@400;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            /* 女性用：ローズピンクパレット */
+            --pink-main: #d4a5a5;
+            --pink-deep: #b57d7d;
+            --pink-light: #fff5f5;
+            --soft-bg: #fdf8f7;
+            --card-bg: #ffffff;
+            
+            /* 都道府県・チェックボタン：管理用UI継承（ピンク版） */
+            --tile-bg-top: #fceeee; 
+            --tile-bg-bottom: #f2dada;
+            --tile-text: #7a5a5a;
+            --tile-border: #e8cfcf;
+            --tile-shadow: 0 4px 10px rgba(212, 165, 165, 0.15);
+            
+            --text-sub: #b09999;
+            --shadow: 0 10px 30px rgba(212, 165, 165, 0.15);
+
+            /* --- フォントサイズ可変用変数 --- */
+            --base-font-size: 16px; 
+            --pref-font-size: 14px; 
+            --pref-grid-cols: repeat(3, 1fr);
+        }
+
+        body { font-family: 'Noto Sans JP', sans-serif; margin: 0; background: var(--soft-bg); color: #5a4d4d; -webkit-font-smoothing: antialiased; line-height: 1.6; font-size: var(--base-font-size); }
+        
+        header { 
+            background: rgba(212, 165, 165, 0.95); backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px);
+            color: white; padding: 1.2rem 1.2rem 1rem; position: sticky; top: 0; z-index: 100; 
+            display: flex; flex-direction: column; gap: 14px; box-shadow: 0 4px 25px rgba(0,0,0,0.1);
+        }
+        header h1 { margin: 0; font-size: 1.5rem; letter-spacing: 0.15em; font-family: 'Lora', serif; text-align: center; }
+
+        .header-action-row { display: flex; justify-content: flex-end; width: 100%; }
+        
+        #force-reload-btn {
+            background: rgba(255, 255, 255, 0.2); border: 1px solid rgba(255, 255, 255, 0.4); 
+            border-radius: 30px; padding: 6px 14px; font-size: 10px; font-weight: bold; color: white;
+            cursor: pointer; display: flex; align-items: center; gap: 8px;
+        }
+
+        .reload-icon { 
+            display: inline-block; width: 10px; height: 10px; border: 1.8px solid white; 
+            border-top: 1.8px solid transparent; border-radius: 50%; position: relative; 
+        }
+        .reload-icon::after { 
+            content: ''; position: absolute; top: -2.8px; left: 4.5px; border-left: 3.5px solid transparent; 
+            border-right: 3.5px solid transparent; border-bottom: 4.5px solid white; transform: rotate(45deg); 
+        }
+
+        .container { padding: 1rem; max-width: 550px; margin: 0 auto; }
+
+        /* 注意事項 */
+        .notice-box { 
+            background: #fff; border: 2px solid var(--pink-main); border-radius: 24px; 
+            padding: 25px; margin-bottom: 25px; font-size: 0.85em; color: #7a5a5a;
+            box-shadow: var(--shadow);
+        }
+        .notice-box h2 { font-size: 1.1em; margin: 0 0 15px; color: var(--pink-deep); border-bottom: 2px solid var(--pink-light); padding-bottom: 10px; line-height: 1.4; }
+        .notice-content { display: flex; flex-direction: column; gap: 18px; }
+        .notice-item { border-left: 3px solid var(--pink-main); padding-left: 12px; }
+        .notice-item strong { display: block; color: var(--pink-deep); margin-bottom: 5px; font-size: 1.05em; }
+        .notice-sub { font-size: 0.95em; color: #8a6a6a; display: block; margin-top: 3px; line-height: 1.5; }
+
+        /* フォームセクション */
+        .form-section { background: var(--card-bg); border-radius: 24px; padding: 25px 20px; box-shadow: var(--shadow); margin-bottom: 25px; overflow: hidden; }
+        .region-header { 
+            display: flex; justify-content: space-between; align-items: center; margin-bottom: 15px;
+            padding-bottom: 10px; border-bottom: 1px solid var(--pink-light);
+        }
+        .section-title { font-weight: 700; font-size: 0.9em; color: var(--pink-deep); }
+
+        .size-selector { display: flex; background: #eeebe9; border-radius: 10px; padding: 3px; gap: 2px; }
+        .size-btn {
+            border: none; background: transparent; padding: 5px 10px; font-size: 11px;
+            font-weight: bold; color: var(--text-sub); border-radius: 8px; cursor: pointer;
+        }
+        .size-btn.active { background: white; color: var(--pink-deep); box-shadow: 0 2px 5px rgba(0,0,0,0.1); }
+
+        .form-group { margin-bottom: 20px; }
+        .label-row { display: flex; align-items: center; margin-bottom: 10px; gap: 8px; }
+        .label-row span { font-weight: 700; font-size: 0.85em; color: var(--pink-deep); }
+        .required { background: #e88e8e; color: white; font-size: 9px; padding: 2px 5px; border-radius: 4px; }
+
+        input, select, textarea {
+            width: 100%; padding: 12px; border-radius: 10px; border: 1px solid var(--tile-border);
+            background: var(--pink-light); color: var(--tile-text); font-size: 1em; box-sizing: border-box; outline: none;
+        }
+
+        .check-grid { display: grid; grid-template-columns: var(--pref-grid-cols); gap: 8px; }
+        .check-item {
+            background: linear-gradient(180deg, #ffffff 0%, #fcf3f3 100%);
+            border: 1px solid var(--tile-border); padding: 10px 4px; border-radius: 10px;
+            font-size: var(--pref-font-size); text-align: center; cursor: pointer; color: var(--tile-text);
+            transition: 0.2s; display: flex; align-items: center; justify-content: center; min-height: 44px;
+            font-weight: bold; box-shadow: var(--tile-shadow);
+        }
+        .check-item.active {
+            background: linear-gradient(180deg, var(--pink-main) 0%, var(--pink-deep) 100%);
+            color: white; border-color: var(--pink-deep); box-shadow: none;
+        }
+
+        .submit-btn {
+            background: linear-gradient(135deg, var(--pink-main) 0%, var(--pink-deep) 100%);
+            color: white; border: none; padding: 20px; border-radius: 20px; width: 100%;
+            font-size: 1.1em; font-weight: 700; cursor: pointer; box-shadow: 0 8px 25px rgba(212,165,165,0.4);
+            margin-top: 10px;
+        }
+
+        .spinning { animation: spin 0.8s linear infinite; }
+        @keyframes spin { from { transform: rotate(0deg); } to { transform: rotate(360deg); } }
+    </style>
+</head>
+<body>
+
+<header>
+    <h1>PLAY REQUEST</h1>
+    <div class="header-action-row">
+        <button id="force-reload-btn" onclick="fastUpdate()">
+            <span class="reload-icon sync-target"></span>
+            最新にリロード
+            <span class="reload-icon sync-target"></span>
+        </button>
+    </div>
+</header>
+
+<div class="container">
+    <div class="notice-box">
+        <h2>申し訳ございませんが、<br>下記のご理解をお願いします。</h2>
+        <div class="notice-content">
+            <div class="notice-item">
+                <strong>■案件の募集期間が短いと男性が決まらない場合があります</strong>
+                前日に男性を決めますので、前々日なら約1日ということになります。
+                <span class="notice-sub">※前々日の夜なら、ほぼ募集期間はないということになってしまいます。</span>
+                <span class="notice-sub">※正直、地域によって変わってしまいます。すみません。</span>
+                <span class="notice-sub">※応募がない場合は、再募集していますが、なかなか難しいと思います。</span>
+            </div>
+            
+            <div class="notice-item">
+                <strong>■1対1の前日の受付は午前中のみでお願いします。</strong>
+                <span class="notice-sub">※午後からのプレイ依頼は、当日扱いになります。</span>
+                <span class="notice-sub">※前日依頼は、お受けしますが男性が決まらない可能性があります。</span>
+            </div>
+
+            <div class="notice-item">
+                <strong>■1対1の当日依頼は、お受けできなくなりました</strong>
+                <span class="notice-sub">※当日の依頼は、いろいろと問題が多いので、お受けしないことにしました。</span>
+            </div>
+
+            <div class="notice-item">
+                <strong>■複数プレイは、監督探しからとなります</strong>
+                依頼日に必ず開催されるとは限りません。
+                <span class="notice-sub">※プレイ依頼受付後に「監督願い」を森が、全監督宛に出して決まりますので、少しお日にちが必要となります。</span>
+                <span class="notice-sub">※何日間前に出せば良いということではなく、その日に動ける監督が居るかどうかで決まります。</span>
+                <span class="notice-sub">※準備期間が長いほど、監督も都合を合わせやすくなります。</span>
+                <span class="notice-sub">※プレイ依頼を出す前に、森に相談してもらうこともできます。</span>
+            </div>
+
+            <div class="notice-item">
+                <strong>■キャンセルは前日の確認までなら問題ありません。</strong>
+            </div>
+
+            <p style="text-align:center; font-weight:bold; color:var(--pink-deep); margin-top:10px; font-size: 1.1em;">《何かあれば森に相談してください》</p>
+        </div>
+    </div>
+
+    <form>
+        <div class="form-section">
+            <div class="region-header">
+                <span class="section-title">基本情報</span>
+                <div class="size-selector">
+                    <button type="button" class="size-btn" id="btn-small" onclick="changeFontSize('small')">小</button>
+                    <button type="button" class="size-btn" id="btn-mid" onclick="changeFontSize('mid')">中</button>
+                    <button type="button" class="size-btn" id="btn-large" onclick="changeFontSize('large')">大</button>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <div class="label-row"><span>ID / ニックネーム</span><span class="required">必須</span></div>
+                <input type="text" placeholder="IDまたは面談時の名前">
+            </div>
+
+            <div class="form-group">
+                <div class="label-row"><span>開催都道府県</span><span class="required">必須</span></div>
+                <select id="pref-select">
+                    <option value="" disabled selected>選択してください</option>
+                    <optgroup label="北海道・東北">
+                        <option>北海道</option><option>青森県</option><option>岩手県</option>
+                        <option>宮城県</option><option>秋田県</option><option>山形県</option><option>福島県</option>
+                    </optgroup>
+                    <optgroup label="関東">
+                        <option>茨城県</option><option>栃木県</option><option>群馬県</option>
+                        <option>埼玉県</option><option>千葉県</option><option>東京都</option><option>神奈川県</option>
+                    </optgroup>
+                    <optgroup label="中部">
+                        <option>新潟県</option><option>富山県</option><option>石川県</option><option>福井県</option>
+                        <option>山梨県</option><option>長野県</option><option>岐阜県</option><option>静岡県</option><option>愛知県</option>
+                    </optgroup>
+                    <optgroup label="近畿">
+                        <option>三重県</option><option>滋賀県</option><option>京都府</option>
+                        <option>大阪府</option><option>兵庫県</option><option>奈良県</option><option>和歌山県</option>
+                    </optgroup>
+                    <optgroup label="中国・四国">
+                        <option>鳥取県</option><option>島根県</option><option>岡山県</option><option>広島県</option><option>山口県</option>
+                        <option>徳島県</option><option>香川県</option><option>愛媛県</option><option>高知県</option>
+                    </optgroup>
+                    <optgroup label="九州・沖縄">
+                        <option>福岡県</option><option>佐賀県</option><option>長崎県</option>
+                        <option>熊本県</option><option>大分県</option><option>宮崎県</option><option>鹿児島県</option><option>沖縄県</option>
+                    </optgroup>
+                </select>
+            </div>
+        </div>
+
+        <div class="form-section">
+            <div class="label-row"><span>希望プレイ（複数選択可）</span><span class="required">必須</span></div>
+            <div class="check-grid" id="play-options">
+                <div class="check-item" onclick="toggleSelection(this)">お任せ</div>
+                <div class="check-item" onclick="toggleSelection(this)">攻められたい</div>
+                <div class="check-item" onclick="toggleSelection(this)">攻めたい</div>
+                <div class="check-item" onclick="toggleSelection(this)">刺激体験</div>
+                <div class="check-item" onclick="toggleSelection(this)">レイプ希望</div>
+                <div class="check-item" onclick="toggleSelection(this)">目隠し</div>
+                <div class="check-item" onclick="toggleSelection(this)">複数人</div>
+                <div class="check-item" onclick="toggleSelection(this)">玩具使用</div>
+                <div class="check-item" onclick="toggleSelection(this)">恋人風</div>
+                <div class="check-item" onclick="toggleSelection(this)">3P</div>
+                <div class="check-item" onclick="toggleSelection(this)">アナル</div>
+                <div class="check-item" onclick="toggleSelection(this)">ドM</div>
+            </div>
+        </div>
+
+        <button type="button" class="submit-btn" onclick="alert('確認画面へ進みます')">内容確認画面へ</button>
+    </form>
+</div>
+
+<script>
+    // フォントサイズ・グリッド制御ロジック
+    function applyFontSize(mode) {
+        const root = document.documentElement;
+        if (mode === 'small') {
+            root.style.setProperty('--base-font-size', '13px');
+            root.style.setProperty('--pref-font-size', '11px');
+            root.style.setProperty('--pref-grid-cols', 'repeat(4, 1fr)');
+        } else if (mode === 'mid') {
+            root.style.setProperty('--base-font-size', '16px');
+            root.style.setProperty('--pref-font-size', '14px');
+            root.style.setProperty('--pref-grid-cols', 'repeat(3, 1fr)');
+        } else if (mode === 'large') {
+            root.style.setProperty('--base-font-size', '19px');
+            root.style.setProperty('--pref-font-size', '17px');
+            root.style.setProperty('--pref-grid-cols', 'repeat(2, 1fr)');
+        }
+        document.querySelectorAll('.size-btn').forEach(btn => {
+            btn.classList.toggle('active', btn.id === `btn-${mode}`);
+        });
+    }
+
+    function changeFontSize(mode) {
+        applyFontSize(mode);
+        localStorage.setItem('formFontSizeMode', mode);
+    }
+
+    window.onload = () => {
+        const saved = localStorage.getItem('formFontSizeMode') || 'mid';
+        applyFontSize(saved);
+    };
+
+    function toggleSelection(el) { el.classList.toggle('active'); }
+    
+    async function fastUpdate() {
+        document.querySelectorAll('.sync-target').forEach(icon => icon.classList.add('spinning'));
+        setTimeout(() => location.reload(), 600);
+    }
+</script>
+</body>
+</html>
