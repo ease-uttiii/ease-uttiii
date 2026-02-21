@@ -15,11 +15,12 @@
             --tile-border: #e8cfcf;
             --tile-text: #7a5a5a;
             --tile-shadow: 0 4px 10px rgba(212, 165, 165, 0.15);
-            --mauve-admin: #8e7a8a; 
-            --base-font-size: 16px; 
+            --mauve-admin: #8e7a8a;
+            --base-font-size: 16px;
             --pref-grid-cols: repeat(3, 1fr);
         }
 
+        /* --- 文字サイズ連動（ダイアログ以外すべて） --- */
         body { 
             font-family: 'Noto Sans JP', sans-serif; 
             margin: 0; 
@@ -29,6 +30,7 @@
             font-size: var(--base-font-size); 
         }
         
+        /* ヘッダー：2列配置 */
         header { 
             background: rgba(212, 165, 165, 0.95); backdrop-filter: blur(10px);
             color: white; padding: 1rem; position: sticky; top: 0; z-index: 100; 
@@ -37,31 +39,31 @@
         }
         header h1 { margin: 0; font-size: 1.4rem; letter-spacing: 0.1em; font-family: 'Lora', serif; }
 
-        /* --- リロードボタン（men.html仕様：文字の両サイドにアイコン） --- */
+        /* リロードボタン：左右にアイコン（完全再現） */
         #force-reload-btn {
             background: rgba(255, 255, 255, 0.2); border: 1px solid rgba(255, 255, 255, 0.4); 
-            border-radius: 30px; padding: 6px 15px; font-size: 11px; font-weight: bold; color: white; cursor: pointer;
+            border-radius: 30px; padding: 6px 14px; font-size: 11px; font-weight: bold; color: white; cursor: pointer;
             display: flex; align-items: center; gap: 6px; outline: none; -webkit-tap-highlight-color: transparent;
         }
-        .spin-icon { display: inline-block; font-size: 14px; transition: transform 0.5s ease-in-out; }
+        .spin-icon { display: inline-block; font-size: 14px; transition: transform 0.6s ease-in-out; }
 
         .container { padding: 1rem; max-width: 550px; margin: 0 auto; }
 
-        /* --- 大切なお願いボタン（絶対に1列表示） --- */
+        /* --- 「お願い」ボタン：絶対に1列で収める --- */
         .notice-btn {
             background: #fff; border: 3px solid var(--mauve-admin); color: var(--mauve-admin);
             font-size: 1.1em; font-weight: 800; padding: 14px 10px; border-radius: 50px; cursor: pointer;
             box-shadow: 0 6px 20px rgba(142, 122, 138, 0.15);
             width: 100%; display: flex; align-items: center; justify-content: center; 
             margin: 15px 0 25px; box-sizing: border-box; outline: none;
-            white-space: nowrap; overflow: hidden;
+            white-space: nowrap; overflow: hidden; /* 改行阻止 */
         }
         .notice-btn .warn-icon { font-size: 1.6em; margin-right: 8px; flex-shrink: 0; }
 
-        /* --- ダイアログ（タイトル・本文は固定サイズ 18px） --- */
+        /* --- ダイアログ：タイトル・本文ともに 18px 固定 --- */
         .notice-modal { border: none; border-radius: 24px; padding: 0; width: 92%; max-width: 550px; box-shadow: 0 20px 60px rgba(0,0,0,0.3); outline: none; }
         .notice-modal::backdrop { background: rgba(0, 0, 0, 0.4); backdrop-filter: blur(4px); }
-        .modal-inner { padding: 30px 25px; background: #fff; outline: none; }
+        .modal-inner { padding: 30px 25px; background: #fff; outline: none; border: none; }
         .modal-header h2 { 
             color: var(--mauve-admin); 
             font-size: 18px !important; /* タイトル固定 */
@@ -79,7 +81,7 @@
         .sub-list li::before { content: "※"; position: absolute; left: 0; }
         .modal-close-btn { width: 100%; padding: 18px; background: var(--mauve-admin); color: white; border: none; border-radius: 14px; font-weight: bold; font-size: 1.3rem; cursor: pointer; margin-top: 20px; outline: none; }
 
-        /* --- フォーム項目（大中小連動） --- */
+        /* --- 各項目：em 指定で連動 --- */
         .form-section { background: var(--card-bg); border-radius: 24px; padding: 25px 20px; box-shadow: var(--tile-shadow); margin-bottom: 25px; }
         .region-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 15px; border-bottom: 1px solid var(--pink-light); padding-bottom: 10px; }
         .section-title { font-weight: 700; color: var(--pink-deep); font-size: 1.1em; }
@@ -90,14 +92,14 @@
         input, select, textarea { width: 100%; padding: 14px; border-radius: 12px; border: 1px solid var(--tile-border); background: var(--pink-light); box-sizing: border-box; font-size: 1em; color: var(--tile-text); outline: none; margin-top: 8px; }
 
         .check-grid { display: grid; grid-template-columns: var(--pref-grid-cols); gap: 10px; margin-top: 10px; }
-        .check-item { background: #fff; border: 1px solid var(--tile-border); padding: 12px 4px; border-radius: 12px; font-size: 0.9em; text-align: center; cursor: pointer; font-weight: bold; display: flex; align-items: center; justify-content: center; min-height: 48px; box-shadow: var(--tile-shadow); transition: 0.2s; }
+        .check-item { background: #fff; border: 1px solid var(--tile-border); padding: 12px 4px; border-radius: 12px; font-size: 0.9em; text-align: center; cursor: pointer; font-weight: bold; display: flex; align-items: center; justify-content: center; min-height: 48px; box-shadow: var(--tile-shadow); }
         .check-item.active { background: linear-gradient(180deg, var(--pink-main) 0%, var(--pink-deep) 100%); color: white; }
 
         .size-selector { display: flex; background: #eeebe9; border-radius: 10px; padding: 3px; gap: 2px; }
         .size-btn { border: none; background: transparent; padding: 6px 14px; font-weight: bold; color: #b09999; border-radius: 8px; cursor: pointer; outline: none; font-size: 0.8em; }
         .size-btn.active { background: var(--mauve-admin); color: white; }
 
-        .submit-btn { background: linear-gradient(135deg, var(--pink-main) 0%, var(--pink-deep) 100%); color: white; border: none; padding: 20px; border-radius: 20px; width: 100%; font-size: 1.2em; font-weight: 700; cursor: pointer; margin-top: 10px; outline: none; }
+        .submit-btn { background: linear-gradient(135deg, var(--pink-main) 0%, var(--pink-deep) 100%); color: white; border: none; padding: 20px; border-radius: 20px; width: 100%; font-size: 1.2em; font-weight: 700; cursor: pointer; margin-top: 10px; outline: none; box-shadow: 0 8px 25px rgba(212,165,165,0.4); }
         .back-link-container { text-align: center; margin-bottom: 40px; }
         .back-to-shared-btn { display: inline-block; padding: 12px 30px; background-color: var(--mauve-admin); color: #fff; text-decoration: none; border-radius: 50px; font-weight: bold; font-size: 0.9em; box-shadow: 0 4px 15px rgba(142, 122, 138, 0.2); }
     </style>
@@ -123,16 +125,9 @@
                 <div class="notice-section">
                     <strong>■案件の募集期間が短いと男性が決まらない場合があります</strong>
                     <p>前日に男性を決めますので、前々日なら約1日ということになります。</p>
-                    <ul class="sub-list">
-                        <li>前々日の夜なら、ほぼ募集期間はないということになってしまいます。</li>
-                        <li>正直、地域によって変わってしまいます。すみません。</li>
-                    </ul>
                 </div>
                 <div class="notice-section">
                     <strong>■1対1の当日依頼は、お受けできなくなりました</strong>
-                    <ul class="sub-list">
-                        <li>当日の依頼は、いろいろと問題が多いので、お受けしないことにしました。</li>
-                    </ul>
                 </div>
                 <p style="text-align: center; font-weight: bold; color: var(--pink-main); margin-top: 30px;">《何かあれば森に相談してください》</p>
             </div>
@@ -155,26 +150,7 @@
             <input type="text" placeholder="例：A-123">
         </div>
 
-        <div class="form-section">
-            <label class="field-label">希望プレイ内容 <span class="required">必須</span></label>
-            <span class="field-desc">本日行いたいプレイ内容にチェック（複数可）。</span>
-            <div class="check-grid">
-                <div class="check-item" onclick="toggleSelection(this)">お任せ</div>
-                <div class="check-item" onclick="toggleSelection(this)">攻められたい</div>
-                <div class="check-item" onclick="toggleSelection(this)">攻めたい</div>
-                <div class="check-item" onclick="toggleSelection(this)">レイプ希望</div>
-                <div class="check-item" onclick="toggleSelection(this)">3P / 複数人</div>
-                <div class="check-item" onclick="toggleSelection(this)">撮影OK</div>
-            </div>
-        </div>
-
-        <div class="form-section">
-            <label class="field-label">具体的な希望やNG事項</label>
-            <span class="field-desc">男性に伝えておきたいことがあれば記入してください。</span>
-            <textarea placeholder="自由に入力してください"></textarea>
-        </div>
-
-        <button type="button" class="submit-btn" onclick="alert('送信準備完了')">内容確認画面へ</button>
+        <button type="button" class="submit-btn">内容確認画面へ</button>
     </form>
 
     <div class="back-link-container">
@@ -186,7 +162,7 @@
     function animateAndReload() {
         const icons = document.querySelectorAll('.spin-icon');
         icons.forEach(i => i.style.transform = 'rotate(360deg)');
-        setTimeout(() => { location.reload(true); }, 500);
+        setTimeout(() => { location.reload(true); }, 600);
     }
 
     function applyFontSize(mode) {
