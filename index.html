@@ -85,4 +85,139 @@
             font-size: 2.2rem; 
             color: var(--accent-color);
         }
-        header p {
+        header p { 
+            font-size: 0.8em; 
+            margin-top: 12px; 
+            color: #b0a4a4; 
+            letter-spacing: 0.15em;
+        }
+
+        .container { 
+            flex: 1; 
+            padding: 1rem; 
+            max-width: 450px; 
+            margin: 0 auto; 
+            width: 90%; 
+            display: flex; 
+            flex-direction: column; 
+            gap: 20px;
+            justify-content: center;
+        }
+
+        .portal-card {
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+            padding: 1.8rem;
+            border-radius: 24px;
+            background: #ffffff;
+            box-shadow: var(--shadow);
+            transition: all 0.2s ease;
+            border: 1px solid rgba(0,0,0,0.02);
+        }
+        .portal-card:active { transform: scale(0.97); box-shadow: none; }
+
+        .card-men { border-bottom: 5px solid var(--men-blue); }
+        .card-men .icon-circle { background: var(--men-blue); }
+        .card-men h2 { color: var(--men-blue); }
+
+        .card-woman { border-bottom: 5px solid var(--woman-pink); }
+        .card-woman .icon-circle { background: var(--woman-pink); }
+        .card-woman h2 { color: var(--woman-pink); }
+
+        .icon-circle {
+            width: 54px; height: 54px; border-radius: 18px;
+            display: flex; align-items: center; justify-content: center;
+            margin-right: 20px; color: white; font-size: 1.4rem; font-family: 'Lora', serif;
+        }
+
+        .card-info { flex: 1; }
+        .card-info h2 { margin: 0; font-size: 1.2em; font-weight: 700; letter-spacing: 0.05em; }
+        .card-info p { margin: 4px 0 0; font-size: 0.85em; color: #a89e9e; font-weight: 500; }
+
+        .arrow { font-size: 1.2rem; color: #d1c8c8; }
+
+        .footer-settings { padding: 3rem 2rem; display: flex; justify-content: center; }
+        .size-selector { display: flex; background: #eeebe9; border-radius: 12px; padding: 4px; gap: 4px; }
+        .size-btn {
+            border: none; background: transparent; padding: 6px 14px; font-size: 11px;
+            font-weight: bold; color: #a89e9e; border-radius: 8px; cursor: pointer;
+        }
+        .size-btn.active { background: white; color: var(--accent-color); box-shadow: 0 2px 5px rgba(0,0,0,0.1); }
+    </style>
+</head>
+<body>
+
+<header>
+    <div class="header-action-row">
+        <button id="force-reload-btn" onclick="fastUpdate()">
+            <span class="reload-icon sync-target"></span>
+            最新にリロード
+            <span class="reload-icon sync-target"></span>
+        </button>
+    </div>
+    <h1>ease</h1>
+    <p>PRIVATE & QUALITY TIME</p>
+</header>
+
+<div class="container">
+    <a href="men.html" class="portal-card card-men">
+        <div class="icon-circle">M</div>
+        <div class="card-info">
+            <h2>FOR MEN</h2>
+            <p>男性キャスト募集・案件一覧</p>
+        </div>
+        <div class="arrow">→</div>
+    </a>
+
+    <a href="woman.html" class="portal-card card-woman">
+        <div class="icon-circle">W</div>
+        <div class="card-info">
+            <h2>FOR WOMEN</h2>
+            <p>女性専用プレイ依頼フォーム</p>
+        </div>
+        <div class="arrow">→</div>
+    </a>
+</div>
+
+<div class="footer-settings">
+    <div class="size-selector">
+        <button class="size-btn" id="btn-small" onclick="changeFontSize('small')">小</button>
+        <button class="size-btn active" id="btn-mid" onclick="changeFontSize('mid')">中</button>
+        <button class="size-btn" id="btn-large" onclick="changeFontSize('large')">大</button>
+    </div>
+</div>
+
+<script>
+    function applyFontSize(mode) {
+        const root = document.documentElement;
+        if (mode === 'small') {
+            root.style.setProperty('--base-font-size', '14px');
+        } else if (mode === 'mid') {
+            root.style.setProperty('--base-font-size', '16px');
+        } else if (mode === 'large') {
+            root.style.setProperty('--base-font-size', '19px');
+        }
+        document.querySelectorAll('.size-btn').forEach(btn => {
+            btn.classList.toggle('active', btn.id === `btn-${mode}`);
+        });
+    }
+
+    function changeFontSize(mode) {
+        applyFontSize(mode);
+        localStorage.setItem('portalFontSizeMode', mode);
+    }
+
+    async function fastUpdate() {
+        document.querySelectorAll('.sync-target').forEach(icon => { icon.classList.add('spinning'); });
+        setTimeout(() => { location.reload(); }, 600);
+    }
+
+    window.onload = () => {
+        const saved = localStorage.getItem('portalFontSizeMode') || 'mid';
+        applyFontSize(saved);
+    };
+</script>
+
+</body>
+</html>
