@@ -3,266 +3,197 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
-    <title>Circle Ease</title>
+    <title>ease - Portal</title>
     <link href="https://fonts.googleapis.com/css2?family=Lora:wght@600&family=Noto+Sans+JP:wght@400;700&display=swap" rel="stylesheet">
     <style>
         :root {
-            --mauve: #b39292;
-            --mauve-deep: #967676;
-            --mauve-light: #fdfaf9;
-            --soft-bg: #f5f1ef;
-            --card-bg: #ffffff;
-            --tile-bg-top: #dbcccc;
-            --tile-bg-bottom: #c9b4b4;
-            --tile-text: #5a4d4d;
-            --tile-border: #b8a0a0;
-            --text-sub: #a89e9e;
-            --shadow: 0 8px 25px rgba(179,146,146,0.12);
-            --tile-shadow: 0 4px 10px rgba(0,0,0,0.06);
+            /* 基本トーン：グレージュ */
+            --main-bg: #f8f6f5;
+            --accent-color: #968686;
+            --text-color: #5a5252;
+            --shadow: 0 10px 30px rgba(0,0,0,0.08);
 
-            /* --- フォントサイズ可変用変数 --- */
-            --base-font-size: 16px;       /* 全体の基本サイズ */
-            --pref-font-size: 17px;       /* 都道府県ボタン */
-            --pref-grid-cols: repeat(3, 1fr);
-            --title-font-size: 1.7rem;    /* ヘッダーロゴ */
-            --card-title-size: 19px;      /* カードタイトル */
+            /* 性別カラー */
+            --men-blue: #5d7a99;    /* シックなブルー */
+            --woman-pink: #d4a5a5;  /* ローズピンク */
+
+            --base-font-size: 16px;
         }
 
         body { 
             font-family: 'Noto Sans JP', sans-serif; 
             margin: 0; 
-            background: var(--soft-bg); 
-            color: #524a4a; 
-            -webkit-font-smoothing: antialiased; 
-            font-size: var(--base-font-size); /* 全体に適用 */
+            background: var(--main-bg); 
+            color: var(--text-color); 
+            display: flex; 
+            flex-direction: column; 
+            min-height: 100vh;
+            font-size: var(--base-font-size);
         }
-        
+
         header { 
-            background: rgba(179, 146, 146, 0.95); backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px);
-            color: white; padding: 1.2rem 1.2rem 1rem; position: sticky; top: 0; z-index: 100; 
-            display: flex; flex-direction: column; gap: 14px; box-shadow: 0 4px 25px rgba(0,0,0,0.1);
+            padding: 4rem 1rem 2rem; 
+            text-align: center; 
         }
         header h1 { 
             margin: 0; 
-            font-size: var(--title-font-size); 
-            letter-spacing: 0.25em; 
             font-family: 'Lora', serif; 
-            text-align: center; 
+            letter-spacing: 0.35em; 
+            font-size: 2.2rem; 
+            color: var(--accent-color);
+        }
+        header p { 
+            font-size: 0.8em; 
+            margin-top: 12px; 
+            color: #b0a4a4; 
+            letter-spacing: 0.15em;
         }
 
-        .header-action-row { display: flex; justify-content: flex-end; width: 100%; }
-        
-        #force-reload-btn {
-            background: rgba(255, 255, 255, 0.15); border: 1px solid rgba(255, 255, 255, 0.4); 
-            border-radius: 30px; padding: 6px 14px; font-size: 10px; font-weight: bold; color: white;
-            cursor: pointer; display: flex; align-items: center; gap: 8px;
+        .container { 
+            flex: 1; 
+            padding: 1rem; 
+            max-width: 450px; 
+            margin: 0 auto; 
+            width: 90%; 
+            display: flex; 
+            flex-direction: column; 
+            gap: 20px;
+            justify-content: center;
         }
 
-        .reload-icon { 
-            display: inline-block; width: 10px; height: 10px; border: 1.8px solid white; 
-            border-top: 1.8px solid transparent; border-radius: 50%; position: relative; 
+        /* リンクボタン */
+        .portal-card {
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+            padding: 1.8rem;
+            border-radius: 24px;
+            background: #ffffff;
+            box-shadow: var(--shadow);
+            transition: all 0.2s ease;
+            border: 1px solid rgba(0,0,0,0.02);
         }
-        .reload-icon::after { 
-            content: ''; position: absolute; top: -2.8px; left: 4.5px; border-left: 3.5px solid transparent; 
-            border-right: 3.5px solid transparent; border-bottom: 4.5px solid white; transform: rotate(45deg); 
-        }
-
-        .header-nav-row { display: flex; gap: 10px; width: 100%; }
-        .nav-btn { 
-            flex: 1; padding: 12px; border-radius: 14px; border: none; background: white; 
-            color: var(--mauve-deep); font-weight: bold; font-size: 0.8em;
-            box-shadow: 0 6px 15px rgba(0,0,0,0.08); display: flex; align-items: center; justify-content: center; gap: 6px;
-        }
-
-        .container { padding: 1.5rem 1rem; max-width: 500px; margin: 0 auto; }
-        
-        .region-section { background: #ffffff; border-radius: 28px; margin-bottom: 40px; box-shadow: var(--shadow); overflow: hidden; }
-        .region-header { 
-            background: var(--mauve-light); padding: 15px 20px; font-weight: 700; font-size: 0.9em; color: var(--mauve-deep); 
-            border-bottom: 1px solid #f0eded; display: flex; justify-content: space-between; align-items: center;
+        .portal-card:active {
+            transform: scale(0.97);
+            box-shadow: none;
         }
 
-        .size-selector { display: flex; background: #eeebe9; border-radius: 10px; padding: 3px; gap: 2px; }
-        .size-btn {
-            border: none; background: transparent; padding: 5px 10px; font-size: 11px;
-            font-weight: bold; color: var(--text-sub); border-radius: 8px; cursor: pointer; transition: 0.2s;
+        /* 男性ボタン：ブルー */
+        .card-men { border-bottom: 5px solid var(--men-blue); }
+        .card-men .icon-circle { background: var(--men-blue); }
+        .card-men h2 { color: var(--men-blue); }
+
+        /* 女性ボタン：ピンク */
+        .card-woman { border-bottom: 5px solid var(--woman-pink); }
+        .card-woman .icon-circle { background: var(--woman-pink); }
+        .card-woman h2 { color: var(--woman-pink); }
+
+        .icon-circle {
+            width: 54px;
+            height: 54px;
+            border-radius: 18px; /* 少し角丸 */
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-right: 20px;
+            color: white;
+            font-size: 1.4rem;
+            font-family: 'Lora', serif;
         }
-        .size-btn.active { background: white; color: var(--mauve-deep); box-shadow: 0 2px 5px rgba(0,0,0,0.1); }
 
-        .region-group-title { padding: 20px 20px 8px; font-weight: 700; font-size: 0.8em; color: var(--mauve); display: flex; align-items: center; }
-        .region-group-title::before { content: ""; display: inline-block; width: 4px; height: 14px; background: var(--mauve); margin-right: 8px; border-radius: 2px; }
-
-        .pref-grid { display: grid; grid-template-columns: var(--pref-grid-cols); gap: 10px; padding: 10px 15px 25px; transition: all 0.3s ease; }
-        
-        .pref-btn { 
-            background: linear-gradient(180deg, var(--tile-bg-top) 0%, var(--tile-bg-bottom) 100%); 
-            border: 1px solid var(--tile-border); 
-            padding: 14px 2px;
-            font-size: var(--pref-font-size); 
+        .card-info { flex: 1; }
+        .card-info h2 { 
+            margin: 0; 
+            font-size: 1.2em; 
             font-weight: 700; 
-            border-radius: 12px; 
-            color: var(--tile-text); 
-            box-shadow: var(--tile-shadow); 
-            transition: all 0.2s ease; 
-            cursor: pointer; 
-            text-align: center;
-            display: flex; align-items: center; justify-content: center;
+            letter-spacing: 0.05em;
         }
-        .pref-btn:active { 
-            background: var(--mauve-deep); color: white;
-            transform: translateY(1px); 
-            box-shadow: none; 
+        .card-info p { 
+            margin: 4px 0 0; 
+            font-size: 0.85em; 
+            color: #a89e9e; 
+            font-weight: 500;
         }
 
-        #current-filter-label { margin: 35px 0 20px; font-size: 1.15em; font-weight: 700; color: var(--mauve-deep); display: flex; align-items: center; }
-        #current-filter-label::after { content: ""; flex: 1; height: 1px; background: #e0d8d5; margin-left: 15px; }
+        .arrow {
+            font-size: 1.2rem;
+            color: #d1c8c8;
+        }
 
-        .recruit-card { background: var(--card-bg); margin-bottom: 2rem; border-radius: 24px; box-shadow: var(--shadow); display: flex; overflow: hidden; }
-        .card-accent { width: 44px; background: linear-gradient(180deg, var(--mauve-light), var(--mauve)); display: flex; align-items: center; justify-content: center; writing-mode: vertical-rl; color: var(--mauve-deep); font-size: 0.7em; font-weight: 700; letter-spacing: 0.4em; }
-        .card-content { padding: 1.8rem; flex: 1; }
-        .recruit-title { font-weight: 700; color: #4a3b3b; font-size: var(--card-title-size); margin-bottom: 12px; }
-        .recruit-info { font-size: 0.8em; color: var(--text-sub); display: flex; flex-direction: column; gap: 7px; }
-        .apply-btn { margin-top: 22px; background: linear-gradient(135deg, var(--mauve) 0%, var(--mauve-deep) 100%); color: white; border: none; padding: 16px; border-radius: 16px; width: 100%; font-size: 1em; font-weight: 700; cursor: pointer; }
-        
-        .spinning { animation: spin 0.8s linear infinite; }
-        @keyframes spin { from { transform: rotate(0deg); } to { transform: rotate(360deg); } }
+        /* 設定エリア */
+        .footer-settings {
+            padding: 3rem 2rem;
+            display: flex;
+            justify-content: center;
+        }
+        .size-selector { display: flex; background: #eeebe9; border-radius: 12px; padding: 4px; gap: 4px; }
+        .size-btn {
+            border: none; background: transparent; padding: 6px 14px; font-size: 11px;
+            font-weight: bold; color: #a89e9e; border-radius: 8px; cursor: pointer;
+        }
+        .size-btn.active { background: white; color: var(--accent-color); box-shadow: 0 2px 5px rgba(0,0,0,0.1); }
     </style>
 </head>
 <body>
 
 <header>
-    <h1>CIRCLE EASE</h1>
-    <div class="header-action-row">
-        <button id="force-reload-btn" onclick="fastUpdate()">
-            <span class="reload-icon sync-target"></span>
-            最新にリロード
-            <span class="reload-icon sync-target"></span>
-        </button>
-    </div>
-    <div class="header-nav-row">
-        <button class="nav-btn" onclick="scrollToSection('region-section')">📍 エリアで絞る</button>
-        <button class="nav-btn" onclick="filterByArea('すべて')">📋 すべて表示</button>
-    </div>
+    <h1>ease</h1>
+    <p>PRIVATE & QUALITY TIME</p>
 </header>
 
 <div class="container">
-    <div id="region-section" class="region-section">
-        <div class="region-header">
-            <span>FIND BY AREA</span>
-            <div class="size-selector">
-                <button class="size-btn" id="btn-small" onclick="changeFontSize('small')">小</button>
-                <button class="size-btn" id="btn-mid" onclick="changeFontSize('mid')">中</button>
-                <button class="size-btn" id="btn-large" onclick="changeFontSize('large')">大</button>
-            </div>
+    <a href="men.html" class="portal-card card-men">
+        <div class="icon-circle">M</div>
+        <div class="card-info">
+            <h2>FOR MEN</h2>
+            <p>男性キャスト募集・案件一覧</p>
         </div>
-        <div id="pref-container"></div>
+        <div class="arrow">→</div>
+    </a>
+
+    <a href="woman.html" class="portal-card card-woman">
+        <div class="icon-circle">W</div>
+        <div class="card-info">
+            <h2>FOR WOMEN</h2>
+            <p>女性専用プレイ依頼フォーム</p>
+        </div>
+        <div class="arrow">→</div>
+    </a>
+</div>
+
+<div class="footer-settings">
+    <div class="size-selector">
+        <button class="size-btn" id="btn-small" onclick="changeFontSize('small')">小</button>
+        <button class="size-btn active" id="btn-mid" onclick="changeFontSize('mid')">中</button>
+        <button class="size-btn" id="btn-large" onclick="changeFontSize('large')">大</button>
     </div>
-    <div id="current-filter-label">表示中: すべての募集</div>
-    <div id="recruit-list"></div>
 </div>
 
 <script>
-let recruitmentItems = [
-    { id: 1, title: "東京都内のプレミアム特別案件", area: "東京都全域", date: "2024-05-20" },
-    { id: 2, title: "大阪・関西エリア合同一斉募集", area: "大阪府", date: "2024-05-25" },
-    { id: 3, title: "北海道エリア限定・特別イベント", area: "北海道全域", date: "2024-06-01" },
-    { id: 4, title: "沖縄マリンリゾート・サマー案件", area: "沖縄県全域", date: "2024-06-10" }
-];
-
-const regions = {
-    "【北海道】": ["北海道全域"], "【東北】": ["青森県", "岩手県", "宮城県", "秋田県", "山形県", "福島県"],
-    "【関東】": ["茨城県", "栃木県", "群馬県", "埼玉県", "千葉県", "東京都全域", "神奈川県"],
-    "【中部】": ["新潟県", "山梨県", "長野県", "岐阜県", "静岡県", "愛知県", "三重県", "富山県", "石川県", "福井県"],
-    "【関西】": ["滋賀県", "京都府", "大阪府", "兵庫県", "奈良県", "和歌山県"],
-    "【中国・四国】": ["鳥取県", "島根県", "岡山県", "広島県", "山口県", "徳島県", "香川県", "愛媛県", "高知県"],
-    "【九州・沖縄】": ["福岡県", "佐賀県", "長崎県", "熊本県", "大分県", "宮崎県", "鹿児島県", "沖縄県全域"]
-};
-
-window.onload = function() {
-    const savedMode = localStorage.getItem('prefFontSizeMode') || 'mid';
-    applyFontSize(savedMode);
-    createPrefButtons();
-    displayRecruits();
-};
-
-function applyFontSize(mode) {
-    const root = document.documentElement;
-    if (mode === 'small') {
-        root.style.setProperty('--base-font-size', '13px');
-        root.style.setProperty('--pref-font-size', '14px');
-        root.style.setProperty('--title-font-size', '1.4rem');
-        root.style.setProperty('--card-title-size', '16px');
-        root.style.setProperty('--pref-grid-cols', 'repeat(4, 1fr)');
-    } else if (mode === 'mid') {
-        root.style.setProperty('--base-font-size', '16px');
-        root.style.setProperty('--pref-font-size', '17px');
-        root.style.setProperty('--title-font-size', '1.7rem');
-        root.style.setProperty('--card-title-size', '19px');
-        root.style.setProperty('--pref-grid-cols', 'repeat(3, 1fr)');
-    } else if (mode === 'large') {
-        root.style.setProperty('--base-font-size', '19px');
-        root.style.setProperty('--pref-font-size', '20px');
-        root.style.setProperty('--title-font-size', '2.0rem');
-        root.style.setProperty('--card-title-size', '22px');
-        root.style.setProperty('--pref-grid-cols', 'repeat(3, 1fr)');
-    }
-    document.querySelectorAll('.size-btn').forEach(btn => {
-        btn.classList.toggle('active', btn.id === `btn-${mode}`);
-    });
-}
-
-function changeFontSize(mode) {
-    applyFontSize(mode);
-    localStorage.setItem('prefFontSizeMode', mode);
-}
-
-async function fastUpdate() {
-    document.querySelectorAll('.sync-target').forEach(icon => { icon.classList.add('spinning'); });
-    setTimeout(() => { location.reload(); }, 600);
-}
-
-function createPrefButtons() {
-    const container = document.getElementById('pref-container');
-    container.innerHTML = '';
-    for (const [regionName, prefs] of Object.entries(regions)) {
-        const title = document.createElement('div');
-        title.className = 'region-group-title'; title.innerText = regionName;
-        container.appendChild(title);
-        const grid = document.createElement('div');
-        grid.className = 'pref-grid';
-        prefs.forEach(pref => {
-            const btn = document.createElement('button');
-            btn.className = 'pref-btn'; btn.innerText = pref;
-            btn.onclick = () => filterByArea(pref);
-            grid.appendChild(btn);
+    function applyFontSize(mode) {
+        const root = document.documentElement;
+        if (mode === 'small') {
+            root.style.setProperty('--base-font-size', '14px');
+        } else if (mode === 'mid') {
+            root.style.setProperty('--base-font-size', '16px');
+        } else if (mode === 'large') {
+            root.style.setProperty('--base-font-size', '19px');
+        }
+        document.querySelectorAll('.size-btn').forEach(btn => {
+            btn.classList.toggle('active', btn.id === `btn-${mode}`);
         });
-        container.appendChild(grid);
     }
-}
 
-function displayRecruits(filter = 'すべて') {
-    const list = document.getElementById('recruit-list');
-    const label = document.getElementById('current-filter-label');
-    list.innerHTML = '';
-    label.innerText = filter === 'すべて' ? '表示中: すべての募集' : `表示中: ${filter}`;
-    const filtered = filter === 'すべて' ? recruitmentItems : recruitmentItems.filter(item => item.area === filter);
-    filtered.forEach(item => {
-        const card = document.createElement('div');
-        card.className = 'recruit-card';
-        card.innerHTML = `<div class="card-accent">RECRUIT</div><div class="card-content"><div class="recruit-title">${item.title}</div><div class="recruit-info"><span>📍 エリア: ${item.area}</span><span>📅 掲載日: ${item.date}</span></div><button class="apply-btn">詳細・応募はこちら</button></div>`;
-        list.appendChild(card);
-    });
-}
+    function changeFontSize(mode) {
+        applyFontSize(mode);
+        localStorage.setItem('portalFontSizeMode', mode);
+    }
 
-function scrollToSection(id) { 
-    const el = document.getElementById(id);
-    if(el) window.scrollTo({ top: el.offsetTop - 180, behavior: 'smooth' }); 
-}
-
-function filterByArea(area) { 
-    displayRecruits(area); 
-    window.scrollTo({ top: document.getElementById('current-filter-label').offsetTop - 200, behavior: 'smooth' }); 
-}
+    window.onload = () => {
+        const saved = localStorage.getItem('portalFontSizeMode') || 'mid';
+        applyFontSize(saved);
+    };
 </script>
+
 </body>
 </html>
