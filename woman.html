@@ -24,33 +24,46 @@
         }
         header h1 { margin: 0; font-size: 1.4rem; letter-spacing: 0.1em; font-family: 'Lora', serif; }
 
-        /* ヘッダーボタンエリア */
         .header-controls { display: flex; align-items: center; gap: 8px; }
-
         .head-btn {
             background: rgba(255, 255, 255, 0.2); border: 1px solid rgba(255, 255, 255, 0.4); 
-            border-radius: 30px; padding: 6px 16px; font-size: 11px; font-weight: bold; color: white; 
+            border-radius: 30px; padding: 6px 14px; font-size: 11px; font-weight: bold; color: white; 
             cursor: pointer; text-decoration: none; display: flex; align-items: center; justify-content: center;
             height: 28px; box-sizing: border-box; outline: none;
         }
-
-        #force-reload-btn { gap: 6px; }
         .reload-icon::before { content: '↻'; }
         .reload-icon { display: inline-block; font-size: 14px; transition: transform 0.6s ease-in-out; }
 
         .container { padding: 1rem; max-width: 550px; margin: 0 auto; }
 
-        /* お願いボタン：18px固定・1列・青枠排除 */
+        /* --- 【修正】お願いボタン：限界まで巨大化 --- */
         .notice-btn {
-            background: #fff; border: 3px solid var(--mauve-admin); color: var(--mauve-admin); font-weight: 800; padding: 14px 5px; border-radius: 50px; cursor: pointer;
-            box-shadow: 0 6px 20px rgba(142, 122, 138, 0.15); width: 100%; display: flex; align-items: center; justify-content: center; 
-            margin: 15px 0 25px; box-sizing: border-box; outline: none !important; font-size: 18px !important; white-space: nowrap !important; overflow: hidden;
+            background: #fff; 
+            border: 4px solid var(--mauve-admin); /* 枠も太く */
+            color: var(--mauve-admin); 
+            font-weight: 900; 
+            padding: 18px 2px; /* 上下を厚く、左右は1行死守のため詰め */
+            border-radius: 60px; 
+            cursor: pointer;
+            box-shadow: 0 8px 25px rgba(142, 122, 138, 0.2); 
+            width: 100%; 
+            display: flex; 
+            align-items: center; 
+            justify-content: center; 
+            margin: 10px 0 30px; 
+            box-sizing: border-box; 
+            outline: none !important; 
+            
+            font-size: 22px !important; /* 限界サイズ */
+            letter-spacing: -0.5px; /* 1行に収めるための微調整 */
+            white-space: nowrap !important; 
+            overflow: hidden;
         }
-        .notice-btn:focus { outline: none !important; }
+        .notice-btn:active { transform: scale(0.98); }
+        .notice-btn .warn-icon { font-size: 1.2em; margin-right: 4px; flex-shrink: 0; }
 
-        /* ダイアログ：青枠排除・18px固定 */
+        /* ダイアログ：18px固定 */
         .notice-modal { border: none; border-radius: 24px; padding: 0; width: 92%; max-width: 550px; outline: none !important; box-shadow: 0 20px 60px rgba(0,0,0,0.3); }
-        .notice-modal:focus { outline: none !important; }
         .notice-modal::backdrop { background: rgba(0, 0, 0, 0.4); backdrop-filter: blur(4px); }
         .modal-inner { padding: 30px 20px; background: #fff; outline: none !important; }
         .modal-header h2 { color: var(--mauve-admin); font-size: 18px !important; margin: 0 0 20px; text-align: center; border-bottom: 2px solid var(--pink-light); padding-bottom: 15px; }
@@ -60,11 +73,7 @@
         .sub-list { margin: 8px 0 0; padding: 0; list-style: none; font-size: 17px !important; color: #8a6a6a; }
         .sub-list li { margin-bottom: 5px; position: relative; padding-left: 1.2em; }
         .sub-list li::before { content: "※"; position: absolute; left: 0; }
-        
-        .modal-close-btn { 
-            width: 100%; padding: 18px; background: var(--mauve-admin); color: white; border: none; border-radius: 14px; font-weight: bold; font-size: 1.3rem; cursor: pointer; margin-top: 20px; outline: none !important; -webkit-tap-highlight-color: transparent; 
-        }
-        .modal-close-btn:focus, .modal-close-btn:active { outline: none !important; }
+        .modal-close-btn { width: 100%; padding: 18px; background: var(--mauve-admin); color: white; border: none; border-radius: 14px; font-weight: bold; font-size: 1.3rem; cursor: pointer; margin-top: 20px; outline: none !important; }
 
         /* フォーム */
         .form-section { background: var(--card-bg); border-radius: 24px; padding: 25px 20px; box-shadow: var(--tile-shadow); margin-bottom: 25px; }
@@ -75,7 +84,7 @@
         input, textarea { width: 100%; padding: 14px; border-radius: 12px; border: 1px solid var(--tile-border); background: var(--pink-light); box-sizing: border-box; font-size: 1em; outline: none; margin-top: 8px; }
         
         .check-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; margin-top: 10px; }
-        .check-item { background: #fff; border: 1px solid var(--tile-border); padding: 12px 4px; border-radius: 12px; font-size: 0.9em; text-align: center; cursor: pointer; font-weight: bold; display: flex; align-items: center; justify-content: center; min-height: 48px; transition: 0.2s; -webkit-tap-highlight-color: transparent; }
+        .check-item { background: #fff; border: 1px solid var(--tile-border); padding: 12px 4px; border-radius: 12px; font-size: 0.9em; text-align: center; cursor: pointer; font-weight: bold; display: flex; align-items: center; justify-content: center; min-height: 48px; transition: 0.2s; }
         .check-item.active { background: linear-gradient(180deg, var(--pink-main) 0%, var(--pink-deep) 100%); color: white; }
 
         .size-selector { display: flex; background: #eeebe9; border-radius: 10px; padding: 3px; gap: 2px; }
@@ -89,7 +98,6 @@
     <h1>PLAY REQUEST</h1>
     <div class="header-controls">
         <a href="index.html" class="head-btn">TOPへ戻る</a>
-        
         <button id="force-reload-btn" class="head-btn" onclick="fastUpdate()">
             <span class="reload-icon sync-target"></span> 最新にリロード <span class="reload-icon sync-target"></span>
         </button>
@@ -97,7 +105,9 @@
 </header>
 
 <div class="container">
-    <button onclick="document.getElementById('notice-dialog').showModal()" class="notice-btn">⚠ 依頼に関する大切なお願い</button>
+    <button onclick="document.getElementById('notice-dialog').showModal()" class="notice-btn">
+        <span class="warn-icon">⚠</span>依頼に関する大切なお願い
+    </button>
 
     <dialog id="notice-dialog" class="notice-modal">
         <div class="modal-inner">
@@ -173,7 +183,6 @@
             <label class="field-label" style="margin-top:0;">具体的な希望やNG事項</label>
             <textarea placeholder="自由に入力してください"></textarea>
         </div>
-
         <button type="button" class="submit-btn" onclick="alert('送信準備完了')">内容確認画面へ</button>
     </form>
 </div>
