@@ -7,305 +7,151 @@
     <link href="https://fonts.googleapis.com/css2?family=Lora:wght@600&family=Noto+Sans+JP:wght@400;700&display=swap" rel="stylesheet">
     <style>
         :root {
-            /* 女性用：ローズピンクパレット */
             --pink-main: #d4a5a5;
             --pink-deep: #b57d7d;
             --pink-light: #fff5f5;
             --soft-bg: #fdf8f7;
             --card-bg: #ffffff;
-            
-            /* 都道府県・チェックボタン：管理用UI継承（ピンク版） */
-            --tile-bg-top: #fceeee; 
-            --tile-bg-bottom: #f2dada;
-            --tile-text: #7a5a5a;
             --tile-border: #e8cfcf;
+            --tile-text: #7a5a5a;
             --tile-shadow: 0 4px 10px rgba(212, 165, 165, 0.15);
-            
             --text-sub: #b09999;
             --shadow: 0 10px 30px rgba(212, 165, 165, 0.15);
-
-            /* --- フォントサイズ可変用変数 --- */
             --base-font-size: 16px; 
-            --pref-font-size: 14px; 
             --pref-grid-cols: repeat(3, 1fr);
         }
 
-        body { font-family: 'Noto Sans JP', sans-serif; margin: 0; background: var(--soft-bg); color: #5a4d4d; -webkit-font-smoothing: antialiased; line-height: 1.6; font-size: var(--base-font-size); }
+        body { font-family: 'Noto Sans JP', sans-serif; margin: 0; background: var(--soft-bg); color: #5a4d4d; line-height: 1.6; font-size: var(--base-font-size); }
         
         header { 
-            background: rgba(212, 165, 165, 0.95); backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px);
-            color: white; padding: 1.2rem 1.2rem 1rem; position: sticky; top: 0; z-index: 100; 
+            background: rgba(212, 165, 165, 0.95); backdrop-filter: blur(10px);
+            color: white; padding: 1.2rem; position: sticky; top: 0; z-index: 100; 
             display: flex; flex-direction: column; gap: 14px; box-shadow: 0 4px 25px rgba(0,0,0,0.1);
         }
         header h1 { margin: 0; font-size: 1.5rem; letter-spacing: 0.15em; font-family: 'Lora', serif; text-align: center; }
 
-        .header-action-row { display: flex; justify-content: flex-end; width: 100%; }
-        
         #force-reload-btn {
-            background: rgba(255, 255, 255, 0.2); border: 1px solid rgba(255, 255, 255, 0.4); 
-            border-radius: 30px; padding: 6px 14px; font-size: 10px; font-weight: bold; color: white;
-            cursor: pointer; display: flex; align-items: center; gap: 8px;
-        }
-
-        .reload-icon { 
-            display: inline-block; width: 10px; height: 10px; border: 1.8px solid white; 
-            border-top: 1.8px solid transparent; border-radius: 50%; position: relative; 
-        }
-        .reload-icon::after { 
-            content: ''; position: absolute; top: -2.8px; left: 4.5px; border-left: 3.5px solid transparent; 
-            border-right: 3.5px solid transparent; border-bottom: 4.5px solid white; transform: rotate(45deg); 
+            align-self: flex-end; background: rgba(255, 255, 255, 0.2); border: 1px solid rgba(255, 255, 255, 0.4); 
+            border-radius: 30px; padding: 6px 14px; font-size: 10px; font-weight: bold; color: white; cursor: pointer;
         }
 
         .container { padding: 1rem; max-width: 550px; margin: 0 auto; }
 
-        /* 注意事項 */
-        .notice-box { 
-            background: #fff; border: 2px solid var(--pink-main); border-radius: 24px; 
-            padding: 25px; margin-bottom: 25px; font-size: 0.85em; color: #7a5a5a;
-            box-shadow: var(--shadow);
+        /* --- お知らせボタン（一行固定・モーブ） --- */
+        .notice-btn {
+            background: #fff; border: 3px solid #8e7a8a; color: #8e7a8a;
+            font-size: 1.3rem; font-weight: 800; white-space: nowrap; overflow: hidden;
+            padding: 16px 20px; border-radius: 50px; cursor: pointer;
+            box-shadow: 0 6px 20px rgba(142, 122, 138, 0.15);
+            width: 95%; max-width: 500px; display: inline-flex; align-items: center; justify-content: center; margin: 20px auto;
         }
-        .notice-box h2 { font-size: 1.1em; margin: 0 0 15px; color: var(--pink-deep); border-bottom: 2px solid var(--pink-light); padding-bottom: 10px; line-height: 1.4; }
-        .notice-content { display: flex; flex-direction: column; gap: 18px; }
-        .notice-item { border-left: 3px solid var(--pink-main); padding-left: 12px; }
-        .notice-item strong { display: block; color: var(--pink-deep); margin-bottom: 5px; font-size: 1.05em; }
-        .notice-sub { font-size: 0.95em; color: #8a6a6a; display: block; margin-top: 3px; line-height: 1.5; }
+        .notice-btn span { font-size: 1.5rem; margin-right: 8px; flex-shrink: 0; }
 
-        /* フォームセクション */
-        .form-section { background: var(--card-bg); border-radius: 24px; padding: 25px 20px; box-shadow: var(--shadow); margin-bottom: 25px; overflow: hidden; }
-        .region-header { 
-            display: flex; justify-content: space-between; align-items: center; margin-bottom: 15px;
-            padding-bottom: 10px; border-bottom: 1px solid var(--pink-light);
-        }
-        .section-title { font-weight: 700; font-size: 0.9em; color: var(--pink-deep); }
+        /* --- ダイアログ設定 --- */
+        .notice-modal { border: none; border-radius: 24px; padding: 0; width: 90%; max-width: 500px; box-shadow: 0 20px 60px rgba(0,0,0,0.2); }
+        .notice-modal::backdrop { background: rgba(142, 122, 138, 0.3); backdrop-filter: blur(5px); }
+        .modal-inner { padding: 30px 25px; background: #fff; } /* 余白をしっかり確保 */
+        .modal-header h2 { color: #8e7a8a; font-size: 1.2rem; margin: 0; text-align: center; line-height: 1.4; }
+        .modal-body { text-align: left; max-height: 450px; overflow-y: auto; margin: 20px 0; padding-right: 10px; }
+        
+        .notice-section { margin-bottom: 25px; font-size: 1rem; }
+        .notice-section strong { display: block; color: #8e7a8a; margin-bottom: 8px; font-size: 1.05rem; border-left: 4px solid #8e7a8a; padding-left: 10px; line-height: 1.3; }
+        .notice-section p { margin: 5px 0; }
+        .sub-list { margin: 8px 0 0; padding: 0; list-style: none; font-size: 0.85rem; color: #8a6a6a; line-height: 1.5; }
+        .sub-list li { margin-bottom: 4px; }
 
+        .footer-msg { text-align: center; font-weight: bold; color: var(--pink-main); margin-top: 25px; font-size: 1.1rem; }
+        .modal-close-btn { width: 100%; padding: 18px; background: #8e7a8a; color: white; border: none; border-radius: 14px; font-weight: bold; font-size: 1.3rem; cursor: pointer; }
+
+        /* --- 大中小ボタン（選択時の色付け） --- */
         .size-selector { display: flex; background: #eeebe9; border-radius: 10px; padding: 3px; gap: 2px; }
-        .size-btn {
-            border: none; background: transparent; padding: 5px 10px; font-size: 11px;
-            font-weight: bold; color: var(--text-sub); border-radius: 8px; cursor: pointer;
-        }
-        .size-btn.active { background: white; color: var(--pink-deep); box-shadow: 0 2px 5px rgba(0,0,0,0.1); }
+        .size-btn { border: none; background: transparent; padding: 5px 12px; font-size: 12px; font-weight: bold; color: var(--text-sub); border-radius: 8px; cursor: pointer; transition: 0.3s; }
+        .size-btn.active { background: #8e7a8a; color: white; box-shadow: 0 2px 5px rgba(0,0,0,0.1); }
 
+        /* --- フォーム共通 --- */
+        .form-section { background: var(--card-bg); border-radius: 24px; padding: 25px 20px; box-shadow: var(--shadow); margin-bottom: 25px; }
+        .region-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 15px; border-bottom: 1px solid var(--pink-light); padding-bottom: 10px; }
+        .section-title { font-weight: 700; font-size: 0.9rem; color: var(--pink-deep); }
         .form-group { margin-bottom: 20px; }
-        .label-row { display: flex; align-items: center; margin-bottom: 10px; gap: 8px; }
-        .label-row span { font-weight: 700; font-size: 0.85em; color: var(--pink-deep); }
+        .label-row { display: flex; align-items: center; margin-bottom: 10px; gap: 8px; font-weight: 700; font-size: 0.85rem; color: var(--pink-deep); }
         .required { background: #e88e8e; color: white; font-size: 9px; padding: 2px 5px; border-radius: 4px; }
-
-        input, select, textarea {
-            width: 100%; padding: 12px; border-radius: 10px; border: 1px solid var(--tile-border);
-            background: var(--pink-light); color: var(--tile-text); font-size: 1em; box-sizing: border-box; outline: none;
-        }
-
+        input, select, textarea { width: 100%; padding: 12px; border-radius: 10px; border: 1px solid var(--tile-border); background: var(--pink-light); color: var(--tile-text); font-size: 1rem; box-sizing: border-box; outline: none; }
         .check-grid { display: grid; grid-template-columns: var(--pref-grid-cols); gap: 8px; }
-        .check-item {
-            background: linear-gradient(180deg, #ffffff 0%, #fcf3f3 100%);
-            border: 1px solid var(--tile-border); padding: 10px 4px; border-radius: 10px;
-            font-size: var(--pref-font-size); text-align: center; cursor: pointer; color: var(--tile-text);
-            transition: 0.2s; display: flex; align-items: center; justify-content: center; min-height: 44px;
-            font-weight: bold; box-shadow: var(--tile-shadow);
-        }
-        .check-item.active {
-            background: linear-gradient(180deg, var(--pink-main) 0%, var(--pink-deep) 100%);
-            color: white; border-color: var(--pink-deep); box-shadow: none;
-        }
-
-        .submit-btn {
-            background: linear-gradient(135deg, var(--pink-main) 0%, var(--pink-deep) 100%);
-            color: white; border: none; padding: 20px; border-radius: 20px; width: 100%;
-            font-size: 1.1em; font-weight: 700; cursor: pointer; box-shadow: 0 8px 25px rgba(212,165,165,0.4);
-            margin-top: 10px;
-        }
-
-        .spinning { animation: spin 0.8s linear infinite; }
-        @keyframes spin { from { transform: rotate(0deg); } to { transform: rotate(360deg); } }
+        .check-item { background: #fff; border: 1px solid var(--tile-border); padding: 10px 4px; border-radius: 10px; font-size: 0.9rem; text-align: center; cursor: pointer; font-weight: bold; box-shadow: var(--tile-shadow); display: flex; align-items: center; justify-content: center; min-height: 44px; }
+        .check-item.active { background: linear-gradient(180deg, var(--pink-main) 0%, var(--pink-deep) 100%); color: white; border-color: var(--pink-deep); }
+        .submit-btn { background: linear-gradient(135deg, var(--pink-main) 0%, var(--pink-deep) 100%); color: white; border: none; padding: 20px; border-radius: 20px; width: 100%; font-size: 1.1rem; font-weight: 700; cursor: pointer; box-shadow: 0 8px 25px rgba(212,165,165,0.4); }
+        .back-to-shared-btn { display: inline-block; padding: 12px 24px; background-color: #8e7a8a; color: #fff; text-decoration: none; border-radius: 50px; font-weight: bold; margin-top: 40px; }
     </style>
 </head>
 <body>
 
 <header>
     <h1>PLAY REQUEST</h1>
-    <div class="header-action-row">
-        <button id="force-reload-btn" onclick="fastUpdate()">
-            <span class="reload-icon sync-target"></span>
-            最新にリロード
-            <span class="reload-icon sync-target"></span>
-        </button>
-    </div>
+    <button id="force-reload-btn" onclick="fastUpdate()">最新にリロード</button>
 </header>
 
 <div class="container">
-    <div class="notice-trigger-area" style="text-align: center; margin: 20px 0;">
-    <button onclick="document.getElementById('notice-dialog').showModal()" class="notice-btn">
-        <span>⚠</span> 依頼に関する大切なお願い
-    </button>
-</div>
-
-<dialog id="notice-dialog" class="notice-modal">
-    <div class="modal-inner">
-        <div class="modal-header">
-            <h2>ご理解をお願いします</h2>
-            <p class="subtitle">ATTENTION</p>
-        </div>
-        
-        <div class="modal-body">
-            <div class="notice-section">
-                <strong>■案件の募集期間が短いと男性が決まらない場合があります</strong>
-                <p>前日に男性を決めますので、前々日なら約1日ということになります。</p>
-                <ul class="sub-list">
-                    <li>※前々日の夜なら、ほぼ募集期間はないということになってしまいます。</li>
-                    <li>※正直、地域によって変わってしまいます。すみません。</li>
-                    <li>※応募がない場合は、再募集していますが、なかなか難しいと思います。</li>
-                </ul>
-            </div>
-
-            <div class="notice-section">
-                <strong>■1対1の前日の受付は午前中のみでお願いします。</strong>
-                <ul class="sub-list">
-                    <li>※午後からのプレイ依頼は、当日扱いになります。</li>
-                    <li>※前日依頼は、お受けしますが男性が決まらない可能性があります。</li>
-                </ul>
-            </div>
-
-            <div class="notice-section">
-                <strong>■1対1の当日依頼は、お受けできなくなりました</strong>
-                <ul class="sub-list">
-                    <li>※当日の依頼は、いろいろと問題が多いので、お受けしないことにしました。</li>
-                </ul>
-            </div>
-
-            <div class="notice-section">
-                <strong>■複数プレイは、監督探しからとなります</strong>
-                <p>依頼日に必ず開催されるとは限りません。</p>
-                <ul class="sub-list">
-                    <li>※プレイ依頼受付後に「監督願い」を森が、全監督宛に出して決まりますので、少しお日にちが必要となります。</li>
-                    <li>※何日間前に出せば良いということではなく、その日に動ける監督が居るかどうかで決まります。</li>
-                    <li>※準備期間が長いほど、監督も都合を合わせやすくなります。</li>
-                    <li>※プレイ依頼を出す前に、森に相談してもらうこともできます。</li>
-                </ul>
-            </div>
-
-            <div class="notice-section">
-                <strong>■キャンセルは前日の確認までなら問題ありません。</strong>
-            </div>
-
-            <p class="footer-msg">《何かあれば森に相談してください》</p>
-        </div>
-
-        <form method="dialog">
-    <button class="modal-close-btn">確認しました</button>
-</form>
+    <div style="text-align: center;">
+        <button onclick="document.getElementById('notice-dialog').showModal()" class="notice-btn">
+            <span>⚠</span> 依頼に関する大切なお願い
+        </button>
     </div>
-</dialog>
 
-<style>
-/* ボタンのスタイル（モーブカラー） */
-.notice-btn {
-    background: #fff;
-    border: 3px solid #8e7a8a;
-    color: #8e7a8a;
-    
-    /* --- 文字サイズと太さ --- */
-    font-size: 1.3rem; 
-    font-weight: 800;
-    
-    /* --- 絶対に改行させない魔法の記述 --- */
-    white-space: nowrap;      /* これで一行に固定されます */
-    overflow: hidden;         /* 万が一溢れた時用 */
-    text-overflow: ellipsis;  /* 万が一溢れたら「...」にする（保険） */
+    <dialog id="notice-dialog" class="notice-modal">
+        <div class="modal-inner">
+            <div class="modal-header">
+                <h2>申し訳ございませんが、<br>下記のご理解をお願いします。</h2>
+            </div>
+            
+            <div class="modal-body">
+                <div class="notice-section">
+                    <strong>■案件の募集期間が短いと男性が決まらない場合があります</strong>
+                    <p>前日に男性を決めますので、前々日なら約1日ということになります。</p>
+                    <ul class="sub-list">
+                        <li>※前々日の夜なら、ほぼ募集期間はないということになってしまいます。</li>
+                        <li>※正直、地域によって変わってしまいます。すみません。</li>
+                        <li>※応募がない場合は、再募集していますが、なかなか難しいと思います。</li>
+                    </ul>
+                </div>
 
-    padding: 16px 20px;       /* 左右の余白を少し詰め、一行に収まりやすく */
-    border-radius: 50px;
-    cursor: pointer;
-    transition: all 0.3s ease;
-    box-shadow: 0 6px 20px rgba(142, 122, 138, 0.15);
-    
-    /* 画面幅いっぱいまで広がるのを許可（ただし最大幅は設定） */
-    width: 95%;
-    max-width: 500px;         /* 一行で収めるために少し広めに確保 */
-    display: inline-flex;     /* アイコンと文字を中央に並べる */
-    align-items: center;
-    justify-content: center;
-    margin: 20px auto;
-}
+                <div class="notice-section">
+                    <strong>■1対1の前日の受付は午前中のみでお願いします。</strong>
+                    <ul class="sub-list">
+                        <li>※午後からのプレイ依頼は、当日扱いになります。</li>
+                        <li>※前日依頼は、お受けしますが男性が決まらない可能性があります。</li>
+                    </ul>
+                </div>
 
-/* アイコン（⚠）の設定 */
-.notice-btn span {
-    font-size: 1.5rem;
-    margin-right: 8px;
-    flex-shrink: 0;           /* アイコンが潰れないように固定 */
-}
+                <div class="notice-section">
+                    <strong>■1対1の当日依頼は、お受けできなくなりました</strong>
+                    <ul class="sub-list">
+                        <li>※当日の依頼は、いろいろと問題が多いので、お受けしないことにしました。</li>
+                    </ul>
+                </div>
 
-.notice-btn:hover {
-    background: #8e7a8a;
-    color: #fff;
-}
+                <div class="notice-section">
+                    <strong>■複数プレイは、監督探しからとなります</strong>
+                    <p>依頼日に必ず開催されるとは限りません。</p>
+                    <ul class="sub-list">
+                        <li>※プレイ依頼受付後に「監督願い」を森が、全監督宛に出して決まりますので、少しお日にちが必要となります。</li>
+                        <li>※何日間前に出せば良いということではなく、その日に動ける監督が居るかどうかで決まります。</li>
+                        <li>※準備期間が長いほど、監督も都合を合わせやすくなります。</li>
+                        <li>※プレイ依頼を出す前に、森に相談してもらうこともできます。</li>
+                    </ul>
+                </div>
 
-/* ダイアログ本体 */
-/* ダイアログ本体のサイズ連動設定 */
-.notice-modal {
-    border: none;
-    border-radius: 24px;
-    padding: 0;
-    width: 90%;
-    max-width: 500px; /* 文字が「大」になっても大丈夫なように少し広めに */
-    box-shadow: 0 20px 60px rgba(0,0,0,0.2);
-}
+                <div class="notice-section">
+                    <strong>■キャンセルは前日の確認までなら問題ありません。</strong>
+                </div>
 
-/* 本文テキスト */
-.notice-section {
-    margin-bottom: 20px;
-    /* 1rem = 大中小ボタンで設定した基本サイズ（14px〜19px） */
-    font-size: 1rem; 
-    line-height: 1.6;
-    color: #5a5252;
-}
+                <p class="footer-msg">《何かあれば森に相談してください》</p>
+            </div>
 
-/* 強調テキスト（■...の部分） */
-.notice-section strong {
-    display: block;
-    color: #8e7a8a;
-    margin-bottom: 5px;
-    /* 本文より少し大きく設定 */
-    font-size: 1.1rem; 
-}
-
-/* 補足説明（※...の部分） */
-.sub-list {
-    margin: 5px 0 0;
-    padding: 0;
-    list-style: none;
-    /* 本文より少し小さく設定 */
-    font-size: 0.85rem; 
-    color: #a89e9e;
-}
-
-/* 下部の「森に相談」メッセージ */
-.footer-msg {
-    text-align: center;
-    font-weight: bold;
-    color: #d4a5a5;
-    margin-top: 20px;
-    font-size: 1.1rem;
-}
-
-/* 「確認しました」ボタン */
-.modal-close-btn {
-    width: 100%;
-    padding: 18px;
-    background: #8e7a8a;
-    color: white;
-    border: none;
-    border-radius: 14px;
-    font-weight: bold;
-    /* ボタンの文字も大きく連動させる */
-    font-size: 1.2rem; 
-    cursor: pointer;
-}
-
-.modal-close-btn:active {
-    transform: scale(0.96);    /* 押した時に少し凹む演出 */
-    background: #7a6877;       /* 押した時は少し濃い色に */
-}
-</style>
+            <form method="dialog">
+                <button class="modal-close-btn">確認しました</button>
+            </form>
+        </div>
+    </dialog>
 
     <form>
         <div class="form-section">
@@ -317,47 +163,23 @@
                     <button type="button" class="size-btn" id="btn-large" onclick="changeFontSize('large')">大</button>
                 </div>
             </div>
-
             <div class="form-group">
                 <div class="label-row"><span>ID / ニックネーム</span><span class="required">必須</span></div>
                 <input type="text" placeholder="IDまたは面談時の名前">
             </div>
-
             <div class="form-group">
                 <div class="label-row"><span>開催都道府県</span><span class="required">必須</span></div>
                 <select id="pref-select">
                     <option value="" disabled selected>選択してください</option>
-                    <optgroup label="北海道・東北">
-                        <option>北海道</option><option>青森県</option><option>岩手県</option>
-                        <option>宮城県</option><option>秋田県</option><option>山形県</option><option>福島県</option>
-                    </optgroup>
-                    <optgroup label="関東">
-                        <option>茨城県</option><option>栃木県</option><option>群馬県</option>
-                        <option>埼玉県</option><option>千葉県</option><option>東京都</option><option>神奈川県</option>
-                    </optgroup>
-                    <optgroup label="中部">
-                        <option>新潟県</option><option>富山県</option><option>石川県</option><option>福井県</option>
-                        <option>山梨県</option><option>長野県</option><option>岐阜県</option><option>静岡県</option><option>愛知県</option>
-                    </optgroup>
-                    <optgroup label="近畿">
-                        <option>三重県</option><option>滋賀県</option><option>京都府</option>
-                        <option>大阪府</option><option>兵庫県</option><option>奈良県</option><option>和歌山県</option>
-                    </optgroup>
-                    <optgroup label="中国・四国">
-                        <option>鳥取県</option><option>島根県</option><option>岡山県</option><option>広島県</option><option>山口県</option>
-                        <option>徳島県</option><option>香川県</option><option>愛媛県</option><option>高知県</option>
-                    </optgroup>
-                    <optgroup label="九州・沖縄">
-                        <option>福岡県</option><option>佐賀県</option><option>長崎県</option>
-                        <option>熊本県</option><option>大分県</option><option>宮崎県</option><option>鹿児島県</option><option>沖縄県</option>
-                    </optgroup>
+                    <option>滋賀県</option><option>京都府</option><option>大阪府</option><option>兵庫県</option>
+                    <option>奈良県</option><option>三重県</option><option>和歌山県</option>
                 </select>
             </div>
         </div>
 
         <div class="form-section">
             <div class="label-row"><span>希望プレイ（複数選択可）</span><span class="required">必須</span></div>
-            <div class="check-grid" id="play-options">
+            <div class="check-grid">
                 <div class="check-item" onclick="toggleSelection(this)">お任せ</div>
                 <div class="check-item" onclick="toggleSelection(this)">攻められたい</div>
                 <div class="check-item" onclick="toggleSelection(this)">攻めたい</div>
@@ -373,23 +195,27 @@
             </div>
         </div>
 
-        <button type="button" class="submit-btn" onclick="alert('確認画面へ進みます')">内容確認画面へ</button>
+        <button type="button" class="submit-btn" onclick="alert('内容を確認します')">内容確認画面へ</button>
     </form>
+
+    <div style="text-align: center;">
+        <a href="index.html" class="back-to-shared-btn">トップページに戻る</a>
+    </div>
 </div>
 
 <script>
-    // フォントサイズ・グリッド制御ロジック
     function applyFontSize(mode) {
-    const root = document.documentElement;
-    if (mode === 'small') {
-        root.style.setProperty('--base-font-size', '14px');
-    } else if (mode === 'mid') {
-        root.style.setProperty('--base-font-size', '16px');
-    } else if (mode === 'large') {
-        root.style.setProperty('--base-font-size', '19px'); // ここがダイアログにも効くようになります
+        const root = document.documentElement;
+        let size = '16px';
+        if (mode === 'small') size = '14px';
+        if (mode === 'large') size = '19px';
+        root.style.setProperty('--base-font-size', size);
+
+        // ボタンの色の切り替え
+        document.querySelectorAll('.size-btn').forEach(btn => btn.classList.remove('active'));
+        const activeBtn = document.getElementById(`btn-${mode}`);
+        if(activeBtn) activeBtn.classList.add('active');
     }
-    // ...以下、ボタンのactive切り替え処理など
-}
 
     function changeFontSize(mode) {
         applyFontSize(mode);
@@ -402,43 +228,7 @@
     };
 
     function toggleSelection(el) { el.classList.toggle('active'); }
-    
-    async function fastUpdate() {
-        document.querySelectorAll('.sync-target').forEach(icon => icon.classList.add('spinning'));
-        setTimeout(() => location.reload(), 600);
-    }
+    function fastUpdate() { location.reload(); }
 </script>
-<div style="text-align: center; margin: 40px 0;">
-    <a href="index.html" class="back-to-shared-btn">
-        トップページに戻る
-    </a>
-</div>
-
-<style>
-/* 管理用カラー：上品なモーブ（#8e7a8a系）と直感的なボタン感 */
-.back-to-shared-btn {
-    display: inline-block;
-    padding: 12px 24px;
-    background-color: #8e7a8a; /* 上品なモーブカラー */
-    color: #ffffff;
-    text-decoration: none;
-    border-radius: 50px; /* 直感的な丸みのあるボタン感 */
-    font-weight: bold;
-    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
-    transition: all 0.3s ease;
-    border: none;
-    cursor: pointer;
-}
-
-.back-to-shared-btn:hover {
-    background-color: #7a6877; /* 少し深みのあるモーブ */
-    transform: translateY(-2px);
-    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.15);
-}
-
-.back-to-shared-btn:active {
-    transform: translateY(0);
-}
-</style>
 </body>
 </html>
