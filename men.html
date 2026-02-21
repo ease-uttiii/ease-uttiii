@@ -36,44 +36,44 @@
             color: #3e4852; 
             -webkit-font-smoothing: antialiased; 
             font-size: var(--base-font-size);
+            -webkit-tap-highlight-color: transparent;
         }
         
+        /* --- 【新ヘッダー構成】womanと共通・menカラー版 --- */
         header { 
             background: rgba(93, 122, 153, 0.95); backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px);
-            color: white; padding: 1.2rem 1.2rem 1rem; position: sticky; top: 0; z-index: 100; 
-            display: flex; flex-direction: column; gap: 14px; box-shadow: 0 4px 25px rgba(0,0,0,0.1);
+            color: white; padding: 1.2rem 1rem; position: sticky; top: 0; z-index: 100; 
+            display: flex; flex-direction: column; align-items: center; gap: 12px; box-shadow: 0 4px 25px rgba(0,0,0,0.1);
         }
         header h1 { 
-            margin: 0; font-size: var(--title-font-size); letter-spacing: 0.25em; 
+            margin: 0; font-size: 1.4rem; letter-spacing: 0.1em; 
             font-family: 'Lora', serif; text-align: center; 
         }
 
-        .header-action-row { display: flex; justify-content: flex-end; width: 100%; }
-        
-        #force-reload-btn {
-            background: rgba(255, 255, 255, 0.15); border: 1px solid rgba(255, 255, 255, 0.4); 
-            border-radius: 30px; padding: 6px 14px; font-size: 10px; font-weight: bold; color: white;
-            cursor: pointer; display: flex; align-items: center; gap: 8px;
+        .header-controls { display: flex; align-items: center; gap: 8px; }
+
+        .head-btn {
+            background: rgba(255, 255, 255, 0.2); border: 1px solid rgba(255, 255, 255, 0.4); 
+            border-radius: 30px; padding: 6px 16px; font-size: 11px; font-weight: bold; color: white; 
+            cursor: pointer; text-decoration: none; display: flex; align-items: center; justify-content: center;
+            height: 28px; box-sizing: border-box; outline: none;
         }
 
-        .reload-icon { 
-            display: inline-block; width: 10px; height: 10px; border: 1.8px solid white; 
-            border-top: 1.8px solid transparent; border-radius: 50%; position: relative; 
-        }
-        .reload-icon::after { 
-            content: ''; position: absolute; top: -2.8px; left: 4.5px; border-left: 3.5px solid transparent; 
-            border-right: 3.5px solid transparent; border-bottom: 4.5px solid white; transform: rotate(45deg); 
-        }
+        #force-reload-btn { gap: 6px; }
+        .reload-icon::before { content: '↻'; }
+        .reload-icon { display: inline-block; font-size: 14px; transition: transform 0.6s ease-in-out; }
 
-        .header-nav-row { display: flex; gap: 10px; width: 100%; }
+        /* サブナビゲーション（エリア絞り込み用） */
+        .header-nav-row { display: flex; gap: 8px; width: 100%; max-width: 500px; margin-top: 5px; }
         .nav-btn { 
-            flex: 1; padding: 12px; border-radius: 14px; border: none; background: white; 
+            flex: 1; padding: 10px; border-radius: 12px; border: none; background: white; 
             color: var(--men-blue-deep); font-weight: bold; font-size: 0.8em;
-            box-shadow: 0 6px 15px rgba(0,0,0,0.08); display: flex; align-items: center; justify-content: center; gap: 6px;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.1); display: flex; align-items: center; justify-content: center; gap: 6px; cursor: pointer;
         }
 
         .container { padding: 1.5rem 1rem; max-width: 500px; margin: 0 auto; }
         
+        /* 地域選択セクション */
         .region-section { background: #ffffff; border-radius: 28px; margin-bottom: 40px; box-shadow: var(--shadow); overflow: hidden; }
         .region-header { 
             background: var(--men-blue-light); padding: 15px 20px; font-weight: 700; font-size: 0.9em; color: var(--men-blue-deep); 
@@ -104,6 +104,7 @@
         #current-filter-label { margin: 35px 0 20px; font-size: 1.15em; font-weight: 700; color: var(--men-blue-deep); display: flex; align-items: center; }
         #current-filter-label::after { content: ""; flex: 1; height: 1px; background: #d0d9e0; margin-left: 15px; }
 
+        /* 募集カード */
         .recruit-card { background: var(--card-bg); margin-bottom: 2rem; border-radius: 24px; box-shadow: var(--shadow); display: flex; overflow: hidden; }
         .card-accent { width: 44px; background: linear-gradient(180deg, var(--men-blue-light), var(--men-blue)); display: flex; align-items: center; justify-content: center; writing-mode: vertical-rl; color: var(--men-blue-deep); font-size: 0.7em; font-weight: 700; letter-spacing: 0.4em; }
         .card-content { padding: 1.8rem; flex: 1; }
@@ -111,19 +112,26 @@
         .recruit-info { font-size: 0.8em; color: var(--text-sub); display: flex; flex-direction: column; gap: 7px; }
         .apply-btn { margin-top: 22px; background: linear-gradient(135deg, var(--men-blue) 0%, var(--men-blue-deep) 100%); color: white; border: none; padding: 16px; border-radius: 16px; width: 100%; font-size: 1em; font-weight: 700; cursor: pointer; }
         
-        .spinning { animation: spin 0.8s linear infinite; }
+        .spinning { animation: spin 0.6s linear infinite; }
         @keyframes spin { from { transform: rotate(0deg); } to { transform: rotate(360deg); } }
+
+        /* 下部フッターボタン */
+        .footer-nav { text-align: center; margin: 40px 0; }
+        .back-to-shared-btn-man {
+            display: inline-block; padding: 12px 24px; background-color: #54627b; color: #ffffff;
+            text-decoration: none; border-radius: 50px; font-weight: bold;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1); transition: all 0.3s ease; border: none; cursor: pointer;
+        }
     </style>
 </head>
 <body>
 
 <header>
     <h1>CIRCLE EASE</h1>
-    <div class="header-action-row">
-        <button id="force-reload-btn" onclick="fastUpdate()">
-            <span class="reload-icon sync-target"></span>
-            最新にリロード
-            <span class="reload-icon sync-target"></span>
+    <div class="header-controls">
+        <a href="index.html" class="head-btn">TOPへ戻る</a>
+        <button id="force-reload-btn" class="head-btn" onclick="fastUpdate()">
+            <span class="reload-icon sync-target"></span> 最新にリロード <span class="reload-icon sync-target"></span>
         </button>
     </div>
     <div class="header-nav-row">
@@ -146,6 +154,10 @@
     </div>
     <div id="current-filter-label">表示中: すべての募集</div>
     <div id="recruit-list"></div>
+</div>
+
+<div class="footer-nav">
+    <a href="index.html" class="back-to-shared-btn-man">トップページに戻る</a>
 </div>
 
 <script>
@@ -177,20 +189,14 @@ function applyFontSize(mode) {
     if (mode === 'small') {
         root.style.setProperty('--base-font-size', '13px');
         root.style.setProperty('--pref-font-size', '14px');
-        root.style.setProperty('--title-font-size', '1.4rem');
-        root.style.setProperty('--card-title-size', '16px');
         root.style.setProperty('--pref-grid-cols', 'repeat(4, 1fr)');
     } else if (mode === 'mid') {
         root.style.setProperty('--base-font-size', '16px');
         root.style.setProperty('--pref-font-size', '17px');
-        root.style.setProperty('--title-font-size', '1.7rem');
-        root.style.setProperty('--card-title-size', '19px');
         root.style.setProperty('--pref-grid-cols', 'repeat(3, 1fr)');
     } else if (mode === 'large') {
         root.style.setProperty('--base-font-size', '19px');
         root.style.setProperty('--pref-font-size', '20px');
-        root.style.setProperty('--title-font-size', '2.0rem');
-        root.style.setProperty('--card-title-size', '22px');
         root.style.setProperty('--pref-grid-cols', 'repeat(3, 1fr)');
     }
     document.querySelectorAll('.size-btn').forEach(btn => {
@@ -205,7 +211,7 @@ function changeFontSize(mode) {
 
 async function fastUpdate() {
     document.querySelectorAll('.sync-target').forEach(icon => { icon.classList.add('spinning'); });
-    setTimeout(() => { location.reload(); }, 600);
+    setTimeout(() => { location.reload(true); }, 600);
 }
 
 function createPrefButtons() {
@@ -243,45 +249,13 @@ function displayRecruits(filter = 'すべて') {
 
 function scrollToSection(id) { 
     const el = document.getElementById(id);
-    if(el) window.scrollTo({ top: el.offsetTop - 180, behavior: 'smooth' }); 
+    if(el) window.scrollTo({ top: el.offsetTop - 140, behavior: 'smooth' }); 
 }
 
 function filterByArea(area) { 
     displayRecruits(area); 
-    window.scrollTo({ top: document.getElementById('current-filter-label').offsetTop - 200, behavior: 'smooth' }); 
+    window.scrollTo({ top: document.getElementById('current-filter-label').offsetTop - 160, behavior: 'smooth' }); 
 }
 </script>
-<div style="text-align: center; margin: 40px 0;">
-    <a href="index.html" class="back-to-shared-btn-man">
-        トップページに戻る
-    </a>
-</div>
-
-<style>
-/* 管理用カラー（男性版）：落ち着いたチャコールネイビー */
-.back-to-shared-btn-man {
-    display: inline-block;
-    padding: 12px 24px;
-    background-color: #54627b; /* モーブと相性の良い、少し青みのあるグレー */
-    color: #ffffff;
-    text-decoration: none;
-    border-radius: 50px; /* 直感的な丸みのあるボタン感（女性用と統一） */
-    font-weight: bold;
-    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
-    transition: all 0.3s ease;
-    border: none;
-    cursor: pointer;
-}
-
-.back-to-shared-btn-man:hover {
-    background-color: #3e4b61; /* 深みのあるネイビー */
-    transform: translateY(-2px);
-    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.15);
-}
-
-.back-to-shared-btn-man:active {
-    transform: translateY(0);
-}
-</style>
 </body>
 </html>
