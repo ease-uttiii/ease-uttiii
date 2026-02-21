@@ -191,8 +191,8 @@
         </div>
 
         <form method="dialog">
-            <button class="modal-close-btn">確認しました</button>
-        </form>
+    <button class="modal-close-btn">確認しました</button>
+</form>
     </div>
 </dialog>
 
@@ -287,14 +287,25 @@
 /* 閉じるボタン */
 .modal-close-btn {
     width: 100%;
-    padding: 14px;
-    background: #8e7a8a;
+    padding: 18px;             /* 上下の厚みを出して押しやすく */
+    background: #8e7a8a;       /* 管理用カラー：モーブ */
     color: white;
     border: none;
-    border-radius: 14px;
-    font-weight: bold;
+    border-radius: 16px;       /* 少し角を丸めて柔らかく */
+    
+    /* --- 文字サイズと太さ --- */
+    font-size: 1.3rem;         /* 文字を大きく */
+    font-weight: 900;          /* ガツンと太字に */
+    letter-spacing: 0.1em;     /* 文字の間隔を少し広げて読みやすく */
+    
     cursor: pointer;
-    margin-top: 10px;
+    margin-top: 15px;
+    transition: background 0.3s, transform 0.2s;
+}
+
+.modal-close-btn:active {
+    transform: scale(0.96);    /* 押した時に少し凹む演出 */
+    background: #7a6877;       /* 押した時は少し濃い色に */
 }
 </style>
 
