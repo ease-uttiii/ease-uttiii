@@ -281,5 +281,37 @@
         setTimeout(() => location.reload(), 600);
     }
 </script>
+<div style="text-align: center; margin: 40px 0;">
+    <a href="index.html" class="back-to-shared-btn">
+        トップページに戻る
+    </a>
+</div>
+
+<style>
+/* 管理用カラー：上品なモーブ（#8e7a8a系）と直感的なボタン感 */
+.back-to-shared-btn {
+    display: inline-block;
+    padding: 12px 24px;
+    background-color: #8e7a8a; /* 上品なモーブカラー */
+    color: #ffffff;
+    text-decoration: none;
+    border-radius: 50px; /* 直感的な丸みのあるボタン感 */
+    font-weight: bold;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+    transition: all 0.3s ease;
+    border: none;
+    cursor: pointer;
+}
+
+.back-to-shared-btn:hover {
+    background-color: #7a6877; /* 少し深みのあるモーブ */
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.15);
+}
+
+.back-to-shared-btn:active {
+    transform: translateY(0);
+}
+</style>
 </body>
 </html>
