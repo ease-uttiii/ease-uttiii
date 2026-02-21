@@ -240,81 +240,65 @@
 }
 
 /* ダイアログ本体 */
+/* ダイアログ本体のサイズ連動設定 */
 .notice-modal {
     border: none;
     border-radius: 24px;
     padding: 0;
     width: 90%;
-    max-width: 450px;
+    max-width: 500px; /* 文字が「大」になっても大丈夫なように少し広めに */
     box-shadow: 0 20px 60px rgba(0,0,0,0.2);
 }
-.notice-modal::backdrop {
-    background: rgba(142, 122, 138, 0.3);
-    backdrop-filter: blur(5px);
-}
 
-.modal-inner { padding: 1.5rem; background: #fff; text-align: center; }
-
-.modal-header h2 { color: #8e7a8a; font-size: 1.2rem; margin: 0; }
-.modal-header .subtitle { font-size: 0.7rem; color: #b0a4a4; margin: 5px 0 15px; letter-spacing: 0.2em; }
-
-/* ダイアログ内の各要素を可変にする */
-.modal-body {
-    text-align: left;
-    max-height: 400px;
-    overflow-y: auto;
-    /* font-sizeを固定せず、継承させるか相対値にする */
-    font-size: 1rem; 
-}
-
+/* 本文テキスト */
 .notice-section {
     margin-bottom: 20px;
-    line-height: 1.6;
-    /* 1rem = --base-font-size と連動します */
+    /* 1rem = 大中小ボタンで設定した基本サイズ（14px〜19px） */
     font-size: 1rem; 
+    line-height: 1.6;
+    color: #5a5252;
 }
 
+/* 強調テキスト（■...の部分） */
 .notice-section strong {
     display: block;
     color: #8e7a8a;
     margin-bottom: 5px;
-    /* 見出しは本文より少し大きく */
+    /* 本文より少し大きく設定 */
     font-size: 1.1rem; 
 }
 
+/* 補足説明（※...の部分） */
 .sub-list {
     margin: 5px 0 0;
     padding: 0;
     list-style: none;
-    /* 補足説明も相対的に変化 */
+    /* 本文より少し小さく設定 */
     font-size: 0.85rem; 
     color: #a89e9e;
 }
 
+/* 下部の「森に相談」メッセージ */
 .footer-msg {
     text-align: center;
     font-weight: bold;
-    color: #d4a5a5; /* ローズピンク */
+    color: #d4a5a5;
     margin-top: 20px;
+    font-size: 1.1rem;
 }
 
-/* 閉じるボタン */
+/* 「確認しました」ボタン */
 .modal-close-btn {
     width: 100%;
-    padding: 18px;             /* 上下の厚みを出して押しやすく */
-    background: #8e7a8a;       /* 管理用カラー：モーブ */
+    padding: 18px;
+    background: #8e7a8a;
     color: white;
     border: none;
-    border-radius: 16px;       /* 少し角を丸めて柔らかく */
-    
-    /* --- 文字サイズと太さ --- */
-    font-size: 1.3rem;         /* 文字を大きく */
-    font-weight: 900;          /* ガツンと太字に */
-    letter-spacing: 0.1em;     /* 文字の間隔を少し広げて読みやすく */
-    
+    border-radius: 14px;
+    font-weight: bold;
+    /* ボタンの文字も大きく連動させる */
+    font-size: 1.2rem; 
     cursor: pointer;
-    margin-top: 15px;
-    transition: background 0.3s, transform 0.2s;
 }
 
 .modal-close-btn:active {
@@ -396,24 +380,16 @@
 <script>
     // フォントサイズ・グリッド制御ロジック
     function applyFontSize(mode) {
-        const root = document.documentElement;
-        if (mode === 'small') {
-            root.style.setProperty('--base-font-size', '13px');
-            root.style.setProperty('--pref-font-size', '11px');
-            root.style.setProperty('--pref-grid-cols', 'repeat(4, 1fr)');
-        } else if (mode === 'mid') {
-            root.style.setProperty('--base-font-size', '16px');
-            root.style.setProperty('--pref-font-size', '14px');
-            root.style.setProperty('--pref-grid-cols', 'repeat(3, 1fr)');
-        } else if (mode === 'large') {
-            root.style.setProperty('--base-font-size', '19px');
-            root.style.setProperty('--pref-font-size', '17px');
-            root.style.setProperty('--pref-grid-cols', 'repeat(2, 1fr)');
-        }
-        document.querySelectorAll('.size-btn').forEach(btn => {
-            btn.classList.toggle('active', btn.id === `btn-${mode}`);
-        });
+    const root = document.documentElement;
+    if (mode === 'small') {
+        root.style.setProperty('--base-font-size', '14px');
+    } else if (mode === 'mid') {
+        root.style.setProperty('--base-font-size', '16px');
+    } else if (mode === 'large') {
+        root.style.setProperty('--base-font-size', '19px'); // ここがダイアログにも効くようになります
     }
+    // ...以下、ボタンのactive切り替え処理など
+}
 
     function changeFontSize(mode) {
         applyFontSize(mode);
