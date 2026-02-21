@@ -133,44 +133,152 @@
 </header>
 
 <div class="container">
-    <div class="notice-box">
-        <h2>申し訳ございませんが、<br>下記のご理解をお願いします。</h2>
-        <div class="notice-content">
-            <div class="notice-item">
+    <div class="notice-trigger-area" style="text-align: center; margin: 20px 0;">
+    <button onclick="document.getElementById('notice-dialog').showModal()" class="notice-btn">
+        <span>⚠</span> 依頼に関する大切なお願い
+    </button>
+</div>
+
+<dialog id="notice-dialog" class="notice-modal">
+    <div class="modal-inner">
+        <div class="modal-header">
+            <h2>ご理解をお願いします</h2>
+            <p class="subtitle">ATTENTION</p>
+        </div>
+        
+        <div class="modal-body">
+            <div class="notice-section">
                 <strong>■案件の募集期間が短いと男性が決まらない場合があります</strong>
-                前日に男性を決めますので、前々日なら約1日ということになります。
-                <span class="notice-sub">※前々日の夜なら、ほぼ募集期間はないということになってしまいます。</span>
-                <span class="notice-sub">※正直、地域によって変わってしまいます。すみません。</span>
-                <span class="notice-sub">※応募がない場合は、再募集していますが、なかなか難しいと思います。</span>
+                <p>前日に男性を決めますので、前々日なら約1日ということになります。</p>
+                <ul class="sub-list">
+                    <li>※前々日の夜なら、ほぼ募集期間はないということになってしまいます。</li>
+                    <li>※正直、地域によって変わってしまいます。すみません。</li>
+                    <li>※応募がない場合は、再募集していますが、なかなか難しいと思います。</li>
+                </ul>
             </div>
-            
-            <div class="notice-item">
+
+            <div class="notice-section">
                 <strong>■1対1の前日の受付は午前中のみでお願いします。</strong>
-                <span class="notice-sub">※午後からのプレイ依頼は、当日扱いになります。</span>
-                <span class="notice-sub">※前日依頼は、お受けしますが男性が決まらない可能性があります。</span>
+                <ul class="sub-list">
+                    <li>※午後からのプレイ依頼は、当日扱いになります。</li>
+                    <li>※前日依頼は、お受けしますが男性が決まらない可能性があります。</li>
+                </ul>
             </div>
 
-            <div class="notice-item">
+            <div class="notice-section">
                 <strong>■1対1の当日依頼は、お受けできなくなりました</strong>
-                <span class="notice-sub">※当日の依頼は、いろいろと問題が多いので、お受けしないことにしました。</span>
+                <ul class="sub-list">
+                    <li>※当日の依頼は、いろいろと問題が多いので、お受けしないことにしました。</li>
+                </ul>
             </div>
 
-            <div class="notice-item">
+            <div class="notice-section">
                 <strong>■複数プレイは、監督探しからとなります</strong>
-                依頼日に必ず開催されるとは限りません。
-                <span class="notice-sub">※プレイ依頼受付後に「監督願い」を森が、全監督宛に出して決まりますので、少しお日にちが必要となります。</span>
-                <span class="notice-sub">※何日間前に出せば良いということではなく、その日に動ける監督が居るかどうかで決まります。</span>
-                <span class="notice-sub">※準備期間が長いほど、監督も都合を合わせやすくなります。</span>
-                <span class="notice-sub">※プレイ依頼を出す前に、森に相談してもらうこともできます。</span>
+                <p>依頼日に必ず開催されるとは限りません。</p>
+                <ul class="sub-list">
+                    <li>※プレイ依頼受付後に「監督願い」を森が、全監督宛に出して決まりますので、少しお日にちが必要となります。</li>
+                    <li>※何日間前に出せば良いということではなく、その日に動ける監督が居るかどうかで決まります。</li>
+                    <li>※準備期間が長いほど、監督も都合を合わせやすくなります。</li>
+                    <li>※プレイ依頼を出す前に、森に相談してもらうこともできます。</li>
+                </ul>
             </div>
 
-            <div class="notice-item">
+            <div class="notice-section">
                 <strong>■キャンセルは前日の確認までなら問題ありません。</strong>
             </div>
 
-            <p style="text-align:center; font-weight:bold; color:var(--pink-deep); margin-top:10px; font-size: 1.1em;">《何かあれば森に相談してください》</p>
+            <p class="footer-msg">《何かあれば森に相談してください》</p>
         </div>
+
+        <form method="dialog">
+            <button class="modal-close-btn">確認しました</button>
+        </form>
     </div>
+</dialog>
+
+<style>
+/* ボタンのスタイル（モーブカラー） */
+.notice-btn {
+    background: #fff;
+    border: 2px solid #8e7a8a;
+    color: #8e7a8a;
+    padding: 12px 24px;
+    border-radius: 50px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 15px rgba(142, 122, 138, 0.1);
+}
+.notice-btn:hover {
+    background: #8e7a8a;
+    color: #fff;
+}
+
+/* ダイアログ本体 */
+.notice-modal {
+    border: none;
+    border-radius: 24px;
+    padding: 0;
+    width: 90%;
+    max-width: 450px;
+    box-shadow: 0 20px 60px rgba(0,0,0,0.2);
+}
+.notice-modal::backdrop {
+    background: rgba(142, 122, 138, 0.3);
+    backdrop-filter: blur(5px);
+}
+
+.modal-inner { padding: 1.5rem; background: #fff; text-align: center; }
+
+.modal-header h2 { color: #8e7a8a; font-size: 1.2rem; margin: 0; }
+.modal-header .subtitle { font-size: 0.7rem; color: #b0a4a4; margin: 5px 0 15px; letter-spacing: 0.2em; }
+
+.modal-body {
+    text-align: left;
+    max-height: 400px;
+    overflow-y: auto;
+    padding-right: 5px;
+}
+
+.notice-section {
+    margin-bottom: 20px;
+    font-size: 0.9rem;
+    line-height: 1.6;
+    color: #5a5252;
+}
+.notice-section strong {
+    display: block;
+    color: #8e7a8a;
+    margin-bottom: 5px;
+}
+.sub-list {
+    margin: 5px 0 0;
+    padding: 0;
+    list-style: none;
+    font-size: 0.8rem;
+    color: #a89e9e;
+}
+
+.footer-msg {
+    text-align: center;
+    font-weight: bold;
+    color: #d4a5a5; /* ローズピンク */
+    margin-top: 20px;
+}
+
+/* 閉じるボタン */
+.modal-close-btn {
+    width: 100%;
+    padding: 14px;
+    background: #8e7a8a;
+    color: white;
+    border: none;
+    border-radius: 14px;
+    font-weight: bold;
+    cursor: pointer;
+    margin-top: 10px;
+}
+</style>
 
     <form>
         <div class="form-section">
