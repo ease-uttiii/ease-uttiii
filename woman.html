@@ -7,116 +7,97 @@
     <link href="https://fonts.googleapis.com/css2?family=Lora:wght@600&family=Noto+Sans+JP:wght@400;700&display=swap" rel="stylesheet">
     <style>
         :root {
-            --pink-main: #d4a5a5;
-            --pink-deep: #b57d7d;
-            --pink-light: #fff5f5;
-            --soft-bg: #fdf8f7;
-            --card-bg: #ffffff;
-            --tile-border: #e8cfcf;
-            --tile-text: #7a5a5a;
-            --tile-shadow: 0 4px 10px rgba(212, 165, 165, 0.15);
-            --mauve-admin: #8e7a8a; 
-            --base-font-size: 16px; 
+            --pink-main: #d4a5a5; --pink-deep: #b57d7d; --pink-light: #fff5f5;
+            --soft-bg: #fdf8f7; --card-bg: #ffffff; --tile-border: #e8cfcf;
+            --tile-text: #7a5a5a; --tile-shadow: 0 4px 10px rgba(212, 165, 165, 0.15);
+            --mauve-admin: #8e7a8a; --base-font-size: 16px;
         }
 
         body { 
-            font-family: 'Noto Sans JP', sans-serif; 
-            margin: 0; 
-            background: var(--soft-bg); 
-            color: #5a4d4d; 
-            line-height: 1.6; 
-            font-size: var(--base-font-size); 
-            -webkit-tap-highlight-color: transparent; /* 全体のタップハイライト消去 */
+            font-family: 'Noto Sans JP', sans-serif; margin: 0; background: var(--soft-bg); color: #5a4d4d; line-height: 1.6; font-size: var(--base-font-size); 
+            -webkit-tap-highlight-color: transparent;
         }
         
         header { 
-            background: rgba(212, 165, 165, 0.95); backdrop-filter: blur(10px);
-            color: white; padding: 1.2rem 1rem; position: sticky; top: 0; z-index: 100; 
-            display: flex; flex-direction: column; align-items: center; gap: 12px;
-            box-shadow: 0 4px 25px rgba(0,0,0,0.1);
+            background: rgba(212, 165, 165, 0.95); backdrop-filter: blur(10px); color: white; padding: 1.2rem 1rem; position: sticky; top: 0; z-index: 100; 
+            display: flex; flex-direction: column; align-items: center; gap: 12px; box-shadow: 0 4px 25px rgba(0,0,0,0.1);
         }
         header h1 { margin: 0; font-size: 1.4rem; letter-spacing: 0.1em; font-family: 'Lora', serif; }
 
-        #force-reload-btn {
-            background: rgba(255, 255, 255, 0.2); 
-            border: 1px solid rgba(255, 255, 255, 0.4); 
-            border-radius: 30px; padding: 6px 16px; font-size: 11px; font-weight: bold; color: white; cursor: pointer;
-            display: flex; align-items: center; gap: 6px; outline: none;
+        /* ヘッダーボタンエリア */
+        .header-controls { display: flex; align-items: center; gap: 8px; }
+
+        .head-btn {
+            background: rgba(255, 255, 255, 0.2); border: 1px solid rgba(255, 255, 255, 0.4); 
+            border-radius: 30px; padding: 6px 16px; font-size: 11px; font-weight: bold; color: white; 
+            cursor: pointer; text-decoration: none; display: flex; align-items: center; justify-content: center;
+            height: 28px; box-sizing: border-box; outline: none;
         }
+
+        #force-reload-btn { gap: 6px; }
         .reload-icon::before { content: '↻'; }
         .reload-icon { display: inline-block; font-size: 14px; transition: transform 0.6s ease-in-out; }
 
         .container { padding: 1rem; max-width: 550px; margin: 0 auto; }
 
+        /* お願いボタン：18px固定・1列・青枠排除 */
         .notice-btn {
-            background: #fff; border: 3px solid var(--mauve-admin); color: var(--mauve-admin);
-            font-weight: 800; padding: 14px 5px; border-radius: 50px; cursor: pointer;
-            box-shadow: 0 6px 20px rgba(142, 122, 138, 0.15);
-            width: 100%; display: flex; align-items: center; justify-content: center; 
-            margin: 15px 0 25px; box-sizing: border-box; outline: none;
-            font-size: 18px !important; white-space: nowrap !important; overflow: hidden;
+            background: #fff; border: 3px solid var(--mauve-admin); color: var(--mauve-admin); font-weight: 800; padding: 14px 5px; border-radius: 50px; cursor: pointer;
+            box-shadow: 0 6px 20px rgba(142, 122, 138, 0.15); width: 100%; display: flex; align-items: center; justify-content: center; 
+            margin: 15px 0 25px; box-sizing: border-box; outline: none !important; font-size: 18px !important; white-space: nowrap !important; overflow: hidden;
         }
-        .notice-btn .warn-icon { font-size: 1.4em; margin-right: 6px; flex-shrink: 0; }
+        .notice-btn:focus { outline: none !important; }
 
-        .notice-modal { border: none; border-radius: 24px; padding: 0; width: 92%; max-width: 550px; box-shadow: 0 20px 60px rgba(0,0,0,0.3); outline: none; }
+        /* ダイアログ：青枠排除・18px固定 */
+        .notice-modal { border: none; border-radius: 24px; padding: 0; width: 92%; max-width: 550px; outline: none !important; box-shadow: 0 20px 60px rgba(0,0,0,0.3); }
+        .notice-modal:focus { outline: none !important; }
         .notice-modal::backdrop { background: rgba(0, 0, 0, 0.4); backdrop-filter: blur(4px); }
-        .modal-inner { padding: 30px 20px; background: #fff; }
-        .modal-header h2 { color: var(--mauve-admin); font-size: 18px !important; margin: 0 0 20px; text-align: center; border-bottom: 2px solid var(--pink-light); padding-bottom: 15px; line-height: 1.4; }
-        .modal-body { text-align: left; max-height: 65vh; overflow-y: auto; font-size: 18px !important; color: #5a4d4d; line-height: 1.5; }
+        .modal-inner { padding: 30px 20px; background: #fff; outline: none !important; }
+        .modal-header h2 { color: var(--mauve-admin); font-size: 18px !important; margin: 0 0 20px; text-align: center; border-bottom: 2px solid var(--pink-light); padding-bottom: 15px; }
+        .modal-body { text-align: left; max-height: 65vh; overflow-y: auto; font-size: 18px !important; color: #5a4d4d; }
         .notice-section { margin-bottom: 25px; }
         .notice-section strong { display: block; color: var(--mauve-admin); margin-bottom: 8px; font-size: 18px !important; border-left: 5px solid var(--mauve-admin); padding-left: 10px; }
-        .sub-text { margin: 8px 0; font-size: 18px !important; color: #5a4d4d; }
         .sub-list { margin: 8px 0 0; padding: 0; list-style: none; font-size: 17px !important; color: #8a6a6a; }
         .sub-list li { margin-bottom: 5px; position: relative; padding-left: 1.2em; }
         .sub-list li::before { content: "※"; position: absolute; left: 0; }
-
-        /* --- 青枠・ハイライトを徹底排除 --- */
+        
         .modal-close-btn { 
-            width: 100%; padding: 18px; background: var(--mauve-admin); color: white; border: none; border-radius: 14px; 
-            font-weight: bold; font-size: 1.3rem; cursor: pointer; margin-top: 20px;
-            outline: none; /* 青枠消去 */
-            -webkit-tap-highlight-color: transparent; /* タップ時の色消去 */
-            user-select: none;
+            width: 100%; padding: 18px; background: var(--mauve-admin); color: white; border: none; border-radius: 14px; font-weight: bold; font-size: 1.3rem; cursor: pointer; margin-top: 20px; outline: none !important; -webkit-tap-highlight-color: transparent; 
         }
-        .modal-close-btn:focus, .modal-close-btn:active { outline: none; border: none; }
+        .modal-close-btn:focus, .modal-close-btn:active { outline: none !important; }
 
+        /* フォーム */
         .form-section { background: var(--card-bg); border-radius: 24px; padding: 25px 20px; box-shadow: var(--tile-shadow); margin-bottom: 25px; }
         .region-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 15px; border-bottom: 1px solid var(--pink-light); padding-bottom: 10px; }
         .section-title { font-weight: 700; color: var(--pink-deep); font-size: 1.1em; }
-        .field-label { font-weight: bold; color: var(--pink-deep); font-size: 1em; display: block; }
-        .field-desc { font-size: 0.85em; color: #8a6a6a; margin-top: 4px; line-height: 1.4; display: block; }
+        .field-label { font-weight: bold; color: var(--pink-deep); display: block; margin-top: 20px; }
         .required { background: #e88e8e; color: white; font-size: 0.6em; padding: 2px 6px; border-radius: 4px; margin-left: 8px; vertical-align: middle; }
-        input, select, textarea { width: 100%; padding: 14px; border-radius: 12px; border: 1px solid var(--tile-border); background: var(--pink-light); box-sizing: border-box; font-size: 1em; color: var(--tile-text); outline: none; margin-top: 8px; }
-        textarea { height: 120px; resize: none; }
-
+        input, textarea { width: 100%; padding: 14px; border-radius: 12px; border: 1px solid var(--tile-border); background: var(--pink-light); box-sizing: border-box; font-size: 1em; outline: none; margin-top: 8px; }
+        
         .check-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; margin-top: 10px; }
-        .check-item { background: #fff; border: 1px solid var(--tile-border); padding: 12px 4px; border-radius: 12px; font-size: 0.9em; text-align: center; cursor: pointer; font-weight: bold; display: flex; align-items: center; justify-content: center; min-height: 48px; box-shadow: var(--tile-shadow); transition: 0.2s; -webkit-tap-highlight-color: transparent; }
+        .check-item { background: #fff; border: 1px solid var(--tile-border); padding: 12px 4px; border-radius: 12px; font-size: 0.9em; text-align: center; cursor: pointer; font-weight: bold; display: flex; align-items: center; justify-content: center; min-height: 48px; transition: 0.2s; -webkit-tap-highlight-color: transparent; }
         .check-item.active { background: linear-gradient(180deg, var(--pink-main) 0%, var(--pink-deep) 100%); color: white; }
 
         .size-selector { display: flex; background: #eeebe9; border-radius: 10px; padding: 3px; gap: 2px; }
         .size-btn { border: none; background: transparent; padding: 6px 14px; font-weight: bold; color: #b09999; border-radius: 8px; cursor: pointer; font-size: 0.8em; outline: none; }
         .size-btn.active { background: var(--mauve-admin); color: white; }
-
-        .submit-btn { background: linear-gradient(135deg, var(--pink-main) 0%, var(--pink-deep) 100%); color: white; border: none; padding: 20px; border-radius: 20px; width: 100%; font-size: 1.2em; font-weight: 700; cursor: pointer; margin-top: 10px; box-shadow: 0 8px 25px rgba(212,165,165,0.4); outline: none; -webkit-tap-highlight-color: transparent; }
-        .back-link-container { text-align: center; padding: 20px 0 40px; }
-        .back-to-shared-btn { display: inline-block; padding: 12px 30px; background-color: var(--mauve-admin); color: #fff; text-decoration: none; border-radius: 50px; font-weight: bold; font-size: 0.9em; box-shadow: 0 4px 15px rgba(142, 122, 138, 0.2); }
+        .submit-btn { background: linear-gradient(135deg, var(--pink-main) 0%, var(--pink-deep) 100%); color: white; border: none; padding: 20px; border-radius: 20px; width: 100%; font-size: 1.2em; font-weight: 700; cursor: pointer; margin-top: 10px; outline: none; }
     </style>
 </head>
 <body>
-
 <header>
     <h1>PLAY REQUEST</h1>
-    <button id="force-reload-btn" onclick="fastUpdate()">
-        <span class="reload-icon sync-target"></span>
-        最新にリロード
-        <span class="reload-icon sync-target"></span>
-    </button>
+    <div class="header-controls">
+        <a href="index.html" class="head-btn">TOPへ戻る</a>
+        
+        <button id="force-reload-btn" class="head-btn" onclick="fastUpdate()">
+            <span class="reload-icon sync-target"></span> 最新にリロード <span class="reload-icon sync-target"></span>
+        </button>
+    </div>
 </header>
 
 <div class="container">
-    <button onclick="document.getElementById('notice-dialog').showModal()" class="notice-btn">
-        <span class="warn-icon">⚠</span>依頼に関する大切なお願い
-    </button>
+    <button onclick="document.getElementById('notice-dialog').showModal()" class="notice-btn">⚠ 依頼に関する大切なお願い</button>
 
     <dialog id="notice-dialog" class="notice-modal">
         <div class="modal-inner">
@@ -124,7 +105,7 @@
             <div class="modal-body">
                 <div class="notice-section">
                     <strong>■案件の募集期間が短いと男性が決まらない場合があります</strong>
-                    <div class="sub-text">前日に男性を決めますので、前々日なら約1日ということになります。</div>
+                    前日に男性を決めますので、前々日なら約1日ということになります。
                     <ul class="sub-list">
                         <li>前々日の夜なら、ほぼ募集期間はないということになってしまいます。</li>
                         <li>正直、地域によって変わってしまいます。すみません。</li>
@@ -140,9 +121,7 @@
                 </div>
                 <div class="notice-section">
                     <strong>■1対1の当日依頼は、お受けできなくなりました</strong>
-                    <ul class="sub-list">
-                        <li>当日の依頼は、いろいろと問題が多いので、お受けしないことにしました。</li>
-                    </ul>
+                    <ul class="sub-list"><li>当日の依頼は、いろいろと問題が多いので、お受けしないことにしました。</li></ul>
                 </div>
                 <div class="notice-section">
                     <strong>■複数プレイは、監督探しからとなりますので、依頼日に必ず開催されるとは限りません。</strong>
@@ -153,9 +132,7 @@
                         <li>プレイ依頼を出す前に、森に相談してもらうこともできます。</li>
                     </ul>
                 </div>
-                <div class="notice-section">
-                    <strong>■キャンセルは前日の確認までなら問題ありません。</strong>
-                </div>
+                <div class="notice-section"><strong>■キャンセルは前日の確認までなら問題ありません。</strong></div>
                 <p style="text-align: center; font-weight: bold; color: var(--pink-main); margin-top: 30px; font-size: 18px !important;">《何かあれば森に相談してください》</p>
             </div>
             <form method="dialog"><button class="modal-close-btn">確認しました</button></form>
@@ -172,21 +149,16 @@
                     <button type="button" class="size-btn size-l" onclick="changeFontSize('large')">大</button>
                 </div>
             </div>
-            <label class="field-label">ID / ニックネーム <span class="required">必須</span></label>
-            <span class="field-desc">ご自身のID、または面談時の名前を入力してください。</span>
+            <label class="field-label" style="margin-top:0;">ID / ニックネーム <span class="required">必須</span></label>
             <input type="text" placeholder="例：A-123">
-
-            <label class="field-label" style="margin-top:20px;">希望日時 <span class="required">必須</span></label>
-            <span class="field-desc">依頼したい日付と開始時間を選択してください。</span>
+            <label class="field-label">希望日時 <span class="required">必須</span></label>
             <input type="datetime-local">
-
-            <label class="field-label" style="margin-top:20px;">待ち合わせ場所 <span class="required">必須</span></label>
-            <span class="field-desc">駅名やホテル名などを具体的に入力してください。</span>
-            <input type="text" placeholder="例：〇〇駅 西口 ロータリー前">
+            <label class="field-label">待ち合わせ場所 <span class="required">必須</span></label>
+            <input type="text" placeholder="例：〇〇駅 西口">
         </div>
 
         <div class="form-section">
-            <label class="field-label">希望プレイ内容 <span class="required">必須</span></label>
+            <label class="field-label" style="margin-top:0;">希望プレイ内容 <span class="required">必須</span></label>
             <div class="check-grid">
                 <div class="check-item" onclick="toggleSelection(this)">お任せ</div>
                 <div class="check-item" onclick="toggleSelection(this)">攻められたい</div>
@@ -198,50 +170,26 @@
         </div>
 
         <div class="form-section">
-            <label class="field-label">具体的な希望やNG事項</label>
+            <label class="field-label" style="margin-top:0;">具体的な希望やNG事項</label>
             <textarea placeholder="自由に入力してください"></textarea>
         </div>
 
         <button type="button" class="submit-btn" onclick="alert('送信準備完了')">内容確認画面へ</button>
     </form>
-
-    <div class="back-link-container">
-        <a href="index.html" class="back-to-shared-btn">トップページに戻る</a>
-    </div>
 </div>
 
 <script>
     function fastUpdate() {
-        const icons = document.querySelectorAll('.sync-target');
-        icons.forEach(i => { i.style.transform = 'rotate(360deg)'; });
-        setTimeout(() => { location.reload(true); }, 600);
+        document.querySelectorAll('.sync-target').forEach(i => i.style.transform = 'rotate(360deg)');
+        setTimeout(() => location.reload(true), 600);
     }
-
     function applyFontSize(mode) {
-        const root = document.documentElement;
-        let size = '16px';
-        if (mode === 'small') size = '13px';
-        if (mode === 'large') size = '20px';
-        root.style.setProperty('--base-font-size', size);
-
-        document.querySelectorAll('.size-btn').forEach(btn => {
-            btn.classList.remove('active');
-            if (mode === 'small' && btn.classList.contains('size-s')) btn.classList.add('active');
-            if (mode === 'mid' && btn.classList.contains('size-m')) btn.classList.add('active');
-            if (mode === 'large' && btn.classList.contains('size-l')) btn.classList.add('active');
-        });
+        let size = mode === 'small' ? '13px' : mode === 'large' ? '20px' : '16px';
+        document.documentElement.style.setProperty('--base-font-size', size);
+        document.querySelectorAll('.size-btn').forEach(b => b.classList.toggle('active', (mode === 'small' && b.classList.contains('size-s')) || (mode === 'mid' && b.classList.contains('size-m')) || (mode === 'large' && b.classList.contains('size-l'))));
     }
-
-    function changeFontSize(mode) {
-        applyFontSize(mode);
-        localStorage.setItem('formFontSizeMode', mode);
-    }
-
-    window.onload = () => {
-        const saved = localStorage.getItem('formFontSizeMode') || 'mid';
-        applyFontSize(saved);
-    };
-
+    function changeFontSize(mode) { applyFontSize(mode); localStorage.setItem('formFontSizeMode', mode); }
+    window.onload = () => applyFontSize(localStorage.getItem('formFontSizeMode') || 'mid');
     function toggleSelection(el) { el.classList.toggle('active'); }
 </script>
 </body>
