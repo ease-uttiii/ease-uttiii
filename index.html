@@ -32,168 +32,57 @@
         }
 
         header { 
-            padding: 4rem 1rem 2rem; 
+            padding: 2rem 1rem 2rem; 
             text-align: center; 
+            position: relative;
         }
+
+        /* --- リロードボタンエリア --- */
+        .header-action-row { 
+            display: flex; 
+            justify-content: flex-end; 
+            padding: 10px 15px;
+            position: absolute;
+            top: 0;
+            right: 0;
+            width: 100%;
+            box-sizing: border-box;
+        }
+        
+        #force-reload-btn {
+            background: rgba(150, 134, 134, 0.1); 
+            border: 1px solid rgba(150, 134, 134, 0.2); 
+            border-radius: 30px; 
+            padding: 6px 14px; 
+            font-size: 10px; 
+            font-weight: bold; 
+            color: var(--accent-color);
+            cursor: pointer; 
+            display: flex; 
+            align-items: center; 
+            gap: 8px;
+            transition: all 0.2s;
+        }
+        #force-reload-btn:active { background: rgba(150, 134, 134, 0.2); }
+
+        .reload-icon { 
+            display: inline-block; width: 10px; height: 10px; border: 1.8px solid var(--accent-color); 
+            border-top: 1.8px solid transparent; border-radius: 50%; position: relative; 
+        }
+        .reload-icon::after { 
+            content: ''; position: absolute; top: -2.8px; left: 4.5px; border-left: 3.5px solid transparent; 
+            border-right: 3.5px solid transparent; border-bottom: 4.5px solid var(--accent-color); transform: rotate(45deg); 
+        }
+
+        .spinning { animation: spin 0.8s linear infinite; }
+        @keyframes spin { from { transform: rotate(0deg); } to { transform: rotate(360deg); } }
+        /* --- ここまで --- */
+
         header h1 { 
-            margin: 0; 
+            margin: 1.5rem 0 0; 
             font-family: 'Lora', serif; 
             letter-spacing: 0.35em; 
             font-size: 2.2rem; 
             color: var(--accent-color);
         }
-        header p { 
-            font-size: 0.8em; 
-            margin-top: 12px; 
-            color: #b0a4a4; 
-            letter-spacing: 0.15em;
-        }
-
-        .container { 
-            flex: 1; 
-            padding: 1rem; 
-            max-width: 450px; 
-            margin: 0 auto; 
-            width: 90%; 
-            display: flex; 
-            flex-direction: column; 
-            gap: 20px;
-            justify-content: center;
-        }
-
-        /* リンクボタン */
-        .portal-card {
-            text-decoration: none;
-            display: flex;
-            align-items: center;
-            padding: 1.8rem;
-            border-radius: 24px;
-            background: #ffffff;
-            box-shadow: var(--shadow);
-            transition: all 0.2s ease;
-            border: 1px solid rgba(0,0,0,0.02);
-        }
-        .portal-card:active {
-            transform: scale(0.97);
-            box-shadow: none;
-        }
-
-        /* 男性ボタン：ブルー */
-        .card-men { border-bottom: 5px solid var(--men-blue); }
-        .card-men .icon-circle { background: var(--men-blue); }
-        .card-men h2 { color: var(--men-blue); }
-
-        /* 女性ボタン：ピンク */
-        .card-woman { border-bottom: 5px solid var(--woman-pink); }
-        .card-woman .icon-circle { background: var(--woman-pink); }
-        .card-woman h2 { color: var(--woman-pink); }
-
-        .icon-circle {
-            width: 54px;
-            height: 54px;
-            border-radius: 18px; /* 少し角丸 */
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            margin-right: 20px;
-            color: white;
-            font-size: 1.4rem;
-            font-family: 'Lora', serif;
-        }
-
-        .card-info { flex: 1; }
-        .card-info h2 { 
-            margin: 0; 
-            font-size: 1.2em; 
-            font-weight: 700; 
-            letter-spacing: 0.05em;
-        }
-        .card-info p { 
-            margin: 4px 0 0; 
-            font-size: 0.85em; 
-            color: #a89e9e; 
-            font-weight: 500;
-        }
-
-        .arrow {
-            font-size: 1.2rem;
-            color: #d1c8c8;
-        }
-
-        /* 設定エリア */
-        .footer-settings {
-            padding: 3rem 2rem;
-            display: flex;
-            justify-content: center;
-        }
-        .size-selector { display: flex; background: #eeebe9; border-radius: 12px; padding: 4px; gap: 4px; }
-        .size-btn {
-            border: none; background: transparent; padding: 6px 14px; font-size: 11px;
-            font-weight: bold; color: #a89e9e; border-radius: 8px; cursor: pointer;
-        }
-        .size-btn.active { background: white; color: var(--accent-color); box-shadow: 0 2px 5px rgba(0,0,0,0.1); }
-    </style>
-</head>
-<body>
-
-<header>
-    <h1>ease</h1>
-    <p>PRIVATE & QUALITY TIME</p>
-</header>
-
-<div class="container">
-    <a href="men.html" class="portal-card card-men">
-        <div class="icon-circle">M</div>
-        <div class="card-info">
-            <h2>FOR MEN</h2>
-            <p>男性キャスト募集・案件一覧</p>
-        </div>
-        <div class="arrow">→</div>
-    </a>
-
-    <a href="woman.html" class="portal-card card-woman">
-        <div class="icon-circle">W</div>
-        <div class="card-info">
-            <h2>FOR WOMEN</h2>
-            <p>女性専用プレイ依頼フォーム</p>
-        </div>
-        <div class="arrow">→</div>
-    </a>
-</div>
-
-<div class="footer-settings">
-    <div class="size-selector">
-        <button class="size-btn" id="btn-small" onclick="changeFontSize('small')">小</button>
-        <button class="size-btn active" id="btn-mid" onclick="changeFontSize('mid')">中</button>
-        <button class="size-btn" id="btn-large" onclick="changeFontSize('large')">大</button>
-    </div>
-</div>
-
-<script>
-    function applyFontSize(mode) {
-        const root = document.documentElement;
-        if (mode === 'small') {
-            root.style.setProperty('--base-font-size', '14px');
-        } else if (mode === 'mid') {
-            root.style.setProperty('--base-font-size', '16px');
-        } else if (mode === 'large') {
-            root.style.setProperty('--base-font-size', '19px');
-        }
-        document.querySelectorAll('.size-btn').forEach(btn => {
-            btn.classList.toggle('active', btn.id === `btn-${mode}`);
-        });
-    }
-
-    function changeFontSize(mode) {
-        applyFontSize(mode);
-        localStorage.setItem('portalFontSizeMode', mode);
-    }
-
-    window.onload = () => {
-        const saved = localStorage.getItem('portalFontSizeMode') || 'mid';
-        applyFontSize(saved);
-    };
-</script>
-
-</body>
-</html>
+        header p {
