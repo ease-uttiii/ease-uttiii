@@ -17,7 +17,6 @@
             --tile-shadow: 0 4px 10px rgba(212, 165, 165, 0.15);
             --mauve-admin: #8e7a8a; 
             --base-font-size: 16px; 
-            --pref-grid-cols: repeat(3, 1fr);
         }
 
         body { 
@@ -29,7 +28,7 @@
             font-size: var(--base-font-size); 
         }
         
-        /* ヘッダー：2列配置 */
+        /* ヘッダー */
         header { 
             background: rgba(212, 165, 165, 0.95); backdrop-filter: blur(10px);
             color: white; padding: 1.2rem 1rem; position: sticky; top: 0; z-index: 100; 
@@ -38,68 +37,82 @@
         }
         header h1 { margin: 0; font-size: 1.4rem; letter-spacing: 0.1em; font-family: 'Lora', serif; }
 
-        /* リロードボタン：左右アイコン */
+        /* --- 【修正】指定されたリロードボタンのスタイル --- */
         #force-reload-btn {
-            background: rgba(255, 255, 255, 0.2); border: 1px solid rgba(255, 255, 255, 0.4); 
-            border-radius: 30px; padding: 6px 16px; font-size: 11px; font-weight: bold; color: white; cursor: pointer;
-            display: flex; align-items: center; gap: 6px; outline: none; -webkit-tap-highlight-color: transparent;
+            background: rgba(255, 255, 255, 0.2); 
+            border: 1px solid rgba(255, 255, 255, 0.4); 
+            border-radius: 30px; 
+            padding: 6px 16px; 
+            font-size: 11px; 
+            font-weight: bold; 
+            color: white; 
+            cursor: pointer;
+            display: flex; 
+            align-items: center; 
+            gap: 6px; 
+            outline: none;
+            -webkit-tap-highlight-color: transparent;
         }
-        .spin-icon { display: inline-block; font-size: 14px; transition: transform 0.6s cubic-bezier(0.4, 0, 0.2, 1); }
+        .reload-icon::before { content: '↻'; } /* アイコンの中身をCSSで指定 */
+        .reload-icon { display: inline-block; font-size: 14px; transition: transform 0.6s ease-in-out; }
 
         .container { padding: 1rem; max-width: 550px; margin: 0 auto; }
 
-        /* お願いボタン：絶対に1列を死守 */
+        /* お願いボタン：18px固定・1列死守 */
         .notice-btn {
-            background: #fff; border: 3px solid var(--mauve-admin); color: var(--mauve-admin);
-            font-size: 1.1em; font-weight: 800; padding: 14px 10px; border-radius: 50px; cursor: pointer;
+            background: #fff; 
+            border: 3px solid var(--mauve-admin); 
+            color: var(--mauve-admin);
+            font-weight: 800; 
+            padding: 14px 5px; 
+            border-radius: 50px; 
+            cursor: pointer;
             box-shadow: 0 6px 20px rgba(142, 122, 138, 0.15);
-            width: 100%; display: flex; align-items: center; justify-content: center; 
-            margin: 15px 0 25px; box-sizing: border-box; outline: none;
-            white-space: nowrap; overflow: hidden;
+            width: 100%; 
+            display: flex; 
+            align-items: center; 
+            justify-content: center; 
+            margin: 15px 0 25px; 
+            box-sizing: border-box; 
+            outline: none;
+            font-size: 18px !important; 
+            white-space: nowrap !important; 
+            overflow: hidden;
         }
-        .notice-btn .warn-icon { font-size: 1.6em; margin-right: 8px; flex-shrink: 0; }
+        .notice-btn .warn-icon { font-size: 1.4em; margin-right: 6px; flex-shrink: 0; }
 
-        /* ダイアログ：18px固定（大中小に連動しない） */
+        /* ダイアログ：18px固定 */
         .notice-modal { border: none; border-radius: 24px; padding: 0; width: 92%; max-width: 550px; box-shadow: 0 20px 60px rgba(0,0,0,0.3); outline: none; }
         .notice-modal::backdrop { background: rgba(0, 0, 0, 0.4); backdrop-filter: blur(4px); }
-        .modal-inner { padding: 30px 25px; background: #fff; outline: none; }
-        .modal-header h2 { 
-            color: var(--mauve-admin); 
-            font-size: 18px !important; 
-            margin: 0 0 20px; text-align: center; border-bottom: 2px solid var(--pink-light); padding-bottom: 15px; 
-        }
-        .modal-body { 
-            text-align: left; max-height: 60vh; overflow-y: auto; 
-            font-size: 18px !important; 
-            color: #5a4d4d; 
-        }
+        .modal-inner { padding: 30px 25px; background: #fff; }
+        .modal-header h2 { color: var(--mauve-admin); font-size: 18px !important; margin: 0 0 20px; text-align: center; border-bottom: 2px solid var(--pink-light); padding-bottom: 15px; }
+        .modal-body { text-align: left; max-height: 60vh; overflow-y: auto; font-size: 18px !important; color: #5a4d4d; }
         .notice-section { margin-bottom: 25px; }
         .notice-section strong { display: block; color: var(--mauve-admin); margin-bottom: 8px; font-size: 1.1rem; border-left: 5px solid var(--mauve-admin); padding-left: 10px; }
         .sub-list { margin: 8px 0 0; padding: 0; list-style: none; font-size: 1rem; color: #8a6a6a; }
         .sub-list li { margin-bottom: 8px; position: relative; padding-left: 1.2em; }
         .sub-list li::before { content: "※"; position: absolute; left: 0; }
-        .modal-close-btn { width: 100%; padding: 18px; background: var(--mauve-admin); color: white; border: none; border-radius: 14px; font-weight: bold; font-size: 1.3rem; cursor: pointer; margin-top: 20px; outline: none; }
+        .modal-close-btn { width: 100%; padding: 18px; background: var(--mauve-admin); color: white; border: none; border-radius: 14px; font-weight: bold; font-size: 1.3rem; cursor: pointer; margin-top: 20px; }
 
-        /* フォームセクション */
+        /* フォーム要素 */
         .form-section { background: var(--card-bg); border-radius: 24px; padding: 25px 20px; box-shadow: var(--tile-shadow); margin-bottom: 25px; }
         .region-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 15px; border-bottom: 1px solid var(--pink-light); padding-bottom: 10px; }
         .section-title { font-weight: 700; color: var(--pink-deep); font-size: 1.1em; }
         .field-label { font-weight: bold; color: var(--pink-deep); font-size: 1em; display: block; }
         .field-desc { font-size: 0.85em; color: #8a6a6a; margin-top: 4px; line-height: 1.4; display: block; }
         .required { background: #e88e8e; color: white; font-size: 0.6em; padding: 2px 6px; border-radius: 4px; margin-left: 8px; vertical-align: middle; }
-        
         input, select, textarea { width: 100%; padding: 14px; border-radius: 12px; border: 1px solid var(--tile-border); background: var(--pink-light); box-sizing: border-box; font-size: 1em; color: var(--tile-text); outline: none; margin-top: 8px; }
         textarea { height: 120px; resize: none; }
 
-        .check-grid { display: grid; grid-template-columns: var(--pref-grid-cols); gap: 10px; margin-top: 10px; }
+        .check-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; margin-top: 10px; }
         .check-item { background: #fff; border: 1px solid var(--tile-border); padding: 12px 4px; border-radius: 12px; font-size: 0.9em; text-align: center; cursor: pointer; font-weight: bold; display: flex; align-items: center; justify-content: center; min-height: 48px; box-shadow: var(--tile-shadow); transition: 0.2s; }
-        .check-item.active { background: linear-gradient(180deg, var(--pink-main) 0%, var(--pink-deep) 100%); color: white; border-color: var(--pink-deep); }
+        .check-item.active { background: linear-gradient(180deg, var(--pink-main) 0%, var(--pink-deep) 100%); color: white; }
 
         .size-selector { display: flex; background: #eeebe9; border-radius: 10px; padding: 3px; gap: 2px; }
-        .size-btn { border: none; background: transparent; padding: 6px 14px; font-weight: bold; color: #b09999; border-radius: 8px; cursor: pointer; outline: none; font-size: 0.8em; }
+        .size-btn { border: none; background: transparent; padding: 6px 14px; font-weight: bold; color: #b09999; border-radius: 8px; cursor: pointer; font-size: 0.8em; }
         .size-btn.active { background: var(--mauve-admin); color: white; }
 
-        .submit-btn { background: linear-gradient(135deg, var(--pink-main) 0%, var(--pink-deep) 100%); color: white; border: none; padding: 20px; border-radius: 20px; width: 100%; font-size: 1.2em; font-weight: 700; cursor: pointer; margin-top: 10px; outline: none; box-shadow: 0 8px 25px rgba(212,165,165,0.4); }
+        .submit-btn { background: linear-gradient(135deg, var(--pink-main) 0%, var(--pink-deep) 100%); color: white; border: none; padding: 20px; border-radius: 20px; width: 100%; font-size: 1.2em; font-weight: 700; cursor: pointer; margin-top: 10px; box-shadow: 0 8px 25px rgba(212,165,165,0.4); }
         .back-link-container { text-align: center; padding: 20px 0 40px; }
         .back-to-shared-btn { display: inline-block; padding: 12px 30px; background-color: var(--mauve-admin); color: #fff; text-decoration: none; border-radius: 50px; font-weight: bold; font-size: 0.9em; box-shadow: 0 4px 15px rgba(142, 122, 138, 0.2); }
     </style>
@@ -108,8 +121,10 @@
 
 <header>
     <h1>PLAY REQUEST</h1>
-    <button id="force-reload-btn" onclick="animateAndReload()">
-        <span class="spin-icon">↻</span>最新にリロード<span class="spin-icon">↻</span>
+    <button id="force-reload-btn" onclick="fastUpdate()">
+        <span class="reload-icon sync-target"></span>
+        最新にリロード
+        <span class="reload-icon sync-target"></span>
     </button>
 </header>
 
@@ -173,7 +188,6 @@
 
         <div class="form-section">
             <label class="field-label">希望プレイ内容 <span class="required">必須</span></label>
-            <span class="field-desc">本日行いたいプレイ内容にチェックを入れてください（複数可）。</span>
             <div class="check-grid">
                 <div class="check-item" onclick="toggleSelection(this)">お任せ</div>
                 <div class="check-item" onclick="toggleSelection(this)">攻められたい</div>
@@ -186,7 +200,6 @@
 
         <div class="form-section">
             <label class="field-label">具体的な希望やNG事項</label>
-            <span class="field-desc">プレイに関する詳細な希望、またはこれだけは嫌だということがあれば記入してください。</span>
             <textarea placeholder="自由に入力してください"></textarea>
         </div>
 
@@ -199,9 +212,10 @@
 </div>
 
 <script>
-    function animateAndReload() {
-        const icons = document.querySelectorAll('.spin-icon');
-        icons.forEach(icon => { icon.style.transform = 'rotate(360deg)'; });
+    // 関数名を fastUpdate に変更し、sync-target を回転させるよう修正
+    function fastUpdate() {
+        const icons = document.querySelectorAll('.sync-target');
+        icons.forEach(i => { i.style.transform = 'rotate(360deg)'; });
         setTimeout(() => { location.reload(true); }, 600);
     }
 
