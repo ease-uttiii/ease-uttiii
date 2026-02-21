@@ -20,7 +20,6 @@
             --pref-grid-cols: repeat(3, 1fr);
         }
 
-        /* --- 大中小連動：ダイアログ以外すべて --- */
         body { 
             font-family: 'Noto Sans JP', sans-serif; 
             margin: 0; 
@@ -30,7 +29,7 @@
             font-size: var(--base-font-size); 
         }
         
-        /* --- ヘッダー：2列配置 --- */
+        /* ヘッダー：2列配置 */
         header { 
             background: rgba(212, 165, 165, 0.95); backdrop-filter: blur(10px);
             color: white; padding: 1.2rem 1rem; position: sticky; top: 0; z-index: 100; 
@@ -39,7 +38,7 @@
         }
         header h1 { margin: 0; font-size: 1.4rem; letter-spacing: 0.1em; font-family: 'Lora', serif; }
 
-        /* --- リロードボタン：men.html最新仕様（左右アイコン） --- */
+        /* リロードボタン：左右アイコン */
         #force-reload-btn {
             background: rgba(255, 255, 255, 0.2); border: 1px solid rgba(255, 255, 255, 0.4); 
             border-radius: 30px; padding: 6px 16px; font-size: 11px; font-weight: bold; color: white; cursor: pointer;
@@ -49,7 +48,7 @@
 
         .container { padding: 1rem; max-width: 550px; margin: 0 auto; }
 
-        /* --- お願いボタン：絶対に1列を死守 --- */
+        /* お願いボタン：絶対に1列を死守 */
         .notice-btn {
             background: #fff; border: 3px solid var(--mauve-admin); color: var(--mauve-admin);
             font-size: 1.1em; font-weight: 800; padding: 14px 10px; border-radius: 50px; cursor: pointer;
@@ -60,19 +59,18 @@
         }
         .notice-btn .warn-icon { font-size: 1.6em; margin-right: 8px; flex-shrink: 0; }
 
-        /* --- ダイアログ：タイトル・本文は18px前後で固定（隔離） --- */
+        /* ダイアログ：18px固定（大中小に連動しない） */
         .notice-modal { border: none; border-radius: 24px; padding: 0; width: 92%; max-width: 550px; box-shadow: 0 20px 60px rgba(0,0,0,0.3); outline: none; }
         .notice-modal::backdrop { background: rgba(0, 0, 0, 0.4); backdrop-filter: blur(4px); }
         .modal-inner { padding: 30px 25px; background: #fff; outline: none; }
         .modal-header h2 { 
             color: var(--mauve-admin); 
-            font-size: 1.2rem !important; /* 約19px固定 */
+            font-size: 18px !important; 
             margin: 0 0 20px; text-align: center; border-bottom: 2px solid var(--pink-light); padding-bottom: 15px; 
-            line-height: 1.4;
         }
         .modal-body { 
             text-align: left; max-height: 60vh; overflow-y: auto; 
-            font-size: 18px !important; /* 本文18px固定 */
+            font-size: 18px !important; 
             color: #5a4d4d; 
         }
         .notice-section { margin-bottom: 25px; }
@@ -82,11 +80,11 @@
         .sub-list li::before { content: "※"; position: absolute; left: 0; }
         .modal-close-btn { width: 100%; padding: 18px; background: var(--mauve-admin); color: white; border: none; border-radius: 14px; font-weight: bold; font-size: 1.3rem; cursor: pointer; margin-top: 20px; outline: none; }
 
-        /* --- フォーム各要素：emで連動 --- */
+        /* フォームセクション */
         .form-section { background: var(--card-bg); border-radius: 24px; padding: 25px 20px; box-shadow: var(--tile-shadow); margin-bottom: 25px; }
         .region-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 15px; border-bottom: 1px solid var(--pink-light); padding-bottom: 10px; }
         .section-title { font-weight: 700; color: var(--pink-deep); font-size: 1.1em; }
-        .field-label { font-weight: bold; color: var(--pink-deep); font-size: 1em; }
+        .field-label { font-weight: bold; color: var(--pink-deep); font-size: 1em; display: block; }
         .field-desc { font-size: 0.85em; color: #8a6a6a; margin-top: 4px; line-height: 1.4; display: block; }
         .required { background: #e88e8e; color: white; font-size: 0.6em; padding: 2px 6px; border-radius: 4px; margin-left: 8px; vertical-align: middle; }
         
@@ -94,7 +92,7 @@
         textarea { height: 120px; resize: none; }
 
         .check-grid { display: grid; grid-template-columns: var(--pref-grid-cols); gap: 10px; margin-top: 10px; }
-        .check-item { background: #fff; border: 1px solid var(--tile-border); padding: 12px 4px; border-radius: 12px; font-size: 0.9em; text-align: center; cursor: pointer; font-weight: bold; display: flex; align-items: center; justify-content: center; min-height: 48px; box-shadow: var(--tile-shadow); transition: 0.2s; -webkit-tap-highlight-color: transparent; }
+        .check-item { background: #fff; border: 1px solid var(--tile-border); padding: 12px 4px; border-radius: 12px; font-size: 0.9em; text-align: center; cursor: pointer; font-weight: bold; display: flex; align-items: center; justify-content: center; min-height: 48px; box-shadow: var(--tile-shadow); transition: 0.2s; }
         .check-item.active { background: linear-gradient(180deg, var(--pink-main) 0%, var(--pink-deep) 100%); color: white; border-color: var(--pink-deep); }
 
         .size-selector { display: flex; background: #eeebe9; border-radius: 10px; padding: 3px; gap: 2px; }
@@ -163,6 +161,14 @@
             <label class="field-label">ID / ニックネーム <span class="required">必須</span></label>
             <span class="field-desc">ご自身のID、または面談時の名前を入力してください。</span>
             <input type="text" placeholder="例：A-123">
+
+            <label class="field-label" style="margin-top:20px;">希望日時 <span class="required">必須</span></label>
+            <span class="field-desc">依頼したい日付と開始時間を選択してください。</span>
+            <input type="datetime-local">
+
+            <label class="field-label" style="margin-top:20px;">待ち合わせ場所 <span class="required">必須</span></label>
+            <span class="field-desc">駅名やホテル名などを具体的に入力してください。</span>
+            <input type="text" placeholder="例：〇〇駅 西口 ロータリー前">
         </div>
 
         <div class="form-section">
@@ -195,12 +201,8 @@
 <script>
     function animateAndReload() {
         const icons = document.querySelectorAll('.spin-icon');
-        icons.forEach(icon => {
-            icon.style.transform = 'rotate(360deg)';
-        });
-        setTimeout(() => {
-            location.reload(true);
-        }, 600);
+        icons.forEach(icon => { icon.style.transform = 'rotate(360deg)'; });
+        setTimeout(() => { location.reload(true); }, 600);
     }
 
     function applyFontSize(mode) {
