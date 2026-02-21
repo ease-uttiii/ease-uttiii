@@ -200,31 +200,38 @@
 /* ボタンのスタイル（モーブカラー） */
 .notice-btn {
     background: #fff;
-    border: 3px solid #8e7a8a; /* 枠線を少し太く */
+    border: 3px solid #8e7a8a;
     color: #8e7a8a;
     
-    /* --- 文字サイズと太さの調整 --- */
-    font-size: 1.4rem;         /* ここで文字を大きくしています */
-    font-weight: 800;          /* かなり太めに設定 */
+    /* --- 文字サイズと太さ --- */
+    font-size: 1.3rem; 
+    font-weight: 800;
     
-    padding: 18px 30px;        /* 上下左右にたっぷり余白を */
+    /* --- 絶対に改行させない魔法の記述 --- */
+    white-space: nowrap;      /* これで一行に固定されます */
+    overflow: hidden;         /* 万が一溢れた時用 */
+    text-overflow: ellipsis;  /* 万が一溢れたら「...」にする（保険） */
+
+    padding: 16px 20px;       /* 左右の余白を少し詰め、一行に収まりやすく */
     border-radius: 50px;
     cursor: pointer;
     transition: all 0.3s ease;
     box-shadow: 0 6px 20px rgba(142, 122, 138, 0.15);
     
-    /* スマホで画面幅に合わせる設定 */
+    /* 画面幅いっぱいまで広がるのを許可（ただし最大幅は設定） */
     width: 95%;
-    max-width: 420px;
-    display: block;
+    max-width: 500px;         /* 一行で収めるために少し広めに確保 */
+    display: inline-flex;     /* アイコンと文字を中央に並べる */
+    align-items: center;
+    justify-content: center;
     margin: 20px auto;
 }
 
-/* アイコン（⚠）だけさらに少し大きくする */
+/* アイコン（⚠）の設定 */
 .notice-btn span {
-    font-size: 1.6rem;
+    font-size: 1.5rem;
     margin-right: 8px;
-    vertical-align: middle;
+    flex-shrink: 0;           /* アイコンが潰れないように固定 */
 }
 
 .notice-btn:hover {
