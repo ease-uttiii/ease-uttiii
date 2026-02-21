@@ -15,14 +15,13 @@
             --tile-border: #e8cfcf;
             --tile-text: #7a5a5a;
             --tile-shadow: 0 4px 10px rgba(212, 165, 165, 0.15);
-            --mauve-admin: #8e7a8a; /* 管理用カラー */
+            --mauve-admin: #8e7a8a; 
             --base-font-size: 16px; 
             --pref-grid-cols: repeat(3, 1fr);
         }
 
         body { font-family: 'Noto Sans JP', sans-serif; margin: 0; background: var(--soft-bg); color: #5a4d4d; line-height: 1.6; font-size: var(--base-font-size); }
         
-        /* --- ヘッダー（タイトルとボタンを2行に分離） --- */
         header { 
             background: rgba(212, 165, 165, 0.95); backdrop-filter: blur(10px);
             color: white; padding: 1.2rem; position: sticky; top: 0; z-index: 100; 
@@ -30,47 +29,45 @@
         }
         header h1 { margin: 0; font-size: 1.5rem; letter-spacing: 0.15em; font-family: 'Lora', serif; }
 
+        /* --- リロードボタン（アニメーション＋両側アイコン） --- */
         #force-reload-btn {
             background: rgba(255, 255, 255, 0.2); border: 1px solid rgba(255, 255, 255, 0.4); 
-            border-radius: 30px; padding: 8px 18px; font-size: 12px; font-weight: bold; color: white; cursor: pointer;
-            display: flex; align-items: center; gap: 6px; outline: none;
+            border-radius: 30px; padding: 8px 20px; font-size: 12px; font-weight: bold; color: white; cursor: pointer;
+            display: flex; align-items: center; gap: 8px; outline: none; transition: 0.3s;
         }
-        #force-reload-btn::before { content: "↻"; font-size: 16px; font-weight: normal; }
+        #force-reload-btn .spin-icon { display: inline-block; font-size: 16px; transition: transform 0.6s ease-in-out; }
+        #force-reload-btn:active .spin-icon { transform: rotate(360deg); }
 
         .container { padding: 1rem; max-width: 550px; margin: 0 auto; }
 
-        /* --- お知らせボタン（一行・モーブ） --- */
+        /* --- お知らせボタン（三角を大きく） --- */
         .notice-btn {
             background: #fff; border: 3px solid var(--mauve-admin); color: var(--mauve-admin);
             font-size: 1.2rem; font-weight: 800; padding: 16px 20px; border-radius: 50px; cursor: pointer;
             box-shadow: 0 6px 20px rgba(142, 122, 138, 0.15);
-            width: 100%; display: inline-flex; align-items: center; justify-content: center; margin: 15px 0 25px; box-sizing: border-box;
+            width: 100%; display: inline-flex; align-items: center; justify-content: center; margin: 15px 0 25px; box-sizing: border-box; outline: none;
         }
+        .notice-btn .warn-icon { font-size: 1.8rem; margin-right: 10px; }
 
-        /* --- ダイアログ（文字サイズ固定・青枠なし） --- */
+        /* --- ダイアログ --- */
         .notice-modal { border: none; border-radius: 24px; padding: 0; width: 92%; max-width: 550px; box-shadow: 0 20px 60px rgba(0,0,0,0.3); outline: none; }
         .notice-modal::backdrop { background: rgba(0, 0, 0, 0.4); backdrop-filter: blur(4px); }
         .modal-inner { padding: 30px 25px; background: #fff; font-size: 18px; outline: none; }
-        
-        .modal-header { border-bottom: 2px solid var(--pink-light); padding-bottom: 15px; margin-bottom: 20px; }
-        .modal-header h2 { color: var(--mauve-admin); font-size: 1.2rem; margin: 0; text-align: center; }
-
-        .modal-body { text-align: left; max-height: 60vh; overflow-y: auto; padding-right: 10px; }
+        .modal-header h2 { color: var(--mauve-admin); font-size: 1.2rem; margin: 0 0 20px; text-align: center; border-bottom: 2px solid var(--pink-light); padding-bottom: 15px; }
+        .modal-body { text-align: left; max-height: 60vh; overflow-y: auto; }
         .notice-section { margin-bottom: 25px; }
         .notice-section strong { display: block; color: var(--mauve-admin); margin-bottom: 8px; font-size: 1.1rem; border-left: 5px solid var(--mauve-admin); padding-left: 10px; }
         .sub-list { margin: 8px 0 0; padding: 0; list-style: none; font-size: 1rem; color: #8a6a6a; }
         .sub-list li { margin-bottom: 8px; position: relative; padding-left: 1.2em; }
         .sub-list li::before { content: "※"; position: absolute; left: 0; }
+        .modal-close-btn { width: 100%; padding: 18px; background: var(--mauve-admin); color: white; border: none; border-radius: 14px; font-weight: bold; font-size: 1.3rem; cursor: pointer; margin-top: 20px; outline: none; }
 
-        .modal-close-btn { 
-            width: 100%; padding: 18px; background: var(--mauve-admin); color: white; 
-            border: none; border-radius: 14px; font-weight: bold; font-size: 1.3rem; 
-            cursor: pointer; margin-top: 20px; outline: none; -webkit-tap-highlight-color: transparent;
-        }
-
-        /* --- 大中小ボタン（フォーム用） --- */
+        /* --- 大中小ボタン（文字サイズも連動） --- */
         .size-selector { display: flex; background: #eeebe9; border-radius: 10px; padding: 3px; gap: 2px; }
-        .size-btn { border: none; background: transparent; padding: 6px 14px; font-size: 12px; font-weight: bold; color: #b09999; border-radius: 8px; cursor: pointer; outline: none; }
+        .size-btn { 
+            border: none; background: transparent; padding: 6px 14px; font-weight: bold; color: #b09999; border-radius: 8px; cursor: pointer; outline: none;
+            font-size: var(--base-font-size); /* ボタン内の文字もベースサイズに連動 */
+        }
         .size-btn.active { background: var(--mauve-admin); color: white; }
 
         /* --- フォームセクション --- */
@@ -87,33 +84,27 @@
 
         .submit-btn { background: linear-gradient(135deg, var(--pink-main) 0%, var(--pink-deep) 100%); color: white; border: none; padding: 22px; border-radius: 20px; width: 100%; font-size: 1.2rem; font-weight: 700; cursor: pointer; margin-bottom: 30px; outline: none; }
 
-        /* --- トップに戻るボタン --- */
         .back-link-container { text-align: center; padding: 20px 0 40px; }
-        .back-to-shared-btn { 
-            display: inline-block; padding: 12px 30px; background-color: var(--mauve-admin); 
-            color: #fff; text-decoration: none; border-radius: 50px; font-weight: bold; font-size: 0.9rem;
-            box-shadow: 0 4px 15px rgba(142, 122, 138, 0.2);
-        }
+        .back-to-shared-btn { display: inline-block; padding: 12px 30px; background-color: var(--mauve-admin); color: #fff; text-decoration: none; border-radius: 50px; font-weight: bold; font-size: 0.9rem; box-shadow: 0 4px 15px rgba(142, 122, 138, 0.2); }
     </style>
 </head>
 <body>
 
 <header>
     <h1>PLAY REQUEST</h1>
-    <button id="force-reload-btn" onclick="location.reload(true)">最新にリロード</button>
+    <button id="force-reload-btn" onclick="animateAndReload()">
+        <span class="spin-icon">↻</span>最新にリロード<span class="spin-icon">↻</span>
+    </button>
 </header>
 
 <div class="container">
     <button onclick="document.getElementById('notice-dialog').showModal()" class="notice-btn">
-        ⚠ 依頼に関する大切なお願い
+        <span class="warn-icon">⚠</span>依頼に関する大切なお願い
     </button>
 
     <dialog id="notice-dialog" class="notice-modal">
         <div class="modal-inner">
-            <div class="modal-header">
-                <h2>申し訳ございませんが、<br>下記のご理解をお願いします。</h2>
-            </div>
-            
+            <div class="modal-header"><h2>申し訳ございませんが、<br>下記のご理解をお願いします。</h2></div>
             <div class="modal-body">
                 <div class="notice-section">
                     <strong>■案件の募集期間が短いと男性が決まらない場合があります</strong>
@@ -124,7 +115,6 @@
                         <li>応募がない場合は、再募集していますが、なかなか難しいと思います。</li>
                     </ul>
                 </div>
-
                 <div class="notice-section">
                     <strong>■1対1の前日の受付は午前中のみでお願いします。</strong>
                     <ul class="sub-list">
@@ -132,14 +122,12 @@
                         <li>前日依頼は、お受けしますが男性が決まらない可能性があります。</li>
                     </ul>
                 </div>
-
                 <div class="notice-section">
                     <strong>■1対1の当日依頼は、お受けできなくなりました</strong>
                     <ul class="sub-list">
                         <li>当日の依頼は、いろいろと問題が多いので、お受けしないことにしました。</li>
                     </ul>
                 </div>
-
                 <div class="notice-section">
                     <strong>■複数プレイは、監督探しからとなります</strong>
                     <p>依頼日に必ず開催されるとは限りません。</p>
@@ -150,11 +138,7 @@
                         <li>プレイ依頼を出す前に、森に相談してもらうこともできます。</li>
                     </ul>
                 </div>
-
-                <div class="notice-section">
-                    <strong>■キャンセルは前日の確認までなら問題ありません。</strong>
-                </div>
-
+                <div class="notice-section"><strong>■キャンセルは前日の確認までなら問題ありません。</strong></div>
                 <p style="text-align: center; font-weight: bold; color: var(--pink-main); margin-top: 30px;">《何かあれば森に相談してください》</p>
             </div>
             <form method="dialog"><button class="modal-close-btn">確認しました</button></form>
@@ -198,6 +182,12 @@
 </div>
 
 <script>
+    function animateAndReload() {
+        // アイコンを回転させてからリロード
+        document.querySelectorAll('.spin-icon').forEach(el => el.style.transform = 'rotate(360deg)');
+        setTimeout(() => { location.reload(true); }, 500);
+    }
+
     function applyFontSize(mode) {
         const root = document.documentElement;
         let size = '16px';
