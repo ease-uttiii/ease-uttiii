@@ -22,21 +22,21 @@
 
         body { font-family: 'Noto Sans JP', sans-serif; margin: 0; background: var(--soft-bg); color: #5a4d4d; line-height: 1.6; font-size: var(--base-font-size); }
         
+        /* --- ヘッダー：men.html形式 --- */
         header { 
             background: rgba(212, 165, 165, 0.95); backdrop-filter: blur(10px);
-            color: white; padding: 1.2rem; position: sticky; top: 0; z-index: 100; 
-            display: flex; flex-direction: column; align-items: center; gap: 12px; box-shadow: 0 4px 25px rgba(0,0,0,0.1);
+            color: white; padding: 1rem 1.2rem; position: sticky; top: 0; z-index: 100; 
+            display: flex; justify-content: space-between; align-items: center; box-shadow: 0 4px 25px rgba(0,0,0,0.1);
         }
-        header h1 { margin: 0; font-size: 1.5rem; letter-spacing: 0.15em; font-family: 'Lora', serif; }
+        header h1 { margin: 0; font-size: 1.3rem; letter-spacing: 0.15em; font-family: 'Lora', serif; }
 
-        /* --- リロードボタン（アニメーション＋両側アイコン） --- */
+        /* --- リロードボタン：men.htmlと統一 --- */
         #force-reload-btn {
             background: rgba(255, 255, 255, 0.2); border: 1px solid rgba(255, 255, 255, 0.4); 
-            border-radius: 30px; padding: 8px 20px; font-size: 12px; font-weight: bold; color: white; cursor: pointer;
-            display: flex; align-items: center; gap: 8px; outline: none; transition: 0.3s;
+            border-radius: 30px; padding: 6px 12px; font-size: 11px; font-weight: bold; color: white; cursor: pointer;
+            display: flex; align-items: center; gap: 5px; outline: none; -webkit-tap-highlight-color: transparent;
         }
-        #force-reload-btn .spin-icon { display: inline-block; font-size: 16px; transition: transform 0.6s ease-in-out; }
-        #force-reload-btn:active .spin-icon { transform: rotate(360deg); }
+        .spin-icon { display: inline-block; font-size: 14px; transition: transform 0.5s ease-in-out; }
 
         .container { padding: 1rem; max-width: 550px; margin: 0 auto; }
 
@@ -47,7 +47,7 @@
             box-shadow: 0 6px 20px rgba(142, 122, 138, 0.15);
             width: 100%; display: inline-flex; align-items: center; justify-content: center; margin: 15px 0 25px; box-sizing: border-box; outline: none;
         }
-        .notice-btn .warn-icon { font-size: 1.8rem; margin-right: 10px; }
+        .notice-btn .warn-icon { font-size: 2rem; margin-right: 12px; }
 
         /* --- ダイアログ --- */
         .notice-modal { border: none; border-radius: 24px; padding: 0; width: 92%; max-width: 550px; box-shadow: 0 20px 60px rgba(0,0,0,0.3); outline: none; }
@@ -62,11 +62,11 @@
         .sub-list li::before { content: "※"; position: absolute; left: 0; }
         .modal-close-btn { width: 100%; padding: 18px; background: var(--mauve-admin); color: white; border: none; border-radius: 14px; font-weight: bold; font-size: 1.3rem; cursor: pointer; margin-top: 20px; outline: none; }
 
-        /* --- 大中小ボタン（文字サイズも連動） --- */
+        /* --- 大中小ボタン（文字サイズ連動） --- */
         .size-selector { display: flex; background: #eeebe9; border-radius: 10px; padding: 3px; gap: 2px; }
         .size-btn { 
             border: none; background: transparent; padding: 6px 14px; font-weight: bold; color: #b09999; border-radius: 8px; cursor: pointer; outline: none;
-            font-size: var(--base-font-size); /* ボタン内の文字もベースサイズに連動 */
+            font-size: var(--base-font-size); 
         }
         .size-btn.active { background: var(--mauve-admin); color: white; }
 
@@ -183,9 +183,11 @@
 
 <script>
     function animateAndReload() {
-        // アイコンを回転させてからリロード
-        document.querySelectorAll('.spin-icon').forEach(el => el.style.transform = 'rotate(360deg)');
-        setTimeout(() => { location.reload(true); }, 500);
+        const icons = document.querySelectorAll('.spin-icon');
+        icons.forEach(icon => icon.style.transform = 'rotate(360deg)');
+        setTimeout(() => {
+            location.reload(true);
+        }, 500);
     }
 
     function applyFontSize(mode) {
