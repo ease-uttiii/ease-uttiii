@@ -7,16 +7,16 @@
     <link href="https://fonts.googleapis.com/css2?family=Lora:wght@600&family=Noto+Sans+JP:wght@400;700&display=swap" rel="stylesheet">
     <style>
         :root {
-            /* 基本トーン：グレージュ */
-            --main-bg: #f8f6f5;
+            /* 基本トーン：上品なグレージュ */
+            --main-bg: #f2ede9; /* 背景を一段濃い色に変更 */
             --accent-color: #968686;
             --text-color: #5a5252;
             --shadow: 0 10px 30px rgba(0,0,0,0.08);
-            --mauve-admin: #8e7a8a;
+            --mauve-admin: #8e7a8a; /* 管理用モーブ */
             
-            /* 性別カラー */
-            --men-blue: #5d7a99;    /* シックなブルー */
-            --woman-pink: #d4a5a5;  /* ローズピンク */
+            /* 性別カラー（固定） */
+            --men-blue: #5d7a99; 
+            --woman-pink: #d4a5a5; 
 
             --base-font-size: 16px;
         }
@@ -24,7 +24,7 @@
         body { 
             font-family: 'Noto Sans JP', sans-serif; 
             margin: 0; 
-            background: #f2ede9; 
+            background: var(--main-bg); /* 指定の濃い色を適用 */
             color: var(--text-color); 
             display: flex; 
             flex-direction: column; 
@@ -38,55 +38,54 @@
             position: relative;
         }
 
-        /* --- リロードボタンエリア --- */
+        /* --- リロードボタン：色味を管理用モーブ系に統一 --- */
         .header-controls {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    gap: 8px;
-}
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+        }
 
-.head-btn {
-    background: rgba(255, 255, 255, 0.4);
-    border: 1px solid rgba(255, 255, 255, 0.4);
-    border-radius: 30px;
-    padding: 6px 14px;
-    font-size: 11px;
-    font-weight: bold;
-    color: var(--mauve-admin);
-    cursor: pointer;
-    text-decoration: none;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    height: 28px;
-    box-sizing: border-box;
-    white-space: nowrap;
-}
+        .head-btn {
+            background: rgba(142, 122, 138, 0.15); /* モーブを薄く背景に */
+            border: 1px solid rgba(142, 122, 138, 0.3); /* 枠線もモーブ系 */
+            border-radius: 30px;
+            padding: 6px 14px;
+            font-size: 11px;
+            font-weight: bold;
+            color: var(--mauve-admin); /* 文字色をモーブに */
+            cursor: pointer;
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            height: 28px;
+            box-sizing: border-box;
+            white-space: nowrap;
+        }
 
-.reload-icon {
-    display: inline-block;
-    width: 14px;
-    height: 14px;
-    line-height: 14px;
-    margin: 0 4px;
-    font-size: 14px;
-    text-align: center;
-}
+        .reload-icon {
+            display: inline-block;
+            width: 14px;
+            height: 14px;
+            line-height: 14px;
+            margin: 0 4px;
+            font-size: 14px;
+            text-align: center;
+        }
 
-.reload-icon::before {
-    content: '↻';
-}
+        .reload-icon::before {
+            content: '↻';
+        }
 
-.spinning {
-    animation: spin 0.6s linear infinite !important;
-}
+        .spinning {
+            animation: spin 0.6s linear infinite !important;
+        }
 
-@keyframes spin {
-    from { transform: rotate(0deg); }
-    to { transform: rotate(360deg); }
-}
-        /* --- ここまで --- */
+        @keyframes spin {
+            from { transform: rotate(0deg); }
+            to { transform: rotate(360deg); }
+        }
 
         header h1 { 
             margin: 1.5rem 0 0; 
@@ -149,43 +148,40 @@
 
         .footer-settings { padding: 3rem 2rem; display: flex; justify-content: center; }
 
-        /* 土台：管理用モーブを薄くした背景色に変更 */
-.size-selector { 
-    display: flex; 
-    background: #f0edf0; /* ほんのりモーブがかったグレー */
-    border: 1px solid #d8d0d8; 
-    border-radius: 12px; 
-    padding: 4px; 
-    gap: 4px; 
-}
+        .size-selector { 
+            display: flex; 
+            background: #f0edf0; 
+            border: 1px solid #d8d0d8; 
+            border-radius: 12px; 
+            padding: 4px; 
+            gap: 4px; 
+        }
 
-/* ボタン：文字色は管理用モーブ（var(--mauve-admin)） */
-.size-btn { 
-    border: none; 
-    background: transparent; 
-    padding: 8px 16px; 
-    font-size: 13px; 
-    font-weight: 800; 
-    color: var(--mauve-admin); 
-    border-radius: 9px; 
-    cursor: pointer; 
-    transition: 0.2s;
-    min-width: 45px; 
-}
+        .size-btn { 
+            border: none; 
+            background: transparent; 
+            padding: 8px 16px; 
+            font-size: 13px; 
+            font-weight: 800; 
+            color: var(--mauve-admin); 
+            border-radius: 9px; 
+            cursor: pointer; 
+            transition: 0.2s;
+            min-width: 45px; 
+        }
 
-/* 選択時：白背景にクッキリとしたモーブ文字で「ボタン感」を強調 */
-.size-btn.active { 
-    background: #ffffff; 
-    color: var(--mauve-admin); 
-    box-shadow: 0 3px 10px rgba(142, 122, 138, 0.3); /* モーブ系の影 */
-}
+        .size-btn.active { 
+            background: #ffffff; 
+            color: var(--mauve-admin); 
+            box-shadow: 0 3px 10px rgba(142, 122, 138, 0.3); 
+        }
 
     </style>
 </head>
 <body>
 
 <header>
-    <div class="header-action-row">
+    <div class="header-controls">
         <button id="force-reload-btn" class="head-btn" onclick="fastUpdate()">
             <span class="reload-icon sync-target"></span> 最新にリロード <span class="reload-icon sync-target"></span>
         </button>
@@ -243,9 +239,9 @@
     }
 
     function fastUpdate() {
-    document.querySelectorAll('.sync-target').forEach(i => i.classList.add('spinning'));
-    setTimeout(() => location.reload(true), 600);
-}
+        document.querySelectorAll('.sync-target').forEach(i => i.classList.add('spinning'));
+        setTimeout(() => location.reload(true), 600);
+    }
 
     window.onload = () => {
         const saved = localStorage.getItem('portalFontSizeMode') || 'mid';
