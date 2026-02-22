@@ -226,23 +226,22 @@
 </div>
 
 <script>
-   function fastUpdate() {
-    document.querySelectorAll('.sync-target').forEach(i => i.classList.add('spinning'));
-    setTimeout(() => location.reload(true), 600);
-}
+window.onload = function() {
+    // 保存されたサイズがあれば取得、なければ 'mid' をデフォルトにする
+    const savedMode = localStorage.getItem('fontSizeMode') || 'mid';
+    applyFontSize(savedMode);
+};
 
-    function applyFontSize(mode) {
+function applyFontSize(mode) {
     const root = document.documentElement;
     if (mode === 'small') {
         root.style.setProperty('--base-font-size', '13px');
-        root.style.setProperty('--pref-grid-cols', 'repeat(4, 1fr)');
     } else if (mode === 'mid') {
         root.style.setProperty('--base-font-size', '16px');
-        root.style.setProperty('--pref-grid-cols', 'repeat(3, 1fr)');
     } else if (mode === 'large') {
-        root.style.setProperty('--base-font-size', '19px');
-        root.style.setProperty('--pref-grid-cols', 'repeat(3, 1fr)');
+        root.style.setProperty('--base-font-size', '20px');
     }
+    
     document.querySelectorAll('.size-btn').forEach(btn => {
         btn.classList.toggle('active', btn.id === `btn-${mode}`);
     });
@@ -251,6 +250,15 @@
 function changeFontSize(mode) {
     applyFontSize(mode);
     localStorage.setItem('fontSizeMode', mode);
+}
+
+function fastUpdate() {
+    document.querySelectorAll('.sync-target').forEach(i => i.classList.add('spinning'));
+    setTimeout(() => location.reload(true), 600);
+}
+
+function toggleSelection(el) {
+    el.classList.toggle('active');
 }
 
 </script>
