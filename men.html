@@ -139,7 +139,7 @@
             box-shadow: 0 3px 8px rgba(0,0,0,0.12);
         }
 
-        /* お気に入りセクションのスタイル */
+        /* --- お気に入りセクション（大中小対応） --- */
         .favorite-box {
             background: #fdfdfd;
             border: 1px dashed var(--tile-border);
@@ -147,13 +147,48 @@
             padding: 15px;
             border-radius: 16px;
         }
-        .fav-title { font-size: 0.75rem; color: var(--men-blue); font-weight: bold; margin-bottom: 10px; display: flex; align-items: center; gap: 5px; }
+        .fav-title { 
+            font-size: calc(var(--base-font-size) * 0.75); /* 可変 */
+            color: var(--men-blue); 
+            font-weight: bold; 
+            margin-bottom: 10px; 
+            display: flex; 
+            align-items: center; 
+            gap: 5px; 
+        }
         .fav-grid { display: flex; flex-wrap: wrap; gap: 8px; }
         .fav-tag {
-            background: var(--men-blue); color: white; padding: 6px 12px; border-radius: 20px; font-size: 0.8rem; font-weight: bold; display: flex; align-items: center; gap: 6px; cursor: pointer;
+            background: var(--men-blue); 
+            color: white; 
+            padding: 8px 14px; 
+            border-radius: 24px; 
+            font-size: calc(var(--base-font-size) * 0.85); /* 可変 */
+            font-weight: bold; 
+            display: flex; 
+            align-items: center; 
+            gap: 6px; 
+            cursor: pointer;
+            box-shadow: 0 2px 6px rgba(93, 122, 153, 0.2);
         }
-        .fav-empty { font-size: 0.75rem; color: #b0bac3; text-align: center; width: 100%; padding: 10px 0; }
-        .add-fav-mode-btn { background: #fff; border: 1px solid var(--men-blue); color: var(--men-blue); padding: 5px 12px; border-radius: 20px; font-size: 0.7rem; font-weight: bold; cursor: pointer; }
+        .fav-empty { 
+            font-size: calc(var(--base-font-size) * 0.75); /* 可変 */
+            color: #b0bac3; 
+            text-align: center; 
+            width: 100%; 
+            padding: 10px 0; 
+        }
+        .add-fav-mode-btn { 
+            background: #fff; 
+            border: 1px solid var(--men-blue); 
+            color: var(--men-blue); 
+            padding: 5px 12px; 
+            border-radius: 20px; 
+            font-size: calc(var(--base-font-size) * 0.7); /* 可変 */
+            font-weight: bold; 
+            cursor: pointer; 
+        }
+        /* --- ここまで --- */
+
         .pref-btn.is-fav { border: 2px solid var(--men-blue); position: relative; }
         .pref-btn.is-fav::after { content: "★"; position: absolute; top: -5px; right: -5px; background: var(--men-blue); color: white; width: 16px; height: 16px; border-radius: 50%; font-size: 10px; display: flex; align-items: center; justify-content: center; }
 
@@ -332,9 +367,6 @@ function toggleFavEditMode() {
     btn.innerText = isFavEditMode ? "完了" : "設定を変更";
     btn.style.background = isFavEditMode ? "var(--men-blue)" : "#fff";
     btn.style.color = isFavEditMode ? "#fff" : "var(--men-blue)";
-    if (isFavEditMode) {
-        alert("登録したい県を選んでください。");
-    }
 }
 
 function updateFavDisplay() {
