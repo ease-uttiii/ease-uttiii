@@ -8,13 +8,13 @@
     <style>
         :root {
             /* 基本トーン：上品なグレージュ */
-            --main-bg: #f2ede9; /* 背景を一段濃い色に変更 */
+            --main-bg: #f2ede9; 
             --accent-color: #968686;
             --text-color: #5a5252;
             --shadow: 0 10px 30px rgba(0,0,0,0.08);
-            --mauve-admin: #8e7a8a; /* 管理用モーブ */
+            --mauve-admin: #8e7a8a; 
             
-            /* 性別カラー（固定） */
+            /* 性別カラー */
             --men-blue: #5d7a99; 
             --woman-pink: #d4a5a5; 
 
@@ -24,7 +24,7 @@
         body { 
             font-family: 'Noto Sans JP', sans-serif; 
             margin: 0; 
-            background: var(--main-bg); /* 指定の濃い色を適用 */
+            background: var(--main-bg); 
             color: var(--text-color); 
             display: flex; 
             flex-direction: column; 
@@ -33,12 +33,13 @@
         }
 
         header { 
-            padding: 2rem 1rem 2rem; 
+            /* 下の余白を詰めてカードを上に引き上げ */
+            padding: 2rem 1rem 0.5rem; 
             text-align: center; 
             position: relative;
         }
 
-        /* --- リロードボタン：色味を管理用モーブ系に統一 --- */
+        /* --- リロードボタン --- */
         .header-controls {
             display: flex;
             align-items: center;
@@ -47,13 +48,13 @@
         }
 
         .head-btn {
-            background: rgba(142, 122, 138, 0.15); /* モーブを薄く背景に */
-            border: 1px solid rgba(142, 122, 138, 0.3); /* 枠線もモーブ系 */
+            background: rgba(142, 122, 138, 0.15); 
+            border: 1px solid rgba(142, 122, 138, 0.3); 
             border-radius: 30px;
             padding: 6px 14px;
             font-size: 11px;
             font-weight: bold;
-            color: var(--mauve-admin); /* 文字色をモーブに */
+            color: var(--mauve-admin); 
             cursor: pointer;
             text-decoration: none;
             display: flex;
@@ -110,7 +111,9 @@
             display: flex; 
             flex-direction: column; 
             gap: 20px;
-            justify-content: center;
+            /* 中央寄せを解除して位置を安定させる */
+            justify-content: flex-start;
+            padding-top: 1rem;
         }
 
         .portal-card {
