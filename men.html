@@ -226,24 +226,28 @@ const regions = {
     "【九州・沖縄】": ["福岡県", "佐賀県", "長崎県", "熊本県", "大分県", "宮崎県", "鹿児島県", "沖縄県全域"]
 };
 
-// ページ読み込み時に実行
 window.onload = function() {
-    // 保存されたサイズがあれば取得、なければ 'mid' をデフォルトにする
-    const savedMode = localStorage.getItem('fontSizeMode') || 'mid';
+    const savedMode = localStorage.getItem('menFontSizeMode') || 'mid';
     applyFontSize(savedMode);
+    createPrefButtons();
+    displayRecruits();
 };
 
 function applyFontSize(mode) {
     const root = document.documentElement;
     if (mode === 'small') {
         root.style.setProperty('--base-font-size', '13px');
+        root.style.setProperty('--pref-font-size', '14px');
+        root.style.setProperty('--pref-grid-cols', 'repeat(4, 1fr)');
     } else if (mode === 'mid') {
         root.style.setProperty('--base-font-size', '16px');
+        root.style.setProperty('--pref-font-size', '17px');
+        root.style.setProperty('--pref-grid-cols', 'repeat(3, 1fr)');
     } else if (mode === 'large') {
-        root.style.setProperty('--base-font-size', '20px');
+        root.style.setProperty('--base-font-size', '19px');
+        root.style.setProperty('--pref-font-size', '20px');
+        root.style.setProperty('--pref-grid-cols', 'repeat(3, 1fr)');
     }
-    
-    // ボタンの見た目（白背景にするなど）を更新
     document.querySelectorAll('.size-btn').forEach(btn => {
         btn.classList.toggle('active', btn.id === `btn-${mode}`);
     });
@@ -251,18 +255,60 @@ function applyFontSize(mode) {
 
 function changeFontSize(mode) {
     applyFontSize(mode);
-    // 選択したサイズをブラウザに保存
-    localStorage.setItem('fontSizeMode', mode);
+    localStorage.setItem('menFontSizeMode', mode);
+}
+
+async function fastUpdate() {
+    document.querySelectorAll('.sync-target').forEach(icon => { icon.classList.add('spinning'); });
+    setTimeout(() => { location.reload(true); }, 600);
+}
+
+function createPrefButtons() {
+    const container = document.getElementById('pref-container');
+    container.innerHTML = '';
+    for (const [regionName, prefs] of Object.entries(regions)) {
+        const title = document.createElement('div');
+        title.className = 'region-group-title'; title.innerText = regionName;
+        container.appendChild(title);
+        const grid = document.createElement('div');
+        grid.className = 'pref-grid';
+        prefs.forEach(pref => {
+            const btn = document.createElement('button');
+            btn.className = 'pref-btn'; btn.innerText = pref;
+            btn.onclick = () => filterByArea(pref);
+            grid.appendChild(btn);
+        });
+        container.appendChild(grid);
+    }
+}
+
+function displayRecruits(filter = 'すべて') {
+    const list = document.getElementById('recruit-list');
+    const label = document.getElementById('current-filter-label');
+    list.innerHTML = '';
+    label.innerText = filter === 'すべて' ? '表示中: すべての募集' : `表示中: ${filter}`;
+    const filtered = filter === 'すべて' ? recruitmentItems : recruitmentItems.filter(item => item.area === filter);
+    filtered.forEach(item => {
+        const card = document.createElement('div');
+        card.className = 'recruit-card';
+        card.innerHTML = `<div class="card-accent">RECRUIT</div><div class="card-content"><div class="recruit-title">${item.title}</div><div class="recruit-info"><span>📍 エリア: ${item.area}</span><span>📅 掲載日: ${item.date}</span></div><button class="apply-btn">詳細・応募はこちら</button></div>`;
+        list.appendChild(card);
+    });
+}
+
+function scrollToSection(id) { 
+    const el = document.getElementById(id);
+    if(el) window.scrollTo({ top: el.offsetTop - 140, behavior: 'smooth' }); 
+}
+
+function filterByArea(area) { 
+    displayRecruits(area); 
+    window.scrollTo({ top: document.getElementById('current-filter-label').offsetTop - 160, behavior: 'smooth' }); 
 }
 
 function fastUpdate() {
     document.querySelectorAll('.sync-target').forEach(i => i.classList.add('spinning'));
     setTimeout(() => location.reload(true), 600);
-}
-
-// フォームの選択項目用
-function toggleSelection(el) {
-    el.classList.toggle('active');
 }
 
 </script>
