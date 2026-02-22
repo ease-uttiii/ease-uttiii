@@ -63,19 +63,21 @@
             gap: 8px;
             transition: all 0.2s;
         }
-        #force-reload-btn:active { background: rgba(150, 134, 134, 0.2); }
-
         .reload-icon { 
-            display: inline-block; width: 10px; height: 10px; border: 1.8px solid var(--accent-color); 
-            border-top: 1.8px solid transparent; border-radius: 50%; position: relative; 
-        }
-        .reload-icon::after { 
-            content: ''; position: absolute; top: -2.8px; left: 4.5px; border-left: 3.5px solid transparent; 
-            border-right: 3.5px solid transparent; border-bottom: 4.5px solid var(--accent-color); transform: rotate(45deg); 
-        }
+    display: inline-block; 
+    font-size: 14px; 
+    pointer-events: none;
+    vertical-align: middle;
+}
 
-        .spinning { animation: spin 0.6s linear infinite !important; }
-@keyframes spin { from { transform: rotate(0deg); } to { transform: rotate(360deg); } }
+.spinning { 
+    animation: spin 0.6s linear infinite !important; 
+}
+
+@keyframes spin { 
+    from { transform: rotate(0deg); } 
+    to { transform: rotate(360deg); } 
+}
         /* --- ここまで --- */
 
         header h1 { 
@@ -206,10 +208,10 @@
         localStorage.setItem('portalFontSizeMode', mode);
     }
 
-    async function fastUpdate() {
-        document.querySelectorAll('.sync-target').forEach(icon => { icon.classList.add('spinning'); });
-        setTimeout(() => { location.reload(); }, 600);
-    }
+    function fastUpdate() {
+    document.querySelectorAll('.sync-target').forEach(i => i.classList.add('spinning'));
+    setTimeout(() => location.reload(true), 600);
+}
 
     window.onload = () => {
         const saved = localStorage.getItem('portalFontSizeMode') || 'mid';

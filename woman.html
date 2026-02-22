@@ -24,18 +24,21 @@
         }
         header h1 { margin: 0; font-size: 1.4rem; letter-spacing: 0.1em; font-family: 'Lora', serif; }
 
-        .spinning { animation: spin 0.6s linear infinite !important; }
-@keyframes spin { from { transform: rotate(0deg); } to { transform: rotate(360deg); } }
+        .reload-icon { 
+    display: inline-block; 
+    font-size: 14px; 
+    pointer-events: none;
+    vertical-align: middle;
+}
 
-        .header-controls { display: flex; align-items: center; gap: 8px; }
-        .head-btn {
-            background: rgba(255, 255, 255, 0.2); border: 1px solid rgba(255, 255, 255, 0.4); 
-            border-radius: 30px; padding: 6px 14px; font-size: 11px; font-weight: bold; color: white; 
-            cursor: pointer; text-decoration: none; display: flex; align-items: center; justify-content: center;
-            height: 28px; box-sizing: border-box; outline: none;
-        }
-        .reload-icon::before { content: '↻'; }
-        .reload-icon { display: inline-block; font-size: 14px; transition: transform 0.6s ease-in-out; }
+.spinning { 
+    animation: spin 0.6s linear infinite !important; 
+}
+
+@keyframes spin { 
+    from { transform: rotate(0deg); } 
+    to { transform: rotate(360deg); } 
+}
 
         .container { padding: 1rem; max-width: 550px; margin: 0 auto; }
 
@@ -195,6 +198,7 @@
     document.querySelectorAll('.sync-target').forEach(i => i.classList.add('spinning'));
     setTimeout(() => location.reload(true), 600);
 }
+
     function applyFontSize(mode) {
         let size = mode === 'small' ? '13px' : mode === 'large' ? '20px' : '16px';
         document.documentElement.style.setProperty('--base-font-size', size);

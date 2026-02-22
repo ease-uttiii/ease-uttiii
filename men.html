@@ -59,9 +59,21 @@
             height: 28px; box-sizing: border-box; outline: none;
         }
 
-        #force-reload-btn { gap: 6px; }
-        .reload-icon::before { content: '↻'; }
-        .reload-icon { display: inline-block; font-size: 14px; transition: transform 0.6s ease-in-out; }
+        .reload-icon { 
+    display: inline-block; 
+    font-size: 14px; 
+    pointer-events: none;
+    vertical-align: middle;
+}
+
+.spinning { 
+    animation: spin 0.6s linear infinite !important; 
+}
+
+@keyframes spin { 
+    from { transform: rotate(0deg); } 
+    to { transform: rotate(360deg); } 
+}
 
         /* サブナビゲーション（エリア絞り込み用） */
         .header-nav-row { display: flex; gap: 8px; width: 100%; max-width: 500px; margin-top: 5px; }
@@ -112,9 +124,6 @@
         .recruit-info { font-size: 0.8em; color: var(--text-sub); display: flex; flex-direction: column; gap: 7px; }
         .apply-btn { margin-top: 22px; background: linear-gradient(135deg, var(--men-blue) 0%, var(--men-blue-deep) 100%); color: white; border: none; padding: 16px; border-radius: 16px; width: 100%; font-size: 1em; font-weight: 700; cursor: pointer; }
         
-        .spinning { animation: spin 0.6s linear infinite !important; }
-@keyframes spin { from { transform: rotate(0deg); } to { transform: rotate(360deg); } }
-
         /* 下部フッターボタン */
         .footer-nav { text-align: center; margin: 40px 0; }
         .back-to-shared-btn-man {
