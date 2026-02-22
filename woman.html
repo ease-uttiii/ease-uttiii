@@ -125,9 +125,33 @@
         .check-item { background: #fff; border: 1px solid var(--tile-border); padding: 12px 4px; border-radius: 12px; font-size: 0.9em; text-align: center; cursor: pointer; font-weight: bold; display: flex; align-items: center; justify-content: center; min-height: 48px; transition: 0.2s; }
         .check-item.active { background: linear-gradient(180deg, var(--pink-main) 0%, var(--pink-deep) 100%); color: white; }
 
-        .size-selector { display: flex; background: #e2e8ed; border-radius: 10px; padding: 3px; gap: 2px; }
-.size-btn { border: none; background: transparent; padding: 5px 10px; font-size: 11px; font-weight: bold; color: #8e9ba8; border-radius: 8px; cursor: pointer; }
-.size-btn.active { background: white; color: #b57d7d; box-shadow: 0 2px 5px rgba(0,0,0,0.1); }
+.size-selector { 
+    display: flex; 
+    background: #e2e8ed; 
+    border-radius: 12px; 
+    padding: 4px; 
+    gap: 4px; 
+}
+
+.size-btn { 
+    border: none; 
+    background: transparent; 
+    padding: 8px 16px;   /* 上下左右を広げて押しやすく */
+    font-size: 13px;      /* 文字を少し大きく */
+    font-weight: 800;     /* 文字をかなり太く */
+    color: #8e9ba8; 
+    border-radius: 9px; 
+    cursor: pointer; 
+    transition: 0.2s;
+    min-width: 45px;      /* ボタンの幅を揃える */
+}
+
+.size-btn.active { 
+    background: white; 
+    color: var(--pink-deep); /* 文字色を女性用の濃いピンクに */
+    box-shadow: 0 3px 8px rgba(0,0,0,0.12); 
+}
+
         .submit-btn { background: linear-gradient(135deg, var(--pink-main) 0%, var(--pink-deep) 100%); color: white; border: none; padding: 20px; border-radius: 20px; width: 100%; font-size: 1.2em; font-weight: 700; cursor: pointer; margin-top: 10px; outline: none; }
     </style>
 </head>
