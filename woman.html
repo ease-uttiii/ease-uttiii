@@ -125,32 +125,37 @@
         .check-item { background: #fff; border: 1px solid var(--tile-border); padding: 12px 4px; border-radius: 12px; font-size: 0.9em; text-align: center; cursor: pointer; font-weight: bold; display: flex; align-items: center; justify-content: center; min-height: 48px; transition: 0.2s; }
         .check-item.active { background: linear-gradient(180deg, var(--pink-main) 0%, var(--pink-deep) 100%); color: white; }
 
+/* 土台を女性用ページの淡いピンク（var(--pink-light)）に変更 */
 .size-selector { 
     display: flex; 
-    background: #e2e8ed; 
+    background: var(--pink-light); 
+    border: 1px solid var(--tile-border); /* 枠線を追加して馴染ませる */
     border-radius: 12px; 
     padding: 4px; 
     gap: 4px; 
 }
 
+/* 未選択ボタンの文字色を柔らかい茶系（var(--tile-text)）に */
 .size-btn { 
     border: none; 
     background: transparent; 
-    padding: 8px 16px;   /* 上下左右を広げて押しやすく */
-    font-size: 13px;      /* 文字を少し大きく */
-    font-weight: 800;     /* 文字をかなり太く */
-    color: #8e9ba8; 
+    padding: 8px 16px; 
+    font-size: 13px; 
+    font-weight: 800; 
+    color: var(--tile-text); 
     border-radius: 9px; 
     cursor: pointer; 
     transition: 0.2s;
-    min-width: 45px;      /* ボタンの幅を揃える */
+    min-width: 45px; 
 }
 
+/* 選択時は白背景に濃いピンク文字、またはピンクのグラデーションに白文字 */
 .size-btn.active { 
-    background: white; 
-    color: var(--pink-deep); /* 文字色を女性用の濃いピンクに */
-    box-shadow: 0 3px 8px rgba(0,0,0,0.12); 
+    background: #ffffff; 
+    color: var(--pink-deep); 
+    box-shadow: 0 3px 8px rgba(212, 165, 165, 0.3); /* 影もピンク系に */
 }
+
         .submit-btn { background: linear-gradient(135deg, var(--pink-main) 0%, var(--pink-deep) 100%); color: white; border: none; padding: 20px; border-radius: 20px; width: 100%; font-size: 1.2em; font-weight: 700; cursor: pointer; margin-top: 10px; outline: none; }
     </style>
 </head>
