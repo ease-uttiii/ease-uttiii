@@ -21,7 +21,6 @@
             --shadow: 0 8px 25px rgba(93, 122, 153, 0.12);
             --tile-shadow: 0 4px 10px rgba(0,0,0,0.06);
 
-            /* --- フォントサイズ可変用変数 --- */
             --base-font-size: 16px;
             --pref-font-size: 17px;
             --pref-grid-cols: repeat(3, 1fr);
@@ -39,7 +38,6 @@
             -webkit-tap-highlight-color: transparent;
         }
         
-        /* --- 【新ヘッダー構成】womanと共通・menカラー版 --- */
         header { 
             background: rgba(93, 122, 153, 0.95); backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px);
             color: white; padding: 1.2rem 1rem; position: sticky; top: 0; z-index: 100; 
@@ -51,54 +49,53 @@
         }
 
         .header-controls {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    gap: 8px;
-}
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+        }
 
-.head-btn {
-    background: rgba(255, 255, 255, 0.2);
-    border: 1px solid rgba(255, 255, 255, 0.4);
-    border-radius: 30px;
-    padding: 6px 14px;
-    font-size: 11px;
-    font-weight: bold;
-    color: white;
-    cursor: pointer;
-    text-decoration: none;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    height: 28px;
-    box-sizing: border-box;
-    white-space: nowrap;
-}
+        .head-btn {
+            background: rgba(255, 255, 255, 0.2);
+            border: 1px solid rgba(255, 255, 255, 0.4);
+            border-radius: 30px;
+            padding: 6px 14px;
+            font-size: 11px;
+            font-weight: bold;
+            color: white;
+            cursor: pointer;
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            height: 28px;
+            box-sizing: border-box;
+            white-space: nowrap;
+        }
 
-.reload-icon {
-    display: inline-block;
-    width: 14px;
-    height: 14px;
-    line-height: 14px;
-    margin: 0 4px;
-    font-size: 14px;
-    text-align: center;
-}
+        .reload-icon {
+            display: inline-block;
+            width: 14px;
+            height: 14px;
+            line-height: 14px;
+            margin: 0 4px;
+            font-size: 14px;
+            text-align: center;
+        }
 
-.reload-icon::before {
-    content: '↻';
-}
+        .reload-icon::before {
+            content: '↻';
+        }
 
-.spinning {
-    animation: spin 0.6s linear infinite !important;
-}
+        .spinning {
+            animation: spin 0.6s linear infinite !important;
+        }
 
-@keyframes spin {
-    from { transform: rotate(0deg); }
-    to { transform: rotate(360deg); }
-}
+        @keyframes spin {
+            from { transform: rotate(0deg); }
+            to { transform: rotate(360deg); }
+        }
 
-        /* サブナビゲーション（エリア絞り込み用） */
         .header-nav-row { display: flex; gap: 8px; width: 100%; max-width: 500px; margin-top: 5px; }
         .nav-btn { 
             flex: 1; padding: 10px; border-radius: 12px; border: none; background: white; 
@@ -108,41 +105,58 @@
 
         .container { padding: 1.5rem 1rem; max-width: 500px; margin: 0 auto; }
         
-        /* 地域選択セクション */
         .region-section { background: #ffffff; border-radius: 28px; margin-bottom: 40px; box-shadow: var(--shadow); overflow: hidden; }
         .region-header { 
             background: var(--men-blue-light); padding: 15px 20px; font-weight: 700; font-size: 0.9em; color: var(--men-blue-deep); 
             border-bottom: 1px solid #e1e8ed; display: flex; justify-content: space-between; align-items: center;
         }
 
-.size-selector { 
-    display: flex; 
-    background: #e2e8ed; 
-    border: 1px solid var(--tile-border);
-    border-radius: 12px; /* 少し丸みを強調 */
-    padding: 4px;        /* 隙間を広げた */
-    gap: 4px;            /* ボタン同士の隙間を広げた */
-}
+        .size-selector { 
+            display: flex; 
+            background: #e2e8ed; 
+            border: 1px solid var(--tile-border);
+            border-radius: 12px; 
+            padding: 4px; 
+            gap: 4px; 
+        }
 
-.size-btn {
-    border: none; 
-    background: transparent; 
-    padding: 8px 16px;   /* ←上下左右の余白を増やしてボタンを大きく */
-    font-size: 13px;      /* ←文字サイズを11pxから13pxにアップ */
-    font-weight: 800;     /* ←文字をより太く */
-    color: var(--tile-text); 
-    border-radius: 9px; 
-    cursor: pointer; 
-    transition: 0.2s;
-    min-width: 45px;      /* ←ボタンの最低横幅を確保 */
-}
+        .size-btn {
+            border: none; 
+            background: transparent; 
+            padding: 8px 16px; 
+            font-size: 13px; 
+            font-weight: 800; 
+            color: var(--tile-text); 
+            border-radius: 9px; 
+            cursor: pointer; 
+            transition: 0.2s;
+            min-width: 45px; 
+        }
 
-/* 選択時の見た目 */
-.size-btn.active { 
-    background: white; 
-    color: var(--men-blue-deep); 
-    box-shadow: 0 3px 8px rgba(0,0,0,0.12); /* 影を少し強くして「押してる感」を出す */
-}
+        .size-btn.active { 
+            background: white; 
+            color: var(--men-blue-deep); 
+            box-shadow: 0 3px 8px rgba(0,0,0,0.12);
+        }
+
+        /* お気に入りセクションのスタイル */
+        .favorite-box {
+            background: #fdfdfd;
+            border: 1px dashed var(--tile-border);
+            margin: 15px;
+            padding: 15px;
+            border-radius: 16px;
+        }
+        .fav-title { font-size: 0.75rem; color: var(--men-blue); font-weight: bold; margin-bottom: 10px; display: flex; align-items: center; gap: 5px; }
+        .fav-grid { display: flex; flex-wrap: wrap; gap: 8px; }
+        .fav-tag {
+            background: var(--men-blue); color: white; padding: 6px 12px; border-radius: 20px; font-size: 0.8rem; font-weight: bold; display: flex; align-items: center; gap: 6px; cursor: pointer;
+        }
+        .fav-empty { font-size: 0.75rem; color: #b0bac3; text-align: center; width: 100%; padding: 10px 0; }
+        .add-fav-mode-btn { background: #fff; border: 1px solid var(--men-blue); color: var(--men-blue); padding: 5px 12px; border-radius: 20px; font-size: 0.7rem; font-weight: bold; cursor: pointer; }
+        .pref-btn.is-fav { border: 2px solid var(--men-blue); position: relative; }
+        .pref-btn.is-fav::after { content: "★"; position: absolute; top: -5px; right: -5px; background: var(--men-blue); color: white; width: 16px; height: 16px; border-radius: 50%; font-size: 10px; display: flex; align-items: center; justify-content: center; }
+
         .region-group-title { padding: 20px 20px 8px; font-weight: 700; font-size: 0.8em; color: var(--men-blue); display: flex; align-items: center; }
         .region-group-title::before { content: ""; display: inline-block; width: 4px; height: 14px; background: var(--men-blue); margin-right: 8px; border-radius: 2px; }
 
@@ -160,7 +174,6 @@
         #current-filter-label { margin: 35px 0 20px; font-size: 1.15em; font-weight: 700; color: var(--men-blue-deep); display: flex; align-items: center; }
         #current-filter-label::after { content: ""; flex: 1; height: 1px; background: #d0d9e0; margin-left: 15px; }
 
-        /* 募集カード */
         .recruit-card { background: var(--card-bg); margin-bottom: 2rem; border-radius: 24px; box-shadow: var(--shadow); display: flex; overflow: hidden; }
         .card-accent { width: 44px; background: linear-gradient(180deg, var(--men-blue-light), var(--men-blue)); display: flex; align-items: center; justify-content: center; writing-mode: vertical-rl; color: var(--men-blue-deep); font-size: 0.7em; font-weight: 700; letter-spacing: 0.4em; }
         .card-content { padding: 1.8rem; flex: 1; }
@@ -168,7 +181,6 @@
         .recruit-info { font-size: 0.8em; color: var(--text-sub); display: flex; flex-direction: column; gap: 7px; }
         .apply-btn { margin-top: 22px; background: linear-gradient(135deg, var(--men-blue) 0%, var(--men-blue-deep) 100%); color: white; border: none; padding: 16px; border-radius: 16px; width: 100%; font-size: 1em; font-weight: 700; cursor: pointer; }
         
-        /* 下部フッターボタン */
         .footer-nav { text-align: center; margin: 40px 0; }
         .back-to-shared-btn-man {
             display: inline-block; padding: 12px 24px; background-color: #54627b; color: #ffffff;
@@ -203,6 +215,17 @@
                 <button class="size-btn" id="btn-large" onclick="changeFontSize('large')">大</button>
             </div>
         </div>
+
+        <div class="favorite-box">
+            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px;">
+                <div class="fav-title">★ お気に入り登録</div>
+                <button id="fav-edit-btn" class="add-fav-mode-btn" onclick="toggleFavEditMode()">設定を変更</button>
+            </div>
+            <div id="fav-grid" class="fav-grid">
+                <div class="fav-empty">よく利用する県を登録してください（最大5つ）</div>
+            </div>
+        </div>
+
         <div id="pref-container"></div>
     </div>
     <div id="current-filter-label">表示中: すべての募集</div>
@@ -226,10 +249,14 @@ const regions = {
     "【九州・沖縄】": ["福岡県", "佐賀県", "長崎県", "熊本県", "大分県", "宮崎県", "鹿児島県", "沖縄県全域"]
 };
 
+let favorites = JSON.parse(localStorage.getItem('easeFavPrefs')) || [];
+let isFavEditMode = false;
+
 window.onload = function() {
     const savedMode = localStorage.getItem('menFontSizeMode') || 'mid';
     applyFontSize(savedMode);
     createPrefButtons();
+    updateFavDisplay();
     displayRecruits();
 };
 
@@ -258,11 +285,6 @@ function changeFontSize(mode) {
     localStorage.setItem('menFontSizeMode', mode);
 }
 
-async function fastUpdate() {
-    document.querySelectorAll('.sync-target').forEach(icon => { icon.classList.add('spinning'); });
-    setTimeout(() => { location.reload(true); }, 600);
-}
-
 function createPrefButtons() {
     const container = document.getElementById('pref-container');
     container.innerHTML = '';
@@ -274,12 +296,61 @@ function createPrefButtons() {
         grid.className = 'pref-grid';
         prefs.forEach(pref => {
             const btn = document.createElement('button');
-            btn.className = 'pref-btn'; btn.innerText = pref;
-            btn.onclick = () => filterByArea(pref);
+            btn.className = 'pref-btn'; 
+            if (favorites.includes(pref)) btn.classList.add('is-fav');
+            btn.innerText = pref;
+            btn.onclick = () => handlePrefClick(pref, btn);
             grid.appendChild(btn);
         });
         container.appendChild(grid);
     }
+}
+
+function handlePrefClick(pref, btn) {
+    if (isFavEditMode) {
+        if (favorites.includes(pref)) {
+            favorites = favorites.filter(f => f !== pref);
+            btn.classList.remove('is-fav');
+        } else {
+            if (favorites.length >= 5) {
+                alert("登録できるのは5つまでです。");
+                return;
+            }
+            favorites.push(pref);
+            btn.classList.add('is-fav');
+        }
+        localStorage.setItem('easeFavPrefs', JSON.stringify(favorites));
+        updateFavDisplay();
+    } else {
+        filterByArea(pref);
+    }
+}
+
+function toggleFavEditMode() {
+    isFavEditMode = !isFavEditMode;
+    const btn = document.getElementById('fav-edit-btn');
+    btn.innerText = isFavEditMode ? "完了" : "設定を変更";
+    btn.style.background = isFavEditMode ? "var(--men-blue)" : "#fff";
+    btn.style.color = isFavEditMode ? "#fff" : "var(--men-blue)";
+    if (isFavEditMode) {
+        alert("登録したい県を選んでください。");
+    }
+}
+
+function updateFavDisplay() {
+    const grid = document.getElementById('fav-grid');
+    if (favorites.length === 0) {
+        grid.innerHTML = '<div class="fav-empty">よく利用する県を登録してください（最大5つ）</div>';
+        return;
+    }
+    grid.innerHTML = '';
+    favorites.forEach(pref => {
+        const tag = document.createElement('div');
+        tag.className = 'fav-tag';
+        tag.innerHTML = `<span>★</span> ${pref}`;
+        tag.onclick = () => filterByArea(pref);
+        grid.appendChild(tag);
+    });
 }
 
 function displayRecruits(filter = 'すべて') {
@@ -310,7 +381,6 @@ function fastUpdate() {
     document.querySelectorAll('.sync-target').forEach(i => i.classList.add('spinning'));
     setTimeout(() => location.reload(true), 600);
 }
-
 </script>
 </body>
 </html>
