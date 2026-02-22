@@ -25,62 +25,62 @@
         header h1 { margin: 0; font-size: 1.4rem; letter-spacing: 0.1em; font-family: 'Lora', serif; }
 
         .header-controls {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    gap: 8px;
-}
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+        }
 
-.head-btn {
-    background: rgba(255, 255, 255, 0.2);
-    border: 1px solid rgba(255, 255, 255, 0.4);
-    border-radius: 30px;
-    padding: 6px 14px;
-    font-size: 11px;
-    font-weight: bold;
-    color: white;
-    cursor: pointer;
-    text-decoration: none;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    height: 28px;
-    box-sizing: border-box;
-    white-space: nowrap;
-}
+        .head-btn {
+            background: rgba(255, 255, 255, 0.2);
+            border: 1px solid rgba(255, 255, 255, 0.4);
+            border-radius: 30px;
+            padding: 6px 14px;
+            font-size: 11px;
+            font-weight: bold;
+            color: white;
+            cursor: pointer;
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            height: 28px;
+            box-sizing: border-box;
+            white-space: nowrap;
+        }
 
-.reload-icon {
-    display: inline-block;
-    width: 14px;
-    height: 14px;
-    line-height: 14px;
-    margin: 0 4px;
-    font-size: 14px;
-    text-align: center;
-}
+        .reload-icon {
+            display: inline-block;
+            width: 14px;
+            height: 14px;
+            line-height: 14px;
+            margin: 0 4px;
+            font-size: 14px;
+            text-align: center;
+        }
 
-.reload-icon::before {
-    content: '↻';
-}
+        .reload-icon::before {
+            content: '↻';
+        }
 
-.spinning {
-    animation: spin 0.6s linear infinite !important;
-}
+        .spinning {
+            animation: spin 0.6s linear infinite !important;
+        }
 
-@keyframes spin {
-    from { transform: rotate(0deg); }
-    to { transform: rotate(360deg); }
-}
+        @keyframes spin {
+            from { transform: rotate(0deg); }
+            to { transform: rotate(360deg); }
+        }
 
         .container { padding: 1rem; max-width: 550px; margin: 0 auto; }
 
-        /* --- 【修正】お願いボタン：限界まで巨大化 --- */
+        /* --- お願いボタン --- */
         .notice-btn {
             background: #fff; 
-            border: 4px solid var(--mauve-admin); /* 枠も太く */
+            border: 4px solid var(--mauve-admin); 
             color: var(--mauve-admin); 
             font-weight: 900; 
-            padding: 18px 2px; /* 上下を厚く、左右は1行死守のため詰め */
+            padding: 18px 2px; 
             border-radius: 60px; 
             cursor: pointer;
             box-shadow: 0 8px 25px rgba(142, 122, 138, 0.2); 
@@ -91,16 +91,15 @@
             margin: 10px 0 30px; 
             box-sizing: border-box; 
             outline: none !important; 
-            
-            font-size: 22px !important; /* 限界サイズ */
-            letter-spacing: -0.5px; /* 1行に収めるための微調整 */
+            font-size: 22px !important; 
+            letter-spacing: -0.5px; 
             white-space: nowrap !important; 
             overflow: hidden;
         }
         .notice-btn:active { transform: scale(0.98); }
         .notice-btn .warn-icon { font-size: 1.2em; margin-right: 4px; flex-shrink: 0; }
 
-        /* ダイアログ：18px固定 */
+        /* ダイアログ */
         .notice-modal { border: none; border-radius: 24px; padding: 0; width: 92%; max-width: 550px; outline: none !important; box-shadow: 0 20px 60px rgba(0,0,0,0.3); }
         .notice-modal::backdrop { background: rgba(0, 0, 0, 0.4); backdrop-filter: blur(4px); }
         .modal-inner { padding: 30px 20px; background: #fff; outline: none !important; }
@@ -113,48 +112,62 @@
         .sub-list li::before { content: "※"; position: absolute; left: 0; }
         .modal-close-btn { width: 100%; padding: 18px; background: var(--mauve-admin); color: white; border: none; border-radius: 14px; font-weight: bold; font-size: 1.3rem; cursor: pointer; margin-top: 20px; outline: none !important; }
 
-        /* フォーム */
+        /* フォーム入力欄：幅を100%に統一 */
         .form-section { background: var(--card-bg); border-radius: 24px; padding: 25px 20px; box-shadow: var(--tile-shadow); margin-bottom: 25px; }
         .region-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 15px; border-bottom: 1px solid var(--pink-light); padding-bottom: 10px; }
         .section-title { font-weight: 700; color: var(--pink-deep); font-size: 1.1em; }
         .field-label { font-weight: bold; color: var(--pink-deep); display: block; margin-top: 20px; }
         .required { background: #e88e8e; color: white; font-size: 0.6em; padding: 2px 6px; border-radius: 4px; margin-left: 8px; vertical-align: middle; }
-        input, textarea { width: 100%; padding: 14px; border-radius: 12px; border: 1px solid var(--tile-border); background: var(--pink-light); box-sizing: border-box; font-size: 1em; outline: none; margin-top: 8px; }
+        
+        /* すべてのinputとtextareaの幅をピシッと揃える */
+        input[type="text"], 
+        input[type="datetime-local"], 
+        textarea { 
+            width: 100%; 
+            padding: 14px; 
+            border-radius: 12px; 
+            border: 1px solid var(--tile-border); 
+            background: var(--pink-light); 
+            box-sizing: border-box; 
+            font-size: 1em; 
+            font-family: inherit;
+            outline: none; 
+            margin-top: 8px; 
+            display: block;
+            -webkit-appearance: none; /* スマホ標準スタイルのリセット */
+        }
         
         .check-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; margin-top: 10px; }
         .check-item { background: #fff; border: 1px solid var(--tile-border); padding: 12px 4px; border-radius: 12px; font-size: 0.9em; text-align: center; cursor: pointer; font-weight: bold; display: flex; align-items: center; justify-content: center; min-height: 48px; transition: 0.2s; }
         .check-item.active { background: linear-gradient(180deg, var(--pink-main) 0%, var(--pink-deep) 100%); color: white; }
 
-/* 土台を女性用ページの淡いピンク（var(--pink-light)）に変更 */
-.size-selector { 
-    display: flex; 
-    background: var(--pink-light); 
-    border: 1px solid var(--tile-border); /* 枠線を追加して馴染ませる */
-    border-radius: 12px; 
-    padding: 4px; 
-    gap: 4px; 
-}
+        .size-selector { 
+            display: flex; 
+            background: var(--pink-light); 
+            border: 1px solid var(--tile-border); 
+            border-radius: 12px; 
+            padding: 4px; 
+            gap: 4px; 
+        }
 
-/* 未選択ボタンの文字色を柔らかい茶系（var(--tile-text)）に */
-.size-btn { 
-    border: none; 
-    background: transparent; 
-    padding: 8px 16px; 
-    font-size: 13px; 
-    font-weight: 800; 
-    color: var(--mauve-admin); 
-    border-radius: 9px; 
-    cursor: pointer; 
-    transition: 0.2s;
-    min-width: 45px; 
-}
+        .size-btn { 
+            border: none; 
+            background: transparent; 
+            padding: 8px 16px; 
+            font-size: 13px; 
+            font-weight: 800; 
+            color: var(--mauve-admin); 
+            border-radius: 9px; 
+            cursor: pointer; 
+            transition: 0.2s;
+            min-width: 45px; 
+        }
 
-/* 選択時は白背景に濃いピンク文字、またはピンクのグラデーションに白文字 */
-.size-btn.active { 
-    background: #ffffff; 
-    color: var(--tile-text); 
-    box-shadow: 0 3px 8px rgba(212, 165, 165, 0.3); /* 影もピンク系に */
-}
+        .size-btn.active { 
+            background: #ffffff; 
+            color: var(--tile-text); 
+            box-shadow: 0 3px 8px rgba(212, 165, 165, 0.3); 
+        }
 
         .submit-btn { background: linear-gradient(135deg, var(--pink-main) 0%, var(--pink-deep) 100%); color: white; border: none; padding: 20px; border-radius: 20px; width: 100%; font-size: 1.2em; font-weight: 700; cursor: pointer; margin-top: 10px; outline: none; }
     </style>
@@ -220,10 +233,10 @@
             <div class="region-header">
                 <span class="section-title">基本情報</span>
                 <div class="size-selector">
-    <button class="size-btn" id="btn-small" onclick="changeFontSize('small')">小</button>
-    <button class="size-btn" id="btn-mid" onclick="changeFontSize('mid')">中</button>
-    <button class="size-btn" id="btn-large" onclick="changeFontSize('large')">大</button>
-</div>
+                    <button class="size-btn" id="btn-small" onclick="changeFontSize('small')">小</button>
+                    <button class="size-btn" id="btn-mid" onclick="changeFontSize('mid')">中</button>
+                    <button class="size-btn" id="btn-large" onclick="changeFontSize('large')">大</button>
+                </div>
             </div>
             <label class="field-label" style="margin-top:0;">ID / ニックネーム <span class="required">必須</span></label>
             <input type="text" placeholder="例：A-123">
@@ -255,7 +268,6 @@
 
 <script>
 window.onload = function() {
-    // 保存されたサイズがあれば取得、なければ 'mid' をデフォルトにする
     const savedMode = localStorage.getItem('fontSizeMode') || 'mid';
     applyFontSize(savedMode);
 };
@@ -288,7 +300,6 @@ function fastUpdate() {
 function toggleSelection(el) {
     el.classList.toggle('active');
 }
-
 </script>
 </body>
 </html>
