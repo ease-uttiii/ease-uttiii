@@ -115,13 +115,33 @@
             border-bottom: 1px solid #e1e8ed; display: flex; justify-content: space-between; align-items: center;
         }
 
-        .size-selector { display: flex; background: #e2e8ed; border-radius: 10px; padding: 3px; gap: 2px; }
-        .size-btn {
-            border: none; background: transparent; padding: 5px 10px; font-size: 11px;
-            font-weight: bold; color: var(--text-sub); border-radius: 8px; cursor: pointer; transition: 0.2s;
-        }
-        .size-btn.active { background: white; color: var(--men-blue-deep); box-shadow: 0 2px 5px rgba(0,0,0,0.1); }
+.size-selector { 
+    display: flex; 
+    background: #e2e8ed; 
+    border-radius: 12px; /* 少し丸みを強調 */
+    padding: 4px;        /* 隙間を広げた */
+    gap: 4px;            /* ボタン同士の隙間を広げた */
+}
 
+.size-btn {
+    border: none; 
+    background: transparent; 
+    padding: 8px 16px;   /* ←上下左右の余白を増やしてボタンを大きく */
+    font-size: 13px;      /* ←文字サイズを11pxから13pxにアップ */
+    font-weight: 800;     /* ←文字をより太く */
+    color: var(--text-sub); 
+    border-radius: 9px; 
+    cursor: pointer; 
+    transition: 0.2s;
+    min-width: 45px;      /* ←ボタンの最低横幅を確保 */
+}
+
+/* 選択時の見た目 */
+.size-btn.active { 
+    background: white; 
+    color: var(--men-blue-deep); 
+    box-shadow: 0 3px 8px rgba(0,0,0,0.12); /* 影を少し強くして「押してる感」を出す */
+}
         .region-group-title { padding: 20px 20px 8px; font-weight: 700; font-size: 0.8em; color: var(--men-blue); display: flex; align-items: center; }
         .region-group-title::before { content: ""; display: inline-block; width: 4px; height: 14px; background: var(--men-blue); margin-right: 8px; border-radius: 2px; }
 
