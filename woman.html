@@ -232,10 +232,16 @@
 }
 
     function applyFontSize(mode) {
-        let size = mode === 'small' ? '13px' : mode === 'large' ? '20px' : '16px';
-        document.documentElement.style.setProperty('--base-font-size', size);
-        document.querySelectorAll('.size-btn').forEach(b => b.classList.toggle('active', (mode === 'small' && b.classList.contains('size-s')) || (mode === 'mid' && b.classList.contains('size-m')) || (mode === 'large' && b.classList.contains('size-l'))));
-    }
+    document.documentElement.style.setProperty('--base-font-size', '16px');
+    
+    document.querySelectorAll('.size-btn').forEach(b => 
+        b.classList.toggle('active', 
+            (mode === 'small' && b.classList.contains('size-s')) || 
+            (mode === 'mid' && b.classList.contains('size-m')) || 
+            (mode === 'large' && b.classList.contains('size-l'))
+        )
+    );
+}
     function changeFontSize(mode) { applyFontSize(mode); localStorage.setItem('formFontSizeMode', mode); }
     window.onload = () => applyFontSize(localStorage.getItem('formFontSizeMode') || 'mid');
     function toggleSelection(el) { el.classList.toggle('active'); }
