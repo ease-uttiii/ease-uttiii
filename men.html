@@ -112,8 +112,8 @@
         .recruit-info { font-size: 0.8em; color: var(--text-sub); display: flex; flex-direction: column; gap: 7px; }
         .apply-btn { margin-top: 22px; background: linear-gradient(135deg, var(--men-blue) 0%, var(--men-blue-deep) 100%); color: white; border: none; padding: 16px; border-radius: 16px; width: 100%; font-size: 1em; font-weight: 700; cursor: pointer; }
         
-        .spinning { animation: spin 0.6s linear infinite; }
-        @keyframes spin { from { transform: rotate(0deg); } to { transform: rotate(360deg); } }
+        .spinning { animation: spin 0.6s linear infinite !important; }
+@keyframes spin { from { transform: rotate(0deg); } to { transform: rotate(360deg); } }
 
         /* 下部フッターボタン */
         .footer-nav { text-align: center; margin: 40px 0; }
@@ -256,6 +256,12 @@ function filterByArea(area) {
     displayRecruits(area); 
     window.scrollTo({ top: document.getElementById('current-filter-label').offsetTop - 160, behavior: 'smooth' }); 
 }
+
+function fastUpdate() {
+    document.querySelectorAll('.sync-target').forEach(i => i.classList.add('spinning'));
+    setTimeout(() => location.reload(true), 600);
+}
+
 </script>
 </body>
 </html>
