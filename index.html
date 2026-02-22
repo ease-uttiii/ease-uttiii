@@ -148,12 +148,33 @@
         .arrow { font-size: 1.2rem; color: #d1c8c8; }
 
         .footer-settings { padding: 3rem 2rem; display: flex; justify-content: center; }
-        .size-selector { display: flex; background: #eeebe9; border-radius: 12px; padding: 4px; gap: 4px; }
-        .size-btn {
-            border: none; background: transparent; padding: 6px 14px; font-size: 11px;
-            font-weight: bold; color: #a89e9e; border-radius: 8px; cursor: pointer;
-        }
-        .size-btn.active { background: white; color: var(--accent-color); box-shadow: 0 2px 5px rgba(0,0,0,0.1); }
+
+        .size-selector { 
+    display: flex; 
+    background: #e2e8ed; 
+    border-radius: 12px; 
+    padding: 4px; 
+    gap: 4px; 
+}
+
+.size-btn { 
+    border: none; 
+    background: transparent; 
+    padding: 8px 16px;   /* 押しやすい余白 */
+    font-size: 13px;      /* 文字サイズ */
+    font-weight: 800;     /* 文字を太く */
+    color: #8e9ba8; 
+    border-radius: 9px; 
+    cursor: pointer; 
+    transition: 0.2s;
+    min-width: 45px; 
+}
+
+.size-btn.active { 
+    background: white; 
+    color: var(--mauve-admin); /* 管理用カラーのモーブ */
+    box-shadow: 0 3px 8px rgba(0,0,0,0.12); 
+}
     </style>
 </head>
 <body>
