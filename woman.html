@@ -64,21 +64,31 @@
         
         .field-note { display: block; margin-top: 8px; font-size: 0.82em; color: var(--pink-deep); font-weight: bold; line-height: 1.4; }
 
-        /* 入力エリア設定：サイズを大きく調整 */
-        input[type="text"], input[type="datetime-local"], select, textarea { 
-            width: 100%; padding: 14px; border-radius: 12px; border: 1px solid var(--tile-border); 
-            background: var(--pink-light); box-sizing: border-box; 
-            font-size: 1.2em; 
-            font-family: inherit;
-            outline: none; margin-top: 8px; display: block; -webkit-appearance: none; appearance: none;
-            color: #5a4d4d;
-        }
+input[type="text"], input[type="datetime-local"], select, textarea { 
+    width: 100%; 
+    padding: 16px 14px; /* 上下パディングを少し増やして文字の座りを良くしました */
+    border-radius: 12px; 
+    border: 1px solid var(--tile-border); 
+    background: var(--pink-light); 
+    box-sizing: border-box; 
+    font-size: 1.15em; /* ここを「でかすぎない」絶妙なサイズに変更 */
+    font-family: inherit;
+    outline: none; 
+    margin-top: 8px; 
+    display: block; 
+    -webkit-appearance: none; 
+    appearance: none;
+    color: #5a4d4d;
+}
 
-        select {
-            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 24 24' fill='none' stroke='%23b57d7d' stroke-width='3' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M6 9l6 6 6-6'%3E%3C/path%3E%3C/svg%3E");
-            background-repeat: no-repeat; background-position: right 15px center; background-size: 14px;
-            font-weight: bold;
-        }
+select {
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 24 24' fill='none' stroke='%23b57d7d' stroke-width='3' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M6 9l6 6 6-6'%3E%3C/path%3E%3C/svg%3E");
+    background-repeat: no-repeat; 
+    background-position: right 15px center; 
+    background-size: 14px;
+    font-weight: bold;
+    line-height: 1.2; /* 行間を整えて中央に配置 */
+}
         
         optgroup { font-weight: bold; color: var(--mauve-admin); font-size: 0.8em; }
 
