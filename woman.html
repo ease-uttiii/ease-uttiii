@@ -60,19 +60,31 @@
 
         .form-section { background: var(--card-bg); border-radius: 24px; padding: 25px 20px; box-shadow: var(--tile-shadow); margin-bottom: 25px; }
         .region-header { display: flex; justify-content: flex-end; align-items: center; margin-bottom: 15px; border-bottom: 1px solid var(--pink-light); padding-bottom: 10px; }
-        .section-title { font-weight: 700; color: var(--pink-deep); font-size: 1.1em; }
         
-        /* 修正：labelの背景色と角丸を追加して項目を強調 */
+        /* 修正：labelをフレックスにして、中の要素を垂直中央（center）に配置 */
         .field-label { 
             font-weight: bold; 
             color: #fff; 
             background: var(--pink-deep);
-            display: inline-block;
+            display: inline-flex;
+            align-items: center;
             padding: 4px 12px;
             border-radius: 8px;
             margin-top: 1.5em; 
+            min-height: 1.8em;
         }
-        .required { background: #e88e8e; color: white; font-size: 0.7em; padding: 2px 6px; border-radius: 4px; margin-left: 8px; vertical-align: middle; border: 1px solid #fff; }
+        /* 修正：必須バッジの余白を調整して中心を合わせる */
+        .required { 
+            background: #e88e8e; 
+            color: white; 
+            font-size: 0.7em; 
+            padding: 1px 6px; 
+            border-radius: 4px; 
+            margin-left: 8px; 
+            border: 1px solid #fff;
+            line-height: 1.2;
+        }
+
         .field-note { display: block; margin-top: 8px; font-size: 0.82em; color: var(--pink-deep); font-weight: bold; line-height: 1.4; }
 
         input[type="text"], input[type="datetime-local"], select, textarea { 
@@ -180,7 +192,7 @@
 
             <label class="field-label">プレイ日時 <span class="required">必須</span></label>
             <input type="datetime-local">
-            <span class="field-note">※時間は0時00分～23時50分の間でお願いします。24時や25時表記は、ややこしくなるのでこのサークルでは使いません。</span>
+            <span class="field-note">※時間は0時00分～23時50分の間でお願いします。</span>
 
             <label class="field-label">開催する都道府県 <span class="required">必須</span></label>
             <select>
@@ -221,8 +233,8 @@
         </div>
 
         <div class="form-section">
-            <span class="section-title">プレイ内容</span>
-            <label class="field-label" style="margin-top:0;">当てはまる項目にチェックしてください <br><span class="required">必須</span></label>
+            <label class="field-label" style="margin-top:0;">プレイ内容 <span class="required">必須</span></label>
+            <span class="section-title">当てはまる項目にチェックしてください(複数選択可)</span>
             <div class="check-grid">
                 <div class="check-item" onclick="toggleSelection(this)">お任せでいいです</div>
                 <div class="check-item" onclick="toggleSelection(this)">攻められたい</div>
@@ -256,24 +268,16 @@
                 <input type="text" placeholder="1" style="width:100px; text-align:center; margin-top:0;">
                 <span style="font-weight:bold; color:var(--pink-deep);">人</span>
             </div>
-            <span class="field-note">現在、複数プレイは要相談としています。</span>
-            <span class="field-note">※現在、監督増員育成中ですので、しばらく1対1でプレイするか、森と時間を合わせて頂くことになるかもしれません。</span>
-            <span class="field-note">※複数プレイは、監督探しからとなりますので、依頼日に必ず開催されるとは限りません。</span>
             
             <label class="field-label">使用して欲しい玩具</label>
              <textarea placeholder=""></textarea>
-            <span class="field-note">バイブレーター、ローター、電マ、アナルグッズ、ローション、SMグッズ、アイマスク、その他</span>
             
             <label class="field-label">プレイ案件掲載項目</label>
-            <span class="field-note">※プレイ案件の「その他」の項目に掲載しますので、応募する男性に伝えたいことを記入してください。</span>
-            <span class="field-note">※面談時にお聞きしたNGなどは、毎回掲載します。</span>
              <textarea placeholder=""></textarea>
-            <span class="field-note">・他に希望のある方は詳しく書いてください。</span>
-            <span class="field-note">・プレイ場所の指定がなければ「ホテル」となります。</span>
         </div>
 
         <div class="form-section">
-            <span class="section-title">NGについて</span>
+            <label class="field-label">NGについて</label>
             <div class="check-grid">
                 <div class="check-item" onclick="toggleSelection(this)">タバコ</div>
                 <div class="check-item" onclick="toggleSelection(this)">香水</div>
@@ -294,28 +298,22 @@
                 <div class="check-item" onclick="toggleSelection(this)">爪が不衛生な方</div>
                 <div class="check-item" onclick="toggleSelection(this)">過度に緊張する方</div>
             </div>
-            <span class="field-note">NGは、基本「面談時」にお伝えいただいたものが反映されます。</span>
 
             <label class="field-label">追加のNG項目</label>
             <textarea placeholder=""></textarea>
-            <span class="field-note">※NGが多いと男性は集まりにくいです</span>
         </div>
 
         <div class="form-section">
-            <span class="section-title">事務局への連絡</span>
-            <label class="field-label">受検経験の有無</label>
+            <label class="field-label">日本性活プランナー協会の受検経験の有無受検経験の有無</label>
             <div class="check-grid-mini">
                 <div class="check-item" id="exam-none" onclick="selectOne('exam', this)">無し</div>
                 <div class="check-item" id="exam-exists" onclick="selectOne('exam', this)">有り</div>
             </div>
-            <span class="field-note">性に前向きに向き合う姿勢の指標です。</span>
 
             <div class="admin-note-header">【以下、案件には掲載されません】</div>
             
             <label class="field-label">非掲載の特記事項</label>
-            <span class="field-note">※「慣れている方でお願いします」などは掲載項目に記入してください。</span>
              <textarea placeholder=""></textarea>
-            <span class="field-note">※今回だけ特別なことがある場合は記入してください（登録県以外でのプレイなど）。</span>
         </div>
 
         <button type="button" class="submit-btn" onclick="alert('内容を確認しました')">内容確認画面へ</button>
