@@ -213,7 +213,7 @@
 
         <div class="form-section">
             <span class="section-title">プレイ内容</span>
-            <label class="field-label" style="margin-top:0;">当てはまる項目にチェックしてください <span class="required">必須</span></label>
+            <label class="field-label" style="margin-top:0;">当てはまる項目にチェックしてください <br><span class="required">必須</span></label>
             <div class="check-grid">
                 <div class="check-item" onclick="toggleSelection(this)">お任せでいいです</div>
                 <div class="check-item" onclick="toggleSelection(this)">攻められたい</div>
@@ -248,15 +248,16 @@
                 <span style="font-weight:bold; color:var(--pink-deep);">人</span>
             </div>
             <span class="field-note">現在、複数プレイは要相談としています。</span>
+            <span class="field-note">※現在、監督増員育成中ですので、しばらく1対1でプレイするか、森と時間を合わせて頂くことになるかもしれません。(地域によっては、森以外も居ます)
+※複数プレイは、監督探しからとなりますので、依頼日に必ず開催されるとは限りません。(プレイ依頼受付後に「監督願い」を森が、全監督宛に出して決まりますので、少しお日にちが必要となります)</span>
 
             <label class="field-label">使用して欲しい玩具</label>
             <input type="text" placeholder="バイブ、ローター、電マ、アナルグッズ、ローションなど">
 
             <label class="field-label">プレイ案件掲載項目</label>
-            <textarea placeholder="応募する男性に伝えたいことを記入してください。"></textarea>
-            <span class="field-note">※プレイ案件の「その他」の項目に掲載します。</span>
+            <span class="field-note">※プレイ案件の「その他」の項目に掲載しますので、応募する男性に伝えたいことを記入してください。</span>
             <span class="field-note">※面談時にお聞きしたNGなどは、毎回掲載します。</span>
-            <span class="field-note">・他に希望のある方は詳しく書いてください。</span>
+            <span class="field-note">・他に希望のある方は詳しく書いてください。（あまり限定しすぎると男性が集まらないことがあります）</span>
             <span class="field-note">・プレイ場所の指定がなければ「ホテル」となります。</span>
         </div>
 
@@ -300,9 +301,9 @@
 
             <div class="admin-note-header">【以下、案件には掲載されません】</div>
             
-            <label class="field-label">今回だけ特別なことがある場合（非掲載）</label>
-            <textarea placeholder="登録県以外でのプレイやエリア変更など"></textarea>
-            <span class="field-note">※「慣れている方でお願いします」などの希望は、上の「掲載項目」にお願いします。</span>
+            <label class="field-label">非掲載部分※この項目はプレイ案件に記載しません。</label>
+            <span class="field-note">※「慣れている方でお願いします」などの「○○でお願いします」というものは、掲載項目にお願いします。これを掲載しないと、「慣れていない方」「○○でない方」も応募してきますので、抽選後に選別することはできません。</span>
+            <span class="field-note">※今回だけ特別なことがある場合は必ず記入してください。（登録県以外でプレイする場合やエリアが変わる場合など）</span>
         </div>
 
         <button type="button" class="submit-btn" onclick="alert('内容を確認しました')">内容確認画面へ</button>
