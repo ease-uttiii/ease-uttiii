@@ -59,11 +59,20 @@
         .modal-close-btn { width: 100%; padding: 18px; background: var(--mauve-admin); color: white; border: none; border-radius: 14px; font-weight: bold; font-size: 1.3rem; cursor: pointer; margin-top: 20px; outline: none; }
 
         .form-section { background: var(--card-bg); border-radius: 24px; padding: 25px 20px; box-shadow: var(--tile-shadow); margin-bottom: 25px; }
-        .region-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 15px; border-bottom: 1px solid var(--pink-light); padding-bottom: 10px; }
+        .region-header { display: flex; justify-content: flex-end; align-items: center; margin-bottom: 15px; border-bottom: 1px solid var(--pink-light); padding-bottom: 10px; }
         .section-title { font-weight: 700; color: var(--pink-deep); font-size: 1.1em; }
-        /* 修正：labelの上に1行分（約1.5em）のスペースを追加 */
-        .field-label { font-weight: bold; color: var(--pink-deep); display: block; margin-top: 1.5em; }
-        .required { background: #e88e8e; color: white; font-size: 0.6em; padding: 2px 6px; border-radius: 4px; margin-left: 8px; vertical-align: middle; }
+        
+        /* 修正：labelの背景色と角丸を追加して項目を強調 */
+        .field-label { 
+            font-weight: bold; 
+            color: #fff; 
+            background: var(--pink-deep);
+            display: inline-block;
+            padding: 4px 12px;
+            border-radius: 8px;
+            margin-top: 1.5em; 
+        }
+        .required { background: #e88e8e; color: white; font-size: 0.7em; padding: 2px 6px; border-radius: 4px; margin-left: 8px; vertical-align: middle; border: 1px solid #fff; }
         .field-note { display: block; margin-top: 8px; font-size: 0.82em; color: var(--pink-deep); font-weight: bold; line-height: 1.4; }
 
         input[type="text"], input[type="datetime-local"], select, textarea { 
@@ -158,7 +167,6 @@
     <form>
         <div class="form-section">
             <div class="region-header">
-                <span class="section-title">基本情報</span>
                 <div class="size-selector">
                     <button type="button" class="size-btn" id="btn-small" onclick="changeFontSize('small')">小</button>
                     <button type="button" class="size-btn" id="btn-mid" onclick="changeFontSize('mid')">中</button>
@@ -166,7 +174,7 @@
                 </div>
             </div>
             
-            <label class="field-label" style="margin-top:0;">IDまたは面談依頼で利用したニックネーム <span class="required">必須</span></label>
+            <label class="field-label" style="margin-top:0;">IDまたはニックネーム <span class="required">必須</span></label>
             <input type="text" placeholder="例：A-123">
             <span class="field-note">登録県と異なる場合は、必ずIDでお願いします。</span>
 
@@ -240,7 +248,7 @@
             </div>
             <span class="field-note">※興味がある程度で大丈夫です</span>
 
-            <label class="field-label">上記以外のプレイに関する希望があれば記入してください。</label>
+            <label class="field-label">追加の希望プレイ</label>
             <textarea placeholder=""></textarea>
 
             <label class="field-label">相手の希望人数 <span class="required">必須</span></label>
@@ -249,8 +257,8 @@
                 <span style="font-weight:bold; color:var(--pink-deep);">人</span>
             </div>
             <span class="field-note">現在、複数プレイは要相談としています。</span>
-            <span class="field-note">※現在、監督増員育成中ですので、しばらく1対1でプレイするか、森と時間を合わせて頂くことになるかもしれません。(地域によっては、森以外も居ます)</span>
-            <span class="field-note">※複数プレイは、監督探しからとなりますので、依頼日に必ず開催されるとは限りません。(プレイ依頼受付後に「監督願い」を森が、全監督宛に出して決まりますので、少しお日にちが必要となります)</span>
+            <span class="field-note">※現在、監督増員育成中ですので、しばらく1対1でプレイするか、森と時間を合わせて頂くことになるかもしれません。</span>
+            <span class="field-note">※複数プレイは、監督探しからとなりますので、依頼日に必ず開催されるとは限りません。</span>
             
             <label class="field-label">使用して欲しい玩具</label>
              <textarea placeholder=""></textarea>
@@ -260,7 +268,7 @@
             <span class="field-note">※プレイ案件の「その他」の項目に掲載しますので、応募する男性に伝えたいことを記入してください。</span>
             <span class="field-note">※面談時にお聞きしたNGなどは、毎回掲載します。</span>
              <textarea placeholder=""></textarea>
-            <span class="field-note">・他に希望のある方は詳しく書いてください。（あまり限定しすぎると男性が集まらないことがあります）</span>
+            <span class="field-note">・他に希望のある方は詳しく書いてください。</span>
             <span class="field-note">・プレイ場所の指定がなければ「ホテル」となります。</span>
         </div>
 
@@ -286,16 +294,16 @@
                 <div class="check-item" onclick="toggleSelection(this)">爪が不衛生な方</div>
                 <div class="check-item" onclick="toggleSelection(this)">過度に緊張する方</div>
             </div>
-            <span class="field-note">NGは、基本「面談時」にお伝えいただいたものが反映されますが、もし足したいものがあればお選びください。</span>
+            <span class="field-note">NGは、基本「面談時」にお伝えいただいたものが反映されます。</span>
 
-            <label class="field-label">その他NGあれば記入してください</label>
+            <label class="field-label">追加のNG項目</label>
             <textarea placeholder=""></textarea>
             <span class="field-note">※NGが多いと男性は集まりにくいです</span>
         </div>
 
         <div class="form-section">
             <span class="section-title">事務局への連絡</span>
-            <label class="field-label">日本性活プランナー協会の受検経験の有無</label>
+            <label class="field-label">受検経験の有無</label>
             <div class="check-grid-mini">
                 <div class="check-item" id="exam-none" onclick="selectOne('exam', this)">無し</div>
                 <div class="check-item" id="exam-exists" onclick="selectOne('exam', this)">有り</div>
@@ -304,10 +312,10 @@
 
             <div class="admin-note-header">【以下、案件には掲載されません】</div>
             
-            <label class="field-label">非掲載部分※この項目はプレイ案件に記載しません。</label>
-            <span class="field-note">※「慣れている方でお願いします」などの「○○でお願いします」というものは、掲載項目にお願いします。これを掲載しないと、「慣れていない方」「○○でない方」も応募してきますので、抽選後に選別することはできません。</span>
+            <label class="field-label">非掲載の特記事項</label>
+            <span class="field-note">※「慣れている方でお願いします」などは掲載項目に記入してください。</span>
              <textarea placeholder=""></textarea>
-            <span class="field-note">※今回だけ特別なことがある場合は必ず記入してください。（登録県以外でプレイする場合やエリアが変わる場合など）</span>
+            <span class="field-note">※今回だけ特別なことがある場合は記入してください（登録県以外でのプレイなど）。</span>
         </div>
 
         <button type="button" class="submit-btn" onclick="alert('内容を確認しました')">内容確認画面へ</button>
