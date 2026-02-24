@@ -61,7 +61,7 @@
         .form-section { background: var(--card-bg); border-radius: 24px; padding: 25px 20px; box-shadow: var(--tile-shadow); margin-bottom: 25px; }
         .region-header { display: flex; justify-content: flex-end; align-items: center; margin-bottom: 15px; border-bottom: 1px solid var(--pink-light); padding-bottom: 10px; }
         
-        /* 修正：labelをフレックスにして、中の要素を垂直中央（center）に配置 */
+        /* 修正：labelをフレックスにして、中の要素を垂直中央に配置 */
         .field-label { 
             font-weight: bold; 
             color: #fff; 
@@ -73,7 +73,8 @@
             margin-top: 1.5em; 
             min-height: 1.8em;
         }
-        /* 修正：必須バッジの余白を調整して中心を合わせる */
+
+        /* 修正：必須バッジの中央配置 */
         .required { 
             background: #e88e8e; 
             color: white; 
@@ -83,6 +84,7 @@
             margin-left: 8px; 
             border: 1px solid #fff;
             line-height: 1.2;
+            display: inline-block;
         }
 
         .field-note { display: block; margin-top: 8px; font-size: 0.82em; color: var(--pink-deep); font-weight: bold; line-height: 1.4; }
@@ -158,7 +160,7 @@
                 </div>
                 <div class="notice-section">
                     <strong>■1対1の当日依頼は、お受けできなくなりました</strong>
-                    <ul class="sub-list"><li>当日の依頼は、いろいろと問題が多いので、お受けしないことにしました。</li></ul>
+                    <ul class="sub-list"><li>当日の依頼 is、いろいろと問題が多いので、お受けしないことにしました。</li></ul>
                 </div>
                 <div class="notice-section">
                     <strong>■複数プレイは、監督探しからとなりますので、依頼日に必ず開催されるとは限りません。</strong>
@@ -230,6 +232,7 @@
                 <option value="大分県">大分県</option><option value="宮崎県">宮崎県</option>
                 <option value="鹿児島県">鹿児島県</option><option value="沖縄県">沖縄県</option>
             </select>
+        </div>
 
         <div class="form-section">
             <label class="field-label" style="margin-top:0;">プレイ内容 <span class="required">必須</span></label><br>
@@ -265,10 +268,12 @@
             <label class="field-label">相手の希望人数 <span class="required">必須</span></label>
             <div style="display:flex; align-items:center; gap:10px; margin-top:8px;">
                 <input type="text" placeholder="1" style="width:100px; text-align:center; margin-top:0;">
-                <span style="font-weight:bold; color:var(--pink-deep);">人</span><br>
-                <span class="field-note">現在、複数プレイは要相談としています。<br>
+                <span style="font-weight:bold; color:var(--pink-deep);">人</span>
+            </div>
+            <span class="field-note">現在、複数プレイは要相談としています。<br>
 ※現在、監督増員育成中ですので、しばらく1対1でプレイするか、森と時間を合わせて頂くことになるかもしれません。(地域によっては、森以外も居ます)<br>
 ※複数プレイは、監督探しからとなりますので、依頼日に必ず開催されるとは限りません。(プレイ依頼受付後に「監督願い」を森が、全監督宛に出して決まりますので、少しお日にちが必要となります)</span>
+            
             <label class="field-label">使用して欲しい玩具</label>
              <textarea placeholder=""></textarea>
              <span class="field-note">バイブレーター、ローター、電マ、アナルグッズ、ローション、SMグッズ、アイマスク、その他</span>
@@ -278,6 +283,7 @@
              <span class="field-note">※面談時にお聞きしたNGなどは、毎回掲載します。</span>
              <textarea placeholder=""></textarea>
             <span class="field-note">・他に希望のある方は詳しく書いてください。（あまり限定しすぎると男性が集まらないことがあります）<br>・プレイ場所の指定がなければ「ホテル」となります。</span>
+            
             <label class="field-label">NGについて</label>
             <div class="check-grid">
                 <div class="check-item" onclick="toggleSelection(this)">タバコ</div>
@@ -298,9 +304,8 @@
                 <div class="check-item" onclick="toggleSelection(this)">普通体型以外の方</div>
                 <div class="check-item" onclick="toggleSelection(this)">爪が不衛生な方</div>
                 <div class="check-item" onclick="toggleSelection(this)">過度に緊張する方</div>
-                <span class="field-note">NGは、基本「面談時」にお伝えいただいたものが反映されますが、もし足したいものがあればお選びください。</span>
-
             </div>
+            <span class="field-note">NGは、基本「面談時」にお伝えいただいたものが反映されますが、もし足したいものがあればお選びください。</span>
 
             <label class="field-label">追加のNG項目</label>
             <textarea placeholder=""></textarea>
@@ -308,12 +313,12 @@
         </div>
 
         <div class="form-section">
-            <label class="field-label">日本性活プランナー協会の受検経験の有無受検経験の有無</label>
+            <label class="field-label">日本性活プランナー協会の受検経験の有無</label>
             <div class="check-grid-mini">
                 <div class="check-item" id="exam-none" onclick="selectOne('exam', this)">無し</div>
                 <div class="check-item" id="exam-exists" onclick="selectOne('exam', this)">有り</div>
-            <span class="field-note">性に前向きに向き合う姿勢の指標です。</span>
             </div>
+            <span class="field-note">性に前向きに向き合う姿勢の指標です。</span>
 
             <div class="admin-note-header">【以下、案件には掲載されません】</div>
             
