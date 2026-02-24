@@ -29,7 +29,7 @@
             background: rgba(255, 255, 255, 0.2); border: 1px solid rgba(255, 255, 255, 0.4); border-radius: 30px;
             padding: 6px 14px; font-size: 11px; font-weight: bold; color: white; cursor: pointer; text-decoration: none;
             display: flex; align-items: center; justify-content: center; height: 28px; box-sizing: border-box; white-space: nowrap;
-            outline: none; /* 青枠消去 */
+            outline: none;
         }
 
         .reload-icon::before { content: '↻'; }
@@ -43,7 +43,7 @@
             padding: 18px 2px; border-radius: 60px; cursor: pointer; box-shadow: 0 8px 25px rgba(142, 122, 138, 0.2); 
             width: 100%; display: flex; align-items: center; justify-content: center; margin: 10px 0 30px; box-sizing: border-box; 
             font-size: 22px !important; letter-spacing: -0.5px; white-space: nowrap !important; overflow: hidden;
-            outline: none; /* 青枠消去 */
+            outline: none;
         }
 
         .notice-modal { border: none; border-radius: 24px; padding: 0; width: 92%; max-width: 550px; box-shadow: 0 20px 60px rgba(0,0,0,0.3); outline: none; }
@@ -78,7 +78,6 @@
         
         optgroup { font-weight: bold; color: var(--mauve-admin); font-size: 0.8em; }
 
-        /* ボタンデザイン：1列 */
         .check-grid { display: flex; flex-direction: column; gap: 10px; margin-top: 10px; }
         .check-item { 
             background: #fff; border: 1px solid var(--tile-border); padding: 15px; border-radius: 12px; 
@@ -131,7 +130,7 @@
                 <div class="notice-section">
                     <strong>■1対1の前日の受付は午前中のみでお願いします。</strong>
                     <ul class="sub-list">
-                        <li>午後からのプレイ依頼は、当日扱いになります。</li>
+                        <li>午後からのプレイ依頼は、当日扱いになります。(下記参考)</li>
                         <li>前日依頼は、お受けしますが男性が決まらない可能性があります。</li>
                     </ul>
                 </div>
@@ -142,8 +141,10 @@
                 <div class="notice-section">
                     <strong>■複数プレイは、監督探しからとなりますので、依頼日に必ず開催されるとは限りません。</strong>
                     <ul class="sub-list">
-                        <li>プレイ依頼受付後に「監督願い」を森が、全監督宛に出して決まります。</li>
+                        <li>プレイ依頼受付後に「監督願い」を森が、全監督宛に出して決まりますので、少しお日にちが必要となります。</li>
+                        <li>何日間前に出せば良いということではなく、その日に動ける監督が居るかどうかで決まります。</li>
                         <li>準備期間が長いほど、監督も都合を合わせやすくなります。</li>
+                        <li>プレイ依頼を出す前に、森に相談してもらうこともできます。</li>
                     </ul>
                 </div>
                 <div class="notice-section"><strong>■キャンセルは前日の確認までなら問題ありません。</strong></div>
@@ -163,117 +164,111 @@
                     <button type="button" class="size-btn" id="btn-large" onclick="changeFontSize('large')">大</button>
                 </div>
             </div>
-            <label class="field-label" style="margin-top:0;">IDまたはニックネーム <span class="required">必須</span></label>
+            
+            <label class="field-label" style="margin-top:0;">IDまたは面談依頼で利用したニックネーム <span class="required">必須</span></label>
             <input type="text" placeholder="例：A-123">
             <span class="field-note">登録県と異なる場合は、必ずIDでお願いします。</span>
 
             <label class="field-label">プレイ日時 <span class="required">必須</span></label>
             <input type="datetime-local">
-            <span class="field-note">※時間は0時00分～23時50分の間でお願いします。</span>
+            <span class="field-note">※時間は0時00分～23時50分の間でお願いします。24時や25時表記は、ややこしくなるのでこのサークルでは使いません。</span>
 
-            <label class="field-label">相手の希望人数 <span class="required">必須</span></label>
-            <div style="display:flex; align-items:center; gap:10px; margin-top:8px;">
-                <input type="text" placeholder="1" style="width:100px; text-align:center; margin-top:0;">
-                <span style="font-weight:bold; color:var(--pink-deep);">人</span>
-            </div>
-
-            <label class="field-label">開催場所（都道府県） <span class="required">必須</span></label>
+            <label class="field-label">開催する都道府県 <span class="required">必須</span></label>
             <select>
-                <option value="" disabled selected>選択してください</option>
-                <optgroup label="【北海道】"><option value="北海道全域">北海道全域</option></optgroup>
-                <optgroup label="【東北地方】">
-                    <option value="青森県">青森県</option><option value="岩手県">岩手県</option>
-                    <option value="宮城県">宮城県</option><option value="秋田県">秋田県</option>
-                    <option value="山形県">山形県</option><option value="福島県">福島県</option>
-                </optgroup>
-                <optgroup label="【関東地方】">
-                    <option value="茨城県">茨城県</option><option value="栃木県">栃木県</option>
-                    <option value="群馬県">群馬県</option><option value="埼玉県">埼玉県</option>
-                    <option value="千葉県">千葉県</option><option value="東京都全域">東京都全域</option>
-                    <option value="神奈川県">神奈川県</option>
-                </optgroup>
-                <optgroup label="【甲信越地方】">
-                    <option value="新潟県">新潟県</option><option value="山梨県">山梨県</option>
-                    <option value="長野県">長野県</option>
-                </optgroup>
-                <optgroup label="【東海地方】">
-                    <option value="岐阜県">岐阜県</option><option value="静岡県">静岡県</option>
-                    <option value="愛知県">愛知県</option><option value="三重県">三重県</option>
-                </optgroup>
-                <optgroup label="【北陸地方】">
-                    <option value="富山県">富山県</option><option value="石川県">石川県</option>
-                    <option value="福井県">福井県</option>
-                </optgroup>
-                <optgroup label="【関西地方】">
-                    <option value="滋賀県">滋賀県</option><option value="京都府">京都府</option>
-                    <option value="大阪府">大阪府</option><option value="兵庫県">兵庫県</option>
-                    <option value="奈良県">奈良県</option><option value="和歌山県">和歌山県</option>
-                </optgroup>
-                <optgroup label="【中国地方】">
-                    <option value="鳥取県">鳥取県</option><option value="島根県">島根県</option>
-                    <option value="岡山県">岡山県</option><option value="広島県">広島県</option>
-                    <option value="山口県">山口県</option>
-                </optgroup>
-                <optgroup label="【四国地方】">
-                    <option value="徳島県">徳島県</option><option value="香川県">香川県</option>
-                    <option value="愛媛県">愛媛県</option><option value="高知県">高知県</option>
-                </optgroup>
-                <optgroup label="【九州地方】">
-                    <option value="福岡県">福岡県</option><option value="佐賀県">佐賀県</option>
-                    <option value="長崎県">長崎県</option><option value="熊本県">熊本県</option>
-                    <option value="大分県">大分県</option><option value="宮崎県">宮崎県</option>
-                    <option value="鹿児島県">鹿児島県</option>
-                </optgroup>
-                <optgroup label="【沖縄】">
-                    <option value="沖縄県全域">沖縄県全域</option>
-                </optgroup>
+                <option value="東京都">東京都</option>
+                <option disabled>------</option>
+                <option value="北海道">北海道</option>
+                <option value="青森県">青森県</option><option value="岩手県">岩手県</option>
+                <option value="宮城県">宮城県</option><option value="秋田県">秋田県</option>
+                <option value="山形県">山形県</option><option value="福島県">福島県</option>
+                <option disabled>------</option>
+                <option value="茨城県">茨城県</option><option value="栃木県">栃木県</option>
+                <option value="群馬県">群馬県</option><option value="埼玉県">埼玉県</option>
+                <option value="千葉県">千葉県</option><option value="神奈川県">神奈川県</option>
+                <option disabled>------</option>
+                <option value="新潟県">新潟県</option><option value="富山県">富山県</option>
+                <option value="石川県">石川県</option><option value="福井県">福井県</option>
+                <option value="山梨県">山梨県</option><option value="長野県">長野県</option>
+                <option disabled>------</option>
+                <option value="岐阜県">岐阜県</option><option value="静岡県">静岡県</option>
+                <option value="愛知県">愛知県</option><option value="三重県">三重県</option>
+                <option disabled>------</option>
+                <option value="滋賀県">滋賀県</option><option value="京都府">京都府</option>
+                <option value="大阪府">大阪府</option><option value="兵庫県">兵庫県</option>
+                <option value="奈良県">奈良県</option><option value="和歌山県">和歌山県</option>
+                <option disabled>------</option>
+                <option value="鳥取県">鳥取県</option><option value="島根県">島根県</option>
+                <option value="岡山県">岡山県</option><option value="広島県">広島県</option>
+                <option value="山口県">山口県</option>
+                <option disabled>------</option>
+                <option value="徳島県">徳島県</option><option value="香川県">香川県</option>
+                <option value="愛媛県">愛媛県</option><option value="高知県">高知県</option>
+                <option disabled>------</option>
+                <option value="福岡県">福岡県</option><option value="佐賀県">佐賀県</option>
+                <option value="長崎県">長崎県</option><option value="熊本県">熊本県</option>
+                <option value="大分県">大分県</option><option value="宮崎県">宮崎県</option>
+                <option value="鹿児島県">鹿児島県</option><option value="沖縄県">沖縄県</option>
             </select>
-
-            <label class="field-label">待ち合わせ場所 <span class="required">必須</span></label>
-            <input type="text" placeholder="例：〇〇駅 西口">
         </div>
 
         <div class="form-section">
-            <label class="field-label" style="margin-top:0;">希望プレイ内容(複数選択可能)<span class="required">必須</span></label>
+            <span class="section-title">プレイ内容</span>
+            <label class="field-label" style="margin-top:0;">当てはまる項目にチェックしてください <span class="required">必須</span></label>
             <div class="check-grid">
                 <div class="check-item" onclick="toggleSelection(this)">お任せでいいです</div>
                 <div class="check-item" onclick="toggleSelection(this)">攻められたい</div>
                 <div class="check-item" onclick="toggleSelection(this)">攻めたい</div>
                 <div class="check-item" onclick="toggleSelection(this)">少し刺激的な体験がしたい</div>
                 <div class="check-item" onclick="toggleSelection(this)">レイププレイ希望</div>
+                <div class="check-item" onclick="toggleSelection(this)">目隠しされたい</div>
                 <div class="check-item" onclick="toggleSelection(this)">複数人を経験したい(女性1名)</div>
-                <div class="check-item" onclick="toggleSelection(this)">玩具を使ってほしい</div>
+                <div class="check-item" onclick="toggleSelection(this)">玩具を使って欲しい</div>
                 <div class="check-item" onclick="toggleSelection(this)">恋人のように過ごしたい</div>
                 <div class="check-item" onclick="toggleSelection(this)">3P</div>
                 <div class="check-item" onclick="toggleSelection(this)">アナルセックスがしたい</div>
                 <div class="check-item" onclick="toggleSelection(this)">特に舐められたい</div>
                 <div class="check-item" onclick="toggleSelection(this)">特に舐めたい</div>
                 <div class="check-item" onclick="toggleSelection(this)">前戯長め</div>
-                <div class="check-item" onclick="toggleSelection(this)">ドＭです</div>
-                <div class="check-item" onclick="toggleSelection(this)">ドＳです</div>
+                <div class="check-item" onclick="toggleSelection(this)">ドMです</div>
+                <div class="check-item" onclick="toggleSelection(this)">ドSです</div>
                 <div class="check-item" onclick="toggleSelection(this)">縛られたい</div>
                 <div class="check-item" onclick="toggleSelection(this)">お風呂に一緒に入りたい</div>
                 <div class="check-item" onclick="toggleSelection(this)">コスプレがしたい</div>
                 <div class="check-item" onclick="toggleSelection(this)">優しい言葉をかけられたい</div>
                 <div class="check-item" onclick="toggleSelection(this)">新しいスタイルのプレイを試してみたい</div>
             </div>
+            <span class="field-note">※興味がある程度で大丈夫です</span>
 
-            <label class="field-label">使用してほしい玩具</label>
-            <input type="text" placeholder="例：バイブ、ローターなど（自由記入）">
+            <label class="field-label">上記以外のプレイに関する希望があれば記入してください。</label>
+            <textarea placeholder=""></textarea>
 
-            <label class="field-label">プレイ案件掲載項目（その他）</label>
+            <label class="field-label">相手の希望人数 <span class="required">必須</span></label>
+            <div style="display:flex; align-items:center; gap:10px; margin-top:8px;">
+                <input type="text" placeholder="1" style="width:100px; text-align:center; margin-top:0;">
+                <span style="font-weight:bold; color:var(--pink-deep);">人</span>
+            </div>
+            <span class="field-note">現在、複数プレイは要相談としています。</span>
+
+            <label class="field-label">使用して欲しい玩具</label>
+            <input type="text" placeholder="バイブ、ローター、電マ、アナルグッズ、ローションなど">
+
+            <label class="field-label">プレイ案件掲載項目</label>
             <textarea placeholder="応募する男性に伝えたいことを記入してください。"></textarea>
+            <span class="field-note">※プレイ案件の「その他」の項目に掲載します。</span>
+            <span class="field-note">※面談時にお聞きしたNGなどは、毎回掲載します。</span>
+            <span class="field-note">・他に希望のある方は詳しく書いてください。</span>
+            <span class="field-note">・プレイ場所の指定がなければ「ホテル」となります。</span>
         </div>
 
         <div class="form-section">
-            <span class="section-title">追加のNG項目（任意）</span>
+            <span class="section-title">NGについて</span>
             <div class="check-grid">
                 <div class="check-item" onclick="toggleSelection(this)">タバコ</div>
                 <div class="check-item" onclick="toggleSelection(this)">香水</div>
                 <div class="check-item" onclick="toggleSelection(this)">太りすぎている方</div>
                 <div class="check-item" onclick="toggleSelection(this)">痩せ過ぎの方</div>
-                <div class="check-item" onclick="toggleSelection(this)">ドＭな方</div>
-                <div class="check-item" onclick="toggleSelection(this)">ドＳな方</div>
+                <div class="check-item" onclick="toggleSelection(this)">ドМ</div>
+                <div class="check-item" onclick="toggleSelection(this)">ドS</div>
                 <div class="check-item" onclick="toggleSelection(this)">言葉が乱暴な方</div>
                 <div class="check-item" onclick="toggleSelection(this)">髪が薄い方</div>
                 <div class="check-item" onclick="toggleSelection(this)">刺青(タトゥーもNG)</div>
@@ -287,24 +282,30 @@
                 <div class="check-item" onclick="toggleSelection(this)">爪が不衛生な方</div>
                 <div class="check-item" onclick="toggleSelection(this)">過度に緊張する方</div>
             </div>
-            <label class="field-label">上記以外のNG、または詳しく</label>
-            <textarea placeholder="自由に入力してください"></textarea>
+            <span class="field-note">NGは、基本「面談時」にお伝えいただいたものが反映されますが、もし足したいものがあればお選びください。</span>
+
+            <label class="field-label">その他NGあれば記入してください</label>
+            <textarea placeholder=""></textarea>
+            <span class="field-note">※NGが多いと男性は集まりにくいです</span>
         </div>
 
         <div class="form-section">
-            <label class="field-label" style="margin-top:0;">日本性活プランナー協会の受検経験</label>
+            <span class="section-title">事務局への連絡</span>
+            <label class="field-label">日本性活プランナー協会の受検経験の有無</label>
             <div class="check-grid-mini">
                 <div class="check-item" id="exam-none" onclick="selectOne('exam', this)">無し</div>
                 <div class="check-item" id="exam-exists" onclick="selectOne('exam', this)">有り</div>
             </div>
+            <span class="field-note">性に前向きに向き合う姿勢の指標です。</span>
 
             <div class="admin-note-header">【以下、案件には掲載されません】</div>
             
-            <label class="field-label">今回だけ特別なことがある場合</label>
+            <label class="field-label">今回だけ特別なことがある場合（非掲載）</label>
             <textarea placeholder="登録県以外でのプレイやエリア変更など"></textarea>
+            <span class="field-note">※「慣れている方でお願いします」などの希望は、上の「掲載項目」にお願いします。</span>
         </div>
 
-        <button type="button" class="submit-btn" onclick="alert('送信準備完了')">内容確認画面へ</button>
+        <button type="button" class="submit-btn" onclick="alert('内容を確認しました')">内容確認画面へ</button>
     </form>
 </div>
 
