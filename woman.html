@@ -24,85 +24,29 @@
         }
         header h1 { margin: 0; font-size: 1.4rem; letter-spacing: 0.1em; font-family: 'Lora', serif; }
 
-        .header-controls {
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 8px;
-        }
-
+        .header-controls { display: flex; align-items: center; justify-content: center; gap: 8px; }
         .head-btn {
-            background: rgba(255, 255, 255, 0.2);
-            border: 1px solid rgba(255, 255, 255, 0.4);
-            border-radius: 30px;
-            padding: 6px 14px;
-            font-size: 11px;
-            font-weight: bold;
-            color: white;
-            cursor: pointer;
-            text-decoration: none;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            height: 28px;
-            box-sizing: border-box;
-            white-space: nowrap;
+            background: rgba(255, 255, 255, 0.2); border: 1px solid rgba(255, 255, 255, 0.4); border-radius: 30px;
+            padding: 6px 14px; font-size: 11px; font-weight: bold; color: white; cursor: pointer; text-decoration: none;
+            display: flex; align-items: center; justify-content: center; height: 28px; box-sizing: border-box; white-space: nowrap;
         }
 
-        .reload-icon {
-            display: inline-block;
-            width: 14px;
-            height: 14px;
-            line-height: 14px;
-            margin: 0 4px;
-            font-size: 14px;
-            text-align: center;
-        }
-
-        .reload-icon::before {
-            content: '↻';
-        }
-
-        .spinning {
-            animation: spin 0.6s linear infinite !important;
-        }
-
-        @keyframes spin {
-            from { transform: rotate(0deg); }
-            to { transform: rotate(360deg); }
-        }
+        .reload-icon::before { content: '↻'; }
+        .spinning { animation: spin 0.6s linear infinite !important; }
+        @keyframes spin { from { transform: rotate(0deg); } to { transform: rotate(360deg); } }
 
         .container { padding: 1rem; max-width: 550px; margin: 0 auto; }
 
-        /* --- お願いボタン --- */
         .notice-btn {
-            background: #fff; 
-            border: 4px solid var(--mauve-admin); 
-            color: var(--mauve-admin); 
-            font-weight: 900; 
-            padding: 18px 2px; 
-            border-radius: 60px; 
-            cursor: pointer;
-            box-shadow: 0 8px 25px rgba(142, 122, 138, 0.2); 
-            width: 100%; 
-            display: flex; 
-            align-items: center; 
-            justify-content: center; 
-            margin: 10px 0 30px; 
-            box-sizing: border-box; 
-            outline: none !important; 
-            font-size: 22px !important; 
-            letter-spacing: -0.5px; 
-            white-space: nowrap !important; 
-            overflow: hidden;
+            background: #fff; border: 4px solid var(--mauve-admin); color: var(--mauve-admin); font-weight: 900; 
+            padding: 18px 2px; border-radius: 60px; cursor: pointer; box-shadow: 0 8px 25px rgba(142, 122, 138, 0.2); 
+            width: 100%; display: flex; align-items: center; justify-content: center; margin: 10px 0 30px; box-sizing: border-box; 
+            font-size: 22px !important; letter-spacing: -0.5px; white-space: nowrap !important; overflow: hidden;
         }
-        .notice-btn:active { transform: scale(0.98); }
-        .notice-btn .warn-icon { font-size: 1.2em; margin-right: 4px; flex-shrink: 0; }
 
-        /* ダイアログ */
-        .notice-modal { border: none; border-radius: 24px; padding: 0; width: 92%; max-width: 550px; outline: none !important; box-shadow: 0 20px 60px rgba(0,0,0,0.3); }
+        .notice-modal { border: none; border-radius: 24px; padding: 0; width: 92%; max-width: 550px; box-shadow: 0 20px 60px rgba(0,0,0,0.3); }
         .notice-modal::backdrop { background: rgba(0, 0, 0, 0.4); backdrop-filter: blur(4px); }
-        .modal-inner { padding: 30px 20px; background: #fff; outline: none !important; }
+        .modal-inner { padding: 30px 20px; background: #fff; }
         .modal-header h2 { color: var(--mauve-admin); font-size: 18px !important; margin: 0 0 20px; text-align: center; border-bottom: 2px solid var(--pink-light); padding-bottom: 15px; }
         .modal-body { text-align: left; max-height: 65vh; overflow-y: auto; font-size: 18px !important; color: #5a4d4d; }
         .notice-section { margin-bottom: 25px; }
@@ -110,64 +54,47 @@
         .sub-list { margin: 8px 0 0; padding: 0; list-style: none; font-size: 17px !important; color: #8a6a6a; }
         .sub-list li { margin-bottom: 5px; position: relative; padding-left: 1.2em; }
         .sub-list li::before { content: "※"; position: absolute; left: 0; }
-        .modal-close-btn { width: 100%; padding: 18px; background: var(--mauve-admin); color: white; border: none; border-radius: 14px; font-weight: bold; font-size: 1.3rem; cursor: pointer; margin-top: 20px; outline: none !important; }
+        .modal-close-btn { width: 100%; padding: 18px; background: var(--mauve-admin); color: white; border: none; border-radius: 14px; font-weight: bold; font-size: 1.3rem; cursor: pointer; margin-top: 20px; }
 
-        /* フォーム入力欄：幅を100%に統一 */
         .form-section { background: var(--card-bg); border-radius: 24px; padding: 25px 20px; box-shadow: var(--tile-shadow); margin-bottom: 25px; }
         .region-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 15px; border-bottom: 1px solid var(--pink-light); padding-bottom: 10px; }
         .section-title { font-weight: 700; color: var(--pink-deep); font-size: 1.1em; }
         .field-label { font-weight: bold; color: var(--pink-deep); display: block; margin-top: 20px; }
         .required { background: #e88e8e; color: white; font-size: 0.6em; padding: 2px 6px; border-radius: 4px; margin-left: 8px; vertical-align: middle; }
         
-        /* すべてのinputとtextareaの幅をピシッと揃える */
-        input[type="text"], 
-        input[type="datetime-local"], 
-        textarea { 
-            width: 100%; 
-            padding: 14px; 
-            border-radius: 12px; 
-            border: 1px solid var(--tile-border); 
-            background: var(--pink-light); 
-            box-sizing: border-box; 
-            font-size: 1em; 
+        .field-note { display: block; margin-top: 8px; font-size: 0.82em; color: var(--pink-deep); font-weight: bold; line-height: 1.4; }
+
+        /* 入力エリア設定：サイズを大きく調整 */
+        input[type="text"], input[type="datetime-local"], select, textarea { 
+            width: 100%; padding: 14px; border-radius: 12px; border: 1px solid var(--tile-border); 
+            background: var(--pink-light); box-sizing: border-box; 
+            font-size: 1.3em; 
             font-family: inherit;
-            outline: none; 
-            margin-top: 8px; 
-            display: block;
-            -webkit-appearance: none; /* スマホ標準スタイルのリセット */
+            outline: none; margin-top: 8px; display: block; -webkit-appearance: none; appearance: none;
+            color: #5a4d4d;
+        }
+
+        select {
+            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 24 24' fill='none' stroke='%23b57d7d' stroke-width='3' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M6 9l6 6 6-6'%3E%3C/path%3E%3C/svg%3E");
+            background-repeat: no-repeat; background-position: right 15px center; background-size: 14px;
+            font-weight: bold;
         }
         
-        .check-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; margin-top: 10px; }
-        .check-item { background: #fff; border: 1px solid var(--tile-border); padding: 12px 4px; border-radius: 12px; font-size: 0.9em; text-align: center; cursor: pointer; font-weight: bold; display: flex; align-items: center; justify-content: center; min-height: 48px; transition: 0.2s; }
-        .check-item.active { background: linear-gradient(180deg, var(--pink-main) 0%, var(--pink-deep) 100%); color: white; }
+        optgroup { font-weight: bold; color: var(--mauve-admin); font-size: 0.8em; }
 
-        .size-selector { 
-            display: flex; 
-            background: var(--pink-light); 
-            border: 1px solid var(--tile-border); 
-            border-radius: 12px; 
-            padding: 4px; 
-            gap: 4px; 
+        /* 希望プレイ内容：1列で均一な大きさに変更 */
+        .check-grid { display: flex; flex-direction: column; gap: 10px; margin-top: 10px; }
+        .check-item { 
+            background: #fff; border: 1px solid var(--tile-border); padding: 15px; border-radius: 12px; 
+            font-size: 1em; text-align: center; cursor: pointer; font-weight: bold; 
+            display: flex; align-items: center; justify-content: center; min-height: 54px; 
+            transition: 0.2s; box-sizing: border-box; width: 100%;
         }
+        .check-item.active { background: linear-gradient(180deg, var(--pink-main) 0%, var(--pink-deep) 100%); color: white; border-color: var(--pink-deep); }
 
-        .size-btn { 
-            border: none; 
-            background: transparent; 
-            padding: 8px 16px; 
-            font-size: 13px; 
-            font-weight: 800; 
-            color: var(--mauve-admin); 
-            border-radius: 9px; 
-            cursor: pointer; 
-            transition: 0.2s;
-            min-width: 45px; 
-        }
-
-        .size-btn.active { 
-            background: #ffffff; 
-            color: var(--tile-text); 
-            box-shadow: 0 3px 8px rgba(212, 165, 165, 0.3); 
-        }
+        .size-selector { display: flex; background: var(--pink-light); border: 1px solid var(--tile-border); border-radius: 12px; padding: 4px; gap: 4px; }
+        .size-btn { border: none; background: transparent; padding: 8px 16px; font-size: 13px; font-weight: 800; color: var(--mauve-admin); border-radius: 9px; cursor: pointer; transition: 0.2s; min-width: 45px; }
+        .size-btn.active { background: #ffffff; color: var(--tile-text); box-shadow: 0 3px 8px rgba(212, 165, 165, 0.3); }
 
         .submit-btn { background: linear-gradient(135deg, var(--pink-main) 0%, var(--pink-deep) 100%); color: white; border: none; padding: 20px; border-radius: 20px; width: 100%; font-size: 1.2em; font-weight: 700; cursor: pointer; margin-top: 10px; outline: none; }
     </style>
@@ -204,7 +131,7 @@
                 <div class="notice-section">
                     <strong>■1対1の前日の受付は午前中のみでお願いします。</strong>
                     <ul class="sub-list">
-                        <li>午後からのプレイ依頼は、当日扱いになります。(下記参考)</li>
+                        <li>午後からのプレイ依頼は、当日扱いになります。</li>
                         <li>前日依頼は、お受けしますが男性が決まらない可能性があります。</li>
                     </ul>
                 </div>
@@ -215,10 +142,8 @@
                 <div class="notice-section">
                     <strong>■複数プレイは、監督探しからとなりますので、依頼日に必ず開催されるとは限りません。</strong>
                     <ul class="sub-list">
-                        <li>プレイ依頼受付後に「監督願い」を森が、全監督宛に出して決まりますので、少しお日にちが必要となります。</li>
-                        <li>何日間前に出せば良いということではなく、その日に動ける監督が居るかどうかで決まります。</li>
+                        <li>プレイ依頼受付後に「監督願い」を森が、全監督宛に出して決まります。</li>
                         <li>準備期間が長いほど、監督も都合を合わせやすくなります。</li>
-                        <li>プレイ依頼を出す前に、森に相談してもらうこともできます。</li>
                     </ul>
                 </div>
                 <div class="notice-section"><strong>■キャンセルは前日の確認までなら問題ありません。</strong></div>
@@ -238,12 +163,13 @@
                     <button class="size-btn" id="btn-large" onclick="changeFontSize('large')">大</button>
                 </div>
             </div>
-            <label class="field-label" style="margin-top:0;">IDまたは面談依頼で利用したニックネーム <span class="required">必須</span></label>
+            <label class="field-label" style="margin-top:0;">IDまたはニックネーム <span class="required">必須</span></label>
             <input type="text" placeholder="例：A-123">
             <span class="field-note">登録県と異なる場合は、必ずIDでお願いします。</span>
+
             <label class="field-label">プレイ日時 <span class="required">必須</span></label>
             <input type="datetime-local">
-            <span class="field-note">※時間は0時00分～23時50分の間でお願いします。24時や25時表記は、ややこしくなるのでこのサークルでは使いません。</span>
+            <span class="field-note">※時間は0時00分～23時50分の間でお願いします。</span>
 
             <label class="field-label">開催場所（都道府県） <span class="required">必須</span></label>
             <select>
@@ -328,7 +254,7 @@
         </div>
 
         <div class="form-section">
-            <label class="field-label" style="margin-top:0;">上記以外のプレイに関する希望があれば記入してください。</label>
+            <label class="field-label" style="margin-top:0;">上記以外の希望事項など</label>
             <textarea placeholder="自由に入力してください"></textarea>
         </div>
         <button type="button" class="submit-btn" onclick="alert('送信準備完了')">内容確認画面へ</button>
@@ -350,7 +276,6 @@ function applyFontSize(mode) {
     } else if (mode === 'large') {
         root.style.setProperty('--base-font-size', '20px');
     }
-    
     document.querySelectorAll('.size-btn').forEach(btn => {
         btn.classList.toggle('active', btn.id === `btn-${mode}`);
     });
