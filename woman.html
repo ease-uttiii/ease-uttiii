@@ -29,7 +29,7 @@
             background: rgba(255, 255, 255, 0.2); border: 1px solid rgba(255, 255, 255, 0.4); border-radius: 30px;
             padding: 6px 14px; font-size: 11px; font-weight: bold; color: white; cursor: pointer; text-decoration: none;
             display: flex; align-items: center; justify-content: center; height: 28px; box-sizing: border-box; white-space: nowrap;
-            outline: none;
+            outline: none; /* 青枠消去 */
         }
 
         .reload-icon::before { content: '↻'; }
@@ -43,7 +43,7 @@
             padding: 18px 2px; border-radius: 60px; cursor: pointer; box-shadow: 0 8px 25px rgba(142, 122, 138, 0.2); 
             width: 100%; display: flex; align-items: center; justify-content: center; margin: 10px 0 30px; box-sizing: border-box; 
             font-size: 22px !important; letter-spacing: -0.5px; white-space: nowrap !important; overflow: hidden;
-            outline: none;
+            outline: none; /* 青枠消去 */
         }
 
         .notice-modal { border: none; border-radius: 24px; padding: 0; width: 92%; max-width: 550px; box-shadow: 0 20px 60px rgba(0,0,0,0.3); outline: none; }
@@ -66,34 +66,19 @@
         .field-note { display: block; margin-top: 8px; font-size: 0.82em; color: var(--pink-deep); font-weight: bold; line-height: 1.4; }
 
         input[type="text"], input[type="datetime-local"], select, textarea { 
-            width: 100%; 
-            padding: 16px 14px; 
-            border-radius: 12px; 
-            border: 1px solid var(--tile-border); 
-            background: var(--pink-light); 
-            box-sizing: border-box; 
-            font-size: 1.1em; 
-            font-family: inherit;
-            outline: none; 
-            margin-top: 8px; 
-            display: block; 
-            -webkit-appearance: none; 
-            appearance: none;
-            color: #5a4d4d;
+            width: 100%; padding: 16px 14px; border-radius: 12px; border: 1px solid var(--tile-border); background: var(--pink-light); 
+            box-sizing: border-box; font-size: 1.1em; font-family: inherit; outline: none; margin-top: 8px; display: block; 
+            -webkit-appearance: none; appearance: none; color: #5a4d4d;
         }
 
         select {
             background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 24 24' fill='none' stroke='%23b57d7d' stroke-width='3' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M6 9l6 6 6-6'%3E%3C/path%3E%3C/svg%3E");
-            background-repeat: no-repeat; 
-            background-position: right 15px center; 
-            background-size: 14px;
-            font-weight: bold;
-            line-height: 1.2;
+            background-repeat: no-repeat; background-position: right 15px center; background-size: 14px; font-weight: bold; line-height: 1.2;
         }
         
         optgroup { font-weight: bold; color: var(--mauve-admin); font-size: 0.8em; }
 
-        /* ボタンデザイン共通（1列） */
+        /* ボタンデザイン：1列 */
         .check-grid { display: flex; flex-direction: column; gap: 10px; margin-top: 10px; }
         .check-item { 
             background: #fff; border: 1px solid var(--tile-border); padding: 15px; border-radius: 12px; 
@@ -103,7 +88,7 @@
         }
         .check-item.active { background: linear-gradient(180deg, var(--pink-main) 0%, var(--pink-deep) 100%); color: white; border-color: var(--pink-deep); }
 
-        .check-grid-2col { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-top: 10px; }
+        .check-grid-mini { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-top: 10px; }
 
         .size-selector { display: flex; background: var(--pink-light); border: 1px solid var(--tile-border); border-radius: 12px; padding: 4px; gap: 4px; }
         .size-btn { border: none; background: transparent; padding: 8px 16px; font-size: 13px; font-weight: 800; color: var(--mauve-admin); border-radius: 9px; cursor: pointer; transition: 0.2s; min-width: 45px; outline: none; }
@@ -191,7 +176,6 @@
                 <input type="text" placeholder="1" style="width:100px; text-align:center; margin-top:0;">
                 <span style="font-weight:bold; color:var(--pink-deep);">人</span>
             </div>
-            <span class="field-note">※現在、複数プレイは要相談・監督育成中です。</span>
 
             <label class="field-label">開催場所（都道府県） <span class="required">必須</span></label>
             <select>
@@ -247,12 +231,10 @@
 
             <label class="field-label">待ち合わせ場所 <span class="required">必須</span></label>
             <input type="text" placeholder="例：〇〇駅 西口">
-            <span class="field-note">※プレイ場所の指定がなければ「ホテル」となります。</span>
         </div>
 
         <div class="form-section">
-            <span class="section-title">希望プレイ内容</span>
-            <label class="field-label" style="margin-top:0;">当てはまるもの（複数選択）<span class="required">必須</span></label>
+            <label class="field-label" style="margin-top:0;">希望プレイ内容(複数選択可能)<span class="required">必須</span></label>
             <div class="check-grid">
                 <div class="check-item" onclick="toggleSelection(this)">お任せでいいです</div>
                 <div class="check-item" onclick="toggleSelection(this)">攻められたい</div>
@@ -276,17 +258,15 @@
                 <div class="check-item" onclick="toggleSelection(this)">新しいスタイルのプレイを試してみたい</div>
             </div>
 
-            <label class="field-label">使用して欲しい玩具</label>
-            <input type="text" placeholder="バイブ、ローター、電マ、アナルグッズ、ローションなど">
+            <label class="field-label">使用してほしい玩具</label>
+            <input type="text" placeholder="例：バイブ、ローターなど（自由記入）">
 
             <label class="field-label">プレイ案件掲載項目（その他）</label>
             <textarea placeholder="応募する男性に伝えたいことを記入してください。"></textarea>
-            <span class="field-note">※「その他」の項目に掲載されます。</span>
         </div>
 
         <div class="form-section">
             <span class="section-title">追加のNG項目（任意）</span>
-            <span class="field-note">面談時のNGに加えて、今回避けたいものを選んでください。</span>
             <div class="check-grid">
                 <div class="check-item" onclick="toggleSelection(this)">タバコ</div>
                 <div class="check-item" onclick="toggleSelection(this)">香水</div>
@@ -298,7 +278,7 @@
                 <div class="check-item" onclick="toggleSelection(this)">髪が薄い方</div>
                 <div class="check-item" onclick="toggleSelection(this)">刺青(タトゥーもNG)</div>
                 <div class="check-item" onclick="toggleSelection(this)">言葉攻め</div>
-                <div class="check-item" onclick="toggleSelection(this)">コミュニケーション不可</div>
+                <div class="check-item" onclick="toggleSelection(this)">コミュニケーションが取れない方</div>
                 <div class="check-item" onclick="toggleSelection(this)">上から目線な男性</div>
                 <div class="check-item" onclick="toggleSelection(this)">経験がなさすぎる方</div>
                 <div class="check-item" onclick="toggleSelection(this)">オラオラ系</div>
@@ -312,21 +292,19 @@
         </div>
 
         <div class="form-section">
-            <span class="section-title">事務局への連絡</span>
-            <label class="field-label">日本性活プランナー協会の受検経験</label>
-            <div class="check-grid-2col">
+            <label class="field-label" style="margin-top:0;">日本性活プランナー協会の受検経験</label>
+            <div class="check-grid-mini">
                 <div class="check-item" id="exam-none" onclick="selectOne('exam', this)">無し</div>
                 <div class="check-item" id="exam-exists" onclick="selectOne('exam', this)">有り</div>
             </div>
 
             <div class="admin-note-header">【以下、案件には掲載されません】</div>
             
-            <label class="field-label">今回だけ特別な連絡事項</label>
+            <label class="field-label">今回だけ特別なことがある場合</label>
             <textarea placeholder="登録県以外でのプレイやエリア変更など"></textarea>
-            <span class="field-note">※「慣れている方で」等の希望は、上の「掲載項目」の方へ記入してください。</span>
         </div>
 
-        <button type="button" class="submit-btn" onclick="alert('内容を確認しました')">内容確認画面へ</button>
+        <button type="button" class="submit-btn" onclick="alert('送信準備完了')">内容確認画面へ</button>
     </form>
 </div>
 
