@@ -306,10 +306,13 @@
                 <div class="check-item" onclick="toggleSelection(this)">普通体型以外の方</div>
                 <div class="check-item" onclick="toggleSelection(this)">爪が不衛生な方</div>
                 <div class="check-item" onclick="toggleSelection(this)">過度に緊張する方</div>
+                <span class="field-note">NGは、基本「面談時」にお伝えいただいたものが反映されますが、もし足したいものがあればお選びください。</span>
+
             </div>
 
             <label class="field-label">追加のNG項目</label>
             <textarea placeholder=""></textarea>
+            <span class="field-note">※NGが多いと男性は集まりにくいです</span>
         </div>
 
         <div class="form-section">
@@ -317,12 +320,15 @@
             <div class="check-grid-mini">
                 <div class="check-item" id="exam-none" onclick="selectOne('exam', this)">無し</div>
                 <div class="check-item" id="exam-exists" onclick="selectOne('exam', this)">有り</div>
+            <span class="field-note">性に前向きに向き合う姿勢の指標です。</span>
             </div>
 
             <div class="admin-note-header">【以下、案件には掲載されません】</div>
             
-            <label class="field-label">非掲載の特記事項</label>
-             <textarea placeholder=""></textarea>
+            <label class="field-label">非掲載部分<br>※この項目はプレイ案件に記載しません。</label>
+            <span class="field-note">※「慣れている方でお願いします」などの「○○でお願いします」というものは、掲載項目にお願いします。これを掲載しないと、「慣れていない方」「○○でない方」も応募してきますので、抽選後に選別することはできません。</span>
+            <textarea placeholder=""></textarea>
+            <span class="field-note">※今回だけ特別なことがある場合は必ず記入してください。<br>（登録県以外でプレイする場合やエリアが変わる場合など）</span>
         </div>
 
         <button type="button" class="submit-btn" onclick="alert('内容を確認しました')">内容確認画面へ</button>
