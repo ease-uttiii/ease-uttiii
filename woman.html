@@ -60,25 +60,44 @@
 
         .form-section { background: var(--card-bg); border-radius: 24px; padding: 25px 20px; box-shadow: var(--tile-shadow); margin-bottom: 25px; }
         .region-header { display: flex; justify-content: flex-end; align-items: center; margin-bottom: 15px; border-bottom: 1px solid var(--pink-light); padding-bottom: 10px; }
+        
         .field-label { 
-            font-weight: bold; color: #fff; background: var(--pink-deep);
-            display: inline-flex; align-items: center; padding: 4px 12px; border-radius: 8px;
-            margin-top: 1.5em; min-height: 1.8em;
+            font-weight: bold; 
+            color: #fff; 
+            background: var(--pink-deep);
+            display: inline-flex;
+            align-items: center;
+            padding: 4px 12px;
+            border-radius: 8px;
+            margin-top: 1.5em; 
+            min-height: 1.8em;
         }
+
         .required { 
-            background: #e88e8e; color: white; font-size: 0.7em; padding: 1px 6px; 
-            border-radius: 4px; margin-left: 8px; border: 1px solid #fff; line-height: 1.2; display: inline-block;
+            background: #e88e8e; 
+            color: white; 
+            font-size: 0.7em; 
+            padding: 1px 6px; 
+            border-radius: 4px; 
+            margin-left: 8px; 
+            border: 1px solid #fff;
+            line-height: 1.2;
+            display: inline-block;
         }
+
         .field-note { display: block; margin-top: 8px; font-size: 0.82em; color: var(--pink-deep); font-weight: bold; line-height: 1.4; }
+
         input[type="text"], input[type="datetime-local"], select, textarea { 
             width: 100%; padding: 16px 14px; border-radius: 12px; border: 1px solid var(--tile-border); background: var(--pink-light); 
             box-sizing: border-box; font-size: 1.1em; font-family: inherit; outline: none; margin-top: 8px; display: block; 
             -webkit-appearance: none; appearance: none; color: #5a4d4d;
         }
+
         select {
             background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 24 24' fill='none' stroke='%23b57d7d' stroke-width='3' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M6 9l6 6 6-6'%3E%3C/path%3E%3C/svg%3E");
             background-repeat: no-repeat; background-position: right 15px center; background-size: 14px; font-weight: bold; line-height: 1.2;
         }
+        
         .check-grid { display: flex; flex-direction: column; gap: 10px; margin-top: 10px; }
         .check-item { 
             background: #fff; border: 1px solid var(--tile-border); padding: 15px; border-radius: 12px; 
@@ -87,11 +106,15 @@
             transition: 0.2s; box-sizing: border-box; width: 100%; outline: none;
         }
         .check-item.active { background: linear-gradient(180deg, var(--pink-main) 0%, var(--pink-deep) 100%); color: white; border-color: var(--pink-deep); }
+
         .check-grid-mini { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-top: 10px; }
+
         .size-selector { display: flex; background: var(--pink-light); border: 1px solid var(--tile-border); border-radius: 12px; padding: 4px; gap: 4px; }
         .size-btn { border: none; background: transparent; padding: 8px 16px; font-size: 13px; font-weight: 800; color: var(--mauve-admin); border-radius: 9px; cursor: pointer; transition: 0.2s; min-width: 45px; outline: none; }
         .size-btn.active { background: #ffffff; color: var(--tile-text); box-shadow: 0 3px 8px rgba(212, 165, 165, 0.3); }
+
         .submit-btn { background: linear-gradient(135deg, var(--pink-main) 0%, var(--pink-deep) 100%); color: white; border: none; padding: 20px; border-radius: 20px; width: 100%; font-size: 1.2em; font-weight: 700; cursor: pointer; margin-top: 10px; outline: none; }
+        
         .admin-note-header { color: var(--mauve-admin); font-weight: 900; font-size: 1.1em; margin-top: 25px; border-top: 3px solid var(--mauve-admin); padding-top: 15px; text-align: center; }
     </style>
 </head>
@@ -151,7 +174,7 @@
         </div>
     </dialog>
 
-    <form action="admin/index.php" method="POST" id="requestForm">
+    <form action="admin/index.php" method="POST" id="mainForm">
         <div class="form-section">
             <div class="region-header">
                 <div class="size-selector">
@@ -174,112 +197,132 @@
                 <option value="東京都">東京都</option>
                 <option disabled>------</option>
                 <option value="北海道">北海道</option><option value="青森県">青森県</option><option value="岩手県">岩手県</option>
-                <option value="宮城県">宮城県</option><option value="秋田県">秋田県</option><option value="山形県">山形県</option><option value="福島県">福島県</option>
+                <option value="宮城県">宮城県</option><option value="秋田県">秋田県</option>
+                <option value="山形県">山形県</option><option value="福島県">福島県</option>
                 <option disabled>------</option>
-                <option value="茨城県">茨城県</option><option value="栃木県">栃木県</option><option value="群馬県">群馬県</option><option value="埼玉県">埼玉県</option>
+                <option value="茨城県">茨城県</option><option value="栃木県">栃木県</option>
+                <option value="群馬県">群馬県</option><option value="埼玉県">埼玉県</option>
                 <option value="千葉県">千葉県</option><option value="神奈川県">神奈川県</option>
                 <option disabled>------</option>
-                <option value="新潟県">新潟県</option><option value="富山県">富山県</option><option value="石川県">石川県</option><option value="福井県">福井県</option>
+                <option value="新潟県">新潟県</option><option value="富山県">富山県</option>
+                <option value="石川県">石川県</option><option value="福井県">福井県</option>
                 <option value="山梨県">山梨県</option><option value="長野県">長野県</option>
                 <option disabled>------</option>
-                <option value="岐阜県">岐阜県</option><option value="静岡県">静岡県</option><option value="愛知県">愛知県</option><option value="三重県">三重県</option>
+                <option value="岐阜県">岐阜県</option><option value="静岡県">静岡県</option>
+                <option value="愛知県">愛知県</option><option value="三重県">三重県</option>
                 <option disabled>------</option>
-                <option value="滋賀県">滋賀県</option><option value="京都府">京都府</option><option value="大阪府">大阪府</option><option value="兵庫県">兵庫県</option>
+                <option value="滋賀県">滋賀県</option><option value="京都府">京都府</option>
+                <option value="大阪府">大阪府</option><option value="兵庫県">兵庫県</option>
                 <option value="奈良県">奈良県</option><option value="和歌山県">和歌山県</option>
                 <option disabled>------</option>
-                <option value="鳥取県">鳥取県</option><option value="島根県">島根県</option><option value="岡山県">岡山県</option><option value="広島県">広島県</option><option value="山口県">山口県</option>
+                <option value="鳥取県">鳥取県</option><option value="島根県">島根県</option>
+                <option value="岡山県">岡山県</option><option value="広島県">広島県</option>
+                <option value="山口県">山口県</option>
                 <option disabled>------</option>
-                <option value="徳島県">徳島県</option><option value="香川県">香川県</option><option value="愛媛県">愛媛県</option><option value="高知県">高知県</option>
+                <option value="徳島県">徳島県</option><option value="香川県">香川県</option>
+                <option value="愛媛県">愛媛県</option><option value="高知県">高知県</option>
                 <option disabled>------</option>
-                <option value="福岡県">福岡県</option><option value="佐賀県">佐賀県</option><option value="長崎県">長崎県</option><option value="熊本県">熊本県</option>
-                <option value="大分県">大分県</option><option value="宮崎県">宮崎県</option><option value="鹿児島県">鹿児島県</option><option value="沖縄県">沖縄県</option>
+                <option value="福岡県">福岡県</option><option value="佐賀県">佐賀県</option>
+                <option value="長崎県">長崎県</option><option value="熊本県">熊本県</option>
+                <option value="大分県">大分県</option><option value="宮崎県">宮崎県</option>
+                <option value="鹿児島県">鹿児島県</option><option value="沖縄県">沖縄県</option>
             </select>
             
             <label class="field-label">プレイ内容 <span class="required">必須</span></label><br>
             <span class="field-note">当てはまる項目をタップしてください<br>(複数選択可)</span>
             <div class="check-grid" id="playGrid">
-                <div class="check-item" onclick="toggleSelection(this, 'play_content[]')">お任せでいいです</div>
-                <div class="check-item" onclick="toggleSelection(this, 'play_content[]')">攻められたい</div>
-                <div class="check-item" onclick="toggleSelection(this, 'play_content[]')">攻めたい</div>
-                <div class="check-item" onclick="toggleSelection(this, 'play_content[]')">少し刺激的な体験がしたい</div>
-                <div class="check-item" onclick="toggleSelection(this, 'play_content[]')">レイププレイ希望</div>
-                <div class="check-item" onclick="toggleSelection(this, 'play_content[]')">目隠しされたい</div>
-                <div class="check-item" onclick="toggleSelection(this, 'play_content[]')">複数人を経験したい(女性1名)</div>
-                <div class="check-item" onclick="toggleSelection(this, 'play_content[]')">玩具を使って欲しい</div>
-                <div class="check-item" onclick="toggleSelection(this, 'play_content[]')">恋人のように過ごしたい</div>
-                <div class="check-item" onclick="toggleSelection(this, 'play_content[]')">3P</div>
-                <div class="check-item" onclick="toggleSelection(this, 'play_content[]')">アナルセックスがしたい</div>
-                <div class="check-item" onclick="toggleSelection(this, 'play_content[]')">特に舐められたい</div>
-                <div class="check-item" onclick="toggleSelection(this, 'play_content[]')">特に舐めたい</div>
-                <div class="check-item" onclick="toggleSelection(this, 'play_content[]')">前戯長め</div>
-                <div class="check-item" onclick="toggleSelection(this, 'play_content[]')">ドMです</div>
-                <div class="check-item" onclick="toggleSelection(this, 'play_content[]')">ドSです</div>
-                <div class="check-item" onclick="toggleSelection(this, 'play_content[]')">縛られたい</div>
-                <div class="check-item" onclick="toggleSelection(this, 'play_content[]')">お風呂に一緒に入りたい</div>
-                <div class="check-item" onclick="toggleSelection(this, 'play_content[]')">コスプレがしたい</div>
-                <div class="check-item" onclick="toggleSelection(this, 'play_content[]')">優しい言葉をかけられたい</div>
-                <div class="check-item" onclick="toggleSelection(this, 'play_content[]')">新しいスタイルのプレイを試してみたい</div>
+                <div class="check-item" onclick="toggleSelection(this)">お任せでいいです</div>
+                <div class="check-item" onclick="toggleSelection(this)">攻められたい</div>
+                <div class="check-item" onclick="toggleSelection(this)">攻めたい</div>
+                <div class="check-item" onclick="toggleSelection(this)">少し刺激的な体験がしたい</div>
+                <div class="check-item" onclick="toggleSelection(this)">レイププレイ希望</div>
+                <div class="check-item" onclick="toggleSelection(this)">目隠しされたい</div>
+                <div class="check-item" onclick="toggleSelection(this)">複数人を経験したい(女性1名)</div>
+                <div class="check-item" onclick="toggleSelection(this)">玩具を使って欲しい</div>
+                <div class="check-item" onclick="toggleSelection(this)">恋人のように過ごしたい</div>
+                <div class="check-item" onclick="toggleSelection(this)">3P</div>
+                <div class="check-item" onclick="toggleSelection(this)">アナルセックスがしたい</div>
+                <div class="check-item" onclick="toggleSelection(this)">特に舐められたい</div>
+                <div class="check-item" onclick="toggleSelection(this)">特に舐めたい</div>
+                <div class="check-item" onclick="toggleSelection(this)">前戯長め</div>
+                <div class="check-item" onclick="toggleSelection(this)">ドMです</div>
+                <div class="check-item" onclick="toggleSelection(this)">ドSです</div>
+                <div class="check-item" onclick="toggleSelection(this)">縛られたい</div>
+                <div class="check-item" onclick="toggleSelection(this)">お風呂に一緒に入りたい</div>
+                <div class="check-item" onclick="toggleSelection(this)">コスプレがしたい</div>
+                <div class="check-item" onclick="toggleSelection(this)">優しい言葉をかけられたい</div>
+                <div class="check-item" onclick="toggleSelection(this)">新しいスタイルのプレイを試してみたい</div>
             </div>
             <span class="field-note">※興味がある程度で大丈夫です</span>
 
             <label class="field-label">上記以外のプレイに関する希望があれば記入してください。</label>
-            <textarea name="other_play" placeholder=""></textarea>
+            <textarea name="play_msg" placeholder=""></textarea>
 
             <label class="field-label">相手の希望人数 <span class="required">必須</span></label>
             <div style="display:flex; align-items:center; gap:10px; margin-top:8px;">
                 <input type="text" name="member_count" placeholder="1" style="width:100px; text-align:center; margin-top:0;" required>
                 <span style="font-weight:bold; color:var(--pink-deep);">人</span>
             </div>
-            <span class="field-note">現在、複数プレイは要相談としています。<br>※現在、監督増員育成中ですので、しばらく1対1でプレイするか、森と時間を合わせて頂くことになるかもしれません。</span>
+            <span class="field-note">現在、複数プレイは要相談としています。<br>
+※現在、監督増員育成中ですので、しばらく1対1でプレイするか、森と時間を合わせて頂くことになるかもしれません。(地域によっては、森以外も居ます)<br>
+※複数プレイは、監督探しからとなりますので、依頼日に必ず開催されるとは限りません。(プレイ依頼受付後に「監督願い」を森が、全監督宛に出して決まりますので、少しお日にちが必要となります)</span>
             
             <label class="field-label">使用して欲しい玩具</label>
              <textarea name="toys" placeholder=""></textarea>
              <span class="field-note">バイブレーター、ローター、電マ、アナルグッズ、ローション、SMグッズ、アイマスク、その他</span>
             
             <label class="field-label">プレイ案件掲載項目</label>
+             <span class="field-note">※プレイ案件の「その他」の項目に掲載しますので、応募する男性に伝えたいことを記入してください。</span>
+             <span class="field-note">※面談時にお聞きしたNGなどは、毎回掲載します。</span>
              <textarea name="public_note" placeholder=""></textarea>
-            <span class="field-note">・他に希望のある方は詳しく書いてください。<br>・プレイ場所の指定がなければ「ホテル」となります。</span>
+            <span class="field-note">・他に希望のある方は詳しく書いてください。（あまり限定しすぎると男性が集まらないことがあります）<br>・プレイ場所の指定がなければ「ホテル」となります。</span>
             
             <label class="field-label">NGについて</label>
             <span class="field-note">当てはまる項目をタップしてください<br>(複数選択可)</span>
             <div class="check-grid" id="ngGrid">
-                <div class="check-item" onclick="toggleSelection(this, 'ng_list[]')">タバコ</div>
-                <div class="check-item" onclick="toggleSelection(this, 'ng_list[]')">香水</div>
-                <div class="check-item" onclick="toggleSelection(this, 'ng_list[]')">太りすぎている方</div>
-                <div class="check-item" onclick="toggleSelection(this, 'ng_list[]')">痩せ過ぎの方</div>
-                <div class="check-item" onclick="toggleSelection(this, 'ng_list[]')">ドＭ</div>
-                <div class="check-item" onclick="toggleSelection(this, 'ng_list[]')">ドS</div>
-                <div class="check-item" onclick="toggleSelection(this, 'ng_list[]')">言葉が乱暴な方</div>
-                <div class="check-item" onclick="toggleSelection(this, 'ng_list[]')">髪が薄い方</div>
-                <div class="check-item" onclick="toggleSelection(this, 'ng_list[]')">刺青(タトゥーもNG)</div>
-                <div class="check-item" onclick="toggleSelection(this, 'ng_list[]')">言葉攻め</div>
-                <div class="check-item" onclick="toggleSelection(this, 'ng_list[]')">コミュニケーションが取れない方</div>
-                <div class="check-item" onclick="toggleSelection(this, 'ng_list[]')">上から目線な男性</div>
-                <div class="check-item" onclick="toggleSelection(this, 'ng_list[]')">経験がなさすぎる方</div>
-                <div class="check-item" onclick="toggleSelection(this, 'ng_list[]')">オラオラ系</div>
-                <div class="check-item" onclick="toggleSelection(this, 'ng_list[]')">体毛が濃い方</div>
-                <div class="check-item" onclick="toggleSelection(this, 'ng_list[]')">普通体型以外の方</div>
-                <div class="check-item" onclick="toggleSelection(this, 'ng_list[]')">爪が不衛生な方</div>
-                <div class="check-item" onclick="toggleSelection(this, 'ng_list[]')">過度に緊張する方</div>
+                <div class="check-item" onclick="toggleSelection(this)">タバコ</div>
+                <div class="check-item" onclick="toggleSelection(this)">香水</div>
+                <div class="check-item" onclick="toggleSelection(this)">太りすぎている方</div>
+                <div class="check-item" onclick="toggleSelection(this)">痩せ過ぎの方</div>
+                <div class="check-item" onclick="toggleSelection(this)">ドМ</div>
+                <div class="check-item" onclick="toggleSelection(this)">ドS</div>
+                <div class="check-item" onclick="toggleSelection(this)">言葉が乱暴な方</div>
+                <div class="check-item" onclick="toggleSelection(this)">髪が薄い方</div>
+                <div class="check-item" onclick="toggleSelection(this)">刺青(タトゥーもNG)</div>
+                <div class="check-item" onclick="toggleSelection(this)">言葉攻め</div>
+                <div class="check-item" onclick="toggleSelection(this)">コミュニケーションが取れない方</div>
+                <div class="check-item" onclick="toggleSelection(this)">上から目線な男性</div>
+                <div class="check-item" onclick="toggleSelection(this)">経験がなさすぎる方</div>
+                <div class="check-item" onclick="toggleSelection(this)">オラオラ系</div>
+                <div class="check-item" onclick="toggleSelection(this)">体毛が濃い方</div>
+                <div class="check-item" onclick="toggleSelection(this)">普通体型以外の方</div>
+                <div class="check-item" onclick="toggleSelection(this)">爪が不衛生な方</div>
+                <div class="check-item" onclick="toggleSelection(this)">過度に緊張する方</div>
             </div>
+            <span class="field-note">NGは、基本「面談時」にお伝えいただいたものが反映されますが、もし足したいものがあればお選びください。</span>
 
             <label class="field-label">その他NGあれば記入してください</label>
             <textarea name="other_ng" placeholder=""></textarea>
-            
+            <span class="field-note">※NGが多いと男性は集まりにくいです</span>
             <label class="field-label">日本性活プランナー協会の受検経験の有無</label>
             <div class="check-grid-mini">
-                <div class="check-item" id="exam-none" onclick="selectOne('exam', this, '無し')">無し</div>
-                <div class="check-item" id="exam-exists" onclick="selectOne('exam', this, '有り')">有り</div>
+                <div class="check-item" id="exam-none" onclick="selectOne('exam', this)">無し</div>
+                <div class="check-item" id="exam-exists" onclick="selectOne('exam', this)">有り</div>
             </div>
-            <input type="hidden" name="exam_experience" id="exam_hidden">
+            <input type="hidden" name="exam_status" id="exam_hidden">
+            <span class="field-note">性に前向きに向き合う姿勢の指標です。</span>
 
             <div class="admin-note-header">【以下、案件には掲載されません】</div>
             
-            <label class="field-label">非掲載部分</label>
+            <label class="field-label">非掲載部分<br>※この項目はプレイ案件に記載しません。</label>
+            <span class="field-note">※「慣れている方でお願いします」などの「○○でお願いします」というものは、掲載項目にお願いします。これを掲載しないと、「慣れていない方」「○○でない方」も応募してきますので、抽選後に選別することはできません。</span>
             <textarea name="private_note" placeholder=""></textarea>
+            <span class="field-note">※今回だけ特別なことがある場合は必ず記入してください。<br>（登録県以外でプレイする場合やエリアが変わる場合など）</span>
         </div>
 
-        <div id="hidden-inputs"></div>
+        <input type="hidden" name="play_content" id="play_hidden">
+        <input type="hidden" name="ng_list" id="ng_hidden">
+        
         <button type="submit" class="submit-btn">内容確認画面へ</button>
     </form>
 </div>
@@ -292,9 +335,13 @@ window.onload = function() {
 
 function applyFontSize(mode) {
     const root = document.documentElement;
-    if (mode === 'small') root.style.setProperty('--base-font-size', '13px');
-    else if (mode === 'mid') root.style.setProperty('--base-font-size', '16px');
-    else if (mode === 'large') root.style.setProperty('--base-font-size', '20px');
+    if (mode === 'small') {
+        root.style.setProperty('--base-font-size', '13px');
+    } else if (mode === 'mid') {
+        root.style.setProperty('--base-font-size', '16px');
+    } else if (mode === 'large') {
+        root.style.setProperty('--base-font-size', '20px');
+    }
     document.querySelectorAll('.size-btn').forEach(btn => {
         btn.classList.toggle('active', btn.id === `btn-${mode}`);
     });
@@ -310,49 +357,27 @@ function fastUpdate() {
     setTimeout(() => location.reload(true), 600);
 }
 
-// 複数選択（プレイ内容・NG）の処理
-function toggleSelection(el, name) {
+function toggleSelection(el) {
     el.classList.toggle('active');
-    syncHiddenInputs();
 }
 
-// 単一選択（受検経験）の処理
-function selectOne(group, el, val) {
+function selectOne(group, el) {
     if(group === 'exam') {
         document.getElementById('exam-none').classList.remove('active');
         document.getElementById('exam-exists').classList.remove('active');
-        document.getElementById('exam_hidden').value = val;
+        document.getElementById('exam_hidden').value = el.innerText;
     }
     el.classList.add('active');
 }
 
-// 選択状態を隠しinputに同期させる（PHPに送るため）
-function syncHiddenInputs() {
-    const container = document.getElementById('hidden-inputs');
-    container.innerHTML = '';
+// 送信時に選択項目をまとめる処理
+document.getElementById('mainForm').onsubmit = function() {
+    const playItems = Array.from(document.querySelectorAll('#playGrid .active')).map(e => e.innerText);
+    document.getElementById('play_hidden').value = playItems.join(', ');
     
-    // プレイ内容
-    document.querySelectorAll('#playGrid .active').forEach(el => {
-        const input = document.createElement('input');
-        input.type = 'hidden';
-        input.name = 'play_content[]';
-        input.value = el.innerText;
-        container.appendChild(input);
-    });
-
-    // NGリスト
-    document.querySelectorAll('#ngGrid .active').forEach(el => {
-        const input = document.createElement('input');
-        input.type = 'hidden';
-        input.name = 'ng_list[]';
-        input.value = el.innerText;
-        container.appendChild(input);
-    });
-}
-
-// 送信直前に最終同期
-document.getElementById('requestForm').onsubmit = function() {
-    syncHiddenInputs();
+    const ngItems = Array.from(document.querySelectorAll('#ngGrid .active')).map(e => e.innerText);
+    document.getElementById('ng_hidden').value = ngItems.join(', ');
+    
     return true;
 };
 </script>
