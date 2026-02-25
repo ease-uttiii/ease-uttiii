@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>内容確認 | 管理画面</title>
+    <style>
+        :root { --mauve-admin: #8e7a8a; --pink-light: #fdf8f7; --pink-accent: #d4a5a5; }
+        body { font-family: 'Noto Sans JP', sans-serif; background: var(--pink-light); color: #5a4d4d; margin: 0; padding: 20px; }
+        .confirm-box { max-width: 600px; margin: 0 auto; background: #fff; padding: 25px; border-radius: 20px; box-shadow: 0 10px 30px rgba(142, 122, 138, 0.15); border: 3px solid var(--mauve-admin); }
+        h2 { color: var(--mauve-admin); border-bottom: 2px solid var(--mauve-admin); padding-bottom: 12px; text-align: center; font-size: 1.4rem; }
+        table { width: 100%; border-collapse: collapse; margin-top: 20px; table-layout: fixed; }
+        th, td { padding: 14px 10px; border-bottom: 1px solid #eee; text-align: left; vertical-align: top; word-wrap: break-word; }
+        th { width: 35%; color: var(--mauve-admin); font-weight: bold; font-size: 0.9rem; }
+        td { font-size: 1rem; line-height: 1.5; }
+        .btn-area { display: flex; gap: 12px; margin-top: 35px; }
+        .btn { flex: 1; padding: 18px; border: none; border-radius: 15px; cursor: pointer; font-weight: bold; text-align: center; text-decoration: none; font-size: 1.1rem; transition: 0.3s; }
+        .back-btn { background: #e0e0e0; color: #666; }
+        .submit-btn { background: var(--mauve-admin); color: white; box-shadow: 0 4px 15px rgba(142, 122, 138, 0.3); }
+        .submit-btn:active { transform: scale(0.98); }
+        .private-row { background: #fffafa; }
+        .private-label { color: var(--pink-accent) !important; }
+    </style>
+</head>
+<body>
+
+<div class="confirm-box">
+    <h2>ご依頼内容の確認</h2>
+    <table>
+        <tr><th>ID/ニックネーム</th><td id="res-id"></td></tr>
+        <tr><th>プレイ日時</th><td id="res-date"></td></tr>
+        <tr><th>開催都道府県</th><td id="res-pref"></td></tr>
+        <tr><th>プレイ内容</th><td id="res-play"></td></tr>
+        <tr><th>希望人数</th><td id="res-count"></td></tr>
+        <tr><th>使用玩具</th><td id="res-toys"></td></tr>
+        <tr><th>掲載用メモ</th><td id="res-public"></td></tr>
+        <tr><th>NGリスト</th><td id="res-ng"></td></tr>
+        <tr><th>受検経験</th><td id="res-exam"></td></tr>
+        <tr class="private-row"><th class="private-label">【非掲載メモ】</th><td id="res-private"></td></tr>
+    </table>
+
+    <div class="btn-area">
+        <button type="button" class="btn back-btn" onclick="history.back()">修正する</button>
+        <button type="button" class="btn submit-btn" onclick="sendToLine()">この内容で確定</button>
+    </div>
+</div>
+
+<script>
+// URLからデータを取得して表示する
+const params = new URLSearchParams(window.location.search);
+
+function setText(id, paramName) {
+    const val = params.get(paramName);
+    document.getElementById(id).innerText = val ? val : '未入力';
+}
+
+setText('res-id', 'id');
+setText('res-date', 'date');
+setText('res-pref', 'pref');
+setText('res-play', 'play_content');
+setText('res-count', 'member_count');
+setText('res-toys', 'toys');
+setText('res-public', 'public_note');
+setText('res-ng', 'ng_list');
+setText('res-exam', 'exam_status');
+setText('res-private', 'private_note');
+
+// 補足情報の結合（メッセージなど）
+const playMsg = params.get('play_msg');
+if(playMsg) document.getElementById('res-play').innerHTML += '<br><small>追加：' + playMsg + '</small>';
+
+const otherNg = params.get('other_ng');
+if(otherNg) document.getElementById('res-ng').innerHTML += '<br><small>追加：' + otherNg + '</small>';
+
+function sendToLine() {
+    alert('GitHub Pagesのため、ここから先はLINE転送などの外部連携設定が必要です。\n現在は確認画面までの動作となります。');
+}
+</script>
+</body>
+</html>
