@@ -1,24 +1,32 @@
 <?php
-// 1. フォームからのデータ受け取り処理
-if ($_SERVER["REQUEST_METHOD"] == "POST") {
-    $id = $_POST['id'] ?? '未入力';
-    $date = $_POST['date'] ?? '未入力';
-    $pref = $_POST['pref'] ?? '未入力';
-    $play_content = isset($_POST['play_content']) ? implode(", ", $_POST['play_content']) : '未選択';
-    $msg = $_POST['msg'] ?? '';
+// --- 設定：保存先ファイル ---
+$csv_file = 'data.csv';
+
+// --- A. 送信ボタン（最終確定）が押された場合 ---
+if (isset($_POST['confirm_submit'])) {
+    $id = $_POST['id'] ?? '';
+    $date = $_POST['date'] ?? '';
+    $pref = $_POST['pref'] ?? '';
+    $content = $_POST['content'] ?? '';
     $receive_time = date("Y/m/d H:i");
 
-    // 保存用データ行
-    $data = [$receive_time, $id, $date, $pref, $play_content, $msg];
-    
-    // csvに追記保存
-    $file = fopen('data.csv', 'a');
+    $data = [$receive_time, $id, $date, $pref, $content];
+    $file = fopen($csv_file, 'a');
     fputcsv($file, $data);
     fclose($file);
 
-    // 送信後の戻り先（女性用フォームへ）
     header("Location: ../woman.html?status=success");
     exit;
+}
+
+// --- B. フォームから「確認画面へ」で届いた場合 ---
+$is_confirm = false;
+if ($_SERVER["REQUEST_METHOD"] == "POST" && !isset($_POST['confirm_submit'])) {
+    $is_confirm = true;
+    $tmp_id = $_POST['id'] ?? '';
+    $tmp_date = $_POST['date'] ?? '';
+    $tmp_pref = $_POST['pref'] ?? '';
+    $tmp_content = isset($_POST['play_content']) ? implode(", ", $_POST['play_content']) : '未選択';
 }
 ?>
 <!DOCTYPE html>
@@ -26,79 +34,83 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>管理パネル | Admin</title>
+    <title>管理パネル / 内容確認</title>
     <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;700&display=swap" rel="stylesheet">
     <style>
-        :root {
-            --mauve-admin: #8e7a8a; --mauve-light: #f4f1f3;
-            --text-color: #4a4548; --bg-color: #fdfcfc; --white: #ffffff;
-        }
-        body { font-family: 'Noto Sans JP', sans-serif; margin: 0; background: var(--bg-color); color: var(--text-color); }
-        header { background: var(--mauve-admin); color: white; padding: 1rem; text-align: center; font-weight: bold; letter-spacing: 0.1em; }
-        .container { max-width: 900px; margin: 20px auto; padding: 0 15px; }
+        :root { --mauve: #8e7a8a; --mauve-light: #f4f1f3; --bg: #fdfcfc; }
+        body { font-family: 'Noto Sans JP', sans-serif; margin: 0; background: var(--bg); color: #4a4548; line-height: 1.6; }
+        header { background: var(--mauve); color: white; padding: 1rem; text-align: center; font-weight: bold; }
+        .container { max-width: 600px; margin: 20px auto; padding: 0 15px; }
         
-        /* 統計バッジ */
-        .stats { display: flex; gap: 10px; margin-bottom: 20px; }
-        .stat-card { background: var(--white); padding: 15px; border-radius: 12px; flex: 1; text-align: center; border: 1px solid #e8cfcf; }
-        .stat-num { display: block; font-size: 1.5rem; font-weight: bold; color: var(--mauve-admin); }
+        /* 確認画面用スタイル */
+        .confirm-box { background: white; border: 2px solid var(--mauve); padding: 25px; border-radius: 20px; box-shadow: 0 10px 30px rgba(0,0,0,0.05); }
+        .confirm-item { margin-bottom: 20px; border-bottom: 1px dashed #eee; padding-bottom: 10px; }
+        .label { font-size: 0.8rem; color: var(--mauve); font-weight: bold; display: block; }
+        .val { font-size: 1.1rem; margin-top: 5px; display: block; }
+        
+        .btn-group { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-top: 30px; }
+        .btn { padding: 15px; border-radius: 12px; border: none; font-weight: bold; cursor: pointer; text-align: center; text-decoration: none; font-size: 1rem; }
+        .btn-submit { background: var(--mauve); color: white; }
+        .btn-back { background: #eee; color: #666; }
 
-        /* リスト表示 */
-        .section-title { border-left: 4px solid var(--mauve-admin); padding-left: 10px; margin: 30px 0 15px; font-weight: bold; }
-        .table-wrapper { background: var(--white); border-radius: 12px; border: 1px solid #e8cfcf; overflow-x: auto; }
-        table { width: 100%; border-collapse: collapse; min-width: 600px; }
-        th, td { padding: 14px; text-align: left; border-bottom: 1px solid #eee; font-size: 0.9rem; }
-        th { background: var(--mauve-light); color: var(--mauve-admin); font-weight: bold; }
-        tr:last-child td { border-bottom: none; }
-        .no-data { text-align: center; padding: 50px; color: #999; }
+        /* 管理画面用テーブルスタイル */
+        .section-title { border-left: 4px solid var(--mauve); padding-left: 10px; margin: 40px 0 15px; font-weight: bold; }
+        .table-wrapper { background: white; border-radius: 12px; border: 1px solid #e8cfcf; overflow-x: auto; }
+        table { width: 100%; border-collapse: collapse; min-width: 500px; }
+        th, td { padding: 12px; text-align: left; border-bottom: 1px solid #eee; font-size: 0.85rem; }
+        th { background: var(--mauve-light); color: var(--mauve); }
     </style>
 </head>
 <body>
 
-<header>ADMIN DASHBOARD</header>
+<header><?php echo $is_confirm ? '入力内容の確認' : '管理用ダッシュボード'; ?></header>
 
 <div class="container">
-    <div class="stats">
-        <?php
-        $lines = file_exists('data.csv') ? file('data.csv') : [];
-        $count = count($lines);
-        ?>
-        <div class="stat-card"><span class="stat-num"><?php echo $count; ?></span>届出件数</div>
-        <div class="stat-card" onclick="location.reload()" style="cursor:pointer; display:flex; align-items:center; justify-content:center;">🔄 更新</div>
-    </div>
 
-    <div class="section-title">最新の届出リスト</div>
-    <div class="table-wrapper">
-        <table>
-            <thead>
-                <tr>
-                    <th>受信日時</th>
-                    <th>ID/名</th>
-                    <th>プレイ予定</th>
-                    <th>場所</th>
-                    <th>内容</th>
-                </tr>
-            </thead>
-            <tbody>
-                <?php
-                if ($count > 0) {
-                    $rows = array_reverse(array_map('str_getcsv', $lines)); // 新しい順
-                    foreach ($rows as $row) {
-                        echo "<tr>";
-                        echo "<td>" . htmlspecialchars($row[0]) . "</td>";
-                        echo "<td>" . htmlspecialchars($row[1]) . "</td>";
-                        echo "<td>" . htmlspecialchars($row[2]) . "</td>";
-                        echo "<td>" . htmlspecialchars($row[3]) . "</td>";
-                        echo "<td>" . htmlspecialchars($row[4]) . "</td>";
-                        echo "</tr>";
+    <?php if ($is_confirm): // --- 確認画面の表示 --- ?>
+        <div class="confirm-box">
+            <p style="text-align:center; font-weight:bold; margin-top:0;">以下の内容で送信しますか？</p>
+            <div class="confirm-item"><span class="label">ID/ニックネーム</span><span class="val"><?php echo htmlspecialchars($tmp_id); ?></span></div>
+            <div class="confirm-item"><span class="label">プレイ予定日時</span><span class="val"><?php echo htmlspecialchars($tmp_date); ?></span></div>
+            <div class="confirm-item"><span class="label">開催場所</span><span class="val"><?php echo htmlspecialchars($tmp_pref); ?></span></div>
+            <div class="confirm-item"><span class="label">希望内容</span><span class="val"><?php echo htmlspecialchars($tmp_content); ?></span></div>
+
+            <form action="index.php" method="POST">
+                <input type="hidden" name="id" value="<?php echo htmlspecialchars($tmp_id); ?>">
+                <input type="hidden" name="date" value="<?php echo htmlspecialchars($tmp_date); ?>">
+                <input type="hidden" name="pref" value="<?php echo htmlspecialchars($tmp_pref); ?>">
+                <input type="hidden" name="content" value="<?php echo htmlspecialchars($tmp_content); ?>">
+                <div class="btn-group">
+                    <button type="button" class="btn btn-back" onclick="history.back()">修正する</button>
+                    <button type="submit" name="confirm_submit" class="btn btn-submit">この内容で送信</button>
+                </div>
+            </form>
+        </div>
+
+    <?php else: // --- 管理画面（一覧）の表示 --- ?>
+        <div class="section-title">届出リスト</div>
+        <div class="table-wrapper">
+            <table>
+                <thead>
+                    <tr><th>日時</th><th>ID</th><th>プレイ日</th><th>場所</th></tr>
+                </thead>
+                <tbody>
+                    <?php
+                    if (file_exists($csv_file)) {
+                        $rows = array_reverse(array_map('str_getcsv', file($csv_file)));
+                        foreach ($rows as $row) {
+                            echo "<tr><td>{$row[0]}</td><td>{$row[1]}</td><td>{$row[2]}</td><td>{$row[3]}</td></tr>";
+                        }
+                    } else {
+                        echo "<tr><td colspan='4' style='text-align:center; padding:30px;'>データがありません</td></tr>";
                     }
-                } else {
-                    echo "<tr><td colspan='5' class='no-data'>まだデータがありません</td></tr>";
-                }
-                ?>
-            </tbody>
-        </table>
-    </div>
-</div>
+                    ?>
+                </tbody>
+            </table>
+        </div>
+        <p style="text-align:center; margin-top:20px;"><a href="../woman.html" style="color:var(--mauve); text-decoration:none; font-size:0.9rem;">← フォームへ戻る</a></p>
+    <?php endif; ?>
 
+</div>
 </body>
 </html>
