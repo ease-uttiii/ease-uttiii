@@ -5,56 +5,29 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>依頼一覧 | 管理用画面</title>
     <style>
-        /* 項目ごとのレイアウトをより明確に */
-.info-row { 
-    margin-bottom: 18px; 
-    border-bottom: 1px solid #f0e6e6; 
-    padding-bottom: 8px; 
-}
-.info-row:last-child { border-bottom: none; }
+       :root { --mauve-admin: #8e7a8a; --pink-light: #fdf8f7; }
+body { font-family: 'Noto Sans JP', sans-serif; background: var(--pink-light); color: #5a4d4d; margin: 0; padding: 15px; line-height: 1.5; }
 
-.label { 
-    font-size: 0.7rem; 
-    font-weight: bold; 
-    color: #fff; 
-    background: var(--mauve-admin); 
-    padding: 2px 10px; 
-    border-radius: 50px; 
-    display: inline-block;
-    margin-bottom: 6px;
-    letter-spacing: 0.05em;
-}
+header { background: var(--mauve-admin); color: white; padding: 15px; text-align: center; border-radius: 15px; margin-bottom: 20px; box-shadow: 0 4px 15px rgba(0,0,0,0.1); }
+h1 { margin: 0; font-size: 1.1rem; letter-spacing: 0.05em; }
 
-/* プレイ日時の強調 */
-.datetime-box {
-    background: #fff0f0;
-    padding: 10px;
-    border-radius: 10px;
-    border-left: 4px solid #d4a5a5;
-    font-weight: bold;
-    font-size: 1.1rem;
-    color: #4a3a3a;
-    margin-bottom: 15px;
-}
+.list-container { max-width: 600px; margin: 0 auto; }
+.card { background: white; border-radius: 15px; padding: 20px; margin-bottom: 20px; border-left: 6px solid var(--mauve-admin); box-shadow: 0 4px 10px rgba(0,0,0,0.05); }
 
-/* フリーテキスト（長い文章）の読みやすさ */
-.content { 
-    font-size: 1rem; 
-    line-height: 1.6; 
-    color: #333;
-    white-space: pre-wrap; 
-    word-break: break-all;
-    padding: 5px 0;
-}
+.card-header { display: flex; justify-content: space-between; border-bottom: 1px solid #f0f0f0; padding-bottom: 10px; margin-bottom: 15px; font-size: 0.85rem; color: #999; }
+.card-id { font-weight: bold; color: var(--mauve-admin); }
 
-/* 枠で囲って目立たせる（プレイ内容や掲載用メモ） */
-.memo-box {
-    background: #fdfdfd;
-    border: 1px solid #eee;
-    padding: 12px;
-    border-radius: 10px;
-    margin-top: 5px;
-}
+/* 項目ごとのブロック */
+.info-item { margin-bottom: 15px; }
+.label { font-size: 0.75rem; font-weight: bold; color: var(--mauve-admin); display: block; margin-bottom: 3px; }
+.content { font-size: 0.95rem; color: #333; white-space: pre-wrap; word-break: break-all; }
+
+/* プレイ日時だけ少し大きく */
+.date-content { font-size: 1.05rem; font-weight: bold; color: #444; border-bottom: 1px dashed #e0d0d0; padding-bottom: 2px; display: inline-block; }
+
+/* 非掲載メモ（管理用） */
+.private-section { margin-top: 20px; padding: 12px; background: #faf5f5; border-radius: 10px; border: 1px solid #eee; }
+.private-label { font-size: 0.75rem; color: #b1a0af; font-weight: bold; }
     </style>
 </head>
 <body>
@@ -88,47 +61,48 @@ async function loadData() {
             // data.forEach(row => { ... }) の中の card.innerHTML をこれに差し替え
 card.innerHTML = `
     <div class="card-header">
-        <span class="card-id">👤 ${row[1]}</span>
-        <span class="card-date">受付: ${new Date(row[0]).toLocaleString('ja-JP')}</span>
+        <span class="card-id">ID: ${row[1]}</span>
+        <span>${new Date(row[0]).toLocaleString('ja-JP')}</span>
     </div>
-    <div class="card-body">
-        <div class="label">📅 プレイ希望日時</div>
-        <div class="datetime-box">${row[2]}</div>
+    
+    <div class="info-item">
+        <span class="label">【プレイ希望日時】</span>
+        <div class="content"><span class="date-content">${row[2]}</span></div>
+    </div>
 
-        <div class="info-row">
-            <span class="label">📍 都道府県 / 人数</span>
-            <div class="content"><strong>${row[3]}</strong> ／ ${row[5]}名</div>
-        </div>
+    <div class="info-item">
+        <span class="label">【場所 / 人数】</span>
+        <div class="content">${row[3]} ／ ${row[5]}名</div>
+    </div>
 
-        <div class="info-row">
-            <span class="label">📝 プレイ内容</span>
-            <div class="memo-box"><div class="content">${row[4]}</div></div>
-        </div>
+    <div class="info-item">
+        <span class="label">【プレイ内容（詳細）】</span>
+        <div class="content">${row[4] || '-'}</div>
+    </div>
 
-        <div class="info-row">
-            <span class="label">🧸 使用玩具</span>
-            <div class="content">${row[6] || 'なし'}</div>
-        </div>
+    <div class="info-item">
+        <span class="label">【使用玩具】</span>
+        <div class="content">${row[6] || 'なし'}</div>
+    </div>
 
-        <div class="info-row">
-            <span class="label">📢 掲載用メモ</span>
-            <div class="memo-box"><div class="content">${row[7] || 'なし'}</div></div>
-        </div>
+    <div class="info-item">
+        <span class="label">【掲載用メモ】</span>
+        <div class="content">${row[7] || '-'}</div>
+    </div>
 
-        <div class="info-row">
-            <span class="label">❌ NGリスト</span>
-            <div class="content" style="color: #c0392b;">${row[8] || 'なし'}</div>
-        </div>
+    <div class="info-item">
+        <span class="label">【NGリスト】</span>
+        <div class="content" style="color:#d9534f;">${row[8] || 'なし'}</div>
+    </div>
 
-        <div class="info-row">
-            <span class="label">🎓 受検経験</span>
-            <div class="content">${row[9]}</div>
-        </div>
-        
-        <div class="private-section">
-            <span class="private-label">⚠️ 非掲載メモ（管理用）</span>
-            <div class="content" style="color:#666; font-size:0.95rem; margin-top:5px; padding:8px; background:rgba(255,255,255,0.5); border-radius:5px;">${row[10] || 'なし'}</div>
-        </div>
+    <div class="info-item">
+        <span class="label">【受検経験】</span>
+        <div class="content">${row[9]}</div>
+    </div>
+    
+    <div class="private-section">
+        <span class="private-label">非掲載メモ（管理用）</span>
+        <div class="content" style="font-size:0.9rem; color:#777; margin-top:5px;">${row[10] || 'なし'}</div>
     </div>
 `;
             listDiv.appendChild(card);
