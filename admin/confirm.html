@@ -55,7 +55,7 @@ function setText(id, paramName) {
 }
 
 setText('res-id', 'id');
-setText('res-date', 'date');
+setText('res-date', 'date'); // これでwoman.htmlから合体された日時が表示されます
 setText('res-pref', 'pref');
 setText('res-play', 'play_content');
 setText('res-count', 'member_count');
@@ -72,33 +72,18 @@ if(playMsg) document.getElementById('res-play').innerHTML += '<br><small>追加�
 const otherNg = params.get('other_ng');
 if(otherNg) document.getElementById('res-ng').innerHTML += '<br><small>追加：' + otherNg + '</small>';
 
-// admin/confirm.html の JavaScript 内
+// --- 関数定義を修正 ---
 function sendToLine() {
-    // ★ここを新しいURLに書き換える★
+    // ★最新のGAS URLをここに設定してください★
     const gasUrl = 'https://script.google.com/macros/s/AKfycbzOS0IUuf_Q-UggnZanN0Kgj4bat_LIH4GliwXz6yUblqqBaOQ5siOfGIrT6VBpzdrW3A/exec';
-    
-    // ...以降の処理
-}
     
     // 送信するデータをまとめる
     const paramsData = new URLSearchParams();
-    paramsData.append('id', params.get('id'));
-
-    // ★ここが重要です★
-    // woman.htmlで設定した <input type="hidden" name="date" id="full_date"> 
-    // の値を取得して送信しています。
-    paramsData.append('date', params.get('date'));
     
-    paramsData.append('pref', params.get('pref'));
-    paramsData.append('play_content', params.get('play_content'));
-    paramsData.append('play_msg', params.get('play_msg'));
-    paramsData.append('member_count', params.get('member_count'));
-    paramsData.append('toys', params.get('toys'));
-    paramsData.append('public_note', params.get('public_note'));
-    paramsData.append('ng_list', params.get('ng_list'));
-    paramsData.append('other_ng', params.get('other_ng'));
-    paramsData.append('exam_status', params.get('exam_status'));
-    paramsData.append('private_note', params.get('private_note'));
+    // URLSearchParamsの中身をそのまま再利用
+    params.forEach((value, key) => {
+        paramsData.append(key, value);
+    });
 
     // ボタンを無効化して連打防止
     const btn = document.querySelector('.submit-btn');
@@ -120,7 +105,6 @@ function sendToLine() {
         btn.innerText = 'この内容で確定';
     });
 }
-// ...（略）
 </script>
 </body>
 </html>
