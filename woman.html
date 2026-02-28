@@ -190,16 +190,16 @@
 
             <label class="field-label">プレイ希望日時 <span class="required">必須</span></label>
             <div style="display: flex; gap: 8px; margin-top: 8px; width: 100%;">
-                <input type="date" id="play_date" required 
+                <input type="date" name="play_date" id="play_date" required 
                        style="flex: 2; padding: 16px 10px; font-size: 1em; height: 56px; background: var(--pink-light); border: 1px solid var(--tile-border); border-radius: 12px; color: #5a4d4d; -webkit-appearance: none;">
                 
-                <select id="play_time" required 
+                <select name="play_time" id="play_time" required 
                         style="flex: 1; padding: 16px 10px; font-size: 1em; height: 56px; background: var(--pink-light); border: 1px solid var(--tile-border); border-radius: 12px; color: #5a4d4d; -webkit-appearance: none; background-image: url('data:image/svg+xml,%3Csvg xmlns=\'http://www.w3.org/2000/svg\' width=\'12\' height=\'12\' viewBox=\'0 0 24 24\' fill=\'none\' stroke=\'%23b57d7d\' stroke-width=\'3\' stroke-linecap=\'round\' stroke-linejoin=\'round\'%3E%3Cpath d=\'M6 9l6 6 6-6\'%3E%3C/path%3E%3C/svg%3E'); background-repeat: no-repeat; background-position: right 10px center; background-size: 14px;">
                     <option value="">時間</option>
                 </select>
             </div>
             <input type="hidden" name="date" id="full_date">
-            <span class="field-note">※時間は0時00分～23時30分の間でお願いします。24時や25時表記は、ややこしくなるのでこのサークルでは使いません。</span>
+            <span class="field-note">※時間は0時00分～23時30分の間でお願いします。</span>
 
             <label class="field-label">開催する都道府県 <span class="required">必須</span></label>
             <select name="pref" required>
@@ -272,19 +272,12 @@
                 <input type="text" name="member_count" placeholder="1" style="width:100px; text-align:center; margin-top:0;" required>
                 <span style="font-weight:bold; color:var(--pink-deep);">人</span>
             </div>
-            <span class="field-note">現在、複数プレイは要相談としています。<br>
-※現在、監督増員育成中ですので、しばらく1対1でプレイするか、森と時間を合わせて頂くことになるかもしれません。(地域によっては、森以外も居ます)<br>
-※複数プレイは、監督探しからとなりますので、依頼日に必ず開催されるとは限りません。(プレイ依頼受付後に「監督願い」を森が、全監督宛に出して決まりますので、少しお日にちが必要となります)</span>
             
             <label class="field-label">使用して欲しい玩具</label>
              <textarea name="toys" placeholder=""></textarea>
-             <span class="field-note">バイブレーター、ローター、電マ、アナルグッズ、ローション、SMグッズ、アイマスク、その他</span>
             
             <label class="field-label">プレイ案件掲載項目</label>
-             <span class="field-note">※プレイ案件の「その他」の項目に掲載しますので、応募する男性に伝えたいことを記入してください。</span>
-             <span class="field-note">※面談時にお聞きしたNGなどは、毎回掲載します。</span>
              <textarea name="public_note" placeholder=""></textarea>
-            <span class="field-note">・他に希望のある方は詳しく書いてください。（あまり限定しすぎると男性が集まらないことがあります）<br>・プレイ場所の指定がなければ「ホテル」となります。</span>
             
             <label class="field-label">NGについて</label>
             <span class="field-note">当てはまる項目をタップしてください<br>(複数選択可)</span>
@@ -308,25 +301,21 @@
                 <div class="check-item" onclick="toggleSelection(this)">爪が不衛生な方</div>
                 <div class="check-item" onclick="toggleSelection(this)">過度に緊張する方</div>
             </div>
-            <span class="field-note">NGは、基本「面談時」にお伝えいただいたものが反映されますが、もし足したいものがあればお選びください。</span>
 
             <label class="field-label">その他NGあれば記入してください</label>
             <textarea name="other_ng" placeholder=""></textarea>
-            <span class="field-note">※NGが多いと男性は集まりにくいです</span>
+            
             <label class="field-label">日本性活プランナー協会の受検経験の有無</label>
             <div class="check-grid-mini">
                 <div class="check-item" id="exam-none" onclick="selectOne('exam', this)">無し</div>
                 <div class="check-item" id="exam-exists" onclick="selectOne('exam', this)">有り</div>
             </div>
             <input type="hidden" name="exam_status" id="exam_hidden">
-            <span class="field-note">性に前向きに向き合う姿勢の指標です。</span>
 
             <div class="admin-note-header">【以下、案件には掲載されません】</div>
             
             <label class="field-label">非掲載部分<br>※この項目はプレイ案件に記載しません。</label>
-            <span class="field-note">※「慣れている方でお願いします」などの「○○でお願いします」というものは、掲載項目にお願いします。これを掲載しないと、「慣れていない方」「○○でない方」も応募してきますので、抽選後に選別することはできません。</span>
             <textarea name="private_note" placeholder=""></textarea>
-            <span class="field-note">※今回だけ特別なことがある場合は必ず記入してください。<br>（登録県以外でプレイする場合やエリアが変わる場合など）</span>
         </div>
 
         <input type="hidden" name="play_content" id="play_hidden">
@@ -338,11 +327,9 @@
 
 <script>
 window.onload = function() {
-    // フォントサイズ適用（保存されたモードを適用）
     const savedMode = localStorage.getItem('fontSizeMode') || 'mid';
     applyFontSize(savedMode);
 
-    // 0:00から23:30までの選択肢を自動生成
     const timeSelect = document.getElementById('play_time');
     for (let h = 0; h < 24; h++) {
         for (let m = 0; m < 60; m += 30) {
@@ -355,7 +342,6 @@ window.onload = function() {
     }
 };
 
-// フォーム送信時の処理
 document.getElementById('mainForm').onsubmit = function() {
     // プレイ内容のテキストを取得してhiddenフィールドにセット
     const playItems = Array.from(document.querySelectorAll('#playGrid .active')).map(e => e.innerText);
@@ -365,7 +351,7 @@ document.getElementById('mainForm').onsubmit = function() {
     const ngItems = Array.from(document.querySelectorAll('#ngGrid .active')).map(e => e.innerText);
     document.getElementById('ng_hidden').value = ngItems.join(', ');
 
-    // 日付と時間を合体させてhiddenフィールドにセット
+    // ★修正：日付と時間を合体させてhiddenフィールドにセット
     const d = document.getElementById('play_date').value;
     const t = document.getElementById('play_time').value;
     if (d && t) {
@@ -375,7 +361,6 @@ document.getElementById('mainForm').onsubmit = function() {
     return true;
 };
 
-// フォントサイズ適用関数
 function applyFontSize(mode) {
     const root = document.documentElement;
     let size = '16px';
@@ -385,33 +370,27 @@ function applyFontSize(mode) {
     
     root.style.setProperty('--base-font-size', size);
     
-    // ボタンのスタイル切り替え
     document.querySelectorAll('.size-btn').forEach(btn => {
         btn.classList.toggle('active', btn.id === `btn-${mode}`);
     });
 }
 
-// フォントサイズ変更関数
 function changeFontSize(mode) {
     applyFontSize(mode);
     localStorage.setItem('fontSizeMode', mode);
 }
 
-// 強制リロード関数
 function fastUpdate() {
     document.querySelectorAll('.sync-target').forEach(i => i.classList.add('spinning'));
-    // キャッシュを避けるためタイムスタンプを付与
     setTimeout(() => {
         location.href = location.pathname + '?t=' + new Date().getTime();
     }, 600);
 }
 
-// 選択項目の切り替え
 function toggleSelection(el) {
     el.classList.toggle('active');
 }
 
-// 単一選択項目の処理
 function selectOne(group, el) {
     if(group === 'exam') {
         document.getElementById('exam-none').classList.remove('active');
