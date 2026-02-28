@@ -77,30 +77,28 @@ if(otherNg) document.getElementById('res-ng').innerHTML += '<br><small>追加：
 // admin/confirm.html
 
 // admin/confirm.html の JavaScript 内
+// admin/confirm.html の JavaScript 内
 function sendToLine() {
-    // ★最新のURLを貼り付けてください★
+    // 最新のデプロイURLをここに貼り付けてください
     const gasUrl = 'https://script.google.com/macros/s/AKfycbzOS0IUuf_Q-UggnZanN0Kgj4bat_LIH4GliwXz6yUblqqBaOQ5siOfGIrT6VBpzdrW3A/exec';
     
-    // 送信するデータをまとめる (params.getで woman.html からパラメータを取得)
+    // 送信するデータをまとめる
     const paramsData = new URLSearchParams();
-    paramsData.append('id', params.get('id'));                // ID
-    paramsData.append('date', params.get('date'));            // ★プレイ日時 (hiddenの値)
-    paramsData.append('pref', params.get('pref'));            // 都道府県
+    paramsData.append('id', params.get('id'));
+
+    // ★ここが重要です★
+    // woman.htmlで設定した <input type="hidden" name="date" id="full_date"> 
+    // の値を取得して送信しています。
+    paramsData.append('date', params.get('date'));
     
-    // プレイ内容（フリーテキストも結合）
-    const playContent = params.get('play_content') || '';
-    const playMsg = params.get('play_msg') || '';
-    paramsData.append('play_content', playContent + (playMsg ? ' (' + playMsg + ')' : ''));
-    
+    paramsData.append('pref', params.get('pref'));
+    paramsData.append('play_content', params.get('play_content'));
+    paramsData.append('play_msg', params.get('play_msg'));
     paramsData.append('member_count', params.get('member_count'));
     paramsData.append('toys', params.get('toys'));
     paramsData.append('public_note', params.get('public_note'));
-    
-    // NG項目（フリーテキストも結合）
-    const ngList = params.get('ng_list') || '';
-    const otherNg = params.get('other_ng') || '';
-    paramsData.append('ng_list', ngList + (otherNg ? ' (' + otherNg + ')' : ''));
-    
+    paramsData.append('ng_list', params.get('ng_list'));
+    paramsData.append('other_ng', params.get('other_ng'));
     paramsData.append('exam_status', params.get('exam_status'));
     paramsData.append('private_note', params.get('private_note'));
 
@@ -109,7 +107,7 @@ function sendToLine() {
     btn.disabled = true;
     btn.innerText = '送信中...';
 
-    // GoogleスプレッドシートへGETで送信
+    // Googleスプレッドシートへ送信
     fetch(gasUrl + '?' + paramsData.toString(), {
         method: 'GET'
     })
