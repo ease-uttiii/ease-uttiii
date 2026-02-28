@@ -337,6 +337,7 @@
 </div>
 
 <script>
+<script>
 window.onload = function() {
     // フォントサイズ適用
     const savedMode = localStorage.getItem('fontSizeMode') || 'mid';
@@ -355,27 +356,29 @@ window.onload = function() {
     }
 };
 
-// （中略：既存の関数などはそのまま）
-
+// フォーム送信時の処理
 document.getElementById('mainForm').onsubmit = function() {
-    // 既存の処理
+    // プレイ内容の結合
     const playItems = Array.from(document.querySelectorAll('#playGrid .active')).map(e => e.innerText);
     document.getElementById('play_hidden').value = playItems.join(', ');
     
+    // NG項目の結合
     const ngItems = Array.from(document.querySelectorAll('#ngGrid .active')).map(e => e.innerText);
     document.getElementById('ng_hidden').value = ngItems.join(', ');
 
-    // --- ここから追加：日付と時間を合体させて隠し入力にセット ---
+    // --- 【修正点】日付と時間を合体させて隠し入力(name="date")にセット ---
     const d = document.getElementById('play_date').value;
     const t = document.getElementById('play_time').value;
     if (d && t) {
+        // nameを"full_date"から"date"に変更
         document.getElementById('full_date').value = `${d} ${t}`;
     }
-    // --- ここまで追加 ---
+    // ------------------------------------------------------------------
     
     return true;
 };
 
+// --- 関数定義はそのまま ---
 function applyFontSize(mode) {
     const root = document.documentElement;
     if (mode === 'small') {
@@ -413,16 +416,6 @@ function selectOne(group, el) {
     el.classList.add('active');
 }
 
-// 送信時に選択項目をまとめる処理
-document.getElementById('mainForm').onsubmit = function() {
-    const playItems = Array.from(document.querySelectorAll('#playGrid .active')).map(e => e.innerText);
-    document.getElementById('play_hidden').value = playItems.join(', ');
-    
-    const ngItems = Array.from(document.querySelectorAll('#ngGrid .active')).map(e => e.innerText);
-    document.getElementById('ng_hidden').value = ngItems.join(', ');
-    
-    return true;
-};
 </script>
 </body>
 </html>
