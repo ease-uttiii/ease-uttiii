@@ -76,17 +76,18 @@ if(otherNg) document.getElementById('res-ng').innerHTML += '<br><small>追加：
 // ...（略）
 // admin/confirm.html
 
+// admin/confirm.html の JavaScript 内
 function sendToLine() {
-    // 最新のデプロイURLをここに貼り付けてください
+    // ★最新のURLを貼り付けてください★
     const gasUrl = 'https://script.google.com/macros/s/AKfycbzOS0IUuf_Q-UggnZanN0Kgj4bat_LIH4GliwXz6yUblqqBaOQ5siOfGIrT6VBpzdrW3A/exec';
     
-    // 送信するデータをまとめる (パラメータ名を woman.html のnameと一致させる)
+    // 送信するデータをまとめる (params.getで woman.html からパラメータを取得)
     const paramsData = new URLSearchParams();
-    paramsData.append('id', params.get('id'));
-    paramsData.append('date', params.get('date')); // ★ここが重要：woman.htmlの隠しフィールド名
-    paramsData.append('pref', params.get('pref'));
+    paramsData.append('id', params.get('id'));                // ID
+    paramsData.append('date', params.get('date'));            // ★プレイ日時 (hiddenの値)
+    paramsData.append('pref', params.get('pref'));            // 都道府県
     
-    // プレイ内容（詳細追記含む）
+    // プレイ内容（フリーテキストも結合）
     const playContent = params.get('play_content') || '';
     const playMsg = params.get('play_msg') || '';
     paramsData.append('play_content', playContent + (playMsg ? ' (' + playMsg + ')' : ''));
@@ -95,7 +96,7 @@ function sendToLine() {
     paramsData.append('toys', params.get('toys'));
     paramsData.append('public_note', params.get('public_note'));
     
-    // NG項目（追記含む）
+    // NG項目（フリーテキストも結合）
     const ngList = params.get('ng_list') || '';
     const otherNg = params.get('other_ng') || '';
     paramsData.append('ng_list', ngList + (otherNg ? ' (' + otherNg + ')' : ''));
@@ -108,7 +109,7 @@ function sendToLine() {
     btn.disabled = true;
     btn.innerText = '送信中...';
 
-    // Googleスプレッドシートへ送信
+    // GoogleスプレッドシートへGETで送信
     fetch(gasUrl + '?' + paramsData.toString(), {
         method: 'GET'
     })
