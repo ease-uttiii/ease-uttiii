@@ -55,7 +55,7 @@ function setText(id, paramName) {
 }
 
 setText('res-id', 'id');
-setText('res-date', 'date'); // これでwoman.htmlから合体された日時が表示されます
+setText('res-date', 'date');
 setText('res-pref', 'pref');
 setText('res-play', 'play_content');
 setText('res-count', 'member_count');
@@ -72,9 +72,8 @@ if(playMsg) document.getElementById('res-play').innerHTML += '<br><small>追加�
 const otherNg = params.get('other_ng');
 if(otherNg) document.getElementById('res-ng').innerHTML += '<br><small>追加：' + otherNg + '</small>';
 
-// --- 関数定義を修正 ---
 function sendToLine() {
-    // ★最新のGAS URLをここに設定してください★
+    // ★最新のGAS URL
     const gasUrl = 'https://script.google.com/macros/s/AKfycbzOS0IUuf_Q-UggnZanN0Kgj4bat_LIH4GliwXz6yUblqqBaOQ5siOfGIrT6VBpzdrW3A/exec';
     
     // 送信するデータをまとめる
@@ -97,7 +96,9 @@ function sendToLine() {
     .then(response => response.json())
     .then(data => {
         alert('保存しました。');
-        window.location.href = 'index.html';
+        
+        // ★修正ポイント：パラメータをクリアしてindex.htmlへ遷移
+        window.location.href = 'index.html?cleared=true';
     })
     .catch(error => {
         alert('エラーが発生しました。もう一度お試しください。');
