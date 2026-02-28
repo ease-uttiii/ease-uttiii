@@ -74,30 +74,41 @@ if(otherNg) document.getElementById('res-ng').innerHTML += '<br><small>追加：
 
 // admin/confirm.html の最後にある script タグ内の sendToLine 関数を書き換え
 // ...（略）
+// admin/confirm.html
+
 function sendToLine() {
-    // 1. ここに新しいURLを貼る
+    // 最新のデプロイURLをここに貼り付けてください
     const gasUrl = 'https://script.google.com/macros/s/AKfycbzOS0IUuf_Q-UggnZanN0Kgj4bat_LIH4GliwXz6yUblqqBaOQ5siOfGIrT6VBpzdrW3A/exec';
     
-    // 2. ★関数全体をこの形式に書き換える★
+    // 送信するデータをまとめる (パラメータ名を woman.html のnameと一致させる)
     const paramsData = new URLSearchParams();
     paramsData.append('id', params.get('id'));
-    paramsData.append('date', params.get('date'));
+    paramsData.append('date', params.get('date')); // ★ここが重要：woman.htmlの隠しフィールド名
     paramsData.append('pref', params.get('pref'));
-    paramsData.append('play_content', params.get('play_content'));
-    paramsData.append('play_msg', params.get('play_msg'));
+    
+    // プレイ内容（詳細追記含む）
+    const playContent = params.get('play_content') || '';
+    const playMsg = params.get('play_msg') || '';
+    paramsData.append('play_content', playContent + (playMsg ? ' (' + playMsg + ')' : ''));
+    
     paramsData.append('member_count', params.get('member_count'));
     paramsData.append('toys', params.get('toys'));
     paramsData.append('public_note', params.get('public_note'));
-    paramsData.append('ng_list', params.get('ng_list'));
-    paramsData.append('other_ng', params.get('other_ng'));
+    
+    // NG項目（追記含む）
+    const ngList = params.get('ng_list') || '';
+    const otherNg = params.get('other_ng') || '';
+    paramsData.append('ng_list', ngList + (otherNg ? ' (' + otherNg + ')' : ''));
+    
     paramsData.append('exam_status', params.get('exam_status'));
     paramsData.append('private_note', params.get('private_note'));
 
+    // ボタンを無効化して連打防止
     const btn = document.querySelector('.submit-btn');
     btn.disabled = true;
     btn.innerText = '送信中...';
 
-    // データを送信する
+    // Googleスプレッドシートへ送信
     fetch(gasUrl + '?' + paramsData.toString(), {
         method: 'GET'
     })
@@ -105,6 +116,11 @@ function sendToLine() {
     .then(data => {
         alert('保存しました。');
         window.location.href = 'index.html';
+    })
+    .catch(error => {
+        alert('エラーが発生しました。もう一度お試しください。');
+        btn.disabled = false;
+        btn.innerText = 'この内容で確定';
     });
 }
 // ...（略）
