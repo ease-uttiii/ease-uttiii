@@ -97,8 +97,8 @@ function sendToLine() {
     .then(data => {
         alert('保存しました。');
         
-        // ★修正ポイント：パラメータをクリアしてindex.htmlへ遷移
-        window.location.href = 'index.html?cleared=true';
+        // ★修正箇所：パラメータを確実にクリアして遷移
+        window.location.href = 'index.html'; 
     })
     .catch(error => {
         alert('エラーが発生しました。もう一度お試しください。');
