@@ -45,10 +45,13 @@ h1 { margin: 0; font-size: 1.1rem; letter-spacing: 0.05em; }
 const gasUrl = 'https://script.google.com/macros/s/AKfycbzOS0IUuf_Q-UggnZanN0Kgj4bat_LIH4GliwXz6yUblqqBaOQ5siOfGIrT6VBpzdrW3A/exec';
 
 async function loadData() {
+    const listDiv = document.getElementById('list');
+    
     try {
+        // GETでデータ配列を取得
         const response = await fetch(gasUrl);
         const data = await response.json();
-        const listDiv = document.getElementById('list');
+        
         listDiv.innerHTML = '';
 
         if (data.length === 0) {
@@ -56,61 +59,62 @@ async function loadData() {
             return;
         }
 
-        data.forEach(row => {
+        data.forEach(item => {
             const card = document.createElement('div');
             card.className = 'card';
             
-            // ★重要：row[0]から順に、送信側で設定した配列の順序と合わせてください
+            // ★修正ポイント：item.key名でデータを参照するようにしました
             card.innerHTML = `
     <div class="card-header">
-        <span class="card-id">ID: ${row[1]}</span>
-        <span>受付: ${new Date(row[0]).toLocaleString('ja-JP')}</span>
+        <span class="card-id">ID: ${item.id}</span>
+        <span>受付: ${new Date(item.submittedAt).toLocaleString('ja-JP')}</span>
     </div>
     
     <div class="info-item">
         <span class="label">【プレイ希望日時】</span>
-        <div class="content"><span class="date-content">${row[2]}</span></div>
+        <div class="content"><span class="date-content">${item.date}</span></div>
     </div>
 
     <div class="info-item">
         <span class="label">【場所 / 人数】</span>
-        <div class="content">${row[3]} ／ ${row[4]}名</div>
+        <div class="content">${item.pref} ／ ${item.member_count}名</div>
     </div>
 
     <div class="info-item">
         <span class="label">【プレイ内容】</span>
-        <div class="content">${row[5]}</div>
+        <div class="content">${item.play_content}</div>
     </div>
 
     <div class="info-item">
         <span class="label">【使用玩具】</span>
-        <div class="content">${row[6] || 'なし'}</div>
+        <div class="content">${item.toys || 'なし'}</div>
     </div>
 
     <div class="info-item">
         <span class="label">【掲載用メモ】</span>
-        <div class="content">${row[7] || '-'}</div>
+        <div class="content">${item.public_note || '-'}</div>
     </div>
 
     <div class="info-item">
         <span class="label">【NGリスト】</span>
-        <div class="content" style="color:#d9534f;">${row[8] || 'なし'}</div>
+        <div class="content" style="color:#d9534f;">${item.ng_list || 'なし'}</div>
     </div>
 
     <div class="info-item">
         <span class="label">【受検経験】</span>
-        <div class="content">${row[9]}</div>
+        <div class="content">${item.exam_status}</div>
     </div>
     
     <div class="private-section">
         <span class="private-label">非掲載メモ（管理用）</span>
-        <div class="content" style="font-size:0.9rem; color:#777; margin-top:5px;">${row[10] || 'なし'}</div>
+        <div class="content" style="font-size:0.9rem; color:#777; margin-top:5px;">${item.private_note || 'なし'}</div>
     </div>
 `;
             listDiv.appendChild(card);
         });
     } catch (e) {
-        document.getElementById('list').innerHTML = '<div class="loading">読み込みエラーが発生しました。</div>';
+        console.error(e);
+        listDiv.innerHTML = '<div class="loading">読み込みエラーが発生しました。</div>';
     }
 }
 
