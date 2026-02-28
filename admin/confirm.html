@@ -72,15 +72,13 @@ if(playMsg) document.getElementById('res-play').innerHTML += '<br><small>追加�
 const otherNg = params.get('other_ng');
 if(otherNg) document.getElementById('res-ng').innerHTML += '<br><small>追加：' + otherNg + '</small>';
 
-// admin/confirm.html の最後にある script タグ内の sendToLine 関数を書き換え
-// ...（略）
-// admin/confirm.html
-
-// admin/confirm.html の JavaScript 内
 // admin/confirm.html の JavaScript 内
 function sendToLine() {
-    // 最新のデプロイURLをここに貼り付けてください
+    // ★ここを新しいURLに書き換える★
     const gasUrl = 'https://script.google.com/macros/s/AKfycbzOS0IUuf_Q-UggnZanN0Kgj4bat_LIH4GliwXz6yUblqqBaOQ5siOfGIrT6VBpzdrW3A/exec';
+    
+    // ...以降の処理
+}
     
     // 送信するデータをまとめる
     const paramsData = new URLSearchParams();
