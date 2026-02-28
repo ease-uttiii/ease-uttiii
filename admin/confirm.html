@@ -72,8 +72,43 @@ if(playMsg) document.getElementById('res-play').innerHTML += '<br><small>追加�
 const otherNg = params.get('other_ng');
 if(otherNg) document.getElementById('res-ng').innerHTML += '<br><small>追加：' + otherNg + '</small>';
 
+// admin/confirm.html の最後にある script タグ内の sendToLine 関数を書き換え
 function sendToLine() {
-    alert('GitHub Pagesのため、ここから先はLINE転送などの外部連携設定が必要です。\n現在は確認画面までの動作となります。');
+    const gasUrl = 'https://script.google.com/macros/s/AKfycbzOS0IUuf_Q-UggnZanN0Kgj4bat_LIH4GliwXz6yUblqqBaOQ5siOfGIrT6VBpzdrW3A/exec'; // ←ここに貼り付け！
+    
+    // 送信するデータをまとめる
+    const data = {
+        id: params.get('id'),
+        date: params.get('date'),
+        pref: params.get('pref'),
+        play: params.get('play_content') + (params.get('play_msg') ? ' / ' + params.get('play_msg') : ''),
+        count: params.get('member_count'),
+        toys: params.get('toys'),
+        public: params.get('public_note'),
+        ng: params.get('ng_list') + (params.get('other_ng') ? ' / ' + params.get('other_ng') : ''),
+        exam: params.get('exam_status'),
+        private: params.get('private_note')
+    };
+
+    // ボタンを無効化して連打防止
+    const btn = document.querySelector('.submit-btn');
+    btn.disabled = true;
+    btn.innerText = '送信中...';
+
+    // Googleスプレッドシートへ送信
+    fetch(gasUrl, {
+        method: 'POST',
+        body: JSON.stringify(data)
+    })
+    .then(response => {
+        alert('ご依頼を確定し、スプレッドシートに保存しました。');
+        window.location.href = 'index.html'; // 一覧画面へ戻る
+    })
+    .catch(error => {
+        alert('エラーが発生しました。もう一度お試しください。');
+        btn.disabled = false;
+        btn.innerText = 'この内容で確定';
+    });
 }
 </script>
 </body>
