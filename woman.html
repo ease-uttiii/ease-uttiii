@@ -87,7 +87,7 @@
 
         .field-note { display: block; margin-top: 8px; font-size: 0.82em; color: var(--pink-deep); font-weight: bold; line-height: 1.4; }
 
-        input[type="text"], input[type="datetime-local"], select, textarea { 
+        input[type="text"], input[type="date"], select, textarea { 
             width: 100%; padding: 16px 14px; border-radius: 12px; border: 1px solid var(--tile-border); background: var(--pink-light); 
             box-sizing: border-box; font-size: 1.1em; font-family: inherit; outline: none; margin-top: 8px; display: block; 
             -webkit-appearance: none; appearance: none; color: #5a4d4d;
@@ -188,18 +188,18 @@
             <input type="text" name="id" placeholder="例：A-123" required>
             <span class="field-note">登録県と異なる場合は、必ずIDでお願いします。</span>
 
-           <label class="field-label">プレイ希望日時 <span class="required">必須</span></label>
-<div style="display: flex; gap: 8px; margin-top: 8px; width: 100%;">
-    <input type="date" id="play_date" required 
-           style="flex: 2; padding: 16px 10px; font-size: 1em; height: 56px; background: var(--pink-light); border: 1px solid var(--tile-border); border-radius: 12px; color: #5a4d4d; -webkit-appearance: none;">
-    
-    <select id="play_time" required 
-            style="flex: 1; padding: 16px 10px; font-size: 1em; height: 56px; background: var(--pink-light); border: 1px solid var(--tile-border); border-radius: 12px; color: #5a4d4d; -webkit-appearance: none; background-image: url('data:image/svg+xml,%3Csvg xmlns=\'http://www.w3.org/2000/svg\' width=\'12\' height=\'12\' viewBox=\'0 0 24 24\' fill=\'none\' stroke=\'%23b57d7d\' stroke-width=\'3\' stroke-linecap=\'round\' stroke-linejoin=\'round\'%3E%3Cpath d=\'M6 9l6 6 6-6\'%3E%3C/path%3E%3C/svg%3E'); background-repeat: no-repeat; background-position: right 10px center; background-size: 14px;">
-        <option value="">時間</option>
-    </select>
-</div>
-<input type="hidden" name="date" id="full_date">
-<span class="field-note">※時間は0時00分～23時30分の間でお願いします。24時や25時表記は、ややこしくなるのでこのサークルでは使いません。</span>
+            <label class="field-label">プレイ希望日時 <span class="required">必須</span></label>
+            <div style="display: flex; gap: 8px; margin-top: 8px; width: 100%;">
+                <input type="date" id="play_date" required 
+                       style="flex: 2; padding: 16px 10px; font-size: 1em; height: 56px; background: var(--pink-light); border: 1px solid var(--tile-border); border-radius: 12px; color: #5a4d4d; -webkit-appearance: none;">
+                
+                <select id="play_time" required 
+                        style="flex: 1; padding: 16px 10px; font-size: 1em; height: 56px; background: var(--pink-light); border: 1px solid var(--tile-border); border-radius: 12px; color: #5a4d4d; -webkit-appearance: none; background-image: url('data:image/svg+xml,%3Csvg xmlns=\'http://www.w3.org/2000/svg\' width=\'12\' height=\'12\' viewBox=\'0 0 24 24\' fill=\'none\' stroke=\'%23b57d7d\' stroke-width=\'3\' stroke-linecap=\'round\' stroke-linejoin=\'round\'%3E%3Cpath d=\'M6 9l6 6 6-6\'%3E%3C/path%3E%3C/svg%3E'); background-repeat: no-repeat; background-position: right 10px center; background-size: 14px;">
+                    <option value="">時間</option>
+                </select>
+            </div>
+            <input type="hidden" name="date" id="full_date">
+            <span class="field-note">※時間は0時00分～23時30分の間でお願いします。24時や25時表記は、ややこしくなるのでこのサークルでは使いません。</span>
 
             <label class="field-label">開催する都道府県 <span class="required">必須</span></label>
             <select name="pref" required>
@@ -337,9 +337,8 @@
 </div>
 
 <script>
-<script>
 window.onload = function() {
-    // フォントサイズ適用
+    // フォントサイズ適用（保存されたモードを適用）
     const savedMode = localStorage.getItem('fontSizeMode') || 'mid';
     applyFontSize(savedMode);
 
@@ -356,55 +355,63 @@ window.onload = function() {
     }
 };
 
-// woman.html の JavaScript 中の document.getElementById('mainForm').onsubmit
+// フォーム送信時の処理
 document.getElementById('mainForm').onsubmit = function() {
-    // 既存の処理
+    // プレイ内容のテキストを取得してhiddenフィールドにセット
     const playItems = Array.from(document.querySelectorAll('#playGrid .active')).map(e => e.innerText);
     document.getElementById('play_hidden').value = playItems.join(', ');
     
+    // NGリストのテキストを取得してhiddenフィールドにセット
     const ngItems = Array.from(document.querySelectorAll('#ngGrid .active')).map(e => e.innerText);
     document.getElementById('ng_hidden').value = ngItems.join(', ');
 
-    // ★重要：プレイ日時の値をここで合体させる
+    // 日付と時間を合体させてhiddenフィールドにセット
     const d = document.getElementById('play_date').value;
     const t = document.getElementById('play_time').value;
     if (d && t) {
-        // hidden input の name="date" に値をセット
         document.getElementById('full_date').value = d + " " + t;
     }
     
     return true;
 };
 
-// --- 関数定義はそのまま ---
+// フォントサイズ適用関数
 function applyFontSize(mode) {
     const root = document.documentElement;
-    if (mode === 'small') {
-        root.style.setProperty('--base-font-size', '13px');
-    } else if (mode === 'mid') {
-        root.style.setProperty('--base-font-size', '16px');
-    } else if (mode === 'large') {
-        root.style.setProperty('--base-font-size', '20px');
-    }
+    let size = '16px';
+    if (mode === 'small') size = '13px';
+    else if (mode === 'mid') size = '16px';
+    else if (mode === 'large') size = '20px';
+    
+    root.style.setProperty('--base-font-size', size);
+    
+    // ボタンのスタイル切り替え
     document.querySelectorAll('.size-btn').forEach(btn => {
         btn.classList.toggle('active', btn.id === `btn-${mode}`);
     });
 }
 
+// フォントサイズ変更関数
 function changeFontSize(mode) {
     applyFontSize(mode);
     localStorage.setItem('fontSizeMode', mode);
 }
 
+// 強制リロード関数
 function fastUpdate() {
     document.querySelectorAll('.sync-target').forEach(i => i.classList.add('spinning'));
-    setTimeout(() => location.reload(true), 600);
+    // キャッシュを避けるためタイムスタンプを付与
+    setTimeout(() => {
+        location.href = location.pathname + '?t=' + new Date().getTime();
+    }, 600);
 }
 
+// 選択項目の切り替え
 function toggleSelection(el) {
     el.classList.toggle('active');
 }
 
+// 単一選択項目の処理
 function selectOne(group, el) {
     if(group === 'exam') {
         document.getElementById('exam-none').classList.remove('active');
@@ -413,7 +420,6 @@ function selectOne(group, el) {
     }
     el.classList.add('active');
 }
-
 </script>
 </body>
 </html>
