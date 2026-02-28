@@ -73,43 +73,41 @@ const otherNg = params.get('other_ng');
 if(otherNg) document.getElementById('res-ng').innerHTML += '<br><small>追加：' + otherNg + '</small>';
 
 // admin/confirm.html の最後にある script タグ内の sendToLine 関数を書き換え
+// ...（略）
 function sendToLine() {
-    const gasUrl = 'https://script.google.com/macros/s/AKfycbzOS0IUuf_Q-UggnZanN0Kgj4bat_LIH4GliwXz6yUblqqBaOQ5siOfGIrT6VBpzdrW3A/exec// ←ここに貼り付け！
+    // 1. ここに新しいURLを貼る
+    const gasUrl = 'https://script.google.com/macros/s/ここにURLを貼り付け/exec';
     
-    // 送信するデータをまとめる
-    const data = {
-        id: params.get('id'),
-        date: params.get('date'),
-        pref: params.get('pref'),
-        play: params.get('play_content') + (params.get('play_msg') ? ' / ' + params.get('play_msg') : ''),
-        count: params.get('member_count'),
-        toys: params.get('toys'),
-        public: params.get('public_note'),
-        ng: params.get('ng_list') + (params.get('other_ng') ? ' / ' + params.get('other_ng') : ''),
-        exam: params.get('exam_status'),
-        private: params.get('private_note')
-    };
+    // 2. ★関数全体をこの形式に書き換える★
+    const paramsData = new URLSearchParams();
+    paramsData.append('id', params.get('id'));
+    paramsData.append('date', params.get('date'));
+    paramsData.append('pref', params.get('pref'));
+    paramsData.append('play_content', params.get('play_content'));
+    paramsData.append('play_msg', params.get('play_msg'));
+    paramsData.append('member_count', params.get('member_count'));
+    paramsData.append('toys', params.get('toys'));
+    paramsData.append('public_note', params.get('public_note'));
+    paramsData.append('ng_list', params.get('ng_list'));
+    paramsData.append('other_ng', params.get('other_ng'));
+    paramsData.append('exam_status', params.get('exam_status'));
+    paramsData.append('private_note', params.get('private_note'));
 
-    // ボタンを無効化して連打防止
     const btn = document.querySelector('.submit-btn');
     btn.disabled = true;
     btn.innerText = '送信中...';
 
-    // Googleスプレッドシートへ送信
-    fetch(gasUrl, {
-        method: 'POST',
-        body: JSON.stringify(data)
+    // データを送信する
+    fetch(gasUrl + '?' + paramsData.toString(), {
+        method: 'GET'
     })
-    .then(response => {
-        alert('ご依頼を確定し、スプレッドシートに保存しました。');
-        window.location.href = 'index.html'; // 一覧画面へ戻る
-    })
-    .catch(error => {
-        alert('エラーが発生しました。もう一度お試しください。');
-        btn.disabled = false;
-        btn.innerText = 'この内容で確定';
+    .then(response => response.json())
+    .then(data => {
+        alert('保存しました。');
+        window.location.href = 'index.html';
     });
 }
+// ...（略）
 </script>
 </body>
 </html>
