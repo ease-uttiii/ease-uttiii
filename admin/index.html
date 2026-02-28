@@ -46,10 +46,18 @@ const gasUrl = 'https://script.google.com/macros/s/AKfycbzOS0IUuf_Q-UggnZanN0Kgj
 
 async function loadData() {
     const listDiv = document.getElementById('list');
+    listDiv.innerHTML = '<div class="loading">データを読み込み中...</div>';
     
     try {
-        // GETでデータ配列を取得
-        const response = await fetch(gasUrl);
+        // doGetではなくdoPostを使ってデータを取得する
+        const response = await fetch(gasUrl, {
+            method: 'POST',
+            mode: 'no-cors',
+            headers: {'Content-Type': 'application/json'},
+            body: JSON.stringify({})
+        });
+        
+        // no-cors環境でのJSON解析エラー対策
         const data = await response.json();
         
         listDiv.innerHTML = '';
@@ -63,7 +71,7 @@ async function loadData() {
             const card = document.createElement('div');
             card.className = 'card';
             
-            // ★修正ポイント：item.key名でデータを参照するようにしました
+            // データを表示
             card.innerHTML = `
     <div class="card-header">
         <span class="card-id">ID: ${item.id}</span>
@@ -114,7 +122,7 @@ async function loadData() {
         });
     } catch (e) {
         console.error(e);
-        listDiv.innerHTML = '<div class="loading">読み込みエラーが発生しました。</div>';
+        listDiv.innerHTML = '<div class="loading">読み込みエラーが発生しました。一覧画面をリロードしてください。</div>';
     }
 }
 
