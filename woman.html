@@ -337,6 +337,40 @@
 window.onload = function() {
     const savedMode = localStorage.getItem('fontSizeMode') || 'mid';
     applyFontSize(savedMode);
+
+    // --- ここから追加：30分刻みの時間リストを作成 ---
+    const timeSelect = document.getElementById('play_time');
+    for (let h = 0; h < 24; h++) {
+        for (let m = 0; m < 60; m += 30) {
+            const hour = h.toString().padStart(2, '0');
+            const min = m.toString().padStart(2, '0');
+            const time = `${hour}:${min}`;
+            const option = new Option(time, time);
+            timeSelect.add(option);
+        }
+    }
+    // --- ここまで追加 ---
+};
+
+// （中略：既存の関数などはそのまま）
+
+document.getElementById('mainForm').onsubmit = function() {
+    // 既存の処理
+    const playItems = Array.from(document.querySelectorAll('#playGrid .active')).map(e => e.innerText);
+    document.getElementById('play_hidden').value = playItems.join(', ');
+    
+    const ngItems = Array.from(document.querySelectorAll('#ngGrid .active')).map(e => e.innerText);
+    document.getElementById('ng_hidden').value = ngItems.join(', ');
+
+    // --- ここから追加：日付と時間を合体させて隠し入力にセット ---
+    const d = document.getElementById('play_date').value;
+    const t = document.getElementById('play_time').value;
+    if (d && t) {
+        document.getElementById('full_date').value = `${d} ${t}`;
+    }
+    // --- ここまで追加 ---
+    
+    return true;
 };
 
 function applyFontSize(mode) {
