@@ -41,7 +41,8 @@ h1 { margin: 0; font-size: 1.1rem; letter-spacing: 0.05em; }
 </div>
 
 <script>
-const gasUrl = 'https://script.google.com/macros/s/AKfycbzOS0IUuf_Q-UggnZanN0Kgj4bat_LIH4GliwXz6yUblqqBaOQ5siOfGIrT6VBpzdrW3A/exec// ←ここに貼り付け！
+// ★ここへデプロイした最新のURLを貼り付けてください★
+const gasUrl = 'https://script.google.com/macros/s/AKfycbzOS0IUuf_Q-UggnZanN0Kgj4bat_LIH4GliwXz6yUblqqBaOQ5siOfGIrT6VBpzdrW3A/exec';
 
 async function loadData() {
     try {
@@ -58,11 +59,12 @@ async function loadData() {
         data.forEach(row => {
             const card = document.createElement('div');
             card.className = 'card';
-            // data.forEach(row => { ... }) の中の card.innerHTML をこれに差し替え
-card.innerHTML = `
+            
+            // ★重要：row[0]から順に、送信側で設定した配列の順序と合わせてください
+            card.innerHTML = `
     <div class="card-header">
         <span class="card-id">ID: ${row[1]}</span>
-        <span>${new Date(row[0]).toLocaleString('ja-JP')}</span>
+        <span>受付: ${new Date(row[0]).toLocaleString('ja-JP')}</span>
     </div>
     
     <div class="info-item">
@@ -72,12 +74,12 @@ card.innerHTML = `
 
     <div class="info-item">
         <span class="label">【場所 / 人数】</span>
-        <div class="content">${row[3]} ／ ${row[5]}名</div>
+        <div class="content">${row[3]} ／ ${row[4]}名</div>
     </div>
 
     <div class="info-item">
-        <span class="label">【プレイ内容（詳細）】</span>
-        <div class="content">${row[4] || '-'}</div>
+        <span class="label">【プレイ内容】</span>
+        <div class="content">${row[5]}</div>
     </div>
 
     <div class="info-item">
