@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>依頼一覧 | 管理用画面</title>
+    <style>
+        :root { --mauve-admin: #8e7a8a; --pink-light: #fdf8f7; }
+        body { font-family: 'Noto Sans JP', sans-serif; background: var(--pink-light); color: #5a4d4d; margin: 0; padding: 15px; }
+        header { background: var(--mauve-admin); color: white; padding: 15px; text-align: center; border-radius: 15px; margin-bottom: 20px; box-shadow: 0 4px 15px rgba(0,0,0,0.1); }
+        h1 { margin: 0; font-size: 1.2rem; }
+        .list-container { max-width: 800px; margin: 0 auto; }
+        .card { background: white; border-radius: 15px; padding: 15px; margin-bottom: 15px; border-left: 6px solid var(--mauve-admin); box-shadow: 0 4px 10px rgba(0,0,0,0.05); }
+        .card-header { display: flex; justify-content: space-between; border-bottom: 1px solid #eee; padding-bottom: 8px; margin-bottom: 10px; font-size: 0.85rem; color: #888; }
+        .card-id { font-weight: bold; color: var(--mauve-admin); font-size: 1rem; }
+        .card-body { font-size: 0.95rem; line-height: 1.6; }
+        .info-row { margin-bottom: 5px; }
+        .label { font-weight: bold; color: #8e7a8a; width: 80px; display: inline-block; }
+        .loading { text-align: center; padding: 50px; color: var(--mauve-admin); font-weight: bold; }
+    </style>
+</head>
+<body>
+
+<header>
+    <h1>届いたプレイ依頼一覧</h1>
+</header>
+
+<div class="list-container" id="list">
+    <div class="loading">データを読み込み中...</div>
+</div>
+
+<script>
+const gasUrl = 'ここにデプロイしたURLを貼る'; // ←ここに貼り付け！
+
+async function loadData() {
+    try {
+        const response = await fetch(gasUrl);
+        const data = await response.json();
+        const listDiv = document.getElementById('list');
+        listDiv.innerHTML = '';
+
+        if (data.length === 0) {
+            listDiv.innerHTML = '<div class="loading">まだ依頼はありません。</div>';
+            return;
+        }
+
+        data.forEach(row => {
+            const card = document.createElement('div');
+            card.className = 'card';
+            card.innerHTML = `
+                <div class="card-header">
+                    <span>送信日: ${new Date(row[0]).toLocaleString('ja-JP')}</span>
+                    <span class="card-id">ID: ${row[1]}</span>
+                </div>
+                <div class="card-body">
+                    <div class="info-row"><span class="label">プレイ日時:</span> ${row[2]}</div>
+                    <div class="info-row"><span class="label">都道府県:</span> ${row[3]}</div>
+                    <div class="info-row"><span class="label">プレイ内容:</span> ${row[4]}</div>
+                    <div class="info-row"><span class="label">希望人数:</span> ${row[5]}人</div>
+                    <div class="info-row"><span class="label">NG項目:</span> ${row[8]}</div>
+                    <div style="margin-top:10px; padding-top:10px; border-top:1px dashed #eee; color:#d4a5a5; font-size:0.85rem;">
+                        <strong>【非掲載メモ】</strong><br>${row[10] || 'なし'}
+                    </div>
+                </div>
+            `;
+            listDiv.appendChild(card);
+        });
+    } catch (e) {
+        document.getElementById('list').innerHTML = '<div class="loading">読み込みエラーが発生しました。</div>';
+    }
+}
+
+loadData();
+</script>
+</body>
+</html>
