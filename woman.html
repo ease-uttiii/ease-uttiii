@@ -321,19 +321,21 @@
 </dialog>
 
 <script>
-
-// ★この関数全体を差し替えてください
 function openModal(dialogId) {
     const dialog = document.getElementById(dialogId);
     
     // スクロールコンテナを取得
     const inner = dialog.querySelector('.modal-inner');
-    if (inner) {
-        // ★ここが重要：表示前に一番上に戻す
-        inner.scrollTop = 0; 
-    }
     
-    dialog.showModal(); // ダイアログを表示
+    dialog.showModal(); // 先にダイアログを表示する
+
+    // ★修正箇所：ダイアログ表示後に、スクロール位置を0（上）にする
+    if (inner) {
+        // コンテンツ描画が確定した瞬間に位置を補正する
+        setTimeout(() => {
+            inner.scrollTop = 0;
+        }, 0);
+    }
 }
 
 window.onload = function() {
