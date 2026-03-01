@@ -66,37 +66,37 @@
             white-space: nowrap;
         }
 
-        /* ★お知らせリンクのスタイル (目立たせる設定) */
         .announcement-link {
-            display: block;
-            background: #fdf5f8;                /* 背景色を薄いモーブピンクに */
-            color: var(--mauve-admin);
-            border: 1px solid rgba(142, 122, 138, 0.5); /* 枠線を強調 */
-            padding: 12px;
-            border-radius: 12px;
-            text-decoration: none;
-            max-width: 450px;
-            margin: 15px auto 0;
-            width: 85%;
-            text-align: center;
-            box-shadow: 0 4px 15px rgba(142, 122, 138, 0.15); /* 影を強調 */
-            transition: all 0.2s;
-        }
-        .announcement-link:active { background: #fce8f0; }
-        
-        .ann-title {
-            display: block;
-            font-size: 13px; /* 文字を少し大きく */
-            font-weight: bold;
-            margin-bottom: 2px;
-            color: #7a5a5a; /* 文字色を濃く */
-        }
-        
-        .ann-date {
-            display: block;
-            font-size: 10px;
-            color: #a89e9e;
-        }
+    display: block;
+    background: #fdf5f8;
+    color: var(--mauve-admin);
+    border: 2px solid var(--mauve-admin); /* ★枠線を太く */
+    padding: 20px; /* ★内側の余白を広げて大きく */
+    border-radius: 16px;
+    text-decoration: none;
+    max-width: 450px;
+    margin: 20px auto 0; /* ★上余白を少し広げる */
+    width: 85%;
+    text-align: center;
+    box-shadow: 0 6px 20px rgba(142, 122, 138, 0.2); /* ★影をさらに強めに */
+    transition: all 0.2s;
+}
+.announcement-link:active { background: #fce8f0; transform: scale(0.98); } /* ★押した時に少し小さくなる動き追加 */
+
+.ann-title {
+    display: block;
+    font-size: 18px; /* ★文字サイズを大幅に大きく */
+    font-weight: bold;
+    margin-bottom: 5px;
+    color: var(--mauve-deep);
+}
+
+.ann-date {
+    display: block;
+    font-size: 12px; /* ★日付サイズも少し大きく */
+    color: #a89e9e;
+    font-weight: bold;
+}
 
         .reload-icon {
             display: inline-block;
