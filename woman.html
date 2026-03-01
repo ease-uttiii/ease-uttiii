@@ -48,7 +48,6 @@
 
         .form-section { background: var(--card-bg); border-radius: 24px; padding: 25px 15px; box-shadow: var(--tile-shadow); margin-bottom: 25px; }
         
-        /* ラベルが大サイズでも崩れないように設定 */
         .field-label { 
             font-weight: bold; color: #fff; background: var(--pink-deep);
             display: inline-flex; align-items: center; padding: 6px 14px; border-radius: 8px; margin-top: 1.8em; 
@@ -68,7 +67,6 @@
 
         .check-grid { display: flex; flex-direction: column; gap: 10px; margin-top: 12px; }
         
-        /* 大サイズでも枠からはみ出ない工夫 */
         .check-item { 
             background: #fff; border: 1px solid var(--tile-border); padding: 15px 10px; border-radius: 12px; 
             font-size: 1em; text-align: center; cursor: pointer; font-weight: bold; 
@@ -199,7 +197,8 @@
             <textarea name="other_ng" placeholder="その他NGあれば記入してください"></textarea>
             
             <label class="field-label">日本性活プランナー協会の受検経験</label>
-            <div class="check-grid" style="flex-direction: row; gap: 10px;">
+            <span class="field-note">性に前向きに向き合う姿勢の指標です。</span>
+            <div class="check-grid" style="flex-direction: row; gap: 10px; margin-top: 10px;">
                 <div class="check-item" id="ex-n" style="flex:1;" onclick="selectExam('無し')">無し</div>
                 <div class="check-item" id="ex-y" style="flex:1;" onclick="selectExam('有り')">有り</div>
             </div>
