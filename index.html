@@ -166,7 +166,7 @@
 
         .size-btn { 
     border: none; 
-    background: #ffffff; /* ★背景を白に */
+    background: #ffffff; 
     padding: 8px 16px; 
     font-size: 13px; 
     font-weight: 800; 
@@ -174,16 +174,15 @@
     border-radius: 9px; 
     cursor: pointer; 
     transition: 0.2s;
-    min-width: 45px;
-    box-shadow: 0 1px 3px rgba(0,0,0,0.1); /* ★立体感をプラス */
+    min-width: 45px;                
+    box-shadow: 0 1px 3px rgba(0,0,0,0.1); /* 立体感追加 */
 }
 
         .size-btn.active { 
-            background: #ffffff; 
-            color: var(--mauve-admin); 
-            box-shadow: 0 3px 10px rgba(142, 122, 138, 0.3); 
-        }
-
+    background: var(--mauve-admin); /* ★モーブカラーの背景 */
+    color: #ffffff; /* ★白文字 */
+    box-shadow: 0 3px 10px rgba(142, 122, 138, 0.4); 
+}
     </style>
 </head>
 <body>
