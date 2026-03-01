@@ -101,22 +101,24 @@
 <header>
     <h1>女性用プレイ依頼フォーム</h1>
     <div class="header-controls">
-        <a href="index.html" class="head-btn">帰る場所</a>
+        <a href="index.html" class="head-btn">TOPへ戻る</a>
         
         <button id="force-reload-btn" class="head-btn" onclick="fastUpdate()">
             <span class="reload-icon sync-target"></span> 最新にリロード <span class="reload-icon sync-target"></span>
         </button>
-        <div class="size-selector">
-            <button type="button" class="size-btn" id="btn-small" onclick="changeFontSize('small')">小</button>
-            <button type="button" class="size-btn" id="btn-mid" onclick="changeFontSize('mid')">中</button>
-            <button type="button" class="size-btn" id="btn-large" onclick="changeFontSize('large')">大</button>
-        </div>
     </div>
 </header>
 
 <div class="container">
     <button type="button" class="notice-btn" onclick="document.getElementById('notice-dialog').showModal()">⚠依頼に関する大切なお願い</button>
-
+ <div class="size-selector">
+            <span>FIND BY AREA</span>
+            <div class="size-selector">
+                <button class="size-btn" id="btn-small" onclick="changeFontSize('small')">小</button>
+                <button class="size-btn" id="btn-mid" onclick="changeFontSize('mid')">中</button>
+                <button class="size-btn" id="btn-large" onclick="changeFontSize('large')">大</button>
+            </div>
+        </div>
     <dialog id="notice-dialog" class="notice-modal">
         <div class="modal-inner">
             <h3 style="color:var(--mauve-admin); text-align:center;">申し訳ございませんが、<br>下記のご理解をお願いします。</h3>
