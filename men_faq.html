@@ -5,7 +5,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
     <title>男性からの質問 - ease</title>
     <link href="https://fonts.googleapis.com/css2?family=Lora:wght@600&family=Noto+Sans+JP:wght@400;700&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="style.css">
     <style>
         :root {
             /* ★管理用カラー：上品なモーブカラー */
@@ -16,8 +15,6 @@
             --mauve-text: #5a4a4a;
             --shadow: 0 8px 25px rgba(153, 93, 112, 0.08);
             --tile-shadow: 0 4px 10px rgba(0,0,0,0.04);
-            
-            /* フォントサイズはJSで管理するためCSS変数での定義を削除 */
         }
 
         body { 
@@ -26,8 +23,6 @@
             background: var(--mauve-bg); 
             color: var(--mauve-text);
             -webkit-font-smoothing: antialiased; 
-            /* ★サイズ変更の動きをスムーズにする */
-            transition: font-size 0.2s ease;
             -webkit-tap-highlight-color: transparent;
             line-height: 1.6;
         }
@@ -52,6 +47,32 @@
             border-radius: 30px; padding: 6px 14px; font-size: 11px; font-weight: bold; color: white;
             cursor: pointer; text-decoration: none; display: flex; align-items: center; justify-content: center;
             height: 28px; box-sizing: border-box; white-space: nowrap;
+        }
+        
+        /* ★ダイアログ表示用ボタンのスタイル */
+        .info-btn-wrapper {
+            background: var(--mauve-bg);
+            padding: 10px 1rem 0;
+            display: flex;
+            justify-content: center;
+        }
+        .open-modal-btn {
+            background: white;
+            border: 2px solid var(--mauve-main);
+            color: var(--mauve-deep);
+            border-radius: 12px;
+            padding: 10px 20px;
+            font-weight: bold;
+            font-size: 0.9em;
+            cursor: pointer;
+            box-shadow: var(--tile-shadow);
+            transition: all 0.2s;
+            width: 100%;
+            max-width: 550px;
+        }
+        .open-modal-btn:active {
+            background: var(--mauve-light);
+            transform: scale(0.99);
         }
         
         .container { padding: 1rem; max-width: 550px; margin: 0 auto; }
@@ -144,22 +165,6 @@
         .modal-body strong { color: var(--mauve-deep); }
         /* ---------------------------------- */
         
-        /* ★文字サイズ変更ボタン用のCSS★ */
-        .font-size-buttons {
-            display: flex;
-            justify-content: center;
-            gap: 5px;
-            margin-top: 10px;
-        }
-        .size-btn {
-            background: rgba(255, 255, 255, 0.3);
-            border: 1px solid rgba(255, 255, 255, 0.5);
-            border-radius: 15px;
-            padding: 2px 10px;
-            font-size: 10px;
-            color: white;
-            cursor: pointer;
-        }
     </style>
 </head>
 <body>
@@ -169,8 +174,11 @@
         <a href="index.html" class="head-btn">TOPへ戻る</a>
         <a href="men_announce.html" class="head-btn">お知らせへ戻る</a>
     </div>
-    
 </header>
+
+<div class="info-btn-wrapper">
+    <button class="open-modal-btn" onclick="openModal()">サークルの基本情報を確認する</button>
+</div>
 
 <div class="container">
     <div class="card">
@@ -184,106 +192,8 @@
             <p>恋愛目的ではなく、非日常の安心・安全な性活動を目的としているため、ルールのご理解とご同意が前提となります。</p>
         </div>
     </div>
-
-    <div class="card">
-        <h2 class="card-title">女性と連絡先を交換しても良いですか？</h2>
-        <div class="answer">
-            <p>サークルeaseでは、連絡先の直接交換は原則禁止とされています。ただし、以下のような例外があります。</p>
-            <p>女性側が「もう一度会いたい男性」がいる場合、サークル（森）を通じて確認を行います。<br>
-            男性の同意が得られた場合に限り、サークル経由で連絡先をお伝えすることが可能です。</p>
-            <p>その後のやり取りはすべて自己責任となり、サークルは関与いたしません。</p>
-            <div class="important-note">
-                ※なお、連絡先交換後にトラブルとなるケースが多く報告されておりますので、慎重にご判断いただくことを強くおすすめします。<br>
-                <strong>※間違っても、連絡先を聞くように誘導したり、促したりしないでください。</strong>
-            </div>
-        </div>
+    
     </div>
-
-    <div class="card">
-        <h2 class="card-title">プレイ案件は、もっと先までわかりませんか？予定が組めません。</h2>
-        <div class="answer">
-            <p>女性からのプレイ依頼は、平均2日前に出されることが多いです。</p>
-            <p>女性からすれば、セックスがしたいと思った時にプレイができるのが一番良いのですが、さすがにサークル側も毎回それに対応することができない為、少しでも早目にプレイ依頼を出してもらうようにと、お願いだけしている状態です。</p>
-            <p>もちろん、一週間前などに依頼を出していただける女性も居ますが、自分がセックスがしたいと思った時に依頼を出してもらって、男性側で対応している方が、お互い気持ちが入り、プレイが楽しくなるというのがサークルの判断なので、このような仕組みをとっています。</p>
-            <p>女性の気持ちが入っていないと、セックスは楽しくなりませんので、ご理解ください。</p>
-        </div>
-    </div>
-
-    <div class="card">
-        <h2 class="card-title">月会費の支払い方法はクレジットカード払いだけですか？</h2>
-        <div class="answer">
-            <p>クレジットカード払いとpaypay払いとなります。</p>
-            <div class="important-note">
-                ※クレジットカードやpaypayの情報は、当サークルには提示されませんが、もし犯罪などが起きた場合に、クレジットカード会社の情報やpaypayの情報から個人が特定できるように、必ずクレジットカード払いか本人確認済みのpaypay払いをお願いしています<br>
-                (何も問題がない場合は、サークル側に個人情報が知らされることはありません)
-            </div>
-            <p>※月会費は、脱退・月会費設定解除フォームからいつでも解除できます</p>
-        </div>
-    </div>
-
-    <div class="card">
-        <h2 class="card-title">参加料金はどのくらい掛かりますか？</h2>
-        <div class="answer">
-            <p>毎月1,000円の月会費と各プレイ参加費のみとなります</p>
-            <p>※参加費は、事前に掲載しているか、お伝えする金額となり、後から上がる事はありません</p>
-            <p>※特別な場所や特別な道具使用時は、参加費で補うために高くなる（20,000円まで）場合がありますが、高いと思う場合は参加希望を出さなければ大丈夫です</p>
-            <p>※ホテル代程度とは、その日に掛かるホテル代です(3,000円～くらいだと思います)</p>
-        </div>
-    </div>
-
-    <div class="card">
-        <h2 class="card-title">抽選は当たりますか？</h2>
-        <div class="answer">
-            <p>抽選は、PCのソフトを使用し、『ガチ』で行っております</p>
-            <p>数ヶ月当たらない方もいれば、月2回当たった方もいます</p>
-            <p class="sub-text">※抽選以外にメンバーに直接メールをさせていただくことが多々ありますが、それは抽選には含まれません。(タイプなどの関係の為です)</p>
-        </div>
-    </div>
-
-    <div class="card">
-        <h2 class="card-title">抽選結果はいつ分かりますか？</h2>
-        <div class="answer">
-            <p>抽選は、プレイ前日に行い「当選者1名」を決めています。そして、「当選者のみ」に連絡しています。<br>
-            <span class="sub-text">※男性メンバー急増につき、2022年8月20日に変更しました。</span></p>
-            <p>当選者には、【〇〇日のプレイ希望の抽選に予備当選しました】と、すぐに連絡しています。</p>
-            <p>その【当選】の連絡が前日中に来ないのであれば落選となります。</p>
-            <p>このようなシステムなので、残念ながら抽選に外れた方には連絡していません。</p>
-            
-            <p><strong>《時間について》</strong></p>
-            <p>実は時間が決まっていないというのが正しい回答です。</p>
-            <p>2022年8月に抽選日を前日に変更したのですが、その理由は前日にキャンセルする女性や生理になる女性が多いということからです。</p>
-            <p>それをなるべく避ける為に、前日（前々日）に女性へプレイを進めていいかの確認をし、大丈夫と分かった時点で当選者に連絡をするという方法に変えました。</p>
-            <p>なので、その女性の返信時間が抽選開始のタイミングとなっており、各プレイによって時間が異なるという感じです。</p>
-            <p class="sub-text">※連絡が遅い女性は前々日に聞いています。</p>
-            <p>皆様が思う以上に女性の心変わりや体調の変化は激しく、結構管理も大変なのです。<br>
-            <span class="sub-text">※女性も男性以上に緊張などをするため、ホルモンバランスが乱れ、早期に生理が来たりするので、早すぎる決定は避けて言います 。（言い訳です）</span></p>
-            <p>分かりにくくてすみません。</p>
-            <p class="important-note">※前日中に、当選の連絡がない場合はキャンセル待ちということになります。<br>
-            ※1ヶ月前にプレイ依頼をする女性は少なく、皆さん早くても2,3日前くらいです。</p>
-        </div>
-    </div>
-
-    <div class="card">
-        <h2 class="card-title">リモート面談(テレビ電話)では何をしますか？</h2>
-        <div class="answer">
-            <p>リモート面談は、面接とは違い「落ちる」ということはありません。顔見せ程度でお考え下さい。</p>
-            <p>その中で、プレイまでの流れを少し説明し、質問などをお聞きします。</p>
-            <p>早い方なら１～2分で終わります 。</p>
-        </div>
-    </div>
-
-    <div class="card">
-        <h2 class="card-title">プレイはホームページ上の『男性のプレイ参加者募集案件』だけですか？</h2>
-        <div class="answer">
-            <p>いいえ、その他のプレイ案件もあります。ホームページに記載している案件がすべてではありません。<br>
-            <span class="sub-text">※サークルの運営上、載せていな案件が一部あります。</span></p>
-            <p>複数人や過激な案件、当日希望などの案件は載せていません。<br>
-            <span class="sub-text">※その他の案件は、男性メンバーへ直接メッセージ連絡にてお知らせしています。</span></p>
-            <p>そして、案件は1日１件しか載せていません。２件３件載せても結局すべてに応募が来るので、応募があった男性はその日のその時間は空いていると判断し、他のプレイ案件の抽選に自動応募という形にしています。もし、応募した内容と違う案件に当選し、「自分は31～35歳の間しか無理だ！36歳は嫌だ」などある方はお申しつけ下さい。</p>
-        </div>
-    </div>
-
-</div>
 
 <div class="modal-overlay" id="js-modal">
     <div class="modal-content">
@@ -304,41 +214,4 @@
             <p>女性がこのサークルに入る理由は様々ですが、女性の考えを踏まえても抽選が一番良いような気がしますよね😁</p>
             <p><strong>■森特別枠を作る(森が選ぶ)</strong><br>私は、元々夜の女性を扱う店をやっていたのですが、最終的に「森と仲良くなれば女性と触れ合える」という形が定着し、困った経験があります。<br>おそらく、同じことになるでしょう。</p>
             <p>若干、今でもそれを感じることがあります。<br>複数プレイは、人選を採用しているからです。<br>実際、私に連絡取ってくる人には、こちらからも声掛をけやすいですけどね。</p>
-            <p>どうですか？<br>抽選を採用するのはこのような経緯からです。<br>もちろん、サークルを始める前に、そんな事は考え済みです。</p>
-            <p>抽選しか提示していないので、そこに問題があると思っている方が多いようですが、考え抜いた上での抽選です。<br>もっと他に良い仕組みがあると思う方は、是非ご自分でサークルを作ることをお勧めします。</p>
-            <p>※「抽選をしていないのでは？」という人もいますが、、、。</p>
-            <p>少し前までは、「参加する女性などいない」という批判が多かったのですが、最近では「沢山の女性がこのサークルに参加していること」が、認識されてきたのか、そのような批判は無くなってきました。<br>女性が参加していることが明白なら、抽選でないと「それこそ同じ男性ばかり行く」ことになりますよね。<br>※これはちょっと考えたらわかりますよね。</p>
-            <p>これを言うと、「プランナーだけで楽しんでいる」という方も居ますが、基本監督以外のプランナーは、同じ女性と2回会うことはありません。<br>プランナーは、あくまでも女性の参加をサポートする役目です。</p>
-            <p>入りはプランナーというのは当たり前で、それがないと女性もサークルで楽しめません。<br>以上が、抽選を採用する理由です。</p>
-            <p>当選を操作できてしまうと、どうしても依怙贔屓やお金が絡んでくるので絶対にできなくしています。<br>当たる当たらないは運です。</p>
-            <p>※キャンセルや問題が発生した時には人選に変わるので、森が独占で決める場合はあります。</p>
-        </div>
-        
-        <button class="action-btn" onclick="closeModal()">閉じる</button>
-    </div>
-</div>
-
-
-<script>
-    // ★ページ読み込み時の自動表示処理(window.onload = ...)のみを削除し、
-    // 文言等は残しています。
-
-    function closeModal() {
-        document.getElementById('js-modal').classList.remove('open');
-    }
-    
-    // 背景クリックでも閉じる機能
-    document.getElementById('js-modal').addEventListener('click', function(e) {
-        if (e.target === this) {
-            closeModal();
-        }
-    });
-
-    // ★必要であればこの関数をボタン等で呼び出してください
-    function openModal() {
-        document.getElementById('js-modal').classList.add('open');
-    }
-</script>
-
-</body>
-</html>
+            <p>どうですか？<br>抽選を採用するのはこのような経緯からです。<br>もちろん、サークルを始める前に、
