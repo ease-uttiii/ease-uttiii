@@ -6,7 +6,10 @@
     <title>内容確認 | 管理画面</title>
     <style>
         :root { --mauve-admin: #8e7a8a; --pink-light: #fdf8f7; --pink-accent: #d4a5a5; }
-        body { font-family: 'Noto Sans JP', sans-serif; background: var(--pink-light); color: #5a4d4d; margin: 0; padding: 20px; }
+        body { font-family: 'Noto Sans JP', sans-serif; background: var(--pink-light); color: #5a4d4d; margin: 0; padding: 20px; 
+            /* ★サイズ変更の動きをスムーズにする */
+            transition: font-size 0.2s ease;
+        }
         .confirm-box { max-width: 600px; margin: 0 auto; background: #fff; padding: 25px; border-radius: 20px; box-shadow: 0 10px 30px rgba(142, 122, 138, 0.15); border: 3px solid var(--mauve-admin); }
         h2 { color: var(--mauve-admin); border-bottom: 2px solid var(--mauve-admin); padding-bottom: 12px; text-align: center; font-size: 1.4rem; }
         table { width: 100%; border-collapse: collapse; margin-top: 20px; table-layout: fixed; }
@@ -20,12 +23,35 @@
         .submit-btn:active { transform: scale(0.98); }
         .private-row { background: #fffafa; }
         .private-label { color: var(--pink-accent) !important; }
+
+        /* ★文字サイズ変更ボタン用のCSS★ */
+        .font-size-buttons {
+            display: flex;
+            justify-content: center;
+            gap: 5px;
+            margin-bottom: 20px;
+        }
+        .size-btn {
+            background: rgba(142, 122, 138, 0.3);
+            border: 1px solid rgba(142, 122, 138, 0.5);
+            border-radius: 15px;
+            padding: 4px 12px;
+            font-size: 12px;
+            color: #5a4d4d;
+            cursor: pointer;
+        }
     </style>
     <link rel="stylesheet" href="../style.css">
 </head>
 <body>
-<script src="../script.js"></script>
+
 <div class="confirm-box">
+    <div class="font-size-buttons">
+        <button class="size-btn" onclick="changeFontSize('font-small')">小</button>
+        <button class="size-btn" onclick="changeFontSize('font-medium')">中</button>
+        <button class="size-btn" onclick="changeFontSize('font-large')">大</button>
+    </div>
+    
     <h2>ご依頼内容の確認</h2>
     <table>
         <tr><th>ID/ニックネーム</th><td id="res-id"></td></tr>
@@ -45,6 +71,8 @@
         <button type="button" class="btn submit-btn" onclick="sendToLine()">この内容で確定</button>
     </div>
 </div>
+
+<script src="../script.js"></script>
 
 <script>
 // URLからデータを取得して表示する
