@@ -326,11 +326,9 @@
 <script src="script.js"></script>
 
 <script>
-    // ページ読み込み時にダイアログを表示
-    window.onload = function() {
-        document.getElementById('js-modal').classList.add('open');
-    };
+    // ★自動で開く処理を削除しました
 
+    // 閉じる関数
     function closeModal() {
         document.getElementById('js-modal').classList.remove('open');
     }
@@ -341,6 +339,12 @@
             closeModal();
         }
     });
+
+    // ★もしボタン等でダイアログを開く必要がある場合は、
+    // 以下のような「開く関数」を追加してください。
+    function openModal() {
+        document.getElementById('js-modal').classList.add('open');
+    }
 </script>
 
 </body>
