@@ -152,13 +152,17 @@
         .footer-settings { padding: 3rem 2rem; display: flex; justify-content: center; }
 
         .size-selector { 
-            display: flex; 
-            background: #f0edf0; 
-            border: 1px solid #d8d0d8; 
-            border-radius: 12px; 
-            padding: 4px; 
-            gap: 4px; 
-        }
+    display: flex;
+    align-items: center; /* 上下中央寄せ */
+    background: #f0edf0; 
+    border: 1px solid #d8d0d8; 
+    border-radius: 12px; 
+    padding: 4px 10px; /* ★左右のpaddingを少し広げる */
+    gap: 8px; /* ★文字とボタンの隙間 */
+    color: var(--mauve-admin); /* 文字色を上品なモーブに */
+    font-weight: bold;
+    font-size: 0.9em;
+}
 
         .size-btn { 
             border: none; 
@@ -216,6 +220,12 @@
 <div class="footer-settings">
     <div class="size-selector">
         <button class="size-btn" id="btn-small" onclick="changeFontSize('small')">小</button>
+        </div>
+</div>
+
+<div class="footer-settings">
+    <div class="size-selector">
+        <span>FONT SIZE ⇒</span> <button class="size-btn" id="btn-small" onclick="changeFontSize('small')">小</button>
         <button class="size-btn active" id="btn-mid" onclick="changeFontSize('mid')">中</button>
         <button class="size-btn" id="btn-large" onclick="changeFontSize('large')">大</button>
     </div>
