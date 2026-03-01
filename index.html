@@ -66,25 +66,37 @@
             white-space: nowrap;
         }
 
-        /* ★お知らせリンクのスタイル (位置調整) */
+        /* ★お知らせリンクのスタイル (目立たせる設定) */
         .announcement-link {
             display: block;
-            background: #fff;
+            background: #fdf5f8;                /* 背景色を薄いモーブピンクに */
             color: var(--mauve-admin);
-            border: 1px solid rgba(142, 122, 138, 0.2);
-            padding: 10px;
+            border: 1px solid rgba(142, 122, 138, 0.5); /* 枠線を強調 */
+            padding: 12px;
             border-radius: 12px;
-            font-size: 12px;
-            font-weight: bold;
             text-decoration: none;
             max-width: 450px;
-            margin: 15px auto 0; /* ★上 margin を調整 */
+            margin: 15px auto 0;
             width: 85%;
             text-align: center;
-            box-shadow: 0 2px 10px rgba(0,0,0,0.03);
+            box-shadow: 0 4px 15px rgba(142, 122, 138, 0.15); /* 影を強調 */
             transition: all 0.2s;
         }
-        .announcement-link:active { background: #fdf5f5; }
+        .announcement-link:active { background: #fce8f0; }
+        
+        .ann-title {
+            display: block;
+            font-size: 13px; /* 文字を少し大きく */
+            font-weight: bold;
+            margin-bottom: 2px;
+            color: #7a5a5a; /* 文字色を濃く */
+        }
+        
+        .ann-date {
+            display: block;
+            font-size: 10px;
+            color: #a89e9e;
+        }
 
         .reload-icon {
             display: inline-block;
@@ -214,12 +226,13 @@
             <span class="reload-icon sync-target"></span> 最新にリロード <span class="reload-icon sync-target"></span>
         </button>
     </div>
-    <h1>ease</h1>
+    <h1>ease app</h1>
     <p>PRIVATE & QUALITY TIME</p>
 </header>
 
-<a href="men-announce.html" class="announcement-link">
-    🔔 男性メンバーへの大切なお知らせ
+<a href="men_announcement.html" class="announcement-link">
+    <span class="ann-title">🔔 男性メンバー用 お知らせ頁</span>
+    <span class="ann-date">Updated: 2024.11.20</span>
 </a>
 
 <div class="container">
