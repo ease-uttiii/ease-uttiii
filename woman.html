@@ -331,6 +331,7 @@ function openModal(dialogId) {
     if (inner) {
         inner.scrollTop = 0;
     }
+} // ★ここに閉じ括弧が必要でした
 
 window.onload = function() {
     const dSel = document.getElementById('d');
@@ -373,7 +374,6 @@ function fastUpdate() {
     setTimeout(() => location.reload(), 600);
 }
 
-}
 </script>
 </body>
 </html>
