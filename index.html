@@ -65,36 +65,34 @@
         }
 
         .announcement-link {
-    display: block;
-    background: #fdf5f8;
-    color: var(--mauve-admin);
-    border: 2px solid var(--mauve-admin); /* ★枠線を太く */
-    padding: 20px; /* ★内側の余白を広げて大きく */
-    border-radius: 16px;
-    text-decoration: none;
-    max-width: 450px;
-    margin: 20px auto 0; /* ★上余白を少し広げる */
-    width: 85%;
-    text-align: center;
-    box-shadow: 0 6px 20px rgba(142, 122, 138, 0.2); /* ★影をさらに強めに */
-    transition: all 0.2s;
-}
-.announcement-link:active { background: #fce8f0; transform: scale(0.98); } /* ★押した時に少し小さくなる動き追加 */
+            display: block;
+            background: #fdf5f8;
+            color: var(--mauve-admin);
+            border: 2px solid var(--mauve-admin);
+            padding: 15px; /* ★余白を少し調整 */
+            border-radius: 16px;
+            text-decoration: none;
+            text-align: center;
+            box-shadow: 0 4px 15px rgba(142, 122, 138, 0.15); /* ★影を少し控えめに */
+            transition: all 0.2s;
+            margin-bottom: 20px; /* ★下側の余白用 */
+        }
+        .announcement-link:active { background: #fce8f0; transform: scale(0.98); }
 
-.ann-title {
-    display: block;
-    font-size: 18px; /* ★文字サイズを大幅に大きく */
-    font-weight: bold;
-    margin-bottom: 5px;
-    color: var(--mauve-deep);
-}
+        .ann-title {
+            display: block;
+            font-size: 16px; /* ★文字サイズを少し調整 */
+            font-weight: bold;
+            margin-bottom: 2px;
+            color: var(--mauve-deep);
+        }
 
-.ann-date {
-    display: block;
-    font-size: 12px; /* ★日付サイズも少し大きく */
-    color: #a89e9e;
-    font-weight: bold;
-}
+        .ann-date {
+            display: block;
+            font-size: 11px;
+            color: #a89e9e;
+            font-weight: bold;
+        }
 
         .reload-icon {
             display: inline-block;
@@ -212,11 +210,12 @@
         </div>
         <div class="arrow">→</div>
     </a>
+    
+    <a href="men_announce.html" class="announcement-link">
+        <span class="ann-title">男性メンバー用 お知らせ</span>
+        <span class="ann-date">Updated: 2026.3.1</span>
+    </a>
 </div>
-<a href="men_announce.html" class="announcement-link">
-    <span class="ann-title">男性メンバー用 お知らせ</span>
-    <span class="ann-date">Updated: 2026.3.1</span>
-</a>
 
 <script>
     function fastUpdate() {
