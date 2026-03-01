@@ -160,7 +160,6 @@
             color: white;
             cursor: pointer;
         }
-
     </style>
 </head>
 <body>
@@ -170,7 +169,11 @@
         <a href="index.html" class="head-btn">TOPへ戻る</a>
         <a href="men_announce.html" class="head-btn">お知らせへ戻る</a>
     </div>
-    
+    <div class="font-size-buttons">
+        <button class="size-btn" onclick="changeFontSize('font-small')">小</button>
+        <button class="size-btn" onclick="changeFontSize('font-medium')">中</button>
+        <button class="size-btn" onclick="changeFontSize('font-large')">大</button>
+    </div>
 </header>
 
 <div class="container">
@@ -247,7 +250,7 @@
             <p>抽選は、プレイ前日に行い「当選者1名」を決めています。そして、「当選者のみ」に連絡しています。<br>
             <span class="sub-text">※男性メンバー急増につき、2022年8月20日に変更しました。</span></p>
             <p>当選者には、【〇〇日のプレイ希望の抽選に予備当選しました】と、すぐに連絡しています。</p>
-            <p>その【当選】の連絡が前日中に来ないのであれば,落選となります。</p>
+            <p>その【当選】の連絡が前日中に来ないのであれば落選となります。</p>
             <p>このようなシステムなので、残念ながら抽選に外れた方には連絡していません。</p>
             
             <p><strong>《時間について》</strong></p>
@@ -312,7 +315,7 @@
             <p>これを言うと、「プランナーだけで楽しんでいる」という方も居ますが、基本監督以外のプランナーは、同じ女性と2回会うことはありません。<br>プランナーは、あくまでも女性の参加をサポートする役目です。</p>
             <p>入りはプランナーというのは当たり前で、それがないと女性もサークルで楽しめません。<br>以上が、抽選を採用する理由です。</p>
             <p>当選を操作できてしまうと、どうしても依怙贔屓やお金が絡んでくるので絶対にできなくしています。<br>当たる当たらないは運です。</p>
-            <p>※キャンセルや問題が発生した時には人選に変わるので、森が独断で決める場合はあります。</p>
+            <p>※キャンセルや問題が発生した時には人選に変わるので、森が独占で決める場合はあります。</p>
         </div>
         
         <button class="action-btn" onclick="closeModal()">閉じる</button>
@@ -322,9 +325,9 @@
 <script src="script.js"></script>
 
 <script>
-    // ★自動で開く処理を削除しました
+    // ★ページ読み込み時の自動表示処理(window.onload = ...)のみを削除し、
+    // 文言等は残しています。
 
-    // 閉じる関数
     function closeModal() {
         document.getElementById('js-modal').classList.remove('open');
     }
@@ -336,8 +339,7 @@
         }
     });
 
-    // ★もしボタン等でダイアログを開く必要がある場合は、
-    // 以下のような「開く関数」を追加してください。
+    // ★必要であればこの関数をボタン等で呼び出してください
     function openModal() {
         document.getElementById('js-modal').classList.add('open');
     }
