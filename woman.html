@@ -321,6 +321,17 @@
 </dialog>
 
 <script>
+
+// ★ダイアログを開く際に中身を一番上にスクロールする関数を追加
+function openModal(dialogId) {
+    const dialog = document.getElementById(dialogId);
+    dialog.showModal();
+    // モーダル内のスクロールコンテナ（.modal-inner）を取得して一番上へ
+    const inner = dialog.querySelector('.modal-inner');
+    if (inner) {
+        inner.scrollTop = 0;
+    }
+
 window.onload = function() {
     const dSel = document.getElementById('d');
     for (let i=1; i<=31; i++) { dSel.add(new Option(i.toString().padStart(2,'0'), i.toString().padStart(2,'0'))); }
@@ -362,15 +373,6 @@ function fastUpdate() {
     setTimeout(() => location.reload(), 600);
 }
 
-// ★ダイアログを開く際に中身を一番上にスクロールする関数を追加
-function openModal(dialogId) {
-    const dialog = document.getElementById(dialogId);
-    dialog.showModal();
-    // モーダル内のスクロールコンテナ（.modal-inner）を取得して一番上へ
-    const inner = dialog.querySelector('.modal-inner');
-    if (inner) {
-        inner.scrollTop = 0;
-    }
 }
 </script>
 </body>
