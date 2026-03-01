@@ -43,10 +43,10 @@
             font-size: 1.2em; letter-spacing: -0.5px; display: block; outline: none;
         }
 
-        /* フォーム外のNGボタン用スタイル */
-        .ng-btn-outer {
+        /* NGボタン用のスタイル */
+        .ng-btn-style {
             background: #fff; border: 4px solid #a58e8e; color: #a58e8e; font-weight: 900; 
-            padding: 18px 5px; border-radius: 60px; cursor: pointer; width: 100%; margin: 10px 0 25px; 
+            padding: 18px 5px; border-radius: 60px; cursor: pointer; width: 100%; margin: 0 0 15px; 
             font-size: 1.2em; letter-spacing: -0.5px; display: block; outline: none;
             box-sizing: border-box;
         }
@@ -56,7 +56,7 @@
         .modal-inner h3 { margin-top: 0; font-size: 1.1em; line-height: 1.4; }
         .modal-inner p { font-size: 0.9em; margin-bottom: 15px; border-bottom: 1px solid var(--pink-light); padding-bottom: 10px; }
 
-        .form-section { background: var(--card-bg); border-radius: 24px; padding: 25px 15px; box-shadow: var(--tile-shadow); margin-bottom: 25px; }
+        .form-section { background: var(--card-bg); border-radius: 24px; padding: 25px 15px; box-shadow: var(--tile-shadow); margin-bottom: 15px; }
         
         .field-label { 
             font-weight: bold; color: #fff; background: var(--pink-deep);
@@ -67,13 +67,11 @@
         .required { background: #e88e8e; color: white; font-size: 0.7em; padding: 2px 6px; border-radius: 4px; margin-left: 8px; border: 1px solid #fff; flex-shrink: 0; }
         .field-note { display: block; margin-top: 10px; font-size: 0.85em; color: var(--pink-deep); font-weight: bold; line-height: 1.4; }
 
-        /* 入力フィールド：はみ出し対策 */
         input[type="text"], select, textarea { 
             width: 100%; padding: 12px; border-radius: 12px; border: 1px solid var(--tile-border); background: var(--pink-light); 
             box-sizing: border-box; font-size: 1em; margin-top: 8px; display: block; color: #5a4d4d; outline: none;
             line-height: 1.5;
         }
-        /* テキストエリアの高さと文字サイズ調整 */
         textarea { height: auto; min-height: 120px; resize: vertical; }
 
         .date-grid { display: flex; flex-wrap: wrap; gap: 8px; align-items: center; margin-top: 8px; font-weight: bold; }
@@ -92,10 +90,9 @@
         .submit-btn { 
             background: linear-gradient(135deg, var(--pink-main) 0%, var(--pink-deep) 100%); color: white; 
             border: none; padding: 20px; border-radius: 20px; width: 100%; font-size: 1.2em; font-weight: 700; 
-            cursor: pointer; margin-top: 25px; outline: none; -webkit-appearance: none;
+            cursor: pointer; margin-top: 0; outline: none; -webkit-appearance: none;
         }
-        /* 青枠（フォーカス）を消去 */
-        .submit-btn:focus, .notice-btn:focus, .size-btn:focus, .ng-btn-outer:focus { outline: none; }
+        .submit-btn:focus, .notice-btn:focus, .size-btn:focus, .ng-btn-style:focus { outline: none; }
         
         .admin-note-header { background: var(--mauve-admin); color: white; padding: 12px; margin: 45px 0 15px; border-radius: 10px; text-align: center; font-weight: bold; font-size: 1.1em; }
     </style>
@@ -234,10 +231,10 @@
         <input type="hidden" name="play_content" id="play_hidden">
         <input type="hidden" name="ng_list" id="ng_hidden">
         
+        <button type="button" class="ng-btn-style" onclick="document.getElementById('ng-action-dialog').showModal()">🚫女性から男性へのNG行動</button>
+
         <button type="submit" class="submit-btn">内容確認画面へ</button>
     </form>
-    
-    <button type="button" class="ng-btn-outer" onclick="document.getElementById('ng-action-dialog').showModal()">🚫女性から男性へのNG行動</button>
 </div>
 
 <dialog id="ng-action-dialog" class="notice-modal">
