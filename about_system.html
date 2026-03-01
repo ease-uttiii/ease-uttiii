@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+    <title>サークルの仕組み - ease</title>
+    <link href="https://fonts.googleapis.com/css2?family=Lora:wght@600&family=Noto+Sans+JP:wght@400;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            /* ★管理用カラー：上品なモーブカラー */
+            --mauve-main: #a895a5;
+            --mauve-deep: #7a5a5a;
+            --mauve-light: #fff5f5;
+            --mauve-bg: #fffbfb;
+            --mauve-text: #5a4a4a;
+            --shadow: 0 8px 25px rgba(153, 93, 112, 0.08);
+            --tile-shadow: 0 4px 10px rgba(0,0,0,0.04);
+            
+            --base-font-size: 16px;
+        }
+
+        body { 
+            font-family: 'Noto Sans JP', sans-serif; 
+            margin: 0; 
+            background: var(--mauve-bg); 
+            color: var(--mauve-text);
+            -webkit-font-smoothing: antialiased; 
+            font-size: var(--base-font-size);
+            line-height: 1.7;
+        }
+        
+        header { 
+            background: rgba(142, 122, 138, 0.95);
+            color: white; padding: 1.5rem 1rem; position: sticky; top: 0; z-index: 100; 
+            display: flex; flex-direction: column; align-items: center; gap: 8px; box-shadow: 0 4px 25px rgba(0,0,0,0.08);
+        }
+        
+        header h1 { margin: 0; font-size: 1.2rem; letter-spacing: 0.1em; font-family: 'Lora', serif; text-align: center; }
+
+        .header-controls { 
+            display: flex; 
+            align-items: center; 
+            justify-content: center;
+            gap: 10px; 
+            width: 100%;
+        }
+        .head-btn {
+            background: rgba(255, 255, 255, 0.2); border: 1px solid rgba(255, 255, 255, 0.4);
+            border-radius: 30px; padding: 6px 14px; font-size: 11px; font-weight: bold; color: white;
+            cursor: pointer; text-decoration: none; display: flex; align-items: center; justify-content: center;
+            height: 28px; box-sizing: border-box; white-space: nowrap;
+        }
+        
+        .container { padding: 1.5rem 1rem; max-width: 550px; margin: 0 auto; }
+
+        .card { 
+            background: white; border-radius: 20px; padding: 25px; 
+            box-shadow: var(--tile-shadow); margin-bottom: 20px;
+        }
+
+        .card-title {
+            color: var(--mauve-deep); font-size: 1.2em; font-weight: bold;
+            margin-top: 0; margin-bottom: 20px;
+            display: flex; align-items: center; gap: 10px;
+        }
+        .card-title::before { content: "■"; color: var(--mauve-main); }
+
+        .section-title {
+            font-size: 1em;
+            color: var(--mauve-deep);
+            border-bottom: 2px solid var(--mauve-light);
+            padding-bottom: 5px;
+            margin: 25px 0 15px;
+            font-weight: bold;
+        }
+        .section-title:first-child { margin-top: 0; }
+
+        .description {
+            font-size: 0.95em;
+            margin-bottom: 15px;
+        }
+
+        .important-note { 
+            background: var(--mauve-light);
+            border-left: 4px solid var(--mauve-deep);
+            padding: 15px;
+            border-radius: 8px;
+            margin: 15px 0;
+            font-size: 0.9em;
+            color: var(--mauve-text);
+        }
+        
+        .list-style {
+            padding-left: 20px;
+            margin: 10px 0;
+            font-size: 0.95em;
+        }
+
+    </style>
+</head>
+<body>
+<header>
+    <h1>サークルの仕組み</h1>
+    <div class="header-controls">
+        <a href="index.html" class="head-btn">TOPへ戻る</a>
+    </div>
+</header>
+
+<div class="container">
+    
+    <div class="card">
+        <h2 class="card-title">なぜ抽選なのか？</h2>
+        <div class="description">
+            <p>当サークルでは、運営において「抽選」を採用しております。その経緯と理由についてお伝えいたします。</p>
+            <p>抽選以外で考えられるのは「順番」や「人選」ですが、それぞれに問題点があります。</p>
+        </div>
+
+        <h3 class="section-title">①参加した順（順番）</h3>
+        <p class="description">前もっていつ当たるかは分かりますが、日が合わず参加できなければ後ろへ回るため、新しく参加する人は順番待ちが何年後になるか分かりません。この仕組みは公平とは言えません。</p>
+
+        <h3 class="section-title">②応募の先着順</h3>
+        <p class="description">不公平であり、男性が案件ページに貼り付くことになります。時間に余裕がある人ばかりが当選することになり、女性が求めている「多様な男性とのセックス」というニーズが満たされず、女性メンバーの減少に繋がります。</p>
+    </div>
+
+    <div class="card">
+        <h2 class="card-title">抽選という選択</h2>
+        <div class="description">
+            <p>女性がサークルに入る理由は様々ですが、女性の気持ちや立場を踏まえても、抽選が一番良い仕組みであると判断しております。</p>
+            <p>なお、当サークルは当選を操作できない仕組みにしており、依怙贔屓やお金の絡みを完全に排除しています。当たる当たらないは運です。</p>
+        </div>
+        <div class="important-note">
+            ※プランナー（監督以外）は女性の参加サポートが目的であり、基本的には同じ女性と2回会うことはありません。<br>
+            ※キャンセルや問題発生時には緊急の人選対応（森が決定）を行う場合があります。
+        </div>
+    </div>
+    
+    <div class="card">
+        <h2 class="card-title">森特別枠（人選）について</h2>
+        <div class="description">
+            <p>複数プレイなど一部の案件では、人選を採用しています。ただし、これに依存すると特定の男性ばかりが選ばれる形が定着しやすく、問題の原因となります。</p>
+            <p>抽選に対する疑問をお持ちの方もいらっしゃいますが、考え抜いた上での判断です。</p>
+        </div>
+    </div>
+
+</div>
+
+</body>
+</html>
