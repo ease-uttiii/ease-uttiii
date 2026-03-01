@@ -1,0 +1,25 @@
+/* style.css */
+
+/* デフォルト（中サイズ）のフォントサイズ */
+body {                
+    font-size: 16px; 
+    line-height: 1.8;
+}
+header h1 { font-size: 1.4rem; }
+.card-title { font-size: 1.25em; }
+
+/* --- 文字サイズ変更時のクラス --- */
+
+/* 小サイズ */
+body.font-small {                
+    font-size: 14px;
+}
+body.font-small header h1 { font-size: 1.2rem; }
+body.font-small .card-title { font-size: 1.1em; }
+
+/* 大サイズ */
+body.font-large {                
+    font-size: 18px;
+}
+body.font-large header h1 { font-size: 1.6rem; }
+body.font-large .card-title { font-size: 1.4em; }
