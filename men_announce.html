@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
     <title>男性メンバーへの大切なお知らせ - ease</title>
     <link href="https://fonts.googleapis.com/css2?family=Lora:wght@600&family=Noto+Sans+JP:wght@400;700&display=swap" rel="stylesheet">
-   <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="style.css">
     <style>
         :root {
             /* ★管理用カラー：上品なモーブカラー */
@@ -19,7 +19,7 @@
             --tile-shadow: 0 4px 10px rgba(0,0,0,0.04);
             --admin-label-bg: #8e7a8a;
             
-            --base-font-size: 16px;
+            /* フォントサイズはJSで管理するためCSS変数での定義を削除 */
         }
 
         body { 
@@ -28,7 +28,8 @@
             background: var(--mauve-bg); 
             color: var(--mauve-text);
             -webkit-font-smoothing: antialiased; 
-            font-size: var(--base-font-size);
+            /* ★サイズ変更の動きをスムーズにする */
+            transition: font-size 0.2s ease;
             -webkit-tap-highlight-color: transparent;
             line-height: 1.6;
         }
@@ -88,15 +89,36 @@
 
         .footer-note { font-size: 0.8em; color: var(--mauve-deep); text-align: center; margin-top: 30px; line-height: 1.4; }
 
+        /* ★文字サイズ変更ボタン用のCSS★ */
+        .font-size-buttons {
+            display: flex;
+            justify-content: center;
+            gap: 5px;
+            margin-top: 10px;
+        }
+        .size-btn {
+            background: rgba(255, 255, 255, 0.3);
+            border: 1px solid rgba(255, 255, 255, 0.5);
+            border-radius: 15px;
+            padding: 2px 10px;
+            font-size: 10px;
+            color: white;
+            cursor: pointer;
+        }
+
     </style>
 </head>
 <body>
-    <script src="script.js"></script>
 <header>
     <h1>大切なお知らせ</h1>
     <div class="header-controls">
         <a href="index.html" class="head-btn">TOPへ戻る</a>
         <a href="men_faq.html" class="head-btn">男性専用FAQ</a>
+    </div>
+    <div class="font-size-buttons">
+        <button class="size-btn" onclick="changeFontSize('font-small')">小</button>
+        <button class="size-btn" onclick="changeFontSize('font-medium')">中</button>
+        <button class="size-btn" onclick="changeFontSize('font-large')">大</button>
     </div>
 </header>
 
@@ -151,6 +173,8 @@
     </div>
 
 </div>
+
+<script src="script.js"></script>
 
 </body>
 </html>
