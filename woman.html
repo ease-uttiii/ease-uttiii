@@ -62,27 +62,13 @@
         .region-header { display: flex; justify-content: flex-end; align-items: center; margin-bottom: 15px; border-bottom: 1px solid var(--pink-light); padding-bottom: 10px; }
         
         .field-label { 
-            font-weight: bold; 
-            color: #fff; 
-            background: var(--pink-deep);
-            display: inline-flex;
-            align-items: center;
-            padding: 4px 12px;
-            border-radius: 8px;
-            margin-top: 1.5em; 
-            min-height: 1.8em;
+            font-weight: bold; color: #fff; background: var(--pink-deep);
+            display: inline-flex; align-items: center; padding: 4px 12px; border-radius: 8px; margin-top: 1.5em; min-height: 1.8em;
         }
 
         .required { 
-            background: #e88e8e; 
-            color: white; 
-            font-size: 0.7em; 
-            padding: 1px 6px; 
-            border-radius: 4px; 
-            margin-left: 8px; 
-            border: 1px solid #fff;
-            line-height: 1.2;
-            display: inline-block;
+            background: #e88e8e; color: white; font-size: 0.7em; padding: 1px 6px; border-radius: 4px; 
+            margin-left: 8px; border: 1px solid #fff; line-height: 1.2; display: inline-block;
         }
 
         .field-note { display: block; margin-top: 8px; font-size: 0.82em; color: var(--pink-deep); font-weight: bold; line-height: 1.4; }
@@ -140,7 +126,6 @@
             <div class="modal-body">
                 <div class="notice-section">
                     <strong>■案件の募集期間が短いと男性が決まらない場合があります</strong>
-                    前日に男性を決めますので、前々日なら約1日ということになります。
                     <ul class="sub-list">
                         <li>前々日の夜なら、ほぼ募集期間はないということになってしまいます。</li>
                         <li>正直、地域によって変わってしまいます。すみません。</li>
@@ -150,7 +135,7 @@
                 <div class="notice-section">
                     <strong>■1対1の前日の受付は午前中のみでお願いします。</strong>
                     <ul class="sub-list">
-                        <li>午後からのプレイ依頼は、当日扱いになります。(下記参考)</li>
+                        <li>午後からのプレイ依頼は、当日扱いになります。</li>
                         <li>前日依頼は、お受けしますが男性が決まらない可能性があります。</li>
                     </ul>
                 </div>
@@ -161,10 +146,8 @@
                 <div class="notice-section">
                     <strong>■複数プレイは、監督探しからとなりますので、依頼日に必ず開催されるとは限りません。</strong>
                     <ul class="sub-list">
-                        <li>プレイ依頼受付後に「監督願い」を森が、全監督宛に出して決まりますので、少しお日にちが必要となります。</li>
-                        <li>何日間前に出せば良いということではなく、その日に動ける監督が居るかどうかで決まります。</li>
+                        <li>プレイ依頼受付後に「監督願い」を森が、全監督宛に出して決まります。</li>
                         <li>準備期間が長いほど、監督も都合を合わせやすくなります。</li>
-                        <li>プレイ依頼を出す前に、森に相談してもらうこともできます。</li>
                     </ul>
                 </div>
                 <div class="notice-section"><strong>■キャンセルは前日の確認までなら問題ありません。</strong></div>
@@ -184,17 +167,16 @@
                 </div>
             </div>
             
-            <label class="field-label" style="margin-top:0;">IDまたは面談依頼で利用したニックネーム <span class="required">必須</span></label>
+            <label class="field-label" style="margin-top:0;">IDまたはニックネーム <span class="required">必須</span></label>
             <input type="text" name="id" placeholder="例：A-123" required>
             <span class="field-note">登録県と異なる場合は、必ずIDでお願いします。</span>
 
             <label class="field-label">プレイ希望日時 <span class="required">必須</span></label>
             <div style="display: flex; gap: 8px; margin-top: 8px; width: 100%;">
                 <input type="date" name="play_date" id="play_date" required 
-                       style="flex: 2; padding: 16px 10px; font-size: 1em; height: 56px; background: var(--pink-light); border: 1px solid var(--tile-border); border-radius: 12px; color: #5a4d4d; -webkit-appearance: none;">
-                
+                       style="flex: 2; height: 56px;">
                 <select name="play_time" id="play_time" required 
-                        style="flex: 1; padding: 16px 10px; font-size: 1em; height: 56px; background: var(--pink-light); border: 1px solid var(--tile-border); border-radius: 12px; color: #5a4d4d; -webkit-appearance: none; background-image: url('data:image/svg+xml,%3Csvg xmlns=\'http://www.w3.org/2000/svg\' width=\'12\' height=\'12\' viewBox=\'0 0 24 24\' fill=\'none\' stroke=\'%23b57d7d\' stroke-width=\'3\' stroke-linecap=\'round\' stroke-linejoin=\'round\'%3E%3Cpath d=\'M6 9l6 6 6-6\'%3E%3C/path%3E%3C/svg%3E'); background-repeat: no-repeat; background-position: right 10px center; background-size: 14px;">
+                        style="flex: 1; height: 56px;">
                     <option value="">時間</option>
                 </select>
             </div>
@@ -204,41 +186,19 @@
             <label class="field-label">開催する都道府県 <span class="required">必須</span></label>
             <select name="pref" required>
                 <option value="東京都">東京都</option>
-                <option disabled>------</option>
-                <option value="北海道">北海道</option><option value="青森県">青森県</option><option value="岩手県">岩手県</option>
-                <option value="宮城県">宮城県</option><option value="秋田県">秋田県</option>
-                <option value="山形県">山形県</option><option value="福島県">福島県</option>
-                <option disabled>------</option>
-                <option value="茨城県">茨城県</option><option value="栃木県">栃木県</option>
-                <option value="群馬県">群馬県</option><option value="埼玉県">埼玉県</option>
-                <option value="千葉県">千葉県</option><option value="神奈川県">神奈川県</option>
-                <option disabled>------</option>
-                <option value="新潟県">新潟県</option><option value="富山県">富山県</option>
-                <option value="石川県">石川県</option><option value="福井県">福井県</option>
-                <option value="山梨県">山梨県</option><option value="長野県">長野県</option>
-                <option disabled>------</option>
-                <option value="岐阜県">岐阜県</option><option value="静岡県">静岡県</option>
-                <option value="愛知県">愛知県</option><option value="三重県">三重県</option>
-                <option disabled>------</option>
-                <option value="滋賀県">滋賀県</option><option value="京都府">京都府</option>
-                <option value="大阪府">大阪府</option><option value="兵庫県">兵庫県</option>
-                <option value="奈良県">奈良県</option><option value="和歌山県">和歌山県</option>
-                <option disabled>------</option>
-                <option value="鳥取県">鳥取県</option><option value="島根県">島根県</option>
-                <option value="岡山県">岡山県</option><option value="広島県">広島県</option>
-                <option value="山口県">山口県</option>
-                <option disabled>------</option>
-                <option value="徳島県">徳島県</option><option value="香川県">香川県</option>
-                <option value="愛媛県">愛媛県</option><option value="高知県">高知県</option>
-                <option disabled>------</option>
-                <option value="福岡県">福岡県</option><option value="佐賀県">佐賀県</option>
-                <option value="長崎県">長崎県</option><option value="熊本県">熊本県</option>
-                <option value="大分県">大分県</option><option value="宮崎県">宮崎県</option>
-                <option value="鹿児島県">鹿児島県</option><option value="沖縄県">沖縄県</option>
-            </select>
+                <option value="神奈川県">神奈川県</option>
+                <option value="千葉県">千葉県</option>
+                <option value="埼玉県">埼玉県</option>
+                <option value="大阪府">大阪府</option>
+                <option value="兵庫県">兵庫県</option>
+                <option value="京都府">京都府</option>
+                <option value="愛知県">愛知県</option>
+                <option value="福岡県">福岡県</option>
+                <option value="北海道">北海道</option>
+                </select>
             
             <label class="field-label">プレイ内容 <span class="required">必須</span></label><br>
-            <span class="field-note">当てはまる項目をタップしてください<br>(複数選択可)</span>
+            <span class="field-note">当てはまる項目をタップしてください(複数選択可)</span>
             <div class="check-grid" id="playGrid">
                 <div class="check-item" onclick="toggleSelection(this)">お任せでいいです</div>
                 <div class="check-item" onclick="toggleSelection(this)">攻められたい</div>
@@ -260,11 +220,10 @@
                 <div class="check-item" onclick="toggleSelection(this)">お風呂に一緒に入りたい</div>
                 <div class="check-item" onclick="toggleSelection(this)">コスプレがしたい</div>
                 <div class="check-item" onclick="toggleSelection(this)">優しい言葉をかけられたい</div>
-                <div class="check-item" onclick="toggleSelection(this)">新しいスタイルのプレイを試してみたい</div>
+                <div class="check-item" onclick="toggleSelection(this)">新しいスタイルのプレイを試したい</div>
             </div>
-            <span class="field-note">※興味がある程度で大丈夫です</span>
 
-            <label class="field-label">上記以外のプレイに関する希望があれば記入してください。</label>
+            <label class="field-label">補足・その他の希望</label>
             <textarea name="play_msg" placeholder=""></textarea>
 
             <label class="field-label">相手の希望人数 <span class="required">必須</span></label>
@@ -274,19 +233,19 @@
             </div>
             
             <label class="field-label">使用して欲しい玩具</label>
-             <textarea name="toys" placeholder=""></textarea>
+            <textarea name="toys" placeholder=""></textarea>
             
             <label class="field-label">プレイ案件掲載項目</label>
-             <textarea name="public_note" placeholder=""></textarea>
+            <textarea name="public_note" placeholder=""></textarea>
             
             <label class="field-label">NGについて</label>
-            <span class="field-note">当てはまる項目をタップしてください<br>(複数選択可)</span>
+            <span class="field-note">当てはまる項目をタップしてください(複数選択可)</span>
             <div class="check-grid" id="ngGrid">
                 <div class="check-item" onclick="toggleSelection(this)">タバコ</div>
                 <div class="check-item" onclick="toggleSelection(this)">香水</div>
                 <div class="check-item" onclick="toggleSelection(this)">太りすぎている方</div>
                 <div class="check-item" onclick="toggleSelection(this)">痩せ過ぎの方</div>
-                <div class="check-item" onclick="toggleSelection(this)">ドМ</div>
+                <div class="check-item" onclick="toggleSelection(this)">ドM</div>
                 <div class="check-item" onclick="toggleSelection(this)">ドS</div>
                 <div class="check-item" onclick="toggleSelection(this)">言葉が乱暴な方</div>
                 <div class="check-item" onclick="toggleSelection(this)">髪が薄い方</div>
@@ -302,10 +261,10 @@
                 <div class="check-item" onclick="toggleSelection(this)">過度に緊張する方</div>
             </div>
 
-            <label class="field-label">その他NGあれば記入してください</label>
+            <label class="field-label">その他NG事項</label>
             <textarea name="other_ng" placeholder=""></textarea>
             
-            <label class="field-label">日本性活プランナー協会の受検経験の有無</label>
+            <label class="field-label">日本性活プランナー協会の受検経験</label>
             <div class="check-grid-mini">
                 <div class="check-item" id="exam-none" onclick="selectOne('exam', this)">無し</div>
                 <div class="check-item" id="exam-exists" onclick="selectOne('exam', this)">有り</div>
@@ -314,13 +273,12 @@
 
             <div class="admin-note-header">【以下、案件には掲載されません】</div>
             
-            <label class="field-label">非掲載部分<br>※この項目はプレイ案件に記載しません。</label>
+            <label class="field-label">非掲載メモ</label>
             <textarea name="private_note" placeholder=""></textarea>
         </div>
 
         <input type="hidden" name="play_content" id="play_hidden">
         <input type="hidden" name="ng_list" id="ng_hidden">
-        
         <button type="submit" class="submit-btn">内容確認画面へ</button>
     </form>
 </div>
@@ -343,36 +301,21 @@ window.onload = function() {
 };
 
 document.getElementById('mainForm').onsubmit = function() {
-    // プレイ内容のテキストを取得してhiddenフィールドにセット
     const playItems = Array.from(document.querySelectorAll('#playGrid .active')).map(e => e.innerText);
     document.getElementById('play_hidden').value = playItems.join(', ');
-    
-    // NGリストのテキストを取得してhiddenフィールドにセット
     const ngItems = Array.from(document.querySelectorAll('#ngGrid .active')).map(e => e.innerText);
     document.getElementById('ng_hidden').value = ngItems.join(', ');
-
-    // ★修正：日付と時間を合体させてhiddenフィールドにセット
     const d = document.getElementById('play_date').value;
     const t = document.getElementById('play_time').value;
-    if (d && t) {
-        document.getElementById('full_date').value = d + " " + t;
-    }
-    
+    if (d && t) document.getElementById('full_date').value = d + " " + t;
     return true;
 };
 
 function applyFontSize(mode) {
     const root = document.documentElement;
-    let size = '16px';
-    if (mode === 'small') size = '13px';
-    else if (mode === 'mid') size = '16px';
-    else if (mode === 'large') size = '20px';
-    
+    let size = mode === 'small' ? '13px' : mode === 'large' ? '20px' : '16px';
     root.style.setProperty('--base-font-size', size);
-    
-    document.querySelectorAll('.size-btn').forEach(btn => {
-        btn.classList.toggle('active', btn.id === `btn-${mode}`);
-    });
+    document.querySelectorAll('.size-btn').forEach(btn => btn.classList.toggle('active', btn.id === `btn-${mode}`));
 }
 
 function changeFontSize(mode) {
@@ -382,14 +325,10 @@ function changeFontSize(mode) {
 
 function fastUpdate() {
     document.querySelectorAll('.sync-target').forEach(i => i.classList.add('spinning'));
-    setTimeout(() => {
-        location.href = location.pathname + '?t=' + new Date().getTime();
-    }, 600);
+    setTimeout(() => { location.href = location.pathname + '?t=' + new Date().getTime(); }, 600);
 }
 
-function toggleSelection(el) {
-    el.classList.toggle('active');
-}
+function toggleSelection(el) { el.classList.toggle('active'); }
 
 function selectOne(group, el) {
     if(group === 'exam') {
