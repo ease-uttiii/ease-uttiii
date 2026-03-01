@@ -86,10 +86,61 @@
             background: var(--mauve-deep); color: white; 
             padding: 15px; border-radius: 12px; font-weight: bold; 
             margin-top: 20px; transition: background 0.2s;
+            border: none; width: 100%; font-size: 1em; cursor: pointer;
         }
         .action-btn:active { background: #5a4a4a; }
 
         .sub-text { font-size: 0.85em; color: #888; margin-top: 5px; }
+
+        /* --- モーダルダイアログのスタイル --- */
+        .modal-overlay {
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(0, 0, 0, 0.5);
+            display: flex; justify-content: center; align-items: center;
+            z-index: 1000;
+            opacity: 0; visibility: hidden;
+            transition: all 0.3s ease;
+        }
+        .modal-overlay.open { opacity: 1; visibility: visible; }
+        
+        .modal-content {
+            background: white; width: 90%; max-width: 500px;
+            padding: 20px; border-radius: 20px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+            position: relative;
+            transform: scale(0.9);
+            transition: all 0.3s ease;
+            max-height: 80vh; /* 高さ制限 */
+            display: flex;
+            flex-direction: column;
+        }
+        .modal-overlay.open .modal-content { transform: scale(1); }
+        
+        .modal-close {
+            position: absolute; top: 15px; right: 20px;
+            font-size: 24px; color: #ccc; cursor: pointer;
+            z-index: 10;
+        }
+        .modal-close:hover { color: #888; }
+        
+        .modal-title {
+            color: var(--mauve-deep); font-size: 1.2em; font-weight: bold;
+            margin: 0 0 15px; text-align: center;
+            padding-right: 30px;
+        }
+
+        /* ダイアログ内のスクロール設定 */
+        .modal-body {
+            overflow-y: auto;
+            padding: 0 10px;
+            font-size: 0.9em;
+            line-height: 1.7;
+            color: var(--mauve-text);
+        }
+        
+        .modal-body p { margin: 0 0 1em; }
+        .modal-body strong { color: var(--mauve-deep); }
+        /* ---------------------------------- */
 
     </style>
 </head>
@@ -103,14 +154,8 @@
 </header>
 
 <div class="container">
-    
-    <div class="card" style="border: 2px solid var(--mauve-main);">
-        <h1><center>サークルの基本情報</center></h1>
-        <p style="font-size:0.9em; margin: 0 0 10px;">当サークルの運営方針や抽選の仕組みについては、以下をご確認ください。</p>
-        <a href="about_system.html" class="action-btn">≫ サークルの仕組み・抽選の理由</a>
-    </div>
     <div class="card">
-        <p style="font-size:0.9em; color:var(--mauve-deep);">※真似される恐れがあるので、それほど詳しくは載せていません。</p>
+        <p style="font-size:0.9em; color:var(--mauve-deep); margin:0;">※真似される恐れがあるので、それほど詳しくは載せていません。</p>
     </div>
 
     <div class="card">
@@ -182,7 +227,7 @@
             <p>抽選は、プレイ前日に行い「当選者1名」を決めています。そして、「当選者のみ」に連絡しています。<br>
             <span class="sub-text">※男性メンバー急増につき、2022年8月20日に変更しました。</span></p>
             <p>当選者には、【〇〇日のプレイ希望の抽選に予備当選しました】と、すぐに連絡しています。</p>
-            <p>その【当選】の連絡が前日中に来ないのであれば、落選となります。</p>
+            <p>その【当選】の連絡が前日中に来ないのであれば, 落選となります。</p>
             <p>このようなシステムなので、残念ながら抽選に外れた方には連絡していません。</p>
             
             <p><strong>《時間について》</strong></p>
@@ -220,6 +265,57 @@
     </div>
 
 </div>
+
+<div class="modal-overlay" id="js-modal">
+    <div class="modal-content">
+        <div class="modal-close" onclick="closeModal()">×</div>
+        <h2 class="modal-title">サークルの基本情報</h2>
+        
+        <div class="modal-body">
+            <p>このサークルの仕組みというか、なぜ抽選なのかをお伝えしたいと思います。</p>
+            <p><strong>■なぜ抽選なのか？</strong></p>
+            <p>まず、抽選以外で成り立ちそうなのは、「順番」や「人選」ですね。<br>※複数プレイなどは人選です。</p>
+            <p>順番といってもいろいろあります。<br>①参加した順<br>②応募の先着順</p>
+            <p><strong>では、①参加した順で当てていくやり方</strong><br>当然前もっていつ当たるかは分かるのですが、休日に当たるとは限りません。<br>日が合わず参加できなければ、後ろに回ってまた次まで待つ。<br>一番後になります。</p>
+            <p>女性のタイプも運ですね。<br>当然ですよね？<br>「仕事だから明日で！」とか「次の休みに！」などという仕組みでは、新しく参加する人はかなり長く順番待ちになります。<br>それこそ何年後になるのか分かりません。<br>この仕組みはあまり良くないと思いますよね。</p>
+            <p><strong>では、②その案件に応募した先着順で当てるやり方</strong><br>これは不公平で、もっと大変な事になるでしょうね。<br>男性は、案件ページに貼り付けです。</p>
+            <p>それに、時間に余裕がある人が絶対有利なので、決まった男性ばかりが当選することになると思うので、女性が減ることになります。</p>
+            <p>※女性がこのサークルを使うのは、同じ男性ではなく、色々な男性とセックスがしたいからです。<br>同じ男性ばかり行くことはNGなのです。</p>
+            <p>・男性と連絡を取りたくない<br>・情が入る<br>・恋愛したくない<br>・色々と個人情報を探られるのが怖い</p>
+            <p>女性がこのサークルに入る理由は様々ですが、女性の考えを踏まえても抽選が一番良いような気がしますよね😁</p>
+            <p><strong>■森特別枠を作る(森が選ぶ)</strong><br>私は、元々夜の女性を扱う店をやっていたのですが、最終的に「森と仲良くなれば女性と触れ合える」という形が定着し、困った経験があります。<br>おそらく、同じことになるでしょう。</p>
+            <p>若干、今でもそれを感じることがあります。<br>複数プレイは、人選を採用しているからです。<br>実際、私に連絡取ってくる人には、こちらからも声掛をけやすいですけどね。</p>
+            <p>どうですか？<br>抽選を採用するのはこのような経緯からです。<br>もちろん、サークルを始める前に、そんな事は考え済みです。</p>
+            <p>抽選しか提示していないので、そこに問題があると思っている方が多いようですが、考え抜いた上での抽選です。<br>もっと他に良い仕組みがあると思う方は、是非ご自分でサークルを作ることをお勧めします。</p>
+            <p>※「抽選をしていないのでは？」という人もいますが、、、。</p>
+            <p>少し前までは、「参加する女性などいない」という批判が多かったのですが、最近では「沢山の女性がこのサークルに参加していること」が、認識されてきたのか、そのような批判は無くなってきました。<br>女性が参加していることが明白なら、抽選でないと「それこそ同じ男性ばかり行く」ことになりますよね。<br>※これはちょっと考えたらわかりますよね。</p>
+            <p>これを言うと、「プランナーだけで楽しんでいる」という方も居ますが、基本監督以外のプランナーは、同じ女性と2回会うことはありません。<br>プランナーは、あくまでも女性の参加をサポートする役目です。</p>
+            <p>入りはプランナーというのは当たり前で、それがないと女性もサークルで楽しめません。<br>以上が、抽選を採用する理由です。</p>
+            <p>当選を操作できてしまうと、どうしても依怙贔屓やお金が絡んでくるので絶対にできなくしています。<br>当たる当たらないは運です。</p>
+            <p>※キャンセルや問題が発生した時には人選に変わるので, 森が独占で決める場合はあります。</p>
+        </div>
+        
+        <button class="action-btn" onclick="closeModal()">閉じる</button>
+    </div>
+</div>
+
+<script>
+    // ページ読み込み時にダイアログを表示
+    window.onload = function() {
+        document.getElementById('js-modal').classList.add('open');
+    };
+
+    function closeModal() {
+        document.getElementById('js-modal').classList.remove('open');
+    }
+    
+    // 背景クリックでも閉じる機能
+    document.getElementById('js-modal').addEventListener('click', function(e) {
+        if (e.target === this) {
+            closeModal();
+        }
+    });
+</script>
 
 </body>
 </html>
