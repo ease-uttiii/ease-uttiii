@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+    <title>男性メンバーへの大切なお知らせ - ease</title>
+    <link href="https://fonts.googleapis.com/css2?family=Lora:wght@600&family=Noto+Sans+JP:wght@400;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            /* ★管理用カラー：上品なモーブカラー */
+            --mauve-main: #a895a5;
+            --mauve-deep: #7a5a5a;
+            --mauve-light: #fff5f5;
+            --mauve-bg: #fffbfb;
+            --mauve-text: #5a4a4a;
+            --tile-border: #e8cfcf;
+            --shadow: 0 8px 25px rgba(153, 93, 112, 0.08);
+            --tile-shadow: 0 4px 10px rgba(0,0,0,0.04);
+            --admin-label-bg: #8e7a8a;
+            
+            --base-font-size: 16px;
+        }
+
+        body { 
+            font-family: 'Noto Sans JP', sans-serif; 
+            margin: 0; 
+            background: var(--mauve-bg); 
+            color: var(--mauve-text);
+            -webkit-font-smoothing: antialiased; 
+            font-size: var(--base-font-size);
+            -webkit-tap-highlight-color: transparent;
+            line-height: 1.6;
+        }
+        
+        header { 
+            background: rgba(142, 122, 138, 0.95);
+            color: white; padding: 1.5rem 1rem; position: sticky; top: 0; z-index: 100; 
+            display: flex; flex-direction: column; align-items: center; gap: 8px; box-shadow: 0 4px 25px rgba(0,0,0,0.08);
+        }
+        
+        header h1 { margin: 0; font-size: 1.2rem; letter-spacing: 0.1em; font-family: 'Lora', serif; text-align: center; }
+
+        .header-controls { 
+            display: flex; 
+            align-items: center; 
+            justify-content: center;
+            gap: 10px; 
+            width: 100%;
+        }
+        .head-btn {
+            background: rgba(255, 255, 255, 0.2); border: 1px solid rgba(255, 255, 255, 0.4);
+            border-radius: 30px; padding: 6px 14px; font-size: 11px; font-weight: bold; color: white;
+            cursor: pointer; text-decoration: none; display: flex; align-items: center; justify-content: center;
+            height: 28px; box-sizing: border-box; white-space: nowrap;
+        }
+        
+        .container { padding: 1rem; max-width: 550px; margin: 0 auto; }
+
+        .card { 
+            background: white; border-radius: 20px; padding: 25px; 
+            box-shadow: var(--tile-shadow); margin-bottom: 20px;
+        }
+
+        .card-title {
+            color: var(--mauve-deep); font-size: 1.1em; font-weight: bold;
+            margin-top: 0; margin-bottom: 15px;
+            display: flex; align-items: center; gap: 8px;
+        }
+        .card-title::before { content: "■"; color: var(--mauve-main); }
+
+        .info-list { padding-left: 20px; margin: 0; }
+        .info-list li { margin-bottom: 10px; font-size: 0.95em; }
+        
+        .important-note { 
+            background: var(--mauve-light); border-left: 4px solid var(--mauve-deep);
+            padding: 15px; border-radius: 8px; margin: 15px 0; font-size: 0.9em;
+        }
+
+        .action-btn { 
+            display: block; text-align: center; text-decoration: none;
+            background: var(--mauve-deep); color: white; 
+            padding: 15px; border-radius: 12px; font-weight: bold; 
+            margin-top: 20px; transition: background 0.2s;
+        }
+        .action-btn:active { background: #5a4a4a; }
+
+        .footer-note { font-size: 0.8em; color: var(--mauve-deep); text-align: center; margin-top: 30px; line-height: 1.4; }
+
+    </style>
+</head>
+<body>
+<header>
+    <h1>大切なお知らせ</h1>
+    <div class="header-controls">
+        <a href="index.html" class="head-btn">TOPへ戻る</a>
+        <a href="men.html" class="head-btn">募集案件一覧</a>
+    </div>
+</header>
+
+<div class="container">
+    
+    <div class="card">
+        <h2 class="card-title">掲載順について</h2>
+        <p>2024年11月20より、掲載は<strong>「日付順」</strong>にしております。<br>一番上の掲載が最新ではないのでご注意ください。</p>
+    </div>
+
+    <div class="card">
+        <h2 class="card-title">案件の多重掲載について</h2>
+        <p>※女性の情報(NG・希望年齢含む)が大幅に異なる場合は、同日の未掲載案件を多重掲載する場合があります。</p>
+        <div class="important-note">
+            <strong>理由：</strong><br>
+            ①女性からのプレイ依頼が以前より大幅に増えたため。<br>
+            ②女性からの希望が複雑になってきたため。
+        </div>
+        <p><strong>掲載方法：</strong>「ky0101a」のように[a]や[b]を付けます。<br>
+        (それほど変更のない場合は、従来通り未掲載案件として当選者へ連絡します)</p>
+    </div>
+
+    <div class="card">
+        <h2 class="card-title">抽選・ご連絡について</h2>
+        <p>前日に女性へ最終確認をして、その返信が届き次第抽選が行われるため、案件毎に<strong>「抽選時間」・「当選お知らせ時間」</strong>が異なります。</p>
+        <p>プレイ参加希望の参加申し込みは、<strong>当日まで</strong>受け付けています。(キャンセルなどがある為)</p>
+    </div>
+
+    <div class="card">
+        <h2 class="card-title">プランナー制度と検定について</h2>
+        <p>2025年から日本性活プランナー協会の<strong>「検定合格者」</strong>をプレイ依頼の希望欄に追加します。</p>
+        <p class="important-note">※検定合格者のみが応募できる案件が出てきますのでご了承ください。<br>このサークルはプランナー制度を取り入れています。</p>
+    </div>
+
+    <div class="card">
+        <h2 class="card-title">サークルの運営方針について</h2>
+        <p>ここはサークルなので、「案件が少ない」と思う方は、サービスが良くなるというようなお客様感覚で待つのではなく、女性を増やして<strong>「案件を増やす」</strong>という活動にも参加できるので、是非検討してください。</p>
+        <p>※「案件が少ない」と、サークルやプランナーに声をかけるよりは、「頑張ってください 」と応援している方が、女性が増える率は高いです。</p>
+    </div>
+
+    <div class="card">
+        <h2 class="card-title">各種アクション</h2>
+        <ul class="info-list">
+            <li>プレイ案件の複数送信は、<a href="men.html">こちら</a>からお願いします。</li>
+            <li>抽選については、男性メンバーからよくある質問をご覧ください。</li>
+        </ul>
+        <a href="men.html" class="action-btn">案件一覧を見て申し込む</a>
+    </div>
+    
+    <div class="footer-note">
+        <p>※リモート面談が必要となります。</p>
+        <p>極稀に、リモート面談が嫌という男性がいますが、女性はサークル仲間なので、サークルサイドが顔も分からない男性に会わせる訳にはいかないので、ご理解ください。</p>
+    </div>
+
+</div>
+
+</body>
+</html>
