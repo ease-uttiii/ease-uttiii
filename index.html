@@ -17,8 +17,6 @@
             /* 性別カラー */
             --men-blue: #5d7a99; 
             --woman-pink: #d4a5a5; 
-
-            --base-font-size: 16px;
         }
 
         body { 
@@ -29,7 +27,7 @@
             display: flex; 
             flex-direction: column; 
             min-height: 100vh;
-            font-size: var(--base-font-size);
+            font-size: 16px;
         }
 
         header { 
@@ -181,41 +179,6 @@
 
         .arrow { font-size: 1.2rem; color: #d1c8c8; }
 
-        .footer-settings { padding: 3rem 2rem; display: flex; justify-content: center; }
-
-        .size-selector { 
-            display: flex; 
-            align-items: center;                
-            background: rgba(142, 122, 138, 0.15); 
-            border: 1px solid rgba(142, 122, 138, 0.3); 
-            border-radius: 12px; 
-            padding: 4px 10px; 
-            gap: 8px; 
-            color: var(--mauve-admin); 
-            font-weight: bold;
-            font-size: 0.9em;
-        }
-
-        .size-btn { 
-            border: none; 
-            background: #ffffff;
-            padding: 8px 16px; 
-            font-size: 13px; 
-            font-weight: 800; 
-            color: var(--mauve-admin); 
-            border-radius: 9px; 
-            cursor: pointer; 
-            transition: 0.2s;
-            min-width: 45px;
-            box-shadow: 0 1px 3px rgba(0,0,0,0.1);
-        }
-
-        .size-btn.active { 
-            background: var(--mauve-admin); 
-            color: #ffffff; 
-            box-shadow: 0 3px 10px rgba(142, 122, 138, 0.4); 
-        }
-
     </style>
 </head>
 <body>
@@ -255,44 +218,11 @@
     </a>
 </div>
 
-<div class="footer-settings">
-    <div class="size-selector">
-        <span>FONT SIZE ⇒</span>
-        <button class="size-btn" id="btn-small" onclick="changeFontSize('small')">小</button>
-        <button class="size-btn active" id="btn-mid" onclick="changeFontSize('mid')">中</button>
-        <button class="size-btn" id="btn-large" onclick="changeFontSize('large')">大</button>
-    </div>
-</div>
-
 <script>
-    function applyFontSize(mode) {
-        const root = document.documentElement;
-        if (mode === 'small') {
-            root.style.setProperty('--base-font-size', '14px');
-        } else if (mode === 'mid') {
-            root.style.setProperty('--base-font-size', '16px');
-        } else if (mode === 'large') {
-            root.style.setProperty('--base-font-size', '19px');
-        }
-        document.querySelectorAll('.size-btn').forEach(btn => {
-            btn.classList.toggle('active', btn.id === `btn-${mode}`);
-        });
-    }
-
-    function changeFontSize(mode) {
-        applyFontSize(mode);
-        localStorage.setItem('portalFontSizeMode', mode);
-    }
-
     function fastUpdate() {
         document.querySelectorAll('.sync-target').forEach(i => i.classList.add('spinning'));
         setTimeout(() => location.reload(true), 600);
     }
-
-    window.onload = () => {
-        const saved = localStorage.getItem('portalFontSizeMode') || 'mid';
-        applyFontSize(saved);
-    };
 </script>
 
 </body>
