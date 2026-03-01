@@ -110,14 +110,17 @@
     background: var(--men-blue-light); padding: 15px 0; font-weight: 700; font-size: 0.9em; color: var(--men-blue-deep); 
     border-bottom: 1px solid #e1e8ed; display: flex; justify-content: center; align-items: center;
 }
-        .size-selector { 
+       .size-selector { 
     display: flex; 
-    align-items: center; /* これで文字が上下中央になります */
+    align-items: center; /* 上下中央寄せ */
+    justify-content: center; /* 中身を中央寄せ */
     background: #e2e8ed; 
     border: 1px solid var(--tile-border);
     border-radius: 12px; 
     padding: 4px; 
-    gap: 8px; /* 文字とボタンの隙間を少し空けました */
+    gap: 8px;
+    width: calc(100% - 8px); /* 枠の幅を親の端まで広げる */
+    margin: 0 auto; /* 中央配置 */
 }
 
         .size-btn {
