@@ -107,19 +107,21 @@
         
         .region-section { background: #ffffff; border-radius: 28px; margin-bottom: 40px; box-shadow: var(--shadow); overflow: hidden; }
         /* 修正後（justify-content を center に変更） */
+/* 修正後（paddingを左右調整し、justify-contentをcenterに） */
 .region-header { 
-    background: var(--men-blue-light); padding: 15px 20px; font-weight: 700; font-size: 0.9em; color: var(--men-blue-deep); 
+    background: var(--men-blue-light); padding: 15px 0; font-weight: 700; font-size: 0.9em; color: var(--men-blue-deep); 
     border-bottom: 1px solid #e1e8ed; display: flex; justify-content: center; align-items: center;
 }
 
         .size-selector { 
-            display: flex; 
-            background: #e2e8ed; 
-            border: 1px solid var(--tile-border);
-            border-radius: 12px; 
-            padding: 4px; 
-            gap: 4px; 
-        }
+    display: flex; 
+    align-items: center; /* これで文字が上下中央になります */
+    background: #e2e8ed; 
+    border: 1px solid var(--tile-border);
+    border-radius: 12px; 
+    padding: 4px; 
+    gap: 8px; /* 文字とボタンの隙間を少し空けました */
+}
 
         .size-btn {
             border: none; 
