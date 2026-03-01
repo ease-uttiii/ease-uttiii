@@ -49,30 +49,34 @@
             height: 28px; box-sizing: border-box; white-space: nowrap;
         }
         
-        /* ★ダイアログ表示用ボタンのスタイル */
+        /* ★ダイアログ表示用ボタンのスタイル（強調修正） */
         .info-btn-wrapper {
             background: var(--mauve-bg);
-            padding: 10px 1rem 0;
+            padding: 15px 1rem;
             display: flex;
             justify-content: center;
         }
         .open-modal-btn {
-            background: white;
-            border: 2px solid var(--mauve-main);
-            color: var(--mauve-deep);
-            border-radius: 12px;
-            padding: 10px 20px;
+            background: var(--mauve-deep);                /* 背景を濃い色に */
+            border: 2px solid var(--mauve-deep);
+            color: white;                                 /* 文字を白に */
+            border-radius: 15px;                          /* 丸みを少し小さく */
+            padding: 15px 25px;                           /* サイズを大きく */
             font-weight: bold;
-            font-size: 0.9em;
+            font-size: 1em;                               /* 文字サイズを大きく */
             cursor: pointer;
-            box-shadow: var(--tile-shadow);
+            box-shadow: 0 4px 15px rgba(122, 90, 90, 0.3); /* 影を濃く */
             transition: all 0.2s;
             width: 100%;
             max-width: 550px;
+            letter-spacing: 0.05em;
+        }
+        .open-modal-btn:hover {
+            background: #8e6a6a;                          /* ホバー時に明るく */
+            border-color: #8e6a6a;
         }
         .open-modal-btn:active {
-            background: var(--mauve-light);
-            transform: scale(0.99);
+            transform: scale(0.98);
         }
         
         .container { padding: 1rem; max-width: 550px; margin: 0 auto; }
@@ -118,7 +122,7 @@
         /* --- モーダルダイアログのスタイル --- */
         .modal-overlay {
             position: fixed; top: 0; left: 0; width: 100%; height: 100%;
-            background: rgba(0, 0, 0, 0.5);
+            background: rgba(0, 0, 0, 0.6); /* 背景を少し暗く */
             display: flex; justify-content: center; align-items: center;
             z-index: 1000;
             opacity: 0; visibility: hidden;
@@ -129,7 +133,7 @@
         .modal-content {
             background: white; width: 90%; max-width: 500px;
             padding: 20px; border-radius: 20px;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+            box-shadow: 0 10px 30px rgba(0,0,0,0.3);
             position: relative;
             transform: scale(0.9);
             transition: all 0.3s ease;
@@ -226,7 +230,6 @@
                 (何も問題がない場合は、サークル側に個人情報が知らされることはありません)
             </div>
             <p>※月会費は、脱退・月会費設定解除フォームからいつでも解除できます</p>
-            <p>≪クレジットカードをお持ちでない方へのおすすめカード≫</p>
         </div>
     </div>
     
