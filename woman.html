@@ -32,19 +32,21 @@
         }
 
         .size-selector { display: flex; background: var(--pink-light); border: 1px solid var(--tile-border); border-radius: 12px; padding: 3px; gap: 3px; }
-        .size-btn { border: none; background: transparent; padding: 5px 10px; font-size: 12px; font-weight: 800; color: var(--mauve-admin); border-radius: 8px; cursor: pointer; }
+        .size-btn { border: none; background: transparent; padding: 5px 10px; font-size: 12px; font-weight: 800; color: var(--mauve-admin); border-radius: 8px; cursor: pointer; outline: none; }
         .size-btn.active { background: #ffffff; color: var(--tile-text); box-shadow: 0 2px 5px rgba(0,0,0,0.1); }
 
         .container { padding: 1rem; max-width: 550px; margin: 0 auto; }
 
         .notice-btn {
             background: #fff; border: 4px solid var(--mauve-admin); color: var(--mauve-admin); font-weight: 900; 
-            padding: 18px 5px; border-radius: 60px; cursor: pointer; width: 100%; margin: 10px 0 30px; 
-            font-size: 1.3em; letter-spacing: -0.5px; display: block;
+            padding: 18px 5px; border-radius: 60px; cursor: pointer; width: 100%; margin: 10px 0 15px; 
+            font-size: 1.2em; letter-spacing: -0.5px; display: block; outline: none;
         }
 
-        .notice-modal { border: none; border-radius: 24px; padding: 0; width: 92%; max-width: 500px; }
-        .modal-inner { padding: 25px; background: #fff; text-align: left; }
+        .notice-modal { border: none; border-radius: 24px; padding: 0; width: 92%; max-width: 500px; box-shadow: 0 10px 30px rgba(0,0,0,0.2); }
+        .modal-inner { padding: 25px; background: #fff; text-align: left; max-height: 80vh; overflow-y: auto; }
+        .modal-inner h3 { margin-top: 0; font-size: 1.1em; line-height: 1.4; }
+        .modal-inner p { font-size: 0.9em; margin-bottom: 15px; border-bottom: 1px solid var(--pink-light); padding-bottom: 10px; }
 
         .form-section { background: var(--card-bg); border-radius: 24px; padding: 25px 15px; box-shadow: var(--tile-shadow); margin-bottom: 25px; }
         
@@ -59,7 +61,7 @@
 
         input[type="text"], select, textarea { 
             width: 100%; padding: 14px; border-radius: 12px; border: 1px solid var(--tile-border); background: var(--pink-light); 
-            box-sizing: border-box; font-size: 1.1em; margin-top: 8px; display: block; color: #5a4d4d;
+            box-sizing: border-box; font-size: 1.1em; margin-top: 8px; display: block; color: #5a4d4d; outline: none;
         }
 
         .date-grid { display: flex; flex-wrap: wrap; gap: 8px; align-items: center; margin-top: 8px; font-weight: bold; }
@@ -75,7 +77,13 @@
         }
         .check-item.active { background: linear-gradient(180deg, var(--pink-main) 0%, var(--pink-deep) 100%); color: white; border-color: var(--pink-deep); }
 
-        .submit-btn { background: linear-gradient(135deg, var(--pink-main) 0%, var(--pink-deep) 100%); color: white; border: none; padding: 20px; border-radius: 20px; width: 100%; font-size: 1.2em; font-weight: 700; cursor: pointer; margin-top: 25px; }
+        .submit-btn { 
+            background: linear-gradient(135deg, var(--pink-main) 0%, var(--pink-deep) 100%); color: white; 
+            border: none; padding: 20px; border-radius: 20px; width: 100%; font-size: 1.2em; font-weight: 700; 
+            cursor: pointer; margin-top: 25px; outline: none; -webkit-appearance: none;
+        }
+        /* 青枠（フォーカス）を消去 */
+        .submit-btn:focus, .notice-btn:focus, .size-btn:focus { outline: none; }
         
         .admin-note-header { background: var(--mauve-admin); color: white; padding: 12px; margin: 45px 0 15px; border-radius: 10px; text-align: center; font-weight: bold; font-size: 1.1em; }
     </style>
@@ -96,6 +104,8 @@
 
 <div class="container">
     <button type="button" class="notice-btn" onclick="document.getElementById('notice-dialog').showModal()">⚠依頼に関する大切なお願い</button>
+    
+    <button type="button" class="notice-btn" style="margin-top:0; border-color: #a58e8e; color: #a58e8e;" onclick="document.getElementById('ng-action-dialog').showModal()">🚫女性から男性へのNG行動</button>
 
     <dialog id="notice-dialog" class="notice-modal">
         <div class="modal-inner">
@@ -103,10 +113,24 @@
             <p><strong>■案件の募集期間が短いと男性が決まらない場合があります</strong><br>前日に男性を決めますので、前々日なら約1日ということになります。<br>※前々日の夜なら、ほぼ募集期間はないということになってしまいます。<br>※正直、地域によって変わってしまいます。すみません。<br>※応募がない場合は、再募集していますが、なかなか難しいと思います。</p>
             <p><strong>■1対1の前日の受付は午前中のみでお願いします。</strong><br>※午後からのプレイ依頼は、当日扱いになります。<br>※前日依頼は、お受けしますが男性が決まらない可能性があります。</p>
             <p><strong>■1対1の当日依頼は、お受けできなくなりました</strong><br>※当日の依頼は、いろいろと問題が多いので、お受けしないことにしました。</p>
-            <p><strong>■複数プレイは、監督探しからとなります</strong><br>※プレイ依頼受付後に「監督願い」を森が、全監督宛に出して決まりますので、少しお日にちが必要となります。<br>※準備期間が長いほど、監督も都合を合わせやすくなります。</p>
+            <p><strong>■複数プレイは、監督探しからとなります</strong><br>※少しお日にちが必要となります。準備期間が長いほど、監督も都合を合わせやすくなります。</p>
             <p><strong>■キャンセルは前日の確認までなら問題ありません。</strong></p>
             <p style="text-align:center; color:var(--pink-deep); font-weight:bold;">《何かあれば森に相談してください》</p>
             <form method="dialog"><button class="submit-btn" style="margin-top:10px;">確認しました</button></form>
+        </div>
+    </dialog>
+
+    <dialog id="ng-action-dialog" class="notice-modal">
+        <div class="modal-inner">
+            <h3 style="color:#a58e8e; text-align:center;">《女性から男性へのNG行動》</h3>
+            <p style="text-align:center;">※下記は基本です。<br>相手の嫌がる事はなるべく避けてください。</p>
+            <p><strong>・連絡先の交換を求める行為</strong><br>サークルでは個人情報のやり取りは禁止されています。女性から聞く行為もNGです。※再会希望等は森を通じてのみ、双方の同意がある場合のみ可能です。その後のトラブルは自己責任となります。</p>
+            <p><strong>・恋愛感情を持ち込む行為</strong><br>サークルeaseは恋愛目的ではありません。男性への執着や恋愛発言はトラブルの元となるため禁止されています。</p>
+            <p><strong>・無断キャンセルや当日キャンセル</strong><br>信頼を損なう行為として、依頼拒否や除名の対象となります（緊急入院等を除く）。</p>
+            <p><strong>・プレイ後の執拗な接触希望</strong><br>プレイ終了後はその場限りの関係が基本です。「また会いたい」等の継続希望は男性への負担となるため好ましくありません。</p>
+            <p><strong>・秘密保持義務の違反（身バレリスク）</strong><br>待ち合わせ場所の特定や外見のSNS発信、個人情報の過度な詮索は厳禁です。</p>
+            <p style="text-align:center; font-weight:bold;">以上、確認の上次にお進みください。</p>
+            <form method="dialog"><button class="submit-btn" style="margin-top:10px; background: linear-gradient(135deg, #a58e8e 0%, #8e7a7a 100%);">確認しました</button></form>
         </div>
     </dialog>
 
