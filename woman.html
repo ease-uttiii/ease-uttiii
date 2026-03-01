@@ -12,43 +12,90 @@
             --tile-text: #7a5a5a; --tile-shadow: 0 4px 10px rgba(212, 165, 165, 0.15);
             --mauve-admin: #8e7a8a; --base-font-size: 16px;
         }
-        body { font-family: 'Noto Sans JP', sans-serif; margin: 0; background: var(--soft-bg); color: #5a4d4d; line-height: 1.6; font-size: var(--base-font-size); }
-        header { background: rgba(212, 165, 165, 0.95); color: white; padding: 1.2rem 1rem; text-align: center; position: sticky; top: 0; z-index: 100; }
-        header h1 { margin: 0; font-size: 1.3rem; font-family: 'Lora', serif; }
-        .container { padding: 1rem; max-width: 550px; margin: 0 auto; }
+
+        body { 
+            font-family: 'Noto Sans JP', sans-serif; margin: 0; background: var(--soft-bg); color: #5a4d4d; line-height: 1.6; font-size: var(--base-font-size); 
+            -webkit-tap-highlight-color: transparent;
+        }
         
+        header { 
+            background: rgba(212, 165, 165, 0.95); backdrop-filter: blur(10px); color: white; padding: 1rem; position: sticky; top: 0; z-index: 100; 
+            display: flex; flex-direction: column; align-items: center; gap: 10px; box-shadow: 0 4px 20px rgba(0,0,0,0.1);
+        }
+        header h1 { margin: 0; font-size: 1.2rem; font-family: 'Lora', serif; }
+
+        .header-controls { display: flex; align-items: center; justify-content: center; gap: 6px; flex-wrap: wrap; }
+        .head-btn {
+            background: rgba(255, 255, 255, 0.2); border: 1px solid rgba(255, 255, 255, 0.4); border-radius: 30px;
+            padding: 6px 12px; font-size: 11px; font-weight: bold; color: white; cursor: pointer; text-decoration: none;
+            display: flex; align-items: center; justify-content: center; white-space: nowrap;
+        }
+
+        .size-selector { display: flex; background: var(--pink-light); border: 1px solid var(--tile-border); border-radius: 12px; padding: 3px; gap: 3px; }
+        .size-btn { border: none; background: transparent; padding: 5px 10px; font-size: 12px; font-weight: 800; color: var(--mauve-admin); border-radius: 8px; cursor: pointer; }
+        .size-btn.active { background: #ffffff; color: var(--tile-text); box-shadow: 0 2px 5px rgba(0,0,0,0.1); }
+
+        .container { padding: 1rem; max-width: 550px; margin: 0 auto; }
+
         .notice-btn {
             background: #fff; border: 4px solid var(--mauve-admin); color: var(--mauve-admin); font-weight: 900; 
-            padding: 18px 2px; border-radius: 60px; cursor: pointer; width: 100%; margin: 10px 0 30px; font-size: 20px;
+            padding: 18px 5px; border-radius: 60px; cursor: pointer; width: 100%; margin: 10px 0 30px; 
+            font-size: 1.3em; letter-spacing: -0.5px; display: block;
         }
-        .notice-modal { border: none; border-radius: 24px; padding: 0; width: 92%; max-width: 500px; }
-        .modal-inner { padding: 25px; background: #fff; font-size: 0.9em; text-align: left; }
-        .modal-inner p { margin: 0.8em 0; border-bottom: 1px solid var(--pink-light); padding-bottom: 5px; }
 
-        .form-section { background: var(--card-bg); border-radius: 24px; padding: 25px 20px; box-shadow: var(--tile-shadow); margin-bottom: 25px; }
-        .field-label { font-weight: bold; color: #fff; background: var(--pink-deep); display: inline-flex; padding: 4px 12px; border-radius: 8px; margin-top: 1.5em; align-items: center; }
-        .required { background: #e88e8e; color: white; font-size: 0.7em; padding: 1px 6px; border-radius: 4px; margin-left: 8px; border: 1px solid #fff; }
-        .field-note { display: block; margin-top: 8px; font-size: 0.85em; color: var(--pink-deep); font-weight: bold; line-height: 1.5; }
+        .notice-modal { border: none; border-radius: 24px; padding: 0; width: 92%; max-width: 500px; }
+        .modal-inner { padding: 25px; background: #fff; text-align: left; }
+
+        .form-section { background: var(--card-bg); border-radius: 24px; padding: 25px 15px; box-shadow: var(--tile-shadow); margin-bottom: 25px; }
         
+        /* ラベルが大サイズでも崩れないように設定 */
+        .field-label { 
+            font-weight: bold; color: #fff; background: var(--pink-deep);
+            display: inline-flex; align-items: center; padding: 6px 14px; border-radius: 8px; margin-top: 1.8em; 
+            min-height: 1.5em; max-width: 100%; box-sizing: border-box;
+        }
+
+        .required { background: #e88e8e; color: white; font-size: 0.7em; padding: 2px 6px; border-radius: 4px; margin-left: 8px; border: 1px solid #fff; flex-shrink: 0; }
+        .field-note { display: block; margin-top: 10px; font-size: 0.85em; color: var(--pink-deep); font-weight: bold; line-height: 1.4; }
+
         input[type="text"], select, textarea { 
             width: 100%; padding: 14px; border-radius: 12px; border: 1px solid var(--tile-border); background: var(--pink-light); 
             box-sizing: border-box; font-size: 1.1em; margin-top: 8px; display: block; color: #5a4d4d;
         }
-        .date-grid { display: grid; grid-template-columns: 2fr 1.2fr 1.2fr 1.2fr 1.2fr; gap: 4px; align-items: center; margin-top: 8px; font-weight: bold; }
 
-        .check-grid { display: flex; flex-direction: column; gap: 8px; margin-top: 10px; }
-        .check-item { 
-            background: #fff; border: 1px solid var(--tile-border); padding: 14px; border-radius: 12px; 
-            font-size: 1em; text-align: center; cursor: pointer; font-weight: bold; transition: 0.2s;
-        }
-        .check-item.active { background: linear-gradient(180deg, var(--pink-main) 0%, var(--pink-deep) 100%); color: white; }
+        .date-grid { display: flex; flex-wrap: wrap; gap: 8px; align-items: center; margin-top: 8px; font-weight: bold; }
+        .date-grid select { width: auto; min-width: 70px; margin-top: 0; }
+
+        .check-grid { display: flex; flex-direction: column; gap: 10px; margin-top: 12px; }
         
-        .submit-btn { background: linear-gradient(135deg, var(--pink-main) 0%, var(--pink-deep) 100%); color: white; border: none; padding: 20px; border-radius: 20px; width: 100%; font-size: 1.2em; font-weight: 700; cursor: pointer; margin-top: 20px; }
-        .admin-note-header { background: var(--mauve-admin); color: white; padding: 10px; margin: 40px 0 15px; border-radius: 8px; text-align: center; font-weight: bold; }
+        /* 大サイズでも枠からはみ出ない工夫 */
+        .check-item { 
+            background: #fff; border: 1px solid var(--tile-border); padding: 15px 10px; border-radius: 12px; 
+            font-size: 1em; text-align: center; cursor: pointer; font-weight: bold; 
+            display: flex; align-items: center; justify-content: center; 
+            min-height: 60px; height: auto; transition: 0.2s; box-sizing: border-box; width: 100%; line-height: 1.3;
+        }
+        .check-item.active { background: linear-gradient(180deg, var(--pink-main) 0%, var(--pink-deep) 100%); color: white; border-color: var(--pink-deep); }
+
+        .submit-btn { background: linear-gradient(135deg, var(--pink-main) 0%, var(--pink-deep) 100%); color: white; border: none; padding: 20px; border-radius: 20px; width: 100%; font-size: 1.2em; font-weight: 700; cursor: pointer; margin-top: 25px; }
+        
+        .admin-note-header { background: var(--mauve-admin); color: white; padding: 12px; margin: 45px 0 15px; border-radius: 10px; text-align: center; font-weight: bold; font-size: 1.1em; }
     </style>
 </head>
 <body>
-<header><h1>女性用プレイ依頼フォーム</h1></header>
+<header>
+    <h1>女性用プレイ依頼フォーム</h1>
+    <div class="header-controls">
+        <a href="index.html" class="head-btn">TOPへ戻る</a>
+        <button class="head-btn" onclick="location.reload()">最新リロード</button>
+        <div class="size-selector">
+            <button type="button" class="size-btn" id="btn-small" onclick="changeFontSize('small')">小</button>
+            <button type="button" class="size-btn" id="btn-mid" onclick="changeFontSize('mid')">中</button>
+            <button type="button" class="size-btn" id="btn-large" onclick="changeFontSize('large')">大</button>
+        </div>
+    </div>
+</header>
+
 <div class="container">
     <button type="button" class="notice-btn" onclick="document.getElementById('notice-dialog').showModal()">⚠依頼に関する大切なお願い</button>
 
@@ -58,10 +105,10 @@
             <p><strong>■案件の募集期間が短いと男性が決まらない場合があります</strong><br>前日に男性を決めますので、前々日なら約1日ということになります。<br>※前々日の夜なら、ほぼ募集期間はないということになってしまいます。<br>※正直、地域によって変わってしまいます。すみません。<br>※応募がない場合は、再募集していますが、なかなか難しいと思います。</p>
             <p><strong>■1対1の前日の受付は午前中のみでお願いします。</strong><br>※午後からのプレイ依頼は、当日扱いになります。<br>※前日依頼は、お受けしますが男性が決まらない可能性があります。</p>
             <p><strong>■1対1の当日依頼は、お受けできなくなりました</strong><br>※当日の依頼は、いろいろと問題が多いので、お受けしないことにしました。</p>
-            <p><strong>■複数プレイは、監督探しからとなります</strong><br>※少しお日にちが必要となります。準備期間が長いほど、監督も都合を合わせやすくなります。</p>
+            <p><strong>■複数プレイは、監督探しからとなります</strong><br>※プレイ依頼受付後に「監督願い」を森が、全監督宛に出して決まりますので、少しお日にちが必要となります。<br>※準備期間が長いほど、監督も都合を合わせやすくなります。</p>
             <p><strong>■キャンセルは前日の確認までなら問題ありません。</strong></p>
-            <p style="text-align:center; color:var(--pink-deep);">《何かあれば森に相談してください》</p>
-            <form method="dialog"><button class="submit-btn">確認しました</button></form>
+            <p style="text-align:center; color:var(--pink-deep); font-weight:bold;">《何かあれば森に相談してください》</p>
+            <form method="dialog"><button class="submit-btn" style="margin-top:10px;">確認しました</button></form>
         </div>
     </dialog>
 
@@ -76,8 +123,6 @@
                 <span>2026年</span>
                 <select id="m" required><option value="01">01</option><option value="02">02</option><option value="03" selected>03</option><option value="04">04</option><option value="05">05</option><option value="06">06</option><option value="07">07</option><option value="08">08</option><option value="09">09</option><option value="10">10</option><option value="11">11</option><option value="12">12</option></select><span>月</span>
                 <select id="d" required></select><span>日</span>
-            </div>
-            <div class="date-grid" style="grid-template-columns: 1.2fr 1fr 1.2fr 1fr;">
                 <select id="hh" required></select><span>時</span>
                 <select id="mm" required><option value="00">00</option><option value="10">10</option><option value="20">20</option><option value="30">30</option><option value="40">40</option><option value="50">50</option></select><span>分</span>
             </div>
@@ -135,39 +180,36 @@
 
             <label class="field-label">相手の希望人数 <span class="required">必須</span></label>
             <div style="display:flex; align-items:center; gap:10px; margin-top:8px;">
-                <input type="text" name="member_count" value="1" style="width:80px; text-align:center; margin-top:0;" required>人
+                <input type="text" name="member_count" value="1" style="width:70px; text-align:center; margin-top:0;" required><span>人</span>
             </div>
-            <span class="field-note">現在、複数プレイは要相談としています。<br>※現在監督育成中のため1対1になる可能性があります。<br>※複数プレイは依頼日に必ず開催されるとは限りません。</span>
+            <span class="field-note">現在、複数プレイは要相談としています。<br>※監督育成中のため1対1になる可能性があります。<br>※複数プレイは依頼日に必ず開催されるとは限りません。</span>
             
             <label class="field-label">使用して欲しい玩具</label>
             <textarea name="toys" placeholder="バイブレーター、ローター、電マ、アナルグッズ、ローション、SMグッズ、アイマスク、その他"></textarea>
             
             <label class="field-label">プレイ案件掲載項目</label>
-            <textarea name="public_note" placeholder=""></textarea>
-            <span class="field-note">・案件の「その他」に掲載します。応募する男性に伝えたいことを記入してください。<br>・面談時にお聞きしたNGなどは毎回掲載します。<br>・場所指定がなければ「ホテル」となります。</span>
+            <textarea name="public_note"></textarea>
+            <span class="field-note">・案件の「その他」に掲載します。<br>・面談時にお聞きしたNGなどは毎回掲載します。<br>・指定がなければ「ホテル」となります。</span>
             
             <label class="field-label">NGについて</label>
             <div class="check-grid" id="ngGrid">
                 <div class="check-item" onclick="toggleSelection(this)">タバコ</div><div class="check-item" onclick="toggleSelection(this)">香水</div><div class="check-item" onclick="toggleSelection(this)">太りすぎている方</div><div class="check-item" onclick="toggleSelection(this)">痩せ過ぎの方</div><div class="check-item" onclick="toggleSelection(this)">ドМ</div><div class="check-item" onclick="toggleSelection(this)">ドS</div><div class="check-item" onclick="toggleSelection(this)">言葉が乱暴な方</div><div class="check-item" onclick="toggleSelection(this)">髪が薄い方</div><div class="check-item" onclick="toggleSelection(this)">刺青(タトゥーもNG)</div><div class="check-item" onclick="toggleSelection(this)">言葉攻め</div><div class="check-item" onclick="toggleSelection(this)">コミュニケーションが取れない方</div><div class="check-item" onclick="toggleSelection(this)">上から目線な男性</div><div class="check-item" onclick="toggleSelection(this)">経験がなさすぎる方</div><div class="check-item" onclick="toggleSelection(this)">オラオラ系</div><div class="check-item" onclick="toggleSelection(this)">体毛が濃い方</div><div class="check-item" onclick="toggleSelection(this)">普通体型以外の方</div><div class="check-item" onclick="toggleSelection(this)">爪が不衛生な方</div><div class="check-item" onclick="toggleSelection(this)">過度に緊張する方</div>
             </div>
-            <span class="field-note">※NGは基本「面談時」のものが反映されますが、足したいものがあればお選びください。</span>
+            <span class="field-note">※NGは基本「面談時」のものが反映されます。</span>
             <textarea name="other_ng" placeholder="その他NGあれば記入してください"></textarea>
-            <span class="field-note">※NGが多いと男性は集まりにくいです。</span>
             
-            <label class="field-label">日本性活プランナー協会の受検経験の有無</label>
+            <label class="field-label">日本性活プランナー協会の受検経験</label>
             <div class="check-grid" style="flex-direction: row; gap: 10px;">
                 <div class="check-item" id="ex-n" style="flex:1;" onclick="selectExam('無し')">無し</div>
                 <div class="check-item" id="ex-y" style="flex:1;" onclick="selectExam('有り')">有り</div>
             </div>
             <input type="hidden" name="exam_status" id="exam_hidden">
-            <span class="field-note">性に前向きに向き合う姿勢の指標です。</span>
 
             <div class="admin-note-header">非掲載部分</div>
             <span class="field-note">※この項目はプレイ案件に記載しません。</span>
-            <span class="field-note">※「○○でお願いします」という希望は掲載項目に書いてください。掲載しないと抽選後の選別ができません。</span>
             
             <label class="field-label">非掲載メモ</label>
-            <textarea name="private_note" placeholder="今回だけ特別なことがある場合は必ず記入してください。（登録県以外でプレイする場合やエリアが変わる場合など）"></textarea>
+            <textarea name="private_note" placeholder="登録県以外でプレイする場合など、特別なことがあれば記入してください。"></textarea>
         </div>
 
         <input type="hidden" name="play_content" id="play_hidden">
@@ -182,9 +224,13 @@ window.onload = function() {
     for (let i=1; i<=31; i++) { dSel.add(new Option(i.toString().padStart(2,'0'), i.toString().padStart(2,'0'))); }
     const hSel = document.getElementById('hh');
     for (let i=0; i<=23; i++) { hSel.add(new Option(i.toString().padStart(2,'0'), i.toString().padStart(2,'0'))); }
+    
+    const savedMode = localStorage.getItem('fontSizeMode') || 'mid';
+    changeFontSize(savedMode);
 };
 
 function toggleSelection(el) { el.classList.toggle('active'); }
+
 function selectExam(val) {
     document.getElementById('ex-n').classList.remove('active');
     document.getElementById('ex-y').classList.remove('active');
@@ -193,11 +239,17 @@ function selectExam(val) {
     document.getElementById('exam_hidden').value = val;
 }
 
+function changeFontSize(mode) {
+    const root = document.documentElement;
+    let size = mode === 'small' ? '13px' : mode === 'large' ? '20px' : '16px';
+    root.style.setProperty('--base-font-size', size);
+    document.querySelectorAll('.size-btn').forEach(btn => btn.classList.toggle('active', btn.id === `btn-${mode}`));
+    localStorage.setItem('fontSizeMode', mode);
+}
+
 document.getElementById('mainForm').onsubmit = function() {
-    const play = Array.from(document.querySelectorAll('#playGrid .active')).map(e => e.innerText);
-    document.getElementById('play_hidden').value = play.join(', ');
-    const ng = Array.from(document.querySelectorAll('#ngGrid .active')).map(e => e.innerText);
-    document.getElementById('ng_hidden').value = ng.join(', ');
+    document.getElementById('play_hidden').value = Array.from(document.querySelectorAll('#playGrid .active')).map(e => e.innerText).join(', ');
+    document.getElementById('ng_hidden').value = Array.from(document.querySelectorAll('#ngGrid .active')).map(e => e.innerText).join(', ');
     const dateStr = `2026-${document.getElementById('m').value}-${document.getElementById('d').value} ${document.getElementById('hh').value}:${document.getElementById('mm').value}`;
     document.getElementById('full_date').value = dateStr;
     return true;
