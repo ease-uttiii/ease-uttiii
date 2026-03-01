@@ -1,0 +1,420 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+    <title>プレイ参加者募集案件</title>
+    <link href="https://fonts.googleapis.com/css2?family=Lora:wght@600&family=Noto+Sans+JP:wght@400;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            /* スタイリッシュ・ブルー パレット */
+            --men-blue: #5d7a99;
+            --men-blue-deep: #465d75;
+            --men-blue-light: #f0f4f7;
+            --soft-bg: #f5f7f9;
+            --card-bg: #ffffff;
+            --tile-bg-top: #dee6ed;
+            --tile-bg-bottom: #cfdae3;
+            --tile-text: #465563;
+            --tile-border: #b8c6d1;
+            --text-sub: #8e9ba8;
+            --shadow: 0 8px 25px rgba(93, 122, 153, 0.12);
+            --tile-shadow: 0 4px 10px rgba(0,0,0,0.06);
+
+            --base-font-size: 16px;
+            --pref-font-size: 17px;
+            --pref-grid-cols: repeat(3, 1fr);
+            --title-font-size: 1.7rem;
+            --card-title-size: 19px;
+        }
+
+        body { 
+            font-family: 'Noto Sans JP', sans-serif; 
+            margin: 0; 
+            background: var(--soft-bg); 
+            color: #3e4852; 
+            -webkit-font-smoothing: antialiased; 
+            font-size: var(--base-font-size);
+            -webkit-tap-highlight-color: transparent;
+        }
+        
+        header { 
+            background: rgba(93, 122, 153, 0.95); backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px);
+            color: white; padding: 1.2rem 1rem; position: sticky; top: 0; z-index: 100; 
+            display: flex; flex-direction: column; align-items: center; gap: 12px; box-shadow: 0 4px 25px rgba(0,0,0,0.1);
+        }
+        header h1 { 
+            margin: 0; font-size: 1.4rem; letter-spacing: 0.1em; 
+            font-family: 'Lora', serif; text-align: center; 
+        }
+
+        .header-controls {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+        }
+
+        .head-btn {
+            background: rgba(255, 255, 255, 0.2);
+            border: 1px solid rgba(255, 255, 255, 0.4);
+            border-radius: 30px;
+            padding: 6px 14px;
+            font-size: 11px;
+            font-weight: bold;
+            color: white;
+            cursor: pointer;
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            height: 28px;
+            box-sizing: border-box;
+            white-space: nowrap;
+        }
+
+        .reload-icon {
+            display: inline-block;
+            width: 14px;
+            height: 14px;
+            line-height: 14px;
+            margin: 0 4px;
+            font-size: 14px;
+            text-align: center;
+        }
+
+        .reload-icon::before {
+            content: '↻';
+        }
+
+        .spinning {
+            animation: spin 0.6s linear infinite !important;
+        }
+
+        @keyframes spin {
+            from { transform: rotate(0deg); }
+            to { transform: rotate(360deg); }
+        }
+
+        .header-nav-row { display: flex; gap: 8px; width: 100%; max-width: 500px; margin-top: 5px; }
+        .nav-btn { 
+            flex: 1; padding: 10px; border-radius: 12px; border: none; background: white; 
+            color: var(--men-blue-deep); font-weight: bold; font-size: 0.8em;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.1); display: flex; align-items: center; justify-content: center; gap: 6px; cursor: pointer;
+        }
+
+        .container { padding: 1.5rem 1rem; max-width: 500px; margin: 0 auto; }
+        
+        .region-section { background: #ffffff; border-radius: 28px; margin-bottom: 40px; box-shadow: var(--shadow); overflow: hidden; }
+.region-header { 
+    background: var(--men-blue-light); padding: 15px 0; font-weight: 700; font-size: 0.9em; color: var(--men-blue-deep); 
+    border-bottom: 1px solid #e1e8ed; display: flex; justify-content: center; align-items: center;
+}
+       .size-selector { 
+    display: flex; 
+    align-items: center; /* 上下中央寄せ */
+    justify-content: center; /* 中身を中央寄せ */
+    background: #e2e8ed; 
+    border: 1px solid var(--tile-border);
+    border-radius: 12px; 
+    padding: 4px; 
+    gap: 8px;
+    width: calc(100% - 8px); /* 枠の幅を親の端まで広げる */
+    margin: 0 auto; /* 中央配置 */
+}
+
+        .size-btn {
+            border: none; 
+            background: #ffffff; 
+            padding: 8px 15px;
+            font-size: 14px;
+            font-weight: 800; 
+            color: var(--tile-border); 
+            border-radius: 8px; 
+            cursor: pointer; 
+            outline: none;
+        }
+
+        .size-btn.active { 
+            background: white; 
+            color: var(--men-blue-deep); 
+            box-shadow: 0 3px 8px rgba(0,0,0,0.12);
+        }
+
+        .favorite-box {
+            background: #fdfdfd;
+            border: 1px dashed var(--tile-border);
+            margin: 15px;
+            padding: 15px;
+            border-radius: 16px;
+        }
+        .fav-title { 
+            font-size: calc(var(--base-font-size) * 0.75);
+            color: var(--men-blue); 
+            font-weight: bold; 
+            margin-bottom: 10px; 
+            display: flex; 
+            align-items: center; 
+            gap: 5px; 
+        }
+        .fav-grid { display: flex; flex-wrap: wrap; gap: 8px; }
+        .fav-tag {
+            background: var(--men-blue); 
+            color: white; 
+            padding: 8px 14px; 
+            border-radius: 24px; 
+            font-size: calc(var(--base-font-size) * 0.85);
+            font-weight: bold; 
+            display: flex; 
+            align-items: center; 
+            gap: 6px; 
+            cursor: pointer;
+            box-shadow: 0 2px 6px rgba(93, 122, 153, 0.2);
+        }
+        .fav-empty { 
+            font-size: calc(var(--base-font-size) * 0.75);
+            color: #b0bac3; 
+            text-align: center; 
+            width: 100%; 
+            padding: 10px 0; 
+        }
+        .add-fav-mode-btn { 
+            background: #fff; 
+            border: 1px solid var(--men-blue); 
+            color: var(--men-blue); 
+            padding: 5px 12px; 
+            border-radius: 20px; 
+            font-size: calc(var(--base-font-size) * 0.7);
+            font-weight: bold; 
+            cursor: pointer; 
+        }
+
+        .pref-btn.is-fav { border: 2px solid var(--men-blue); position: relative; }
+        .pref-btn.is-fav::after { content: "★"; position: absolute; top: -5px; right: -5px; background: var(--men-blue); color: white; width: 16px; height: 16px; border-radius: 50%; font-size: 10px; display: flex; align-items: center; justify-content: center; }
+
+        .region-group-title { padding: 20px 20px 8px; font-weight: 700; font-size: 0.8em; color: var(--men-blue); display: flex; align-items: center; }
+        .region-group-title::before { content: ""; display: inline-block; width: 4px; height: 14px; background: var(--men-blue); margin-right: 8px; border-radius: 2px; }
+
+        .pref-grid { display: grid; grid-template-columns: var(--pref-grid-cols); gap: 10px; padding: 10px 15px 25px; transition: all 0.3s ease; }
+        
+        .pref-btn { 
+            background: linear-gradient(180deg, var(--tile-bg-top) 0%, var(--tile-bg-bottom) 100%); 
+            border: 1px solid var(--tile-border); padding: 14px 2px; font-size: var(--pref-font-size); 
+            font-weight: 700; border-radius: 12px; color: var(--tile-text); 
+            box-shadow: var(--tile-shadow); transition: all 0.2s ease; cursor: pointer; 
+            text-align: center; display: flex; align-items: center; justify-content: center;
+        }
+        .pref-btn:active { background: var(--men-blue-deep); color: white; transform: translateY(1px); box-shadow: none; }
+
+        #current-filter-label { margin: 35px 0 20px; font-size: 1.15em; font-weight: 700; color: var(--men-blue-deep); display: flex; align-items: center; }
+        #current-filter-label::after { content: ""; flex: 1; height: 1px; background: #d0d9e0; margin-left: 15px; }
+
+        .recruit-card { background: var(--card-bg); margin-bottom: 2rem; border-radius: 24px; box-shadow: var(--shadow); display: flex; overflow: hidden; }
+        .card-accent { width: 44px; background: linear-gradient(180deg, var(--men-blue-light), var(--men-blue)); display: flex; align-items: center; justify-content: center; writing-mode: vertical-rl; color: var(--men-blue-deep); font-size: 0.7em; font-weight: 700; letter-spacing: 0.4em; }
+        .card-content { padding: 1.8rem; flex: 1; }
+        .recruit-title { font-weight: 700; color: #2c363f; font-size: var(--card-title-size); margin-bottom: 12px; }
+        .recruit-info { font-size: 0.8em; color: var(--text-sub); display: flex; flex-direction: column; gap: 7px; }
+        .apply-btn { margin-top: 22px; background: linear-gradient(135deg, var(--men-blue) 0%, var(--men-blue-deep) 100%); color: white; border: none; padding: 16px; border-radius: 16px; width: 100%; font-size: 1em; font-weight: 700; cursor: pointer; }
+        
+        .footer-nav { text-align: center; margin: 40px 0; }
+    </style>
+</head>
+<body>
+
+<header>
+    <h1>プレイ参加者募集案件</h1>
+    <div class="header-controls">
+        <a href="index.html" class="head-btn">TOPへ戻る</a>
+        <button id="force-reload-btn" class="head-btn" onclick="fastUpdate()">
+            <span class="reload-icon sync-target"></span> 最新にリロード <span class="reload-icon sync-target"></span>
+        </button>
+    </div>
+    <div class="header-nav-row">
+        <button class="nav-btn" onclick="scrollToSection('region-section')">📍 エリアで絞る</button>
+        <button class="nav-btn" onclick="filterByArea('すべて')">📋 すべて表示</button>
+    </div>
+</header>
+
+<div class="container">
+    <div id="region-section" class="region-section">
+        <div class="region-header">
+            <div class="size-selector">
+        <span>FONT SIZE ⇒</span>
+        <button class="size-btn" id="btn-small" onclick="changeFontSize('small')">小</button>
+        <button class="size-btn" id="btn-mid" onclick="changeFontSize('mid')">中</button>
+        <button class="size-btn" id="btn-large" onclick="changeFontSize('large')">大</button>
+    </div>
+
+        </div>
+
+        <div class="favorite-box">
+            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px;">
+                <div class="fav-title">★ お気に入り登録</div>
+                <button id="fav-edit-btn" class="add-fav-mode-btn" onclick="toggleFavEditMode()">設定を変更</button>
+            </div>
+            <div id="fav-grid" class="fav-grid">
+                <div class="fav-empty">よく利用する県を登録してください（最大5つ）</div>
+            </div>
+        </div>
+
+        <div id="pref-container"></div>
+    </div>
+    <div id="current-filter-label">表示中: すべての募集</div>
+    <div id="recruit-list"></div>
+</div>
+
+<script>
+let recruitmentItems = [
+    { id: 1, title: "東京都内のプレミアム特別案件", area: "東京都全域", date: "2024-05-20" },
+    { id: 2, title: "大阪・関西エリア合同一斉募集", area: "大阪府", date: "2024-05-25" },
+    { id: 3, title: "北海道エリア限定・特別イベント", area: "北海道全域", date: "2024-06-01" },
+    { id: 4, title: "沖縄マリンリゾート・サマー案件", area: "沖縄県全域", date: "2024-06-10" }
+];
+
+// 最新のエリア区分に修正済み
+const regions = {
+    "【北海道】": ["北海道全域"],
+    "【東北地方】": ["青森県", "岩手県", "宮城県", "秋田県", "山形県", "福島県"],
+    "【関東地方】": ["茨城県", "栃木県", "群馬県", "埼玉県", "千葉県", "東京都全域", "神奈川県"],
+    "【甲信越地方】": ["新潟県", "山梨県", "長野県"],
+    "【東海地方】": ["岐阜県", "静岡県", "愛知県", "三重県"],
+    "【北陸地方】": ["富山県", "石川県", "福井県"],
+    "【関西地方】": ["滋賀県", "京都府", "大阪府", "兵庫県", "奈良県", "和歌山県"],
+    "【中国地方】": ["鳥取県", "島根県", "岡山県", "広島県", "山口県"],
+    "【四国地方】": ["徳島県", "香川県", "愛媛県", "高知県"],
+    "【九州地方】": ["福岡県", "佐賀県", "長崎県", "熊本県", "大分県", "宮崎県", "鹿児島県"],
+    "【沖縄】": ["沖縄県全域"]
+};
+
+let favorites = JSON.parse(localStorage.getItem('easeFavPrefs')) || [];
+let isFavEditMode = false;
+
+window.onload = function() {
+    const savedMode = localStorage.getItem('menFontSizeMode') || 'mid';
+    applyFontSize(savedMode);
+    createPrefButtons();
+    updateFavDisplay();
+    displayRecruits();
+};
+
+function applyFontSize(mode) {
+    const root = document.documentElement;
+    if (mode === 'small') {
+        root.style.setProperty('--base-font-size', '13px');
+        root.style.setProperty('--pref-font-size', '14px');
+        root.style.setProperty('--pref-grid-cols', 'repeat(4, 1fr)');
+    } else if (mode === 'mid') {
+        root.style.setProperty('--base-font-size', '16px');
+        root.style.setProperty('--pref-font-size', '17px');
+        root.style.setProperty('--pref-grid-cols', 'repeat(3, 1fr)');
+    } else if (mode === 'large') {
+        root.style.setProperty('--base-font-size', '19px');
+        root.style.setProperty('--pref-font-size', '20px');
+        root.style.setProperty('--pref-grid-cols', 'repeat(3, 1fr)');
+    }
+    document.querySelectorAll('.size-btn').forEach(btn => {
+        btn.classList.toggle('active', btn.id === `btn-${mode}`);
+    });
+}
+
+function changeFontSize(mode) {
+    applyFontSize(mode);
+    localStorage.setItem('menFontSizeMode', mode);
+}
+
+function createPrefButtons() {
+    const container = document.getElementById('pref-container');
+    container.innerHTML = '';
+    for (const [regionName, prefs] of Object.entries(regions)) {
+        const title = document.createElement('div');
+        title.className = 'region-group-title'; title.innerText = regionName;
+        container.appendChild(title);
+        const grid = document.createElement('div');
+        grid.className = 'pref-grid';
+        prefs.forEach(pref => {
+            const btn = document.createElement('button');
+            btn.className = 'pref-btn'; 
+            if (favorites.includes(pref)) btn.classList.add('is-fav');
+            btn.innerText = pref;
+            btn.onclick = () => handlePrefClick(pref, btn);
+            grid.appendChild(btn);
+        });
+        container.appendChild(grid);
+    }
+}
+
+function handlePrefClick(pref, btn) {
+    if (isFavEditMode) {
+        if (favorites.includes(pref)) {
+            favorites = favorites.filter(f => f !== pref);
+            btn.classList.remove('is-fav');
+        } else {
+            if (favorites.length >= 5) {
+                alert("登録できるのは5つまでです。");
+                return;
+            }
+            favorites.push(pref);
+            btn.classList.add('is-fav');
+        }
+        localStorage.setItem('easeFavPrefs', JSON.stringify(favorites));
+        updateFavDisplay();
+    } else {
+        filterByArea(pref);
+    }
+}
+
+function toggleFavEditMode() {
+    isFavEditMode = !isFavEditMode;
+    const btn = document.getElementById('fav-edit-btn');
+    btn.innerText = isFavEditMode ? "完了" : "設定を変更";
+    btn.style.background = isFavEditMode ? "var(--men-blue)" : "#fff";
+    btn.style.color = isFavEditMode ? "#fff" : "var(--men-blue)";
+}
+
+function updateFavDisplay() {
+    const grid = document.getElementById('fav-grid');
+    if (favorites.length === 0) {
+        grid.innerHTML = '<div class="fav-empty">よく利用する県を登録してください（最大5つ）</div>';
+        return;
+    }
+    grid.innerHTML = '';
+    favorites.forEach(pref => {
+        const tag = document.createElement('div');
+        tag.className = 'fav-tag';
+        tag.innerHTML = `<span>★</span> ${pref}`;
+        tag.onclick = () => filterByArea(pref);
+        grid.appendChild(tag);
+    });
+}
+
+function displayRecruits(filter = 'すべて') {
+    const list = document.getElementById('recruit-list');
+    const label = document.getElementById('current-filter-label');
+    list.innerHTML = '';
+    label.innerText = filter === 'すべて' ? '表示中: すべての募集' : `表示中: ${filter}`;
+    const filtered = filter === 'すべて' ? recruitmentItems : recruitmentItems.filter(item => item.area === filter);
+    filtered.forEach(item => {
+        const card = document.createElement('div');
+        card.className = 'recruit-card';
+        card.innerHTML = `<div class="card-accent">RECRUIT</div><div class="card-content"><div class="recruit-title">${item.title}</div><div class="recruit-info"><span>📍 エリア: ${item.area}</span><span>📅 掲載日: ${item.date}</span></div><button class="apply-btn">詳細・応募はこちら</button></div>`;
+        list.appendChild(card);
+    });
+}
+
+function scrollToSection(id) { 
+    const el = document.getElementById(id);
+    if(el) window.scrollTo({ top: el.offsetTop - 140, behavior: 'smooth' }); 
+}
+
+function filterByArea(area) { 
+    displayRecruits(area); 
+    window.scrollTo({ top: document.getElementById('current-filter-label').offsetTop - 160, behavior: 'smooth' }); 
+}
+
+function fastUpdate() {
+    document.querySelectorAll('.sync-target').forEach(i => i.classList.add('spinning'));
+    setTimeout(() => location.reload(true), 600);
+}
+</script>
+</body>
+</html>
