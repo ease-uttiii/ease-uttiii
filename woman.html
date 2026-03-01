@@ -104,8 +104,6 @@
 
 <div class="container">
     <button type="button" class="notice-btn" onclick="document.getElementById('notice-dialog').showModal()">⚠依頼に関する大切なお願い</button>
-    
-    <button type="button" class="notice-btn" style="margin-top:0; border-color: #a58e8e; color: #a58e8e;" onclick="document.getElementById('ng-action-dialog').showModal()">🚫女性から男性へのNG行動</button>
 
     <dialog id="notice-dialog" class="notice-modal">
         <div class="modal-inner">
@@ -117,20 +115,6 @@
             <p><strong>■キャンセルは前日の確認までなら問題ありません。</strong></p>
             <p style="text-align:center; color:var(--pink-deep); font-weight:bold;">《何かあれば森に相談してください》</p>
             <form method="dialog"><button class="submit-btn" style="margin-top:10px;">確認しました</button></form>
-        </div>
-    </dialog>
-
-    <dialog id="ng-action-dialog" class="notice-modal">
-        <div class="modal-inner">
-            <h3 style="color:#a58e8e; text-align:center;">《女性から男性へのNG行動》</h3>
-            <p style="text-align:center;">※下記は基本です。<br>相手の嫌がる事はなるべく避けてください。</p>
-            <p><strong>・連絡先の交換を求める行為</strong><br>サークルでは個人情報のやり取りは禁止されています。女性から聞く行為もNGです。※再会希望等は森を通じてのみ、双方の同意がある場合のみ可能です。その後のトラブルは自己責任となります。</p>
-            <p><strong>・恋愛感情を持ち込む行為</strong><br>サークルeaseは恋愛目的ではありません。男性への執着や恋愛発言はトラブルの元となるため禁止されています。</p>
-            <p><strong>・無断キャンセルや当日キャンセル</strong><br>信頼を損なう行為として、依頼拒否や除名の対象となります（緊急入院等を除く）。</p>
-            <p><strong>・プレイ後の執拗な接触希望</strong><br>プレイ終了後はその場限りの関係が基本です。「また会いたい」等の継続希望は男性への負担となるため好ましくありません。</p>
-            <p><strong>・秘密保持義務の違反（身バレリスク）</strong><br>待ち合わせ場所の特定や外見のSNS発信、個人情報の過度な詮索は厳禁です。</p>
-            <p style="text-align:center; font-weight:bold;">以上、確認の上次にお進みください。</p>
-            <form method="dialog"><button class="submit-btn" style="margin-top:10px; background: linear-gradient(135deg, #a58e8e 0%, #8e7a7a 100%);">確認しました</button></form>
         </div>
     </dialog>
 
@@ -233,6 +217,8 @@
             
             <label class="field-label">非掲載メモ</label>
             <textarea name="private_note" placeholder="登録県以外でプレイする場合など、特別なことがあれば記入してください。"></textarea>
+            
+            <button type="button" class="notice-btn" style="margin-top:20px; border-color: #a58e8e; color: #a58e8e;" onclick="document.getElementById('ng-action-dialog').showModal()">🚫女性から男性へのNG行動</button>
         </div>
 
         <input type="hidden" name="play_content" id="play_hidden">
@@ -240,6 +226,20 @@
         <button type="submit" class="submit-btn">内容確認画面へ</button>
     </form>
 </div>
+
+<dialog id="ng-action-dialog" class="notice-modal">
+    <div class="modal-inner">
+        <h3 style="color:#a58e8e; text-align:center;">《女性から男性へのNG行動》</h3>
+        <p style="text-align:center;">※下記は基本です。<br>相手の嫌がる事はなるべく避けてください。</p>
+        <p><strong>・連絡先の交換を求める行為</strong><br>サークルでは個人情報のやり取りは禁止されています。女性から聞く行為もNGです。※再会希望等は森を通じてのみ、双方の同意がある場合のみ可能です。その後のトラブルは自己責任となります。</p>
+        <p><strong>・恋愛感情を持ち込む行為</strong><br>サークルeaseは恋愛目的ではありません。男性への執着や恋愛発言はトラブルの元となるため禁止されています。</p>
+        <p><strong>・無断キャンセルや当日キャンセル</strong><br>信頼を損なう行為として、依頼拒否や除名の対象となります（緊急入院等を除く）。</p>
+        <p><strong>・プレイ後の執拗な接触継続希望</strong><br>プレイ終了後はその場限りの関係が基本です。「また会いたい」等の継続希望は男性への負担となるため好ましくありません。</p>
+        <p><strong>・秘密保持義務の違反（身バレリスク）</strong><br>待ち合わせ場所の特定や外見のSNS発信、個人情報の過度な詮索は厳禁です。</p>
+        <p style="text-align:center; font-weight:bold;">以上、確認の上次にお進みください。</p>
+        <form method="dialog"><button class="submit-btn" style="margin-top:10px; background: linear-gradient(135deg, #a58e8e 0%, #8e7a7a 100%);">確認しました</button></form>
+    </div>
+</dialog>
 
 <script>
 window.onload = function() {
