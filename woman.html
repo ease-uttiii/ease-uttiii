@@ -323,15 +323,18 @@
 <script>
 
 // ★ダイアログを開く際に中身を一番上にスクロールする関数を追加
+// ★修正版：ダイアログを開く際に中身を一番上にスクロールする関数
 function openModal(dialogId) {
     const dialog = document.getElementById(dialogId);
-    dialog.showModal();
-    // モーダル内のスクロールコンテナ（.modal-inner）を取得して一番上へ
+    
+    // スクロールコンテナを取得
     const inner = dialog.querySelector('.modal-inner');
     if (inner) {
-        inner.scrollTop = 0;
+        inner.scrollTop = 0; // 開く前に位置を一番上にする
     }
-} // ★ここに閉じ括弧が必要でした
+    
+    dialog.showModal(); // ダイアログを表示
+}
 
 window.onload = function() {
     const dSel = document.getElementById('d');
