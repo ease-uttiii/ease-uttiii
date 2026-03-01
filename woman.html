@@ -101,8 +101,11 @@
 <header>
     <h1>女性用プレイ依頼フォーム</h1>
     <div class="header-controls">
-        <a href="index.html" class="head-btn">TOPへ戻る</a>
-        <button class="head-btn" onclick="location.reload()">最新リロード</button>
+        <a href="index.html" class="head-btn">帰る場所</a>
+        
+        <button id="force-reload-btn" class="head-btn" onclick="fastUpdate()">
+            <span class="reload-icon sync-target"></span> 最新にリロード <span class="reload-icon sync-target"></span>
+        </button>
         <div class="size-selector">
             <button type="button" class="size-btn" id="btn-small" onclick="changeFontSize('small')">小</button>
             <button type="button" class="size-btn" id="btn-mid" onclick="changeFontSize('mid')">中</button>
