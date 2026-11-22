@@ -28,6 +28,52 @@ button:focus-visible,a:focus-visible,input:focus-visible,textarea:focus-visible,
 .app-nav{display:flex;gap:6px;overflow-x:auto;padding:14px 0 4px}
 .app-nav a{flex:0 0 auto;text-decoration:none;padding:8px 12px;border-radius:8px;min-height:44px}
 .app-nav a[aria-current="page"]{background:#254d42;color:#fff}
+
+:root{--brand:#783e53;--text:#24242c;--muted:#666773;--border:#e7e7ed;--surface:#fff}
+body{background:#f4f5f8;color:var(--text);font:16px/1.7 -apple-system,BlinkMacSystemFont,"Hiragino Sans","Yu Gothic",sans-serif}
+main{max-width:1120px;margin:auto;padding:0 32px 80px}
+header{min-height:84px;border-bottom:1px solid var(--border);background:transparent}
+header strong{font-size:34px;color:var(--brand)}
+header a{font-size:14px;text-decoration:none}
+a,legend{color:var(--brand)}
+h1{font-size:clamp(28px,4vw,38px);margin-top:30px;letter-spacing:-.04em}
+h2{font-size:21px}h3{font-size:17px}
+.app-nav{position:sticky;top:0;z-index:4;background:#f4f5f8ed;backdrop-filter:blur(12px);padding:14px 0;border-bottom:1px solid var(--border);gap:8px}
+.app-nav a{font-size:14px;font-weight:650;padding:10px 18px;border:1px solid transparent;border-radius:10px;color:#555766}
+.app-nav a[aria-current="page"]{background:#fff;color:var(--brand);border-color:var(--border);box-shadow:0 2px 5px #25243908}
+section,article{border:1px solid var(--border);background:#fff;border-radius:18px;padding:28px;box-shadow:0 6px 22px #20203905}
+section section,section article{padding:22px;box-shadow:none;background:#fafafd}
+.entry{gap:20px}
+.entry section,.entry section:nth-child(2){background:white;min-height:220px;border-top:4px solid var(--brand)}
+.entry section:nth-child(2){border-top-color:#48637f}
+.entry p{color:var(--muted)}
+.entry button{margin-top:12px}
+button{min-height:46px;padding:10px 18px;border-radius:10px;border:1px solid var(--brand);background:var(--brand);font-weight:650}
+button:hover{filter:brightness(.94)}
+button:disabled{opacity:.45;cursor:default}
+#admin-entry button,#back,#edit-request,#sample-request{color:var(--brand);border-color:#d8cbd0;background:white}
+label{font-size:15px;margin:18px 0}
+input,textarea,select{font:inherit;border-color:#d5d7e0;background:#fff;border-radius:9px;padding:11px 12px;min-height:46px}
+input[type="checkbox"]{min-height:22px;width:22px;height:22px;accent-color:var(--brand)}
+fieldset{border:1px solid var(--border);padding:24px;border-radius:14px;margin:24px 0}
+legend{padding:0 8px;font-size:17px}
+.choice{padding:10px 12px;background:#f7f7fa;border-radius:8px;font-weight:400;margin:7px 0}
+details{border:1px solid var(--border);border-radius:12px;padding:16px 20px;margin:18px 0}
+summary{cursor:pointer;font-weight:650}
+details p,details li{color:#575966;font-size:15px}
+.note{color:var(--muted)}
+#published-listings article{background:white;border-left:4px solid var(--brand)}
+#published-listings h2{font-size:25px}
+#admin-details,#review-values{display:grid;grid-template-columns:minmax(120px,1fr) 3fr;gap:0 24px}
+#admin-details[hidden],#review-values[hidden]{display:none}
+dt,dd{padding:12px 0;border-bottom:1px solid var(--border);margin:0;font-size:15px}
+dt{color:#626574;font-weight:550}dd{color:#222633}
+#lottery-ranks li,#applicant-list li{padding:12px 8px;border-bottom:1px solid var(--border)}
+#publication-status:not(:empty),#lottery-status:not(:empty),#winner-status:not(:empty),#confirmation-status:not(:empty){padding:14px 18px;border-radius:10px;background:#f3edf0;color:#65364a}
+:focus-visible{outline:3px solid #ad7389!important;outline-offset:3px}
+@media(min-width:800px){#request-form>fieldset:nth-of-type(2)>div[role="group"]{display:grid;grid-template-columns:1fr 1fr;gap:6px 12px}#preferences-label{grid-column:1/-1}}
+@media(max-width:700px){main{padding:0 16px 48px}header{min-height:68px}.app-nav{margin-inline:-16px;padding-inline:16px}.app-nav a{padding:10px 12px}section,article{padding:20px;border-radius:14px}section section,section article{padding:16px}fieldset{padding:16px}.entry{grid-template-columns:1fr}.entry section{min-height:0}#admin-details,#review-values{display:block}dt{border-bottom:0;padding-bottom:0}dd{padding-top:2px}}
+
 </style>
 <main>
 <header><strong>Ease</strong><a href="ease-integrated.html">表紙に戻る</a></header>
