@@ -535,7 +535,7 @@ function renderApplicants() {
   ranking.replaceChildren();
   for (const [index, id] of (ranks ?? []).entries()) {
     const row = document.createElement('li');
-    row.textContent = index === 0 ? '当選：' + id : '次点 ' + index + '：' + id;
+    row.textContent = index < winnerIndex ? '連絡終了：' + id : index === winnerIndex ? '現在の当選者：' + id : '次点 ' + (index - winnerIndex) + '：' + id;
     ranking.append(row);
   }
 }
