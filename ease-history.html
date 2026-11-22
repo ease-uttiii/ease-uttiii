@@ -1,0 +1,32 @@
+<!doctype html>
+<html lang="ja">
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Ease｜開催履歴</title>
+<style>
+body{margin:0;padding:14px;color:#211b21;background:#f8f5f6;font:15px/1.7 system-ui,sans-serif}
+ul{list-style:none;margin:0;padding:0;display:grid;grid-template-columns:minmax(0,1fr);gap:14px}
+@media(min-width:960px) and (hover:hover) and (pointer:fine){ul{grid-template-columns:repeat(2,minmax(0,1fr))}}
+li{padding:10px 14px;background:linear-gradient(120deg,#fffdfa,#f9f1e8);border:1px solid #ddd0c5;border-left:4px solid #8a5064;border-radius:8px;box-shadow:0 2px 0 -1px #dacec4,0 5px 8px -5px #43203355;overflow-wrap:anywhere}
+time{display:inline-block;margin-right:.8em;color:#67263e;font-size:13px;font-weight:650}
+p{margin:6px 0 0;padding-top:5px;border-top:1px dashed #ddd0c5;color:#655a63}
+</style>
+<main aria-label="開催履歴"><ul id="history"></ul></main>
+<script>
+const byId = id => document.getElementById(id);
+const archive = [
+  {day:'2026-11-23', date:'2026年11月23日', area:'池袋エリア', content:'13時00分集合／募集人数 1名'},
+  {day:'2026-11-20', date:'2026年11月20日', area:'新宿歌舞伎町エリア', content:'13時00分集合／募集人数 1名'}
+];
+for (const item of archive) {
+  const row = document.createElement('li');
+  const date = document.createElement('time');
+  date.dateTime = item.day;
+  date.textContent = item.date;
+  const content = document.createElement('p');
+  content.textContent = item.content;
+  row.append(date, item.area, content);
+  byId('history').append(row);
+}
+</script>
+</html>

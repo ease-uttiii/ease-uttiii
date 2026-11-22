@@ -1,0 +1,131 @@
+<!doctype html>
+<html lang="ja"><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>本日のプレイ｜Ease</title><style>
+:root{color-scheme:light;--ink:#211b21;--wine:#67263e;--muted:#655a63;--line:#e6dfe1}
+*{box-sizing:border-box}
+body{margin:0;background:#f8f6f5;color:var(--ink);font:15px/1.65 system-ui,-apple-system,"Hiragino Sans","Yu Gothic",sans-serif}
+main{max-width:1180px;margin:auto;padding:0 clamp(18px,5vw,52px) 64px}
+header{display:flex;align-items:center;justify-content:space-between;min-height:77px;border-bottom:1px solid var(--line)}
+.brand{font:700 36px/1 Georgia,serif;letter-spacing:-.06em;color:var(--wine)}
+.brand img{width:clamp(120px,30vw,230px);max-height:64px;object-fit:contain;object-position:left center;vertical-align:middle}
+h1{font-size:clamp(32px,6vw,52px);line-height:1.15;letter-spacing:-.045em;margin:10px 0}
+h2{font-size:25px;letter-spacing:-.035em;margin:38px 0 4px}
+small,.muted{color:var(--muted)}
+.preview{font-size:12px;margin:32px 0 0}
+#date{margin:0 0 19px;font-variant-numeric:tabular-nums}
+button{font:inherit;font-weight:650;color:var(--wine);background:#fff;border:1px solid var(--line);border-radius:9px;padding:8px 14px;cursor:pointer}
+button:hover{background:#f0e7eb}
+button:focus-visible{outline:3px solid var(--wine);outline-offset:3px}
+#login{background:var(--wine);color:white;border-color:var(--wine)}
+.card{padding:clamp(20px,4vw,36px);background:white;border:1px solid var(--line);border-radius:16px}
+.feature{position:relative;isolation:isolate;display:flex;flex-direction:column;justify-content:center;min-height:240px;padding:30px clamp(24px,5vw,50px);color:#472235;background:linear-gradient(110deg,#fffdf7,#f4e9dc);border:1px solid #d7c6bb;border-left:7px solid var(--wine);border-radius:14px;box-shadow:0 3px 0 -1px #decfc2,0 8px 0 -4px #e5d7cd,0 16px 28px -12px #43203355}
+.feature::before{content:"";position:absolute;inset:0;pointer-events:none;z-index:-1;border-radius:inherit;background:repeating-linear-gradient(125deg,#683b2910 0 1px,transparent 1px 5px);opacity:.35}
+.feature span{align-self:flex-start;color:#67263e;border:1px solid #b28e98;border-radius:4px;padding:3px 9px;font-size:12px;font-weight:700}
+.feature strong{display:block;font-size:clamp(29px,6vw,48px);line-height:1.2;letter-spacing:-.04em;margin:13px 0}
+.feature dl{display:grid;grid-template-columns:max-content minmax(0,1fr);gap:6px 16px;margin:0;padding-top:14px;border-top:1px dashed #bda599}
+.feature dd{margin:0;font-weight:650;font-variant-numeric:tabular-nums}
+.feature dt{color:#67535a}
+.today-window{overflow:hidden;border:1px solid var(--wine);border-radius:18px;background:#f1e5e9;box-shadow:0 12px 28px #4320331a}
+.today-window-header{display:flex;align-items:center;justify-content:space-between;gap:12px;padding:10px 18px;background:var(--wine);color:#fff}
+.today-window-header span{font-weight:700}
+.today-window-header small{color:#f6e9ef;font-variant-numeric:tabular-nums}
+.today-window-body{padding:clamp(12px,3vw,24px)}
+.controls{display:flex;gap:8px;flex-wrap:wrap;margin-top:15px;align-items:center}
+.controls button{min-height:44px;min-width:44px}
+.today-window{border-color:#403631;background:#262222}
+.today-window-header{background:#302629;color:#fff3db;border-bottom:1px solid #51433a}
+.today-window-header small{color:#ffd175;font-family:ui-monospace,monospace;letter-spacing:.12em}
+.today-window .feature{color:#ffd175;background:#171514;border:1px solid #504431;border-radius:8px;box-shadow:inset 0 3px 12px #000}
+.today-window .feature::before{background:radial-gradient(circle,#b5833838 .7px,transparent 1.2px) 0 0/5px 5px;opacity:.75}
+.today-window .feature strong{color:#ffcf69;text-shadow:0 0 12px #ffb93455}
+.today-window .feature span{color:#ffd175;border-color:#806339;background:#221b13}
+.today-window .feature dl{border-color:#655237}
+.today-window .feature dt{color:#d7bc89}
+.today-window .feature dd{color:#ffe3a7}
+.today-window .controls button{background:#332b28;color:#ffdfa0;border-color:#6b5540}
+.today-window .controls button:hover{background:#49392b}
+.today-window .controls button:focus-visible{outline-color:#ffcf69}
+.controls span{margin-left:auto;color:var(--muted);font-variant-numeric:tabular-nums}
+.history-window{overflow:hidden;border:1px solid var(--line);border-radius:16px;background:#fff;box-shadow:0 8px 24px #4320330d}
+.history-toolbar{display:flex;align-items:center;justify-content:space-between;gap:12px;padding:12px 18px;border-bottom:1px solid var(--line);background:#fff;color:var(--wine);font-weight:700}
+.history-toolbar a{color:inherit;font-size:13px;text-underline-offset:3px}
+#history{display:block;width:100%;height:360px;border:0;background:#f8f5f6}
+#history:focus-visible{outline:3px solid var(--wine);outline-offset:3px}
+#history .feature{box-shadow:none}
+.record{display:grid;grid-template-columns:1fr 1fr;gap:12px;padding:14px 0}
+.record time{color:var(--muted)}
+.record+.record{border-top:1px solid var(--line)}
+dialog{max-width:min(420px,90vw);border:1px solid var(--line);border-radius:16px;padding:24px}
+dialog h2{margin-top:0}
+dialog::backdrop{background:#28232988}
+@media(max-width:560px){
+  header{min-height:68px}
+  .preview{margin-top:24px}
+  .feature{min-height:220px;padding:22px 20px}
+  .history-toolbar{padding-inline:14px}
+}
+
+body{background:#262222}.today-window{border:0;border-radius:0;box-shadow:none}.today-window .feature{min-height:210px}</style>
+<div class="today-window">
+  <div class="today-window-header"><span>開催案内</span><small id="position"></small></div>
+  <div class="today-window-body">
+    <div class="card feature" id="slide" aria-live="off"></div>
+    <div class="controls">
+      <button id="prev" aria-label="前の案件">←</button>
+      <button id="next" aria-label="次の案件">→</button>
+      <button id="pause">一時停止</button>
+    </div>
+  </div>
+</div>
+<script>
+const byId = id => document.getElementById(id);
+const cases = [
+  {date:'2026年11月23日／13:00集合', area:'池袋エリア', capacity:'1名', type:'通常案件'},
+  {date:'2026年11月20日／13:00集合', area:'新宿歌舞伎町エリア', capacity:'1名', type:'通常案件'},
+  {date:'2026年11月13日／12:30集合', area:'新宿周辺エリア', capacity:'複数名／1名', type:'複数案件'},
+];
+const slides = cases;
+const reducedMotion = matchMedia('(prefers-reduced-motion: reduce)');
+let playing = !reducedMotion.matches;
+let current = 0;
+let timer;
+function fillCard(card, item, label, date) {
+  const status = document.createElement('span');
+  status.textContent = label + ' · ' + item.type;
+  const title = document.createElement('strong');
+  title.textContent = item.area;
+  const details = document.createElement('dl');
+  for (const [label, value] of [['日時', date], ['募集人数', item.capacity]]) {
+    const term = document.createElement('dt');
+    term.textContent = label;
+    const detail = document.createElement('dd');
+    detail.textContent = value;
+    details.append(term, detail);
+  }
+  card.replaceChildren(status, title, details);
+}
+function render() {
+  const slide = byId('slide');
+  const item = slides[current];
+  if (item) fillCard(slide, item, '公式掲載例', item.date);
+  else slide.textContent = '本日の掲載案件はありません。';
+  byId('position').textContent = item ? (current + 1) + ' / ' + slides.length : '';
+}
+function schedule() {
+  clearInterval(timer);
+  byId('pause').textContent = playing ? '一時停止' : '自動送りを再開';
+  if (playing && slides.length > 1) timer = setInterval(() => move(1, false), 5000);
+}
+function move(step, manual) {
+  if (slides.length < 2) return;
+  byId('slide').setAttribute('aria-live', manual ? 'polite' : 'off');
+  current = (current + step + slides.length) % slides.length;
+  render();
+  if (manual) schedule();
+}
+byId('prev').onclick = () => move(-1, true);
+byId('next').onclick = () => move(1, true);
+byId('pause').onclick = () => { playing = !playing; schedule(); };
+render();
+schedule();
+</script>
+</html>

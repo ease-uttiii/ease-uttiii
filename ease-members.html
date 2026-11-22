@@ -1,0 +1,798 @@
+<!doctype html>
+<html lang="ja">
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="manifest" href="ease.webmanifest">
+<meta name="theme-color" content="#67263e">
+<title>会員入口｜Ease</title>
+<style>
+*{box-sizing:border-box}body{margin:0;background:#f8f6f5;color:#211b21;font:16px/1.65 system-ui,sans-serif}main{max-width:680px;margin:auto;padding:24px 18px 64px}header{display:flex;justify-content:space-between;align-items:center;padding-bottom:16px;border-bottom:1px solid #e6dfe1}header strong{font:700 32px Georgia,serif;color:#67263e}a{color:#67263e}section,article{background:#fff;border:1px solid #e6dfe1;border-radius:16px;padding:20px;margin-top:14px}h1,h2,p{margin:0 0 12px}h1{margin-top:22px}.note{color:#655a63}label{display:block;font-weight:650;margin:12px 0}input,textarea{display:block;width:100%;border:1px solid #a9959e;border-radius:8px;padding:10px;font:inherit}button{font:inherit;border:1px solid #67263e;border-radius:8px;padding:8px 14px;background:#67263e;color:white;cursor:pointer}button:disabled{opacity:.6}button:focus-visible,a:focus-visible,input:focus-visible,textarea:focus-visible{outline:3px solid #67263e;outline-offset:3px}.entry{display:grid;gap:12px}@media(min-width:600px){.entry{grid-template-columns:1fr 1fr}}
+fieldset{margin:18px 0;padding:14px;border:1px solid #e6dfe1;border-radius:10px;min-width:0}legend{font-weight:700;color:#67263e}select{display:block;width:100%;border:1px solid #a9959e;border-radius:8px;padding:10px;background:white;font:inherit}.choice{display:flex;align-items:center;gap:8px}.choice input{width:auto}dt{font-weight:700}dd{margin:0 0 12px;white-space:pre-wrap;overflow-wrap:anywhere}small{color:#655a63}
+.date-parts{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:8px}@media(max-width:450px){.date-parts{grid-template-columns:repeat(2,minmax(0,1fr))}}
+body{background:#f5f3ef;color:#232622}
+main{max-width:760px;padding:28px clamp(18px,5vw,40px) 64px}
+header{border-color:#d9ded6}
+header strong{color:#183c34;letter-spacing:-.04em}
+a,legend{color:#245247}
+h1{font-size:clamp(30px,6vw,42px);letter-spacing:-.045em;margin:28px 0 6px}
+section,article{border-color:#dce0d8;box-shadow:0 4px 18px #253c3010}
+.entry{gap:14px}
+.entry section{display:flex;flex-direction:column;align-items:flex-start;padding:24px}
+.entry section:nth-child(2){background:#e8eee9}
+.entry button{margin-top:auto;width:100%;text-align:left}
+button{min-height:44px;background:#254d42;border-color:#254d42}
+button:focus-visible,a:focus-visible,input:focus-visible,textarea:focus-visible,select:focus-visible{outline-color:#2b6557}
+#admin-entry button,#back,#edit-request,#sample-request{background:transparent;color:#254d42}
+#admin-entry{margin-top:20px}
+#favorite-prefectures{display:flex;flex-wrap:wrap;gap:8px;margin-top:10px}#favorite-prefectures button{background:#fff;color:#254d42}
+.app-nav{display:flex;gap:6px;overflow-x:auto;padding:14px 0 4px}
+.app-nav a{flex:0 0 auto;text-decoration:none;padding:8px 12px;border-radius:8px;min-height:44px}
+.app-nav a[aria-current="page"]{background:#254d42;color:#fff}
+</style>
+<main>
+<header><strong>Ease</strong><a href="ease-integrated.html">表紙に戻る</a></header>
+<nav class="app-nav" aria-label="確認版の画面">
+<a href="#request">依頼</a><a href="#listings">募集・応募</a><a href="#confirmation">開催確認</a><a href="#admin">運営管理</a>
+</nav>
+<h1 id="title" tabindex="-1">会員入口</h1>
+<p class="note">確認用。架空の情報を使ってお試しください。</p>
+<div class="entry" id="entry">
+<section><h2>女性会員</h2><p>依頼ページへ進む</p><button type="button" data-route="request">依頼ページへ</button><button type="button" data-route="confirmation">開催可否を回答（デモ）</button><button type="button" data-route="same-day">当日7時の確認メール（デモ）</button></section>
+<section><h2>男性会員</h2><p>募集ページへ進む</p><button type="button" data-route="listings">募集ページへ</button></section>
+</div>
+<p id="admin-entry"><button type="button" data-route="admin">運営管理（デモ）</button></p>
+<section id="admin" hidden>
+<h2>掲載待ちの依頼</h2>
+<p id="admin-status" role="status"></p>
+<button id="review-request" type="button" hidden>依頼内容を確認する</button>
+<dl id="admin-details" tabindex="-1" hidden></dl>
+<label id="certification-rule" hidden><input id="certification-required" type="checkbox" style="display:inline;width:auto"> 検定合格者限定で掲載する</label>
+<button id="approve-request" type="button" hidden>承認して募集ページに掲載する</button>
+<article>
+<h2>応募者一覧（デモ）</h2>
+<p id="lottery-case"></p>
+<p>開催前日の午前9時までに、女性に開催可否を確認します。</p>
+<ul id="applicant-list"></ul>
+
+<p id="lottery-status" role="status"></p>
+<p id="same-day-status"></p>
+<ol id="lottery-ranks"></ol>
+<p id="winner-admin" role="status"></p>
+<button id="advance-winner" type="button" hidden>次点に繰り上げる</button>
+<ul id="offer-history"></ul>
+<button id="approve-interview" type="button" hidden>面談完了を承認する</button>
+</article>
+</section>
+<section id="confirmation" hidden>
+<p id="confirmation-case"></p>
+<p id="confirmation-status" role="status"></p>
+<div id="female-invitation" hidden></div>
+<div id="confirmation-options">
+<button type="button" data-answer="yes">開催できます</button>
+<button type="button" data-answer="no">開催できません</button>
+</div>
+<div id="confirmation-review" hidden>
+<p id="confirmation-summary"></p>
+<button id="save-answer" type="button">この内容で回答する</button>
+<button id="edit-answer" type="button">戻って選び直す</button>
+</div>
+</section>
+<section id="request" hidden>
+<h2>女性用プレイ依頼フォーム</h2>
+<details open><summary>依頼する前に</summary>
+<p>申し訳ございませんが、下記のご理解をお願いします。</p>
+<h3>案件の募集期間が短い場合について</h3>
+<p>「男性が決まらない」、または「経験が少ない方」が当選する場合があります。前日に男性を決めますので、前々日なら約1日ということになります。前々日の夜は、ほぼ募集期間がありません。地域によって変わり、応募がない場合に再募集しても、相手が決まらないことがあります。掲載期間が短いと、多くの男性の目に留まる機会も少なくなります。</p>
+<h3>1対1の前日の受付は午前中のみでお願いします。</h3>
+<p>午後からのプレイ依頼は、当日扱いになります。前日依頼はお受けしますが、男性が決まらない可能性があります。</p>
+<h3>1対1の当日依頼は、お受けできなくなりました</h3>
+<p>当日の依頼は、いろいろと問題が多いので、お受けしないことにしました。</p>
+<h3>複数プレイについて</h3>
+<p>監督探しからとなりますので、依頼日に必ず開催されるとは限りません。受付後に森が全監督宛に「監督願い」を出し、その日に動ける監督がいるかどうかで決まります。準備期間が長いほど都合を合わせやすくなります。依頼前に森へ相談できます。</p>
+<h3>キャンセルについて</h3>
+<p>キャンセルは前日の確認までなら問題ありません。</p>
+<p><strong>《何かあれば森に相談してください》</strong></p>
+<p>女性プランナーに匿名で相談できるチャットを開設しました。</p>
+<p><a href="https://ease-sc.net/chat/chat.php?room=b60609c4d445f5cd" target="_blank" rel="noopener noreferrer">女性プランナーに匿名で相談する ↗</a></p>
+</details>
+<form id="request-form">
+<fieldset><legend>依頼の基本情報</legend>
+<label>IDまたは面談依頼で利用したニックネーム <small>必須</small><input name="member" required></label>
+<p class="note">登録県と異なる場合は、必ずIDでお願いします。</p>
+<strong>プレイ日時 <small>必須</small></strong>
+<div class="date-parts">
+<label>月<select name="month" required></select></label>
+<label>日<select name="day" required></select></label>
+<label>時<select name="hour" required></select></label>
+<label>分<select name="minute" required></select></label>
+</div>
+<p class="note">3月・4月や12月・1月は仕事の調整が難しい方もいるため、余裕を持って依頼を出していただくと相手が決まる可能性が高まります。</p>
+<label>開催する都道府県 <small>必須</small><select name="prefecture" required><option value="">選択してください</option></select></label>
+</fieldset>
+<fieldset><legend>プレイの希望</legend>
+<div role="group" aria-labelledby="preferences-label"><strong id="preferences-label">当てはまる項目 <small>必須・複数選択可</small></strong>
+<label class="choice"><input name="preference" type="checkbox" value="お任せでいいです">お任せでいいです</label>
+<label class="choice"><input name="preference" type="checkbox" value="攻められたい">攻められたい</label>
+<label class="choice"><input name="preference" type="checkbox" value="攻めたい">攻めたい</label>
+<label class="choice"><input name="preference" type="checkbox" value="少し刺激的な体験がしたい">少し刺激的な体験がしたい</label>
+<label class="choice"><input name="preference" type="checkbox" value="レイププレイ希望">レイププレイ希望</label>
+<label class="choice"><input name="preference" type="checkbox" value="目隠しされたい">目隠しされたい</label>
+<label class="choice"><input name="preference" type="checkbox" value="複数人を経験したい(女性1名)">複数人を経験したい(女性1名)</label>
+<label class="choice"><input name="preference" type="checkbox" value="玩具を使って欲しい">玩具を使って欲しい</label>
+<label class="choice"><input name="preference" type="checkbox" value="恋人のように過ごしたい">恋人のように過ごしたい</label>
+<label class="choice"><input name="preference" type="checkbox" value="3P">3P</label>
+<label class="choice"><input name="preference" type="checkbox" value="アナルセックスがしたい">アナルセックスがしたい</label>
+<label class="choice"><input name="preference" type="checkbox" value="特に舐められたい">特に舐められたい</label>
+<label class="choice"><input name="preference" type="checkbox" value="特に舐めたい">特に舐めたい</label>
+<label class="choice"><input name="preference" type="checkbox" value="前戯長め">前戯長め</label>
+<label class="choice"><input name="preference" type="checkbox" value="ドMです">ドMです</label>
+<label class="choice"><input name="preference" type="checkbox" value="ドSです">ドSです</label>
+<label class="choice"><input name="preference" type="checkbox" value="縛られたい">縛られたい</label>
+<label class="choice"><input name="preference" type="checkbox" value="お風呂に一緒に入りたい">お風呂に一緒に入りたい</label>
+<label class="choice"><input name="preference" type="checkbox" value="コスプレがしたい">コスプレがしたい</label>
+<label class="choice"><input name="preference" type="checkbox" value="優しい言葉をかけられたい">優しい言葉をかけられたい</label>
+<label class="choice"><input name="preference" type="checkbox" value="新しいスタイルのプレイを試してみたい">新しいスタイルのプレイを試してみたい</label>
+</div>
+<p class="note">興味がある程度で大丈夫です。</p>
+<label>上記以外のプレイに関する希望があれば記入してください。<textarea name="other" rows="2"></textarea></label>
+<label>相手の希望人数 <small>必須</small><input name="count" type="number" min="1" required></label>
+<p class="note">現在、複数プレイは要相談としています。監督増員育成中のため、1対1で行うか、森と時間を合わせていただく場合があります。複数プレイは監督の調整が必要で、依頼日に必ず開催されるとは限りません。</p>
+<label>使用して欲しい玩具<input name="items"></label>
+<p class="note">バイブレーター、ローター、電マ、アナルグッズ、ローション、SMグッズ、アイマスク、その他</p>
+</fieldset>
+<fieldset><legend>募集ページへの掲載項目</legend>
+<label>応募する方に伝えたいこと<textarea name="publicNote" rows="3"></textarea></label>
+<p class="note">募集の「その他」に掲載します。面談で確認したNGは毎回掲載します。希望があれば詳しく書いてください。場所の指定がなければホテルとなります。</p>
+<label>NGについて<textarea name="ng" rows="2"></textarea></label>
+<p class="note">面談で伝えたNG以外があればご記入ください。なければ空欄で構いません。文章でも入力できます。掲載時に一部変更する場合があります。</p>
+<label>自分自身がタバコを吸うか吸わないか<select name="smoking"><option value="">選択してください</option><option>吸わない</option><option>吸う</option></select></label>
+<label>日本性活プランナー協会の受検経験<select name="exam"><option value="">選択してください</option><option>無し</option><option>有り</option></select></label>
+<p class="note">性に前向きに向き合う姿勢の指標です。</p>
+</fieldset>
+<fieldset><legend>非掲載部分</legend>
+<label>今回だけの事情や運営への連絡事項<textarea name="privateNote" rows="3"></textarea></label>
+<p class="note">ここは募集に掲載されません。応募者への条件は掲載項目に記入してください。登録県以外での開催やエリア変更など、今回だけの事情はここに記入してください。</p>
+</fieldset>
+<details><summary>《参加者募集中》</summary>
+<ul><li><a href="https://ease-sc.net/mori-event.html">森のお茶会</a></li><li><a href="https://ease-sc.net/entry155.html">プランナーお茶会</a></li><li><a href="https://ease-tv.net/">easeTV</a></li></ul>
+</details>
+<details open><summary>《女性から男性へのNG行動》</summary>
+<p><strong>※下記は基本です。相手の嫌がる事はなるべく避けてください。</strong></p>
+<h3>連絡先の交換を求める行為</h3><p>会員間の個人情報のやり取りは禁止です。再会を希望する場合は森に相談し、男性の同意が得られた場合に限り運営経由で連絡先を伝えます。その後のやり取りに運営は関与しません。</p>
+<h3>恋愛感情を持ち込む行為</h3><p>恋愛を目的とする場ではありません。「付き合いたい」「会いたい」などの発言は禁止されています。</p>
+<h3>無断キャンセルや当日キャンセル</h3><p>当日の無断キャンセルは、依頼拒否や除名の対象になります。緊急入院など、やむを得ない場合を除きます。</p>
+<h3>プレイ後の執拗な接触・個人的なやりとりの継続希望</h3><p>終了後はその場限りの関係が基本です。継続を求める言動は相手の負担や誤解につながるため控えてください。</p>
+<h3>秘密保持義務の違反（身バレリスクのある行為）</h3><p>待ち合わせ場所の特定、相手の外見や行動のSNS投稿、個人情報の過度な詮索は禁止です。</p>
+</details>
+<p><strong>以上、確認の上次にお進みください。</strong></p>
+<p class="note">確認用です。確認画面から運営に依頼を送れます。承認後に募集ページに掲載されます。</p>
+<p id="request-error" role="alert"></p>
+<button type="button" id="sample-request">サンプルを入力</button> <button>入力内容を確認する</button>
+</form>
+<section id="request-review" hidden aria-labelledby="review-title">
+<h2 id="review-title" tabindex="-1">依頼内容の確認</h2>
+<dl id="review-values"></dl>
+<button id="edit-request" type="button">入力に戻る</button> <button id="publish-request" type="button">運営に確認を依頼する</button>
+</section>
+</section>
+<section id="listings" hidden>
+<p id="publication-status" role="status"></p>
+<label for="listing-prefecture">都道府県で絞り込む
+<select id="listing-prefecture"><option value="">すべての都道府県</option></select>
+</label>
+<button id="toggle-favorite" type="button" disabled>お気に入りに追加</button>
+<div id="favorite-prefectures" aria-label="お気に入りの都道府県"></div>
+<p id="favorite-status" class="note" role="status"></p>
+<p id="listing-empty" class="note" role="status" hidden>この都道府県に募集中の案件はありません。</p>
+<div id="published-listings"></div>
+<article id="winner-panel" hidden>
+<h2>当選通知・Discord DMの見本</h2>
+<p id="winner-case"></p>
+<form id="winner-form">
+<label>当日の参加可否<select name="decision" required>
+<option value="">選択してください</option><option value="yes">参加する</option><option value="no">辞退する</option>
+</select></label>
+<label id="availability-label" hidden>遠隔面談が可能な日時・時間帯<input name="availability" placeholder="例：11月22日 18:00〜20:00"></label>
+<button>回答内容を確認する</button>
+</form>
+<p id="winner-status" role="status"></p>
+<div id="male-invitation" hidden></div>
+</article>
+
+</section>
+<p><button id="back" hidden>会員入口に戻る</button></p>
+</main>
+<script>
+const byId = id => document.getElementById(id);
+const routes = {
+  request: '依頼ページ',
+  listings: '募集ページ',
+  admin: '運営管理',
+  confirmation: '開催可否の回答',
+  'same-day': '当日の開催確認'
+};
+function show(route) {
+  const nextHash = route ? '#' + route : '';
+  if (location.hash !== nextHash) {
+    history.pushState(null, '', location.pathname + location.search + nextHash);
+  }
+  for (const link of document.querySelectorAll('.app-nav a')) {
+    if (link.getAttribute('href') === nextHash) link.setAttribute('aria-current', 'page');
+    else link.removeAttribute('aria-current');
+  }
+  byId('entry').hidden = Boolean(route);
+  byId('entry').style.display = route ? 'none' : '';
+  byId('request').hidden = route !== 'request';
+  if (route === 'request') {
+    byId('request-review').hidden = true;
+    byId('request-form').hidden = false;
+  }
+  byId('listings').hidden = route !== 'listings';
+  byId('back').hidden = !route;
+  byId('admin-entry').hidden = Boolean(route);
+  byId('admin').hidden = route !== 'admin';
+  sameDayMode = route === 'same-day';
+  const confirming = route === 'confirmation' || sameDayMode;
+  byId('confirmation').hidden = !confirming;
+  draftAnswer = null;
+  if (confirming) renderConfirmation();
+  if (route === 'admin') { renderAdmin(); renderApplicants(); }
+  if (route === 'admin' || route === 'listings') renderWinner();
+  byId('title').textContent = route ? routes[route] : '会員入口';
+  byId('title').focus();
+}
+for (const button of document.querySelectorAll('[data-route]')) {
+  button.addEventListener('click', () => show(button.dataset.route));
+}
+const requestForm = byId('request-form');
+for (const [name, start, end, step] of [['month', 1, 12, 1], ['day', 1, 31, 1], ['hour', 0, 23, 1], ['minute', 0, 50, 10]]) {
+  const select = requestForm.elements[name];
+  select.add(new Option('選択してください', ''));
+  for (let value = start; value <= end; value += step) {
+    select.add(new Option(String(value).padStart(2, '0')));
+  }
+}
+for (const prefecture of '北海道 青森県 岩手県 宮城県 秋田県 山形県 福島県 茨城県 栃木県 群馬県 埼玉県 千葉県 東京都 神奈川県 新潟県 富山県 石川県 福井県 山梨県 長野県 岐阜県 静岡県 愛知県 三重県 滋賀県 京都府 大阪府 兵庫県 奈良県 和歌山県 鳥取県 島根県 岡山県 広島県 山口県 徳島県 香川県 愛媛県 高知県 福岡県 佐賀県 長崎県 熊本県 大分県 宮崎県 鹿児島県 沖縄県'.split(' ')) {
+  requestForm.elements.prefecture.add(new Option(prefecture));
+  byId('listing-prefecture').add(new Option(prefecture));
+}
+let pendingListing;
+let publishedCard;
+const demoProfile = Object.freeze({ height: '160cm台', age: '30〜35歳', build: '普通' });
+const profileFields = [['身長', 'height'], ['年齢', 'age'], ['体型', 'build']];
+const listingKey = 'ease-demo-listing-v1';
+function readListing() {
+  try {
+    const item = JSON.parse(localStorage.getItem(listingKey));
+    if (item && ['date', 'prefecture', 'count', 'publicNote', 'ng'].every(key => typeof item[key] === 'string')) return item;
+  } catch {
+    // Some browsers disable storage for local previews.
+  }
+  return null;
+}
+function fillSample() {
+  const sample = {
+    member: '確認用サンプル', month: '11', day: '23', hour: '13', minute: '00',
+    prefecture: '東京都', count: '1', publicNote: '池袋エリアでの開催を希望します。事前面談済みの方を希望します。',
+    ng: '喫煙', smoking: '吸わない', exam: '無し'
+  };
+  requestForm.reset();
+  for (const [name, value] of Object.entries(sample)) requestForm.elements[name].value = value;
+  requestForm.querySelector('[name="preference"]').checked = true;
+  byId('request-error').textContent = '';
+}
+byId('sample-request').onclick = fillSample;
+fillSample();
+// Synthetic applicants for the confirmation preview.
+const certifiedDemoIds = new Set(['DEMO-M002', 'DEMO-M003']);
+const penaltyIds = new Set(['DEMO-M003']);
+let applicants = new Set(['DEMO-M002', 'DEMO-M003', 'DEMO-M004']);
+let ranks = null;
+let answer = null;
+let sameDayMode = false;
+let sameDayAnswer = null;
+let draftAnswer = null;
+let winnerIndex = 0;
+let offerHistory = [];
+let winnerReply = null;
+let interviewApproved = false;
+const winnerForm = byId('winner-form');
+winnerForm.elements.decision.onchange = () => {
+  const attending = winnerForm.elements.decision.value === 'yes';
+  byId('availability-label').hidden = !attending;
+  winnerForm.elements.availability.required = attending;
+};
+winnerForm.onsubmit = event => {
+  event.preventDefault();
+  if (sameDayAnswer === 'no' || !ranks?.length || winnerReply) return;
+  const attending = winnerForm.elements.decision.value === 'yes';
+  const availability = attending ? winnerForm.elements.availability.value.trim() : '';
+  if (attending && !availability) {
+    byId('winner-status').textContent = '面談可能時間を入力してください。';
+    return;
+  }
+  const summary = attending ? '参加する／面談可能時間：' + availability : '辞退する';
+  if (!window.confirm(summary + ' で回答しますか？')) return;
+  winnerReply = { attending, availability };
+  saveWorkflow();
+  renderWinner();
+};
+byId('approve-interview').onclick = () => {
+  if (sameDayAnswer === 'no' || !winnerReply?.attending || interviewApproved) return;
+  if (!window.confirm('面談完了として承認しますか？')) return;
+  interviewApproved = true;
+  saveWorkflow();
+  renderWinner();
+};
+byId('advance-winner').onclick = () => {
+  if (sameDayAnswer === 'no' || !ranks || winnerIndex + 1 >= ranks.length || interviewApproved || winnerReply?.attending) return;
+  const previous = ranks[winnerIndex];
+  const next = ranks[winnerIndex + 1];
+  const reason = winnerReply ? '辞退' : '未返信';
+  if (!window.confirm(previous + '（' + reason + '）から ' + next + ' に繰り上げますか？')) return;
+  offerHistory.push(previous + ' · ' + reason + ' → ' + next);
+  winnerIndex++;
+  winnerReply = null;
+  saveWorkflow();
+  winnerForm.reset();
+  winnerForm.elements.decision.onchange();
+  renderWinner();
+};
+function renderInvitation(targetId, allowed) {
+  const container = byId(targetId);
+  container.hidden = !allowed;
+  container.replaceChildren();
+  if (!allowed) return;
+  const heading = document.createElement('h3');
+  heading.textContent = '入室前の確認';
+  const rules = document.createElement('ul');
+  for (const text of [
+    '個人情報や連絡先の交換は控えてください。',
+    '相手の意思と案件ごとのNG事項を尊重してください。',
+    '合流時と解散時に運営へ報告してください。',
+    '予定変更や困ったことは運営に連絡してください。'
+  ]) {
+    const item = document.createElement('li');
+    item.textContent = text;
+    rules.append(item);
+  }
+  const label = document.createElement('label');
+  label.className = 'choice';
+  const acknowledgement = document.createElement('input');
+  acknowledgement.type = 'checkbox';
+  label.append(acknowledgement, '注意事項を確認しました');
+  const enter = document.createElement('button');
+  enter.type = 'button';
+  enter.disabled = true;
+  enter.textContent = '案件チャットの見本を開く';
+  const room = document.createElement('section');
+  room.hidden = true;
+  room.setAttribute('aria-live', 'polite');
+  acknowledgement.onchange = () => { enter.disabled = !acknowledgement.checked; };
+  enter.onclick = () => {
+    if (!acknowledgement.checked) return;
+    room.hidden = false;
+    room.textContent = activeListing.prefecture + ' · ' + activeListing.date +
+      '／運営：こちらは確認用の案件チャットです。集合の案内と当日の連絡をここで確認します。';
+    enter.disabled = true;
+  };
+  container.append(heading, rules, label, enter, room);
+}
+function renderWinner() {
+  const cancelled = sameDayAnswer === 'no';
+  const canAdvance = Boolean(!cancelled && ranks && winnerIndex + 1 < ranks.length && !interviewApproved && !winnerReply?.attending);
+  byId('advance-winner').hidden = !canAdvance;
+  byId('offer-history').replaceChildren(...offerHistory.map(entry => {
+    const row = document.createElement('li');
+    row.textContent = entry;
+    return row;
+  }));
+  byId('winner-panel').hidden = !ranks?.length;
+  byId('winner-case').textContent = ranks?.length ? ranks[winnerIndex] + ' · ' + activeListing.date : '';
+  winnerForm.hidden = cancelled || Boolean(winnerReply);
+  byId('winner-status').textContent = cancelled ? '当日の開催は中止になりました。' : interviewApproved
+    ? 'チャット招待（デモ）。連絡先の交換は禁止です。合流と解散を運営に報告してください。'
+    : winnerReply ? '回答を受け付けました。' : '';
+  byId('winner-admin').textContent = cancelled ? '開催中止 · 当日の回答を確認してください。' : interviewApproved ? '面談承認済み · 男性への招待を表示しました。'
+    : winnerReply?.attending ? '参加予定 · 面談可能時間：' + winnerReply.availability
+    : winnerReply ? '辞退の回答を受け付けました。' : ranks?.length ? ranks[winnerIndex] + ' の回答待ち' : '';
+  byId('approve-interview').hidden = cancelled || !winnerReply?.attending || interviewApproved;
+  renderInvitation('male-invitation', interviewApproved && !cancelled);
+}
+const answerLabels = { yes: '開催できます', no: '開催できません' };
+function renderConfirmation() {
+  byId('confirmation-case').textContent = activeListing.prefecture + ' · ' + activeListing.date;
+  const currentAnswer = sameDayMode ? sameDayAnswer : answer;
+  const unavailable = sameDayMode && answer !== 'yes';
+  byId('confirmation-options').hidden = Boolean(unavailable || currentAnswer || draftAnswer);
+  byId('confirmation-review').hidden = Boolean(unavailable || currentAnswer || !draftAnswer);
+  let message = '';
+  if (unavailable) message = '前日の開催OKを確定すると、当日の確認を試せます。';
+  else if (currentAnswer) {
+    message = '回答済み：' + answerLabels[currentAnswer];
+    if (!sameDayMode && currentAnswer === 'yes' && sameDayAnswer !== 'no') {
+      message += '。チャット招待（デモ）：連絡先の交換は禁止です。合流と解散を運営に報告してください。';
+    }
+  } else if (sameDayMode) message = '開催当日 午前7時（日本時間）の確認メールから開く画面です。';
+  byId('confirmation-status').textContent = message;
+  renderInvitation('female-invitation', answer === 'yes' && sameDayAnswer !== 'no');
+  byId('confirmation-summary').textContent = draftAnswer
+    ? '「' + answerLabels[draftAnswer] + '」で確定しますか？'
+    : '';
+}
+for (const button of document.querySelectorAll('[data-answer]')) {
+  button.onclick = () => {
+    draftAnswer = button.dataset.answer;
+    renderConfirmation();
+    byId('save-answer').focus();
+  };
+}
+byId('edit-answer').onclick = () => {
+  draftAnswer = null;
+  renderConfirmation();
+  byId('confirmation-options').querySelector('button').focus();
+};
+byId('save-answer').onclick = () => {
+  if (!draftAnswer) return;
+  if (sameDayMode) {
+    if (answer !== 'yes' || sameDayAnswer) return;
+    sameDayAnswer = draftAnswer;
+  } else {
+    if (answer) return;
+    answer = draftAnswer;
+    if (answer === 'yes') drawRanks();
+  }
+  draftAnswer = null;
+  saveWorkflow();
+  renderConfirmation();
+};
+let activeListing;
+const workflowKey = 'ease-demo-workflow-v1';
+function saveWorkflow() {
+  try {
+    sessionStorage.setItem(workflowKey, JSON.stringify({
+      listing: activeListing, applicants: [...applicants], ranks, answer,
+      sameDayAnswer, winnerIndex, offerHistory, winnerReply, interviewApproved
+    }));
+  } catch {
+    // Continue with in-memory state when session storage is unavailable.
+  }
+}
+function restoreWorkflow() {
+  try {
+    const saved = JSON.parse(sessionStorage.getItem(workflowKey));
+    if (!saved || JSON.stringify(saved.listing) !== JSON.stringify(activeListing)) return;
+    if (!Array.isArray(saved.applicants) || !Array.isArray(saved.offerHistory)) return;
+    applicants = new Set(saved.applicants);
+    ({ ranks, answer, sameDayAnswer, winnerIndex, offerHistory, winnerReply, interviewApproved } = saved);
+  } catch {
+    // Use a fresh workflow if session storage cannot be read.
+  }
+}
+function renderApplicants() {
+  byId('lottery-case').textContent = activeListing.prefecture + ' · ' + activeListing.date;
+  const list = byId('applicant-list');
+  list.replaceChildren();
+  for (const id of applicants) {
+    const row = document.createElement('li');
+    const reason = exclusionReason(id);
+    row.textContent = id + (reason ? ' · ' + reason : ' · 抽選対象');
+    list.append(row);
+  }
+  byId('lottery-status').textContent = answer === 'no' ? '開催できないとの回答を受け付けました。' : ranks === null ? '女性の開催可否の返信待ち' :
+    ranks.length ? '開催OKを記録し、抽選順位を確定しました。' : '開催OKを記録しました。抽選対象の応募者はいません。';
+  byId('same-day-status').textContent = sameDayAnswer
+    ? '当日7時の再確認：' + (sameDayAnswer === 'no' ? '開催中止' : answerLabels[sameDayAnswer])
+    : answer === 'yes' ? '当日7時の再確認：未回答' : '';
+  const ranking = byId('lottery-ranks');
+  ranking.replaceChildren();
+  for (const [index, id] of (ranks ?? []).entries()) {
+    const row = document.createElement('li');
+    row.textContent = index === 0 ? '当選：' + id : '次点 ' + index + '：' + id;
+    ranking.append(row);
+  }
+}
+function exclusionReason(id) {
+  if (penaltyIds.has(id)) return 'ペナルティ対象のため抽選対象外';
+  if (activeListing.certificationRequired && !certifiedDemoIds.has(id)) return '検定合格が未確認のため抽選対象外';
+  return '';
+}
+function drawRanks() {
+  if (ranks !== null) return;
+  ranks = [...applicants].filter(id => !exclusionReason(id));
+  for (let index = ranks.length - 1; index > 0; index--) {
+    const other = Math.floor(Math.random() * (index + 1));
+    [ranks[index], ranks[other]] = [ranks[other], ranks[index]];
+  }
+}
+const prefectureFilter = byId('listing-prefecture');
+const favoritesKey = 'ease-demo-favorite-prefectures';
+let favorites = [];
+try {
+  const saved = JSON.parse(localStorage.getItem(favoritesKey));
+  const prefectures = [...prefectureFilter.options].map(option => option.value).filter(Boolean);
+  if (Array.isArray(saved)) favorites = [...new Set(saved.filter(item => prefectures.includes(item)))];
+} catch {
+  // The preview still works when browser storage is unavailable.
+}
+function renderFavorites() {
+  const selected = prefectureFilter.value;
+  const toggle = byId('toggle-favorite');
+  toggle.disabled = !selected;
+  toggle.textContent = favorites.includes(selected) ? 'お気に入りから外す' : 'お気に入りに追加';
+  byId('favorite-prefectures').replaceChildren(...favorites.map(prefecture => {
+    const button = document.createElement('button');
+    button.type = 'button';
+    button.textContent = prefecture;
+    button.setAttribute('aria-pressed', String(prefecture === selected));
+    button.onclick = () => {
+      prefectureFilter.value = prefecture;
+      filterListings();
+      prefectureFilter.focus();
+    };
+    return button;
+  }));
+}
+byId('toggle-favorite').onclick = () => {
+  const selected = prefectureFilter.value;
+  if (!selected) return;
+  const remove = favorites.includes(selected);
+  favorites = remove ? favorites.filter(item => item !== selected) : [...favorites, selected];
+  let message = selected + (remove ? 'をお気に入りから外しました。' : 'をお気に入りに追加しました。');
+  try {
+    localStorage.setItem(favoritesKey, JSON.stringify(favorites));
+  } catch {
+    message += ' このタブを開いている間に使えます。';
+  }
+  renderFavorites();
+  byId('favorite-status').textContent = message;
+};
+function filterListings() {
+  const selected = byId('listing-prefecture').value;
+  const visible = Boolean(publishedCard && (!selected || activeListing.prefecture === selected));
+  if (publishedCard) publishedCard.hidden = !visible;
+  byId('listing-empty').hidden = visible;
+  renderFavorites();
+}
+byId('listing-prefecture').addEventListener('change', filterListings);
+function publishListing(openListings = true) {
+  if (!pendingListing) return;
+  if (activeListing !== pendingListing) {
+    applicants = new Set(['DEMO-M002', 'DEMO-M003', 'DEMO-M004']);
+    ranks = null;
+    answer = null;
+    sameDayAnswer = null;
+    draftAnswer = null;
+    winnerIndex = 0;
+    offerHistory = [];
+    winnerReply = null;
+    interviewApproved = false;
+    winnerForm.reset();
+    winnerForm.elements.decision.onchange();
+  }
+  activeListing = pendingListing;
+  if (openListings) saveWorkflow();
+  else restoreWorkflow();
+  const card = document.createElement('article');
+  const heading = document.createElement('h2');
+  heading.textContent = pendingListing.prefecture + 'のプレイ募集';
+  card.append(heading);
+  for (const line of [
+    '仮掲載（デモ） · ' + pendingListing.date + '集合 · 募集' + pendingListing.count + '名',
+    pendingListing.preferences ? '希望：' + pendingListing.preferences : '',
+    pendingListing.other ? 'その他の希望：' + pendingListing.other : '',
+    pendingListing.items ? '希望アイテム：' + pendingListing.items : '',
+    pendingListing.publicNote,
+    pendingListing.smoking ? '喫煙：' + pendingListing.smoking : '',
+    pendingListing.exam ? '依頼者の受検経験：' + pendingListing.exam : '',
+    pendingListing.certificationRequired ? '応募資格：検定合格者限定' : '',
+    pendingListing.ng ? 'NG：' + pendingListing.ng : ''
+  ]) {
+    if (!line) continue;
+    const paragraph = document.createElement('p');
+    paragraph.textContent = line;
+    card.append(paragraph);
+  }
+  const profile = pendingListing.profile ?? demoProfile;
+  const profileHeading = document.createElement('h3');
+  profileHeading.textContent = '女性情報（サンプル）';
+  const profileDetails = document.createElement('dl');
+  for (const [label, key] of profileFields) {
+    const term = document.createElement('dt');
+    const detail = document.createElement('dd');
+    term.textContent = label;
+    detail.textContent = profile[key];
+    profileDetails.append(term, detail);
+  }
+  card.append(profileHeading, profileDetails);
+  const apply = document.createElement('button');
+  apply.type = 'button';
+  apply.textContent = '応募を試す';
+  const feedback = document.createElement('p');
+  feedback.setAttribute('role', 'status');
+  apply.onclick = () => {
+    if (answer) {
+      feedback.textContent = answer === 'no' ? 'この案件は開催できません。' : 'この案件の抽選は終了しました。';
+      return;
+    }
+    if (activeListing.certificationRequired && !certifiedDemoIds.has('DEMO-M001')) {
+      feedback.textContent = 'この案件への応募には検定合格の確認が必要です。';
+      return;
+    }
+    applicants.add('DEMO-M001');
+    saveWorkflow();
+    apply.disabled = true;
+    feedback.textContent = '応募を受け付けました（デモ）。';
+  };
+  if (applicants.has('DEMO-M001')) {
+    apply.disabled = true;
+    feedback.textContent = '応募を受け付けました（デモ）。';
+  }
+  card.append(apply, feedback);
+  if (publishedCard) publishedCard.replaceWith(card);
+  else byId('published-listings').append(card);
+  publishedCard = card;
+  if (openListings) byId('listing-prefecture').value = '';
+  filterListings();
+  if (openListings) {
+    try {
+      localStorage.setItem(listingKey, JSON.stringify(pendingListing));
+      byId('publication-status').textContent = '依頼を募集ページに仮掲載しました。';
+    } catch {
+      byId('publication-status').textContent = 'この画面に仮掲載しました。ブラウザの設定により再読み込み後は保持されません。';
+    }
+    byId('request-review').hidden = true;
+    requestForm.hidden = false;
+    show('listings');
+  }
+}
+const pendingKey = 'ease-demo-pending-v1';
+function readPending() {
+  try {
+    const item = JSON.parse(localStorage.getItem(pendingKey));
+    if (item?.listing && Array.isArray(item.fields)) return item;
+  } catch {
+    // The preview can still run within this tab when storage is disabled.
+  }
+  return null;
+}
+let awaitingApproval = readPending();
+function renderAdmin(reviewing = false) {
+  const details = byId('admin-details');
+  details.replaceChildren();
+  byId('admin-status').textContent = awaitingApproval ? '掲載前に依頼内容を確認してください。' : '掲載待ちの依頼はありません。';
+  const canApprove = Boolean(awaitingApproval && reviewing);
+  byId('review-request').hidden = !awaitingApproval || reviewing;
+  byId('approve-request').hidden = !canApprove;
+  details.hidden = !canApprove;
+  byId('certification-rule').hidden = !canApprove;
+  if (canApprove) byId('certification-required').checked = false;
+  if (!canApprove) return;
+  const profile = awaitingApproval.listing.profile ?? demoProfile;
+  const profileRows = profileFields.map(([label, key]) => ['女性情報（サンプル）・' + label, profile[key]]);
+  for (const [label, value] of [...awaitingApproval.fields, ...profileRows]) {
+    if (!value) continue;
+    const term = document.createElement('dt');
+    const detail = document.createElement('dd');
+    term.textContent = label;
+    detail.textContent = value;
+    details.append(term, detail);
+  }
+}
+byId('publish-request').onclick = () => {
+  awaitingApproval = {
+    listing: { ...pendingListing, profile: demoProfile },
+    fields: [...byId('review-values').querySelectorAll('dt')].map(term => [term.textContent, term.nextElementSibling.textContent])
+  };
+  let saved = true;
+  try {
+    localStorage.setItem(pendingKey, JSON.stringify(awaitingApproval));
+  } catch {
+    saved = false;
+  }
+  byId('request-review').hidden = true;
+  requestForm.hidden = false;
+  show('admin');
+  byId('admin-status').textContent = saved
+    ? '依頼を受け付けました。掲載前に内容を確認してください。'
+    : '依頼を受け付けました。このタブで続けて確認してください。';
+};
+byId('review-request').onclick = () => {
+  renderAdmin(true);
+  byId('admin-details').focus();
+};
+byId('approve-request').onclick = () => {
+  if (!awaitingApproval || byId('approve-request').hidden) return;
+  pendingListing = { ...awaitingApproval.listing, certificationRequired: byId('certification-required').checked };
+  awaitingApproval = null;
+  try {
+    localStorage.removeItem(pendingKey);
+  } catch {
+    // No saved request exists when storage is disabled.
+  }
+  publishListing();
+};
+requestForm.onsubmit = event => {
+  event.preventDefault();
+  const data = new FormData(requestForm);
+  const preferences = data.getAll('preference');
+  const month = Number(data.get('month'));
+  const day = Number(data.get('day'));
+  const maxDays = [31, 29, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31];
+  if (!month || day < 1 || day > maxDays[month - 1]) {
+    byId('request-error').textContent = '存在する月日を選択してください。';
+    requestForm.elements.day.focus();
+    return;
+  }
+  if (!preferences.length) {
+    byId('request-error').textContent = '希望の項目を1つ以上選んでください。';
+    requestForm.querySelector('[name="preference"]').focus();
+    return;
+  }
+  const date = data.get('month') + '月' + data.get('day') + '日 ' + data.get('hour') + ':' + data.get('minute');
+  pendingListing = {
+    date,
+    prefecture: data.get('prefecture'),
+    count: data.get('count'),
+    preferences: preferences.join('、'),
+    other: data.get('other'),
+    items: data.get('items'),
+    smoking: data.get('smoking'),
+    exam: data.get('exam'),
+    publicNote: data.get('publicNote'),
+    ng: data.get('ng')
+  };
+  byId('request-error').textContent = '';
+  const values = byId('review-values');
+  values.replaceChildren();
+  const fields = [['会員情報', data.get('member')], ['日時', data.get('month') + '月' + data.get('day') + '日 ' + data.get('hour') + ':' + data.get('minute')], ['都道府県', data.get('prefecture')], ['希望', preferences.join('、')], ['その他の希望', data.get('other')], ['希望人数', data.get('count') + '名'], ['希望アイテム', data.get('items')], ['掲載事項', data.get('publicNote')], ['追加のNG事項', data.get('ng')], ['喫煙', data.get('smoking')], ['受検経験', data.get('exam')], ['運営への連絡（非掲載）', data.get('privateNote')]];
+  for (const [label, value] of fields) {
+    if (!value) continue;
+    const term = document.createElement('dt');
+    const detail = document.createElement('dd');
+    term.textContent = label;
+    detail.textContent = value;
+    values.append(term, detail);
+  }
+  requestForm.hidden = true;
+  byId('request-review').hidden = false;
+  byId('review-title').focus();
+};
+byId('edit-request').onclick = () => {
+  byId('request-review').hidden = true;
+  requestForm.hidden = false;
+  requestForm.elements.member.focus();
+};
+byId('back').onclick = () => show(null);
+pendingListing = readListing() ?? {
+  date: '11月23日 13:00', prefecture: '東京都', count: '1',
+  publicNote: requestForm.elements.publicNote.value,
+  ng: requestForm.elements.ng.value
+};
+publishListing(false);
+window.addEventListener('storage', event => {
+  if (event.key === pendingKey) {
+    awaitingApproval = readPending();
+    if (!byId('admin').hidden) renderAdmin();
+    return;
+  }
+  if (event.key !== listingKey) return;
+  const item = readListing();
+  if (!item) return;
+  const draft = pendingListing;
+  pendingListing = item;
+  publishListing(false);
+  pendingListing = draft;
+});
+window.addEventListener('popstate', () => {
+  const route = location.hash.slice(1);
+  show(Object.hasOwn(routes, route) ? route : null);
+});
+window.addEventListener('hashchange', () => {
+  const route = location.hash.slice(1);
+  show(Object.hasOwn(routes, route) ? route : null);
+});
+const entryRoute = location.hash.slice(1);
+if (Object.hasOwn(routes, entryRoute)) show(entryRoute);
+</script>
+</html>

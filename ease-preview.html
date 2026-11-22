@@ -1,0 +1,102 @@
+<!doctype html>
+<html lang="ja">
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="manifest" href="ease.webmanifest">
+<meta name="theme-color" content="#67263e">
+<title>Ease｜本日のプレイ</title>
+<style>
+:root{color-scheme:light;--ink:#211b21;--wine:#67263e;--muted:#655a63;--line:#e6dfe1}
+*{box-sizing:border-box}
+body{margin:0;background:#f8f6f5;color:var(--ink);font:15px/1.65 system-ui,-apple-system,"Hiragino Sans","Yu Gothic",sans-serif}
+main{max-width:1180px;margin:auto;padding:0 clamp(18px,5vw,52px) 64px}
+header{display:flex;align-items:center;justify-content:space-between;min-height:77px;border-bottom:1px solid var(--line)}
+.brand{font:700 36px/1 Georgia,serif;letter-spacing:-.06em;color:var(--wine)}
+.brand img{width:clamp(120px,30vw,230px);max-height:64px;object-fit:contain;object-position:left center;vertical-align:middle}
+h1{font-size:clamp(32px,6vw,52px);line-height:1.15;letter-spacing:-.045em;margin:10px 0}
+h2{font-size:25px;letter-spacing:-.035em;margin:38px 0 4px}
+small,.muted{color:var(--muted)}
+.preview{font-size:12px;margin:32px 0 0}
+#date{margin:0 0 19px;font-variant-numeric:tabular-nums}
+button{font:inherit;font-weight:650;color:var(--wine);background:#fff;border:1px solid var(--line);border-radius:9px;padding:8px 14px;cursor:pointer}
+button:hover{background:#f0e7eb}
+button:focus-visible{outline:3px solid var(--wine);outline-offset:3px}
+#login{background:var(--wine);color:white;border-color:var(--wine)}
+.card{padding:clamp(20px,4vw,36px);background:white;border:1px solid var(--line);border-radius:16px}
+.feature{position:relative;isolation:isolate;display:flex;flex-direction:column;justify-content:center;min-height:240px;padding:30px clamp(24px,5vw,50px);color:#472235;background:linear-gradient(110deg,#fffdf7,#f4e9dc);border:1px solid #d7c6bb;border-left:7px solid var(--wine);border-radius:14px;box-shadow:0 3px 0 -1px #decfc2,0 8px 0 -4px #e5d7cd,0 16px 28px -12px #43203355}
+.feature::before{content:"";position:absolute;inset:0;pointer-events:none;z-index:-1;border-radius:inherit;background:repeating-linear-gradient(125deg,#683b2910 0 1px,transparent 1px 5px);opacity:.35}
+.feature span{align-self:flex-start;color:#67263e;border:1px solid #b28e98;border-radius:4px;padding:3px 9px;font-size:12px;font-weight:700}
+.feature strong{display:block;font-size:clamp(29px,6vw,48px);line-height:1.2;letter-spacing:-.04em;margin:13px 0}
+.feature dl{display:grid;grid-template-columns:max-content minmax(0,1fr);gap:6px 16px;margin:0;padding-top:14px;border-top:1px dashed #bda599}
+.feature dd{margin:0;font-weight:650;font-variant-numeric:tabular-nums}
+.feature dt{color:#67535a}
+.today-window{overflow:hidden;border:1px solid var(--wine);border-radius:18px;background:#f1e5e9;box-shadow:0 12px 28px #4320331a}
+.today-window-header{display:flex;align-items:center;justify-content:space-between;gap:12px;padding:10px 18px;background:var(--wine);color:#fff}
+.today-window-header span{font-weight:700}
+.today-window-header small{color:#f6e9ef;font-variant-numeric:tabular-nums}
+.today-window-body{padding:clamp(12px,3vw,24px)}
+.controls{display:flex;gap:8px;flex-wrap:wrap;margin-top:15px;align-items:center}
+.controls button{min-height:44px;min-width:44px}
+.today-window{border-color:#403631;background:#262222}
+.today-window-header{background:#302629;color:#fff3db;border-bottom:1px solid #51433a}
+.today-window-header small{color:#ffd175;font-family:ui-monospace,monospace;letter-spacing:.12em}
+.today-window .feature{color:#ffd175;background:#171514;border:1px solid #504431;border-radius:8px;box-shadow:inset 0 3px 12px #000}
+.today-window .feature::before{background:radial-gradient(circle,#b5833838 .7px,transparent 1.2px) 0 0/5px 5px;opacity:.75}
+.today-window .feature strong{color:#ffcf69;text-shadow:0 0 12px #ffb93455}
+.today-window .feature span{color:#ffd175;border-color:#806339;background:#221b13}
+.today-window .feature dl{border-color:#655237}
+.today-window .feature dt{color:#d7bc89}
+.today-window .feature dd{color:#ffe3a7}
+.today-window .controls button{background:#332b28;color:#ffdfa0;border-color:#6b5540}
+.today-window .controls button:hover{background:#49392b}
+.today-window .controls button:focus-visible{outline-color:#ffcf69}
+.controls span{margin-left:auto;color:var(--muted);font-variant-numeric:tabular-nums}
+.history-window{overflow:hidden;border:1px solid var(--line);border-radius:16px;background:#fff;box-shadow:0 8px 24px #4320330d}
+.history-toolbar{display:flex;align-items:center;justify-content:space-between;gap:12px;padding:12px 18px;border-bottom:1px solid var(--line);background:#fff;color:var(--wine);font-weight:700}
+.history-toolbar a{color:inherit;font-size:13px;text-underline-offset:3px}
+#history{display:block;width:100%;height:360px;border:0;background:#f8f5f6}
+#history:focus-visible{outline:3px solid var(--wine);outline-offset:3px}
+#history .feature{box-shadow:none}
+.record{display:grid;grid-template-columns:1fr 1fr;gap:12px;padding:14px 0}
+.record time{color:var(--muted)}
+.record+.record{border-top:1px solid var(--line)}
+dialog{max-width:min(420px,90vw);border:1px solid var(--line);border-radius:16px;padding:24px}
+dialog h2{margin-top:0}
+dialog::backdrop{background:#28232988}
+@media(max-width:560px){
+  header{min-height:68px}
+  .preview{margin-top:24px}
+  .feature{min-height:220px;padding:22px 20px}
+  .history-toolbar{padding-inline:14px}
+}
+.today-panel{display:block;width:100%;height:390px;border:1px solid #403631;border-radius:18px;background:#262222}
+</style>
+<main>
+<header><span class="brand"><span>Ease</span><img src="https://ease-sc.net/img/header.jpg" alt="セックスサークルease" referrerpolicy="no-referrer" hidden></span><button id="login">会員入口</button></header>
+<p class="muted preview">確認用プレビュー · 公式掲載案件でカード表示を確認できます</p>
+<section aria-labelledby="today-title">
+<h1 id="today-title">本日のプレイ</h1>
+<p id="date" class="muted">開催案内の表示例</p>
+<iframe class="today-panel" src="ease-today.html" title="本日のプレイ・開催案内"></iframe>
+</section>
+<section aria-labelledby="history-title">
+<h2 id="history-title">開催履歴</h2>
+<p class="muted">公式の募集情報を使った表示例です。実際の履歴には開催を確認した通常案件を掲載します。</p>
+<div class="history-window">
+<div class="history-toolbar"><span>公式掲載データによる見本</span><small>新しい順</small></div>
+<iframe id="history" src="ease-history.html" title="開催履歴"></iframe>
+</div>
+</section>
+</main>
+<script>
+const byId = id => document.getElementById(id);
+const logo = document.querySelector('.brand img');
+function showLogo() {
+  logo.hidden = false;
+  logo.previousElementSibling.hidden = true;
+}
+logo.addEventListener('load', showLogo);
+if (logo.complete && logo.naturalWidth) showLogo();
+byId('login').onclick = () => location.assign('ease-members.html');
+</script>
+</html>

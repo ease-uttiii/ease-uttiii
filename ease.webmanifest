@@ -1,0 +1,23 @@
+{
+  "id": "./ease-preview.html",
+  "name": "イース 確認用",
+  "short_name": "イース",
+  "start_url": "./ease-integrated.html",
+  "scope": "./",
+  "display": "standalone",
+  "lang": "ja",
+  "theme_color": "#67263e",
+  "background_color": "#f8f6f5",
+  "icons": [
+    {
+      "src": "ease-icon-192.png",
+      "sizes": "192x192",
+      "type": "image/png"
+    },
+    {
+      "src": "ease-icon-512.png",
+      "sizes": "512x512",
+      "type": "image/png"
+    }
+  ]
+}

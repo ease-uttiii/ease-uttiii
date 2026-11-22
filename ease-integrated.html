@@ -1,0 +1,222 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ease - Portal</title>
+    <link href="https://fonts.googleapis.com/css2?family=Lora:wght@600&family=Noto+Sans+JP:wght@400;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            /* 基本トーン：上品なグレージュ */
+            --main-bg: #f2ede9; 
+            --accent-color: #968686;
+            --text-color: #5a5252;
+            --shadow: 0 10px 30px rgba(0,0,0,0.08);
+            --mauve-admin: #8e7a8a; 
+            
+            /* 性別カラー */
+            --men-blue: #5d7a99; 
+            --woman-pink: #d4a5a5; 
+        }
+
+        body { 
+            font-family: 'Noto Sans JP', sans-serif; 
+            margin: 0; 
+            background: var(--main-bg); 
+            color: var(--text-color); 
+            display: flex; 
+            flex-direction: column; 
+            min-height: 100vh;
+            font-size: 16px;
+        }
+
+        header { 
+            /* 下の余白を詰めてカードを上に引き上げ */
+            padding: 1rem 1rem 0.5rem; 
+            text-align: center; 
+            position: relative;
+        }
+
+        /* --- リロードボタン --- */
+        .header-controls {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            margin-top: 10px;
+        }
+
+        .head-btn {
+            background: rgba(142, 122, 138, 0.15); 
+            border: 1px solid rgba(142, 122, 138, 0.3); 
+            border-radius: 30px;
+            padding: 6px 14px;
+            font-size: 11px;
+            font-weight: bold;
+            color: var(--mauve-admin); 
+            cursor: pointer;
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            height: 28px;
+            box-sizing: border-box;
+            white-space: nowrap;
+        }
+
+        .announcement-link {
+            display: block;
+            background: #fdf5f8;
+            color: var(--mauve-admin);
+            border: 2px solid var(--mauve-admin);
+            padding: 15px; /* ★余白を少し調整 */
+            border-radius: 16px;
+            text-decoration: none;
+            text-align: center;
+            box-shadow: 0 4px 15px rgba(142, 122, 138, 0.15); /* ★影を少し控えめに */
+            transition: all 0.2s;
+            margin-bottom: 20px; /* ★下側の余白用 */
+        }
+        .announcement-link:active { background: #fce8f0; transform: scale(0.98); }
+
+        .ann-title {
+            display: block;
+            font-size: 16px; /* ★文字サイズを少し調整 */
+            font-weight: bold;
+            margin-bottom: 2px;
+            color: var(--mauve-deep);
+        }
+
+        .ann-date {
+            display: block;
+            font-size: 11px;
+            color: #a89e9e;
+            font-weight: bold;
+        }
+
+        .reload-icon {
+            display: inline-block;
+            width: 14px;
+            height: 14px;
+            line-height: 14px;
+            margin: 0 4px;
+            font-size: 14px;
+            text-align: center;
+        }
+
+        .reload-icon::before {
+            content: '↻';
+        }
+
+        .spinning {
+            animation: spin 0.6s linear infinite !important;
+        }
+
+        @keyframes spin {
+            from { transform: rotate(0deg); }
+            to { transform: rotate(360deg); }
+        }
+
+        header h1 { 
+            margin: 1rem 0 0;
+            font-family: 'Lora', serif; 
+            letter-spacing: 0.35em; 
+            font-size: 2.2rem; 
+            color: var(--accent-color);
+        }
+        header p { 
+            font-size: 0.8em; 
+            margin-top: 12px; 
+            color: #b0a4a4; 
+            letter-spacing: 0.15em;
+        }
+
+        .container { 
+            flex: 1; 
+            padding: 1rem; 
+            max-width: 450px; 
+            margin: 0 auto; 
+            width: 90%; 
+            display: flex; 
+            flex-direction: column; 
+            gap: 20px;
+            justify-content: flex-start;
+            padding-top: 1rem;
+        }
+
+        .portal-card {
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+            padding: 1.8rem;
+            border-radius: 24px;
+            background: #ffffff;
+            box-shadow: var(--shadow);
+            transition: all 0.2s ease;
+            border: 1px solid rgba(0,0,0,0.02);
+        }
+        .portal-card:active { transform: scale(0.97); box-shadow: none; }
+
+        .card-men { border-bottom: 5px solid var(--men-blue); }
+        .card-men .icon-circle { background: var(--men-blue); }
+        .card-men h2 { color: var(--men-blue); }
+
+        .card-woman { border-bottom: 5px solid var(--woman-pink); }
+        .card-woman .icon-circle { background: var(--woman-pink); }
+        .card-woman h2 { color: var(--woman-pink); }
+
+        .icon-circle {
+            width: 54px; height: 54px; border-radius: 18px;
+            display: flex; align-items: center; justify-content: center;
+            margin-right: 20px; color: white; font-size: 1.4rem; font-family: 'Lora', serif;
+        }
+
+        .card-info { flex: 1; }
+        .card-info h2 { margin: 0; font-size: 1.2em; font-weight: 700; letter-spacing: 0.05em; }
+        .card-info p { margin: 4px 0 0; font-size: 0.85em; color: #a89e9e; font-weight: 500; }
+
+        .arrow { font-size: 1.2rem; color: #d1c8c8; }
+
+    </style>
+<link rel="manifest" href="ease.webmanifest">
+</head>
+<body>
+
+<header>
+    <div class="header-controls">
+        
+    </div>
+    <h1>ease app</h1>
+    <p>PRIVATE & QUALITY TIME</p>
+</header>
+
+
+<div class="container">
+    <a href="ease-members.html#request" class="portal-card card-woman">
+        <div class="icon-circle">W</div>
+        <div class="card-info">
+            <h2>FOR WOMEN</h2>
+            <p>女性用プレイ依頼フォーム</p>
+        </div>
+        <div class="arrow">→</div>
+    </a>
+
+    <a href="ease-members.html#listings" class="portal-card card-men">
+        <div class="icon-circle">M</div>
+        <div class="card-info">
+            <h2>FOR MEN</h2>
+            <p>プレイ参加者募集案件</p>
+        </div>
+        <div class="arrow">→</div>
+    </a>
+    
+    <a href="https://ease-uttiii.pages.dev/men_announce.html" class="announcement-link">
+        <span class="ann-title">男性メンバー用 お知らせ</span>
+    </a>
+</div>
+<nav aria-label="試作の操作" style="text-align:center;padding:20px;line-height:2">
+<a href="ease-members.html#confirmation">開催可否を回答</a> · <a href="ease-members.html#same-day">当日の開催確認</a> · <a href="ease-members.html#admin">運営管理</a>
+<p>確認用プレビュー。架空の情報を使ってお試しください。</p>
+</nav>
+</body>
+</html>
