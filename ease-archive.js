@@ -12,7 +12,7 @@
     content.profile={};for(const field of ['height','age','build'])content.profile[field]=String(item.profile?.[field]??'');
     const match=content.date.match(/^(\d{1,2})月(\d{1,2})日/);
     const eventDate=item.eventDate||(match?now.getFullYear()+'-'+match[1].padStart(2,'0')+'-'+match[2].padStart(2,'0'):'');
-    return {publicationId:String(item.publicationId??item.id??''),kind:'single',eventDate,savedAt:now.toISOString(),content};
+    return {publicationId:String(item.publicationId??item.id??''),kind:isMultiple(item)?'multiple':'single',eventDate,savedAt:now.toISOString(),content};
   }
   function append(storage,item,now=new Date()){
     if(isMultiple(item))return {saved:false,excluded:true};
@@ -31,5 +31,15 @@
     container.append(dl);
     if(content.profile){const p=root.document.createElement('p');p.textContent='女性情報：'+[content.profile.age,content.profile.height,content.profile.build].filter(Boolean).join(' / ');container.append(p);}
   }
-  root.EaseArchive={key,isMultiple,read,snapshot,append,renderContent};
+  function renderWinnerProfiles(container,result,start=0){
+    for(const [index,m] of (result.winnerProfiles??[]).entries()){
+      if(index<start)continue;
+      const section=root.document.createElement('section'),heading=root.document.createElement('h4'),info=root.document.createElement('p'),status=root.document.createElement('p');
+      heading.textContent='当選者 '+(index+1)+'：'+(m.nickname??'未設定')+'（'+m.id+'）';
+      info.textContent=m.pref+' / '+m.age+'歳 / '+m.height+'cm / '+m.build+' / '+(m.smoker?'喫煙':'非喫煙')+' / '+(m.examExperienced?'受検経験あり':'受検経験なし');
+      status.textContent='参加回答：参加する / 面談：承認済み / 面談可能時間：'+(result.confirmedParticipants?.find(p=>p.id===m.id)?.availability??'未取得');
+      section.append(heading,info,status);container.append(section);
+    }
+  }
+  root.EaseArchive={key,isMultiple,read,snapshot,append,renderContent,renderWinnerProfiles};
 })(typeof window==='undefined'?globalThis:window);
