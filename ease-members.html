@@ -107,7 +107,7 @@ dt{color:#626574;font-weight:550}dd{color:#222633}
 <p id="admin-entry"><button type="button" data-route="admin">運営管理（デモ）</button></p>
 <section id="admin" hidden>
 <p><a href="ease-simulation.html">女性100体・男性2,000体のbotシミュレーターを開く</a></p>
-<section><h3>保存済みのbot検証結果（運営用）</h3><p>架空の案件・当選者情報です。募集時の内容と当選者のプロフィール、面談状況を確認できます。</p><button id="load-bot-admin" type="button">検証結果の案件・当選者一覧を表示</button><p id="bot-admin-status" role="status"></p><div id="bot-admin-results"></div></section>
+<section><h3>保存済みのbot検証結果（運営用）</h3><p>架空の案件・当選者情報です。募集時の内容と当選者のプロフィール、面談状況を確認できます。</p><button id="load-bot-admin" type="button">検証結果の案件・当選者一覧を表示</button><p id="bot-admin-status" role="status"></p><div id="bot-admin-results"></div><button id="bot-admin-prev" type="button">前の12件</button> <button id="bot-admin-next" type="button">次の12件</button></section>
 <h2>掲載待ちの依頼</h2>
 <p id="admin-status" role="status"></p>
 <button id="review-request" type="button" hidden>依頼内容を確認する</button>
@@ -297,6 +297,7 @@ const routes = {
   confirmation: '開催可否の回答',
   'same-day': '当日の開催確認'
 };
+let botAdminCases=null,botAdminPage=0;
 let botListingCases=null,botListingPage=0,botListingsLoading=false;
 function renderBotListings(reset=false){
   if(reset)botListingPage=0;
@@ -312,7 +313,7 @@ async function loadBotListings(){
   if(simulationMode||botListingsLoading)return;
   if(botListingCases){renderBotListings();return;}
   botListingsLoading=true;byId('bot-listing-status').textContent='検証結果の募集案件を読み込んでいます。';
-  try{const response=await fetch('ease-bot-result.json');if(!response.ok)throw new Error('取得できませんでした');const data=await response.json();if(data.version!=='ease-bot-v1'||!Array.isArray(data.cases)||data.cases.length>1000)throw new Error('形式を確認してください');botListingCases=data.cases;renderBotListings(true);if(new URLSearchParams(location.search).get("results")==="1"){byId("bot-listings").tabIndex=-1;byId("bot-listings").focus();}}catch(error){byId('bot-listing-status').textContent='表示できませんでした：'+error.message;}finally{botListingsLoading=false;}
+  try{const response=await fetch('ease-bot-result.json');if(!response.ok)throw new Error('取得できませんでした');const data=await response.json();if(data.version!=='ease-bot-v1'||!Array.isArray(data.cases)||data.cases.length>4000)throw new Error('形式を確認してください');botListingCases=data.cases;renderBotListings(true);if(new URLSearchParams(location.search).get("results")==="1"){byId("bot-listings").tabIndex=-1;byId("bot-listings").focus();}}catch(error){byId('bot-listing-status').textContent='表示できませんでした：'+error.message;}finally{botListingsLoading=false;}
 }
 byId('bot-listing-prev').onclick=()=>{if(botListingPage>0)botListingPage--;renderBotListings();};
 byId('bot-listing-next').onclick=()=>{botListingPage++;renderBotListings();};
@@ -954,20 +955,25 @@ window.addEventListener('hashchange', () => {
 });
 const entryRoute = location.hash.slice(1);
 if (Object.hasOwn(routes, entryRoute)) show(entryRoute);
-byId('load-bot-admin').onclick=async()=>{
-  const button=byId('load-bot-admin');button.disabled=true;byId('bot-admin-status').textContent='検証結果を読み込んでいます。';
-  try{
-    const response=await fetch('ease-bot-result.json');if(!response.ok)throw new Error('取得できませんでした');const data=await response.json();
-    if(data.version!=='ease-bot-v1'||!Array.isArray(data.cases)||data.cases.length>1000)throw new Error('データ形式を確認してください');
+function renderBotAdminResults(){if(!botAdminCases)return;
     const fragment=document.createDocumentFragment();
-    for(const c of data.cases){
+    for(const c of botAdminCases.slice(botAdminPage*12,botAdminPage*12+12)){
       const card=document.createElement('article'),heading=document.createElement('h3'),status=document.createElement('p');heading.textContent=c.id+' / '+c.pref+' / '+c.date+' '+c.hour;status.textContent=c.state;card.append(heading,status);
       const details=document.createElement('details'),summary=document.createElement('summary');summary.textContent='募集時の内容';details.append(summary);if(c.result?.publication)EaseArchive.renderContent(details,c.result.publication.content);else details.append('募集時の内容は未保存です。');card.append(details);
       const m=c.result?.winnerProfile;
       if(m){const title=document.createElement('h4');title.textContent='当選者情報（架空）';const text=document.createElement('p');text.textContent=m.id+' / '+m.pref+' / '+m.age+'歳 / '+m.height+'cm / '+m.build+' / '+(m.smoker?'喫煙':'非喫煙')+' / '+(m.examExperienced?'受検経験あり':'受検経験なし');const interview=document.createElement('p');interview.textContent='参加回答：参加する / 面談：'+(c.result.interviewApproved?'承認済み':'未承認')+' / 面談可能時間：'+(c.result.audit.find(e=>e.action==='participation_accepted')?.availability??'未回答');card.append(title,text,interview);}else{const p=document.createElement('p');p.textContent='当選者：未確定';card.append(p);}
       fragment.append(card);
     }
-    byId('bot-admin-results').replaceChildren(fragment);byId('bot-admin-status').textContent=data.cases.length+'案件・当選者'+data.cases.filter(c=>c.winner).length+'人を表示しました。';
+    byId('bot-admin-results').replaceChildren(fragment);byId('bot-admin-status').textContent=botAdminCases.length+'案件・当選者'+botAdminCases.filter(c=>c.winner).length+'人を表示しました。';
+    byId('bot-admin-prev').disabled=botAdminPage===0;byId('bot-admin-next').disabled=(botAdminPage+1)*12>=botAdminCases.length;
+}
+byId('bot-admin-prev').onclick=()=>{if(botAdminPage)botAdminPage--;renderBotAdminResults();};byId('bot-admin-next').onclick=()=>{botAdminPage++;renderBotAdminResults();};
+byId('load-bot-admin').onclick=async()=>{
+  const button=byId('load-bot-admin');button.disabled=true;byId('bot-admin-status').textContent='検証結果を読み込んでいます。';
+  try{
+    const response=await fetch('ease-bot-result.json');if(!response.ok)throw new Error('取得できませんでした');const data=await response.json();
+    if(data.version!=='ease-bot-v1'||!Array.isArray(data.cases)||data.cases.length>4000)throw new Error('データ形式を確認してください');
+    botAdminCases=data.cases;botAdminPage=0;renderBotAdminResults();
   }catch(error){byId('bot-admin-status').textContent='表示できませんでした：'+error.message;}
   finally{button.disabled=false;}
 };
