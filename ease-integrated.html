@@ -22,7 +22,7 @@
 </section>
 <section class="public-events" aria-labelledby="history-title">
 <div class="public-heading"><h2 id="history-title">全国のプレイ履歴</h2><span>複数案件は履歴対象外</span></div>
-<p class="public-note">下記は公式サイトの過去掲載例です。開催実績は未確認です。運営の開催完了データとの連携後、実績を表示します。</p>
+<p class="public-note">通常案件は募集時の掲載内容を保存し、変更前の内容も残します。複数案件は履歴に残しません。公式の過去掲載例は開催実績未確認です。確認版の保存はこのブラウザ内のみです。</p>
 <div class="history-scroll" tabindex="0" role="region" aria-label="全国の過去掲載例"><div id="public-history" class="public-history"></div></div>
 </section>
 <nav class="utilities" aria-label="その他の手続き">
@@ -34,5 +34,6 @@
 <style>
 .public-events{margin-top:32px}.public-heading{display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap}.public-heading span,.public-note{font-size:14px;color:#666773}.public-note{margin:10px 0 14px}.signboard{background:#1e1b1b;border:1px solid #514039;border-radius:18px;padding:24px;color:#ffda92;box-shadow:inset 0 2px 10px #0003}.signboard-label{font-size:14px;letter-spacing:.12em;color:#d6ae72}.signboard h3{font-size:clamp(25px,4vw,36px);line-height:1.4;margin:14px 0 10px;color:#ffd17c}.signboard p{color:#e0c69a}.signboard a{color:#ffe1a8;font-size:14px}.signboard-controls{display:flex;align-items:center;gap:8px;flex-wrap:wrap;margin-top:22px}.signboard button{font:inherit;font-size:14px;min-height:44px;padding:8px 12px;color:#ffdfa6;background:#332b29;border:1px solid #6e5642;border-radius:8px;cursor:pointer}.signboard-controls span{font-size:14px;margin-left:auto}.history-scroll{max-height:360px;overflow:auto;border:1px solid #e1e3e9;border-radius:14px;background:#f0f1f5;padding:14px;overscroll-behavior:contain}.public-history{display:grid;grid-template-columns:1fr 1fr;gap:12px}.public-history article{background:#fff;border:1px solid #e1e3e9;border-left:3px solid #783e53;border-radius:10px;padding:18px}.public-history time{color:#783e53;font-weight:650}.public-history p{margin:5px 0}.public-history small,.public-history a{font-size:14px;color:#666773}@media(max-width:1024px){.public-history{grid-template-columns:1fr}}@media(prefers-reduced-motion:reduce){.signboard{scroll-behavior:auto}}
 </style>
+<script src="ease-archive.js"></script>
 <script src="ease-public.js"></script>
 </body></html>

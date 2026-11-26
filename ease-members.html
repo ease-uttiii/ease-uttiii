@@ -107,6 +107,7 @@ dt{color:#626574;font-weight:550}dd{color:#222633}
 <p id="admin-entry"><button type="button" data-route="admin">運営管理（デモ）</button></p>
 <section id="admin" hidden>
 <p><a href="ease-simulation.html">女性100体・男性2,000体のbotシミュレーターを開く</a></p>
+<section><h3>保存済みのbot検証結果（運営用）</h3><p>架空の案件・当選者情報です。募集時の内容と当選者のプロフィール、面談状況を確認できます。</p><button id="load-bot-admin" type="button">検証結果の案件・当選者一覧を表示</button><p id="bot-admin-status" role="status"></p><div id="bot-admin-results"></div></section>
 <h2>掲載待ちの依頼</h2>
 <p id="admin-status" role="status"></p>
 <button id="review-request" type="button" hidden>依頼内容を確認する</button>
@@ -123,6 +124,7 @@ dt{color:#626574;font-weight:550}dd{color:#222633}
 <p id="same-day-status"></p>
 <ol id="lottery-ranks"></ol>
 <p id="winner-admin" role="status"></p>
+<section id="winner-profile" hidden><h3>当選候補者の情報（運営用・サンプル）</h3><dl id="winner-profile-values"></dl></section>
 <button id="advance-winner" type="button" hidden>次点に繰り上げる</button>
 <ul id="offer-history"></ul>
 <button id="approve-interview" type="button" hidden>面談完了を承認する</button>
@@ -276,6 +278,7 @@ dt{color:#626574;font-weight:550}dd{color:#222633}
 </section>
 <p><button id="back" hidden>会員入口に戻る</button></p>
 </main>
+<script src="ease-archive.js"></script>
 <script>
 const simulationMode = new URLSearchParams(location.search).get('simulation') === '1';
 function previewStore(storage) {
@@ -495,6 +498,11 @@ function renderWinner() {
     : winnerReply?.attending ? '参加予定 · 面談可能時間：' + winnerReply.availability
     : winnerReply ? '辞退の回答を受け付けました。' : ranks?.length ? ranks[winnerIndex] + ' の回答待ち' : '';
   byId('approve-interview').hidden = cancelled || !winnerReply?.attending || interviewApproved;
+  const selectedId=ranks?.[winnerIndex];
+  const selectedProfile=botProfiles.get(selectedId) ?? (selectedId?.startsWith('DEMO-')?{pref:'東京都',age:35,height:175,build:'普通',smoker:false,examExperienced:certifiedDemoIds.has(selectedId)}:null);
+  const profilePanel=byId('winner-profile'),values=byId('winner-profile-values');
+  profilePanel.hidden=!selectedId||cancelled;values.replaceChildren();
+  if(selectedId){for(const [label,value] of [['ID',selectedId],['活動県',selectedProfile?.pref??'未取得'],['年齢',selectedProfile?.age?selectedProfile.age+'歳':'未取得'],['身長',selectedProfile?.height?selectedProfile.height+'cm':'未取得'],['体型',selectedProfile?.build??'未取得'],['喫煙',selectedProfile?selectedProfile.smoker?'吸う':'吸わない':'未取得'],['受検経験',selectedProfile?selectedProfile.examExperienced?'有り':'無し':'未取得'],['参加回答',winnerReply?winnerReply.attending?'参加する':'辞退':'回答待ち'],['面談可能時間',winnerReply?.availability??'未回答'],['面談状況',interviewApproved?'承認済み':'未承認']]){const dt=document.createElement('dt'),dd=document.createElement('dd');dt.textContent=label;dd.textContent=value;values.append(dt,dd);}}
   renderInvitation('male-invitation', interviewApproved && !cancelled);
 }
 const answerLabels = { yes: '開催できます', no: '開催できません' };
@@ -667,6 +675,11 @@ function filterListings() {
 byId('listing-prefecture').addEventListener('change', filterListings);
 function publishListing(openListings = true) {
   if (!pendingListing) return;
+  if(openListings && !simulationMode){
+    pendingListing.publicationId ||= crypto.randomUUID();
+    try{EaseArchive.append(appLocalStore,{...pendingListing,profile:pendingListing.profile??demoProfile});}
+    catch(error){byId('admin-status').textContent='募集内容の履歴を保存できなかったため、掲載していません。保存領域や履歴データを確認してください。';return false;}
+  }
   if (activeListing !== pendingListing) {
     applicants = new Set(['DEMO-M002', 'DEMO-M003', 'DEMO-M004']);
     ranks = null;
@@ -758,6 +771,7 @@ function publishListing(openListings = true) {
     requestForm.hidden = false;
     show('listings');
   }
+  return true;
 }
 function recordApplication(id) {
   if(answer==='no'||sameDayAnswer==='no'||applicants.has(id)||(activeListing.certificationRequired&&!certifiedDemoIds.has(id))) return false;
@@ -824,13 +838,13 @@ byId('review-request').onclick = () => {
 byId('approve-request').onclick = () => {
   if (!awaitingApproval || byId('approve-request').hidden) return;
   pendingListing = { ...awaitingApproval.listing, certificationRequired: byId('certification-required').checked };
+  if (!publishListing()) return;
   awaitingApproval = null;
   try {
     appLocalStore.removeItem(pendingKey);
   } catch {
     // No saved request exists when storage is disabled.
   }
-  publishListing();
 };
 requestForm.onsubmit = event => {
   event.preventDefault();
@@ -884,11 +898,13 @@ byId('edit-request').onclick = () => {
   requestForm.elements.member.focus();
 };
 byId('back').onclick = () => show(null);
-pendingListing = readListing() ?? {
+const restoredPublication=readListing();
+pendingListing = restoredPublication ?? {
   date: '11月23日 13:00', prefecture: '東京都', count: '1',
   publicNote: requestForm.elements.publicNote.value,
   ng: requestForm.elements.ng.value
 };
+if(restoredPublication&&!simulationMode){try{EaseArchive.append(appLocalStore,{...restoredPublication,profile:restoredPublication.profile??demoProfile});}catch{byId('publication-status').textContent='以前の募集内容を履歴に保存できませんでした。元の掲載データは変更していません。';}}
 publishListing(false);
 window.addEventListener('storage', event => {
   if (simulationMode) return;
@@ -915,6 +931,24 @@ window.addEventListener('hashchange', () => {
 });
 const entryRoute = location.hash.slice(1);
 if (Object.hasOwn(routes, entryRoute)) show(entryRoute);
+byId('load-bot-admin').onclick=async()=>{
+  const button=byId('load-bot-admin');button.disabled=true;byId('bot-admin-status').textContent='検証結果を読み込んでいます。';
+  try{
+    const response=await fetch('ease-bot-result.json');if(!response.ok)throw new Error('取得できませんでした');const data=await response.json();
+    if(data.version!=='ease-bot-v1'||!Array.isArray(data.cases)||data.cases.length>1000)throw new Error('データ形式を確認してください');
+    const fragment=document.createDocumentFragment();
+    for(const c of data.cases){
+      const card=document.createElement('article'),heading=document.createElement('h3'),status=document.createElement('p');heading.textContent=c.id+' / '+c.pref+' / '+c.date+' '+c.hour;status.textContent=c.state;card.append(heading,status);
+      const details=document.createElement('details'),summary=document.createElement('summary');summary.textContent='募集時の内容';details.append(summary);if(c.result?.publication)EaseArchive.renderContent(details,c.result.publication.content);else details.append('募集時の内容は未保存です。');card.append(details);
+      const m=c.result?.winnerProfile;
+      if(m){const title=document.createElement('h4');title.textContent='当選者情報（架空）';const text=document.createElement('p');text.textContent=m.id+' / '+m.pref+' / '+m.age+'歳 / '+m.height+'cm / '+m.build+' / '+(m.smoker?'喫煙':'非喫煙')+' / '+(m.examExperienced?'受検経験あり':'受検経験なし');const interview=document.createElement('p');interview.textContent='参加回答：参加する / 面談：'+(c.result.interviewApproved?'承認済み':'未承認')+' / 面談可能時間：'+(c.result.audit.find(e=>e.action==='participation_accepted')?.availability??'未回答');card.append(title,text,interview);}else{const p=document.createElement('p');p.textContent='当選者：未確定';card.append(p);}
+      fragment.append(card);
+    }
+    byId('bot-admin-results').replaceChildren(fragment);byId('bot-admin-status').textContent=data.cases.length+'案件・当選者'+data.cases.filter(c=>c.winner).length+'人を表示しました。';
+  }catch(error){byId('bot-admin-status').textContent='表示できませんでした：'+error.message;}
+  finally{button.disabled=false;}
+};
+if(!simulationMode&&entryRoute==='admin'&&new URLSearchParams(location.search).get('results')==='1')byId('load-bot-admin').click();
 if (simulationMode) {
   const banner = document.createElement('p');
   banner.className = 'note';
@@ -984,7 +1018,7 @@ function runBotCase(payload) {
   const unique=new Set(ranks??[]).size===(ranks??[]).length;
   const passed=missing.length===0&&unexpected.length===0&&unique&&(answer==='no'||ranks!==null);
   record('audit_completed',{passed,missing,unexpected});
-  return { id:payload.id, ranks:ranks??[],winner:interviewApproved?ranks[winnerIndex]:null,interviewApproved,audit,passed,missing,unexpected,attempts:audit.filter(e=>e.action==='winner_contacted').map(e=>({id:e.memberId,reason:audit.find(x=>x.memberId===e.memberId&&['participation_accepted','no_reply','decline','schedule_conflict'].includes(x.action))?.action??'pending'})) };
+  return { id:payload.id,publication:EaseArchive.isMultiple(activeListing)?null:EaseArchive.snapshot(activeListing),winnerProfile:interviewApproved?JSON.parse(JSON.stringify(people.get(ranks[winnerIndex]))):null,ranks:ranks??[],winner:interviewApproved?ranks[winnerIndex]:null,interviewApproved,audit,passed,missing,unexpected,attempts:audit.filter(e=>e.action==='winner_contacted').map(e=>({id:e.memberId,reason:audit.find(x=>x.memberId===e.memberId&&['participation_accepted','no_reply','decline','schedule_conflict'].includes(x.action))?.action??'pending'})) };
 }
 </script>
 </html>
