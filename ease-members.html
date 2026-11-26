@@ -75,7 +75,9 @@ dt{color:#626574;font-weight:550}dd{color:#222633}
 @media(max-width:700px){main{padding:0 16px 48px}header{min-height:68px}.app-nav{margin-inline:-16px;padding-inline:16px}.app-nav a{padding:10px 12px}section,article{padding:20px;border-radius:14px}section section,section article{padding:16px}fieldset{padding:16px}.entry{grid-template-columns:1fr}.entry section{min-height:0}#admin-details,#review-values{display:block}dt{border-bottom:0;padding-bottom:0}dd{padding-top:2px}}
 
 [hidden]{display:none!important}
+#prefecture-links{margin:18px 0}#prefecture-links h3{font-size:15px;margin:18px 0 8px}.prefecture-grid{display:grid;grid-template-columns:repeat(7,minmax(0,1fr));gap:7px}.prefecture-grid a{display:flex;min-height:44px;align-items:center;justify-content:center;text-decoration:none;border:1px solid #ddd8df;border-radius:8px;background:#fff;padding:8px 4px;font-size:14px}.prefecture-grid a[aria-current="location"]{background:var(--brand);color:white}.search-grid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:12px}#listing-search{background:#fafafd;border:1px solid var(--border);border-radius:14px;padding:20px;margin:20px 0}#listing-search label{margin:8px 0}#search-error{color:#a02235}@media(max-width:800px){.prefecture-grid{grid-template-columns:repeat(4,minmax(0,1fr))}.search-grid{grid-template-columns:1fr 1fr}}@media(max-width:420px){.prefecture-grid{grid-template-columns:repeat(3,minmax(0,1fr))}.search-grid{grid-template-columns:1fr}}
 .app-nav a[href="#listings"]{order:-1}
+.listing-detail{border:0;padding:0;margin:0;background:transparent}.listing-detail>summary{list-style:none;min-height:100px;padding:8px;cursor:pointer}.listing-detail>summary::-webkit-details-marker{display:none}.listing-detail>summary h3{font-size:21px;margin:0 0 8px}.listing-detail>summary p{font-size:14px;color:var(--muted);margin:6px 0}.detail-hint{display:inline-block;color:var(--brand);font-size:14px;margin-top:8px}.listing-detail[open]>summary{border-bottom:1px solid var(--border);margin-bottom:18px}.listing-detail[open] .detail-hint{font-size:0}.listing-detail[open] .detail-hint::after{content:'詳細を閉じる';font-size:14px}
 #published-listings button{width:100%;margin-top:16px}
 #published-listings dl{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:0 12px}
 #published-listings dt{grid-row:1;font-size:14px;border:0;padding-bottom:0}
@@ -253,6 +255,18 @@ dt{color:#626574;font-weight:550}dd{color:#222633}
 <p>アプリ追加仕様：抽選後の新規応募は、抽選済み順位を保持して次点の末尾に追加します。前日9時までの確認案内・当日7時の再確認はアプリ用に指定された運用です。</p>
 </details>
 <p id="publication-status" role="status"></p>
+<nav id="prefecture-links" aria-label="都道府県から募集を探す"></nav>
+<form id="listing-search">
+<h2>条件から探す</h2><div class="search-grid">
+<label>開催日・開始<input id="search-from" type="date"></label><label>開催日・終了<input id="search-to" type="date"></label>
+<label>時間帯<select id="search-time"><option value="">すべて</option><option value="morning">午前（12時より前）</option><option value="afternoon">午後（12〜18時より前）</option><option value="evening">夜（18時以降）</option></select></label>
+<label>ご自身の年齢<input id="search-age" type="number" min="20" max="59" placeholder="20〜59歳"></label>
+<label>受検経験の条件<select id="search-exam"><option value="">すべて</option><option value="required">受検経験者限定</option><option value="not-required">指定なし</option></select></label>
+<label>喫煙の条件<select id="search-smoking"><option value="">すべて</option><option value="no-smoking">喫煙者NG</option><option value="not-specified">指定なし</option></select></label>
+<label>案件の種類<select id="search-kind"><option value="">すべて</option><option value="single">1対1</option><option value="multiple">複数</option></select></label>
+<label>案件の状態<select id="search-state"><option value="">すべて</option><option value="open">募集中</option><option value="closed">募集終了</option><option value="cancelled">開催中止</option></select></label>
+</div><label>キーワード<input id="search-keyword" type="search" placeholder="メッセージ・NG事項・女性情報など"></label><p id="search-error" role="alert"></p><button type="submit">この条件で検索</button> <button id="search-clear" type="button">条件をクリア</button>
+</form>
 <label for="listing-prefecture">都道府県で絞り込む
 <select id="listing-prefecture"><option value="">すべての都道府県</option></select>
 </label>
@@ -299,14 +313,39 @@ const routes = {
 };
 let botAdminCases=null,botAdminPage=0;
 let botListingCases=null,botListingPage=0,botListingsLoading=false;
+const searchFields={from:'search-from',to:'search-to',time:'search-time',age:'search-age',exam:'search-exam',smoking:'search-smoking',kind:'search-kind',state:'search-state',q:'search-keyword'};
+function listingDate(c,content){
+ if(c.result?.publication?.eventDate||c.eventDate)return c.result?.publication?.eventDate||c.eventDate;
+ const m=String(content.date??c.date??'').match(/(\d{1,2})月(\d{1,2})日/);return m?new Date().getFullYear()+'-'+m[1].padStart(2,'0')+'-'+m[2].padStart(2,'0'):'';
+}
+function matchesListing(c){
+ const p=c.result?.publication?.content??c,pref=byId('listing-prefecture').value;
+ if(pref&&(c.pref??p.prefecture)!==pref)return false;
+ const date=listingDate(c,p),from=byId('search-from').value,to=byId('search-to').value;
+ if((from&&date<from)||(to&&date>to))return false;
+ const hourRaw=c.hour??String(p.date).match(/\s(\d{1,2}):/)?.[1],hour=hourRaw==null?NaN:Number(String(hourRaw).split(':')[0]);
+ const time=byId('search-time').value;if(time==='morning'&&!(hour<12)||time==='afternoon'&&!(hour>=12&&hour<18)||time==='evening'&&!(hour>=18))return false;
+ const age=byId('search-age').value;if(age&&(Number(age)<Number(p.ruleAgeMin??20)||Number(age)>Number(p.ruleAgeMax??c.maxAge??59)))return false;
+ const exam=byId('search-exam').value,required=Boolean(p.certificationRequired??c.certOnly);
+ if(exam==='required'&&!required||exam==='not-required'&&required)return false;
+ const smoking=byId('search-smoking').value,noSmoking=Boolean(p.ruleNoSmoking??c.noSmoking);
+ if(smoking==='no-smoking'&&!noSmoking||smoking==='not-specified'&&noSmoking)return false;
+ const kind=byId('search-kind').value,multiple=EaseArchive.isMultiple(p);if(kind==='single'&&multiple||kind==='multiple'&&!multiple)return false;
+ const state=byId('search-state').value,cancelled=c.state==='開催中止',closed=Boolean(c.result);
+ if(state==='open'&&(closed||cancelled)||state==='closed'&&(!closed||cancelled)||state==='cancelled'&&!cancelled)return false;
+ const words=byId('search-keyword').value.trim().toLocaleLowerCase().split(/\s+/).filter(Boolean);
+ const text=[c.id,c.pref,p.prefecture,p.date,p.publicNote,p.ng,p.preferences,p.other,p.profile?.age,p.profile?.height,p.profile?.build].filter(Boolean).join(' ').toLocaleLowerCase();
+ return words.every(w=>text.includes(w));
+}
 function renderBotListings(reset=false){
   if(reset)botListingPage=0;
   if(!botListingCases)return;
   const pref=byId('listing-prefecture').value;
-  const items=botListingCases.filter(c=>(!pref||c.pref===pref)&&c.result?.publication);
+  const items=botListingCases.filter(c=>c.result?.publication&&matchesListing(c));
+  byId('bot-listings').querySelector('h2').textContent=(pref||'全国')+'の募集案件（検証結果）';
   const start=botListingPage*12;
   byId('bot-listing-status').textContent=items.length+'件 / '+(items.length?start+1:0)+'〜'+Math.min(start+12,items.length)+'件を表示';
-  byId('bot-listing-cards').replaceChildren(...items.slice(start,start+12).map(c=>{const card=document.createElement('article'),heading=document.createElement('h3'),status=document.createElement('p');heading.textContent=c.pref+' / '+c.date+' '+c.hour;status.textContent=c.id+' · BOT検証済み / '+(c.state==='開催中止'?'開催中止':'募集終了');card.append(heading,status);EaseArchive.renderContent(card,c.result.publication.content);return card;}));
+  byId('bot-listing-cards').replaceChildren(...items.slice(start,start+12).map(c=>{const card=document.createElement('article'),heading=document.createElement('h3'),status=document.createElement('p');heading.textContent=c.pref+' / '+c.date+' '+c.hour;status.textContent=c.id+' · BOT検証済み / '+(c.state==='開催中止'?'開催中止':'募集終了');const details=document.createElement('details'),summary=document.createElement('summary'),overview=document.createElement('p'),hint=document.createElement('span');details.className='listing-detail';overview.textContent='女性情報：'+Object.values(c.result.publication.content.profile??{}).filter(Boolean).join(' / ');hint.className='detail-hint';hint.textContent='タップして詳細を見る';summary.append(heading,status,overview,hint);const body=document.createElement('div');EaseArchive.renderContent(body,c.result.publication.content);details.append(summary,body);card.append(details);return card;}));
   byId('bot-listing-prev').disabled=botListingPage===0;byId('bot-listing-next').disabled=start+12>=items.length;
 }
 async function loadBotListings(){
@@ -647,6 +686,19 @@ function drawRanks(random = Math.random) {
   }
 }
 const prefectureFilter = byId('listing-prefecture');
+function syncSearchUrl(){const url=new URL(location.href);for(const [param,id] of Object.entries(searchFields)){const value=byId(id).value;if(value)url.searchParams.set(param,value);else url.searchParams.delete(param);}if(prefectureFilter.value)url.searchParams.set('pref',prefectureFilter.value);else url.searchParams.delete('pref');url.hash='listings';history.pushState(null,'',url);}
+function restoreListingSearch(){const query=new URLSearchParams(location.search);for(const [param,id] of Object.entries(searchFields))byId(id).value=query.get(param)??'';prefectureFilter.value=query.get('pref')??'';}
+restoreListingSearch();
+const allPrefectures=[...prefectureFilter.options].map(o=>o.value).filter(Boolean);
+const regionNames=[['北海道',1],['東北',6],['関東',7],['中部',9],['近畿',7],['中国',5],['四国',4],['九州・沖縄',8]];
+let regionOffset=0;
+const allLink=document.createElement('a');allLink.textContent='全国の募集案件';const allUrl=new URL(location.href);allUrl.searchParams.delete('pref');allUrl.hash='listings';allLink.href=allUrl;allLink.dataset.pref='';byId('prefecture-links').append(allLink);
+for(const [label,count] of regionNames){const heading=document.createElement('h3'),grid=document.createElement('div');heading.textContent=label;grid.className='prefecture-grid';for(const pref of allPrefectures.slice(regionOffset,regionOffset+count)){const link=document.createElement('a'),url=new URL(location.href);url.searchParams.set('pref',pref);url.hash='listings';link.href=url;link.textContent=pref;link.dataset.pref=pref;grid.append(link);}regionOffset+=count;byId('prefecture-links').append(heading,grid);}
+byId('prefecture-links').addEventListener('click',event=>{const link=event.target.closest('a[data-pref]');if(!link||event.button||event.metaKey||event.ctrlKey||event.shiftKey||event.altKey)return;event.preventDefault();prefectureFilter.value=link.dataset.pref;syncSearchUrl();filterListings();byId('bot-listings').tabIndex=-1;byId('bot-listings').focus();});
+byId('listing-search').onsubmit=event=>{event.preventDefault();const from=byId('search-from').value,to=byId('search-to').value;if(from&&to&&from>to){byId('search-error').textContent='終了日は開始日以降にしてください。';return;}if(!byId('listing-search').reportValidity())return;byId('search-error').textContent='';syncSearchUrl();filterListings();byId('bot-listings').tabIndex=-1;byId('bot-listings').focus();};
+byId('search-clear').onclick=()=>{byId('listing-search').reset();prefectureFilter.value='';byId('search-error').textContent='';syncSearchUrl();filterListings();};
+prefectureFilter.addEventListener('change',syncSearchUrl);
+window.addEventListener('popstate',()=>{restoreListingSearch();filterListings();});
 const favoritesKey = 'ease-demo-favorite-prefectures';
 let favorites = [];
 try {
@@ -691,10 +743,11 @@ byId('toggle-favorite').onclick = () => {
 function filterListings() {
   renderBotListings(true);
   const selected = byId('listing-prefecture').value;
-  const visible = Boolean(publishedCard && (!selected || activeListing.prefecture === selected));
+  const visible = Boolean(publishedCard && matchesListing(activeListing));
   if (publishedCard) publishedCard.hidden = !visible;
   byId('listing-empty').hidden = visible;
   renderFavorites();
+  for(const a of document.querySelectorAll('#prefecture-links a')){if(a.dataset.pref===selected)a.setAttribute('aria-current','location');else a.removeAttribute('aria-current');}
 }
 byId('listing-prefecture').addEventListener('change', filterListings);
 function publishListing(openListings = true) {
@@ -779,6 +832,10 @@ function publishListing(openListings = true) {
     feedback.textContent = '応募を受け付けました（デモ）。';
   }
   card.append(apply, feedback);
+  const detail=document.createElement('details'),summary=document.createElement('summary'),body=document.createElement('div');
+  detail.className='listing-detail';summary.textContent=pendingListing.prefecture+' / '+pendingListing.date+' · タップして詳細を見る';
+  while(card.firstChild)body.append(card.firstChild);
+  detail.append(summary,body);card.append(detail);
   if (publishedCard) publishedCard.replaceWith(card);
   else byId('published-listings').append(card);
   publishedCard = card;
