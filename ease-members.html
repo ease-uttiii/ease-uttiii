@@ -161,6 +161,7 @@ dt{color:#626574;font-weight:550}dd{color:#222633}
 <p><a href="https://ease-sc.net/chat/chat.php?room=b60609c4d445f5cd" target="_blank" rel="noopener noreferrer">女性プランナーに匿名で相談する ↗</a></p>
 </details>
 <form id="request-form">
+<p class="note">依頼は、事前にサークルの面談を受けてからお願いします。</p>
 <fieldset><legend>依頼の基本情報</legend>
 <label>IDまたは面談依頼で利用したニックネーム <small>必須</small><input name="member" required></label>
 <p class="note">登録県と異なる場合は、必ずIDでお願いします。</p>
@@ -367,6 +368,7 @@ fillSample();
 // Synthetic applicants for the confirmation preview.
 const certifiedDemoIds = new Set(['DEMO-M002', 'DEMO-M003']);
 const penaltyIds = new Set(['DEMO-M003']);
+const botProfiles = new Map();
 let applicants = new Set(['DEMO-M002', 'DEMO-M003', 'DEMO-M004']);
 let ranks = null;
 let answer = null;
@@ -594,6 +596,13 @@ function renderApplicants() {
   }
 }
 function exclusionReason(id) {
+  const profile = simulationMode ? botProfiles.get(id) : null;
+  if (profile) {
+    if (profile.age < 20 || profile.age > 59) return '参加資格の年齢範囲外';
+    if (profile.healthy === false || profile.rulesAgreed === false || profile.registered === false) return '参加資格の確認が必要';
+    if (profile.age > (activeListing.ruleAgeMax ?? 59)) return '希望年齢の条件外';
+    if (activeListing.ruleNoSmoking && profile.smoker) return '喫煙の希望条件外';
+  }
   if (penaltyIds.has(id)) return 'ペナルティ対象のため抽選対象外';
   if (activeListing.certificationRequired && !certifiedDemoIds.has(id)) return '受検経験が未確認のため抽選対象外';
   return '';
@@ -933,9 +942,10 @@ function runBotCase(payload) {
   byId('certification-required').checked = Boolean(payload.listing.certificationRequired);
   byId('approve-request').click();
   record('admin_approved');
-  applicants = new Set(); certifiedDemoIds.clear(); penaltyIds.clear();
+  applicants = new Set(); certifiedDemoIds.clear(); penaltyIds.clear(); botProfiles.clear();
   const people = new Map(payload.applicants.map(m=>[m.id,m]));
   for (const m of payload.applicants) {
+    botProfiles.set(m.id,m);
     if (m.examExperienced) certifiedDemoIds.add(m.id);
     if (m.penalty) penaltyIds.add(m.id);
     if(!recordApplication(m.id)) throw new Error('Application was not accepted: '+m.id);
