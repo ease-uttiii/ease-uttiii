@@ -261,6 +261,7 @@ dt{color:#626574;font-weight:550}dd{color:#222633}
 <p id="favorite-status" class="note" role="status"></p>
 <p id="listing-empty" class="note" role="status" hidden>この都道府県に募集中の案件はありません。</p>
 <div id="published-listings"></div>
+<section id="bot-listings"><h2>検証結果の募集案件</h2><p class="note">保存済みのbot検証で掲載した内容です。検証完了・募集終了のため、この一覧からは応募できません。</p><p id="bot-listing-status" role="status"></p><div id="bot-listing-cards"></div><button id="bot-listing-prev" type="button">前の12件</button> <button id="bot-listing-next" type="button">次の12件</button></section>
 <article id="winner-panel" hidden>
 <h2>当選通知・Discord DMの見本</h2>
 <p id="winner-case"></p>
@@ -296,6 +297,25 @@ const routes = {
   confirmation: '開催可否の回答',
   'same-day': '当日の開催確認'
 };
+let botListingCases=null,botListingPage=0,botListingsLoading=false;
+function renderBotListings(reset=false){
+  if(reset)botListingPage=0;
+  if(!botListingCases)return;
+  const pref=byId('listing-prefecture').value;
+  const items=botListingCases.filter(c=>(!pref||c.pref===pref)&&c.result?.publication);
+  const start=botListingPage*12;
+  byId('bot-listing-status').textContent=items.length+'件 / '+(items.length?start+1:0)+'〜'+Math.min(start+12,items.length)+'件を表示';
+  byId('bot-listing-cards').replaceChildren(...items.slice(start,start+12).map(c=>{const card=document.createElement('article'),heading=document.createElement('h3'),status=document.createElement('p');heading.textContent=c.pref+' / '+c.date+' '+c.hour;status.textContent=c.id+' · BOT検証済み / '+(c.state==='開催中止'?'開催中止':'募集終了');card.append(heading,status);EaseArchive.renderContent(card,c.result.publication.content);return card;}));
+  byId('bot-listing-prev').disabled=botListingPage===0;byId('bot-listing-next').disabled=start+12>=items.length;
+}
+async function loadBotListings(){
+  if(simulationMode||botListingsLoading)return;
+  if(botListingCases){renderBotListings();return;}
+  botListingsLoading=true;byId('bot-listing-status').textContent='検証結果の募集案件を読み込んでいます。';
+  try{const response=await fetch('ease-bot-result.json');if(!response.ok)throw new Error('取得できませんでした');const data=await response.json();if(data.version!=='ease-bot-v1'||!Array.isArray(data.cases)||data.cases.length>1000)throw new Error('形式を確認してください');botListingCases=data.cases;renderBotListings(true);if(new URLSearchParams(location.search).get("results")==="1"){byId("bot-listings").tabIndex=-1;byId("bot-listings").focus();}}catch(error){byId('bot-listing-status').textContent='表示できませんでした：'+error.message;}finally{botListingsLoading=false;}
+}
+byId('bot-listing-prev').onclick=()=>{if(botListingPage>0)botListingPage--;renderBotListings();};
+byId('bot-listing-next').onclick=()=>{botListingPage++;renderBotListings();};
 function show(route) {
   const nextHash = route ? '#' + route : '';
   if (location.hash !== nextHash) {
@@ -313,6 +333,8 @@ function show(route) {
     byId('request-form').hidden = false;
   }
   byId('listings').hidden = route !== 'listings';
+  byId('bot-listings').hidden=simulationMode;
+  if(route==='listings')loadBotListings();
   byId('back').hidden = !route;
   byId('admin-entry').hidden = Boolean(route);
   byId('admin').hidden = route !== 'admin';
@@ -666,6 +688,7 @@ byId('toggle-favorite').onclick = () => {
   byId('favorite-status').textContent = message;
 };
 function filterListings() {
+  renderBotListings(true);
   const selected = byId('listing-prefecture').value;
   const visible = Boolean(publishedCard && (!selected || activeListing.prefecture === selected));
   if (publishedCard) publishedCard.hidden = !visible;
