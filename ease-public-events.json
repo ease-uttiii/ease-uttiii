@@ -1,0 +1,10 @@
+{
+  "updatedAt": "2026-11-26",
+  "note": "公式掲載内容の確認例です。開催完了を確認した実績ではありません。全国の運営データとの自動同期は未接続です。",
+  "events": [
+    {"id":"tk1126az","date":"2026-11-26","time":"11:00","prefecture":"東京都","place":"渋谷付近エリア","kind":"multiple","status":"scheduled","source":"https://ease-sc.net/tokyo2.html"},
+    {"id":"tk1126z","date":"2026-11-26","time":"13:00","prefecture":"東京都","place":"新宿エリア","kind":"multiple","status":"scheduled","source":"https://ease-sc.net/tokyo2.html"},
+    {"id":"tk1123","date":"2026-11-23","time":"13:00","prefecture":"東京都","place":"池袋エリア","kind":"single","status":"past_listing","source":"https://ease-sc.net/tokyo2.html"},
+    {"id":"tk1120","date":"2026-11-20","time":"13:00","prefecture":"東京都","place":"新宿歌舞伎町エリア","kind":"single","status":"past_listing","source":"https://ease-sc.net/tokyo2.html"}
+  ]
+}

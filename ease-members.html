@@ -106,11 +106,12 @@ dt{color:#626574;font-weight:550}dd{color:#222633}
 </div>
 <p id="admin-entry"><button type="button" data-route="admin">運営管理（デモ）</button></p>
 <section id="admin" hidden>
+<p><a href="ease-simulation.html">女性100体・男性2,000体のbotシミュレーターを開く</a></p>
 <h2>掲載待ちの依頼</h2>
 <p id="admin-status" role="status"></p>
 <button id="review-request" type="button" hidden>依頼内容を確認する</button>
 <dl id="admin-details" tabindex="-1" hidden></dl>
-<label id="certification-rule" hidden><input id="certification-required" type="checkbox" style="display:inline;width:auto"> 検定合格者限定で掲載する</label>
+<label id="certification-rule" hidden><input id="certification-required" type="checkbox" style="display:inline;width:auto"> 受検経験者限定で掲載する</label>
 <button id="approve-request" type="button" hidden>承認して募集ページに掲載する</button>
 <article>
 <h2>応募者一覧（デモ）</h2>
@@ -241,6 +242,13 @@ dt{color:#626574;font-weight:550}dd{color:#222633}
 </section>
 <section id="listings" hidden>
 <p class="mobile-intro">案件の内容と希望条件を確認して応募できます。応募は抽選への申し込みとなります。</p>
+<details><summary>応募要項・抽選について</summary>
+<p>20〜59歳の健康な男性で、サークルのルールへの理解と同意が必要です。案件に記載された希望年齢・NG事項・受検経験などの条件をご確認ください。リモート面談が必要です。</p>
+<p>前日に女性へ開催可否を確認し、返信後に抽選します。案件ごとに抽選・連絡の時刻は異なります。当選は原則1名で、当選者のみに連絡します。連絡がなくてもキャンセル待ちになる場合があります。応募は当日まで受け付けます。</p>
+<p>未掲載案件の抽選にも含まれる場合や、抽選とは別に直接連絡される場合があります。この確認版のbot検証では、掲載された1対1案件を対象とし、未掲載案件への自動応募と直接選出はまだ再現していません。</p>
+<p><a href="https://ease-sc.net/entry114.html" target="_blank" rel="noopener">公式の募集案内</a> · <a href="https://ease-sc.net/entry17.html" target="_blank" rel="noopener">男性メンバー向けFAQ</a>（2026年11月26日照合）</p>
+<p>アプリ追加仕様：抽選後の新規応募は、抽選済み順位を保持して次点の末尾に追加します。前日9時までの確認案内・当日7時の再確認はアプリ用に指定された運用です。</p>
+</details>
 <p id="publication-status" role="status"></p>
 <label for="listing-prefecture">都道府県で絞り込む
 <select id="listing-prefecture"><option value="">すべての都道府県</option></select>
@@ -268,6 +276,14 @@ dt{color:#626574;font-weight:550}dd{color:#222633}
 <p><button id="back" hidden>会員入口に戻る</button></p>
 </main>
 <script>
+const simulationMode = new URLSearchParams(location.search).get('simulation') === '1';
+function previewStore(storage) {
+  if (!simulationMode) return storage;
+  const data = new Map();
+  return { getItem: key => data.get(key) ?? null, setItem: (key,value) => data.set(key,String(value)), removeItem: key => data.delete(key) };
+}
+const appLocalStore = previewStore(window.localStorage);
+const appSessionStore = previewStore(window.sessionStorage);
 const byId = id => document.getElementById(id);
 const routes = {
   request: '依頼ページ',
@@ -328,7 +344,7 @@ const profileFields = [['身長', 'height'], ['年齢', 'age'], ['体型', 'buil
 const listingKey = 'ease-demo-listing-v1';
 function readListing() {
   try {
-    const item = JSON.parse(localStorage.getItem(listingKey));
+    const item = JSON.parse(appLocalStore.getItem(listingKey));
     if (item && ['date', 'prefecture', 'count', 'publicNote', 'ng'].every(key => typeof item[key] === 'string')) return item;
   } catch {
     // Some browsers disable storage for local previews.
@@ -378,16 +394,12 @@ winnerForm.onsubmit = event => {
   }
   const summary = attending ? '参加する／面談可能時間：' + availability : '辞退する';
   if (!window.confirm(summary + ' で回答しますか？')) return;
-  winnerReply = { attending, availability };
-  saveWorkflow();
-  renderWinner();
+  recordWinnerReply(attending, availability);
 };
 byId('approve-interview').onclick = () => {
   if (sameDayAnswer === 'no' || !winnerReply?.attending || interviewApproved) return;
   if (!window.confirm('面談完了として承認しますか？')) return;
-  interviewApproved = true;
-  saveWorkflow();
-  renderWinner();
+  approveWinnerInterview();
 };
 byId('advance-winner').onclick = () => {
   if (sameDayAnswer === 'no' || !ranks || winnerIndex + 1 >= ranks.length || interviewApproved || winnerReply?.attending) return;
@@ -395,14 +407,33 @@ byId('advance-winner').onclick = () => {
   const next = ranks[winnerIndex + 1];
   const reason = winnerReply ? '辞退' : '未返信';
   if (!window.confirm(previous + '（' + reason + '）から ' + next + ' に繰り上げますか？')) return;
-  offerHistory.push(previous + ' · ' + reason + ' → ' + next);
+  advanceWinner(reason);
+};
+function recordWinnerReply(attending, availability) {
+  if (sameDayAnswer === 'no' || !ranks?.length || winnerReply || (attending && !availability)) return false;
+  winnerReply = { attending, availability };
+  saveWorkflow();
+  renderWinner();
+  return true;
+}
+function approveWinnerInterview() {
+  if (sameDayAnswer === 'no' || !winnerReply?.attending || interviewApproved) return false;
+  interviewApproved = true;
+  saveWorkflow();
+  renderWinner();
+  return true;
+}
+function advanceWinner(reason) {
+  if (sameDayAnswer === 'no' || !ranks || winnerIndex + 1 >= ranks.length || interviewApproved || winnerReply?.attending) return false;
+  offerHistory.push(ranks[winnerIndex] + ' · ' + reason + ' → ' + ranks[winnerIndex + 1]);
   winnerIndex++;
   winnerReply = null;
   saveWorkflow();
   winnerForm.reset();
   winnerForm.elements.decision.onchange();
   renderWinner();
-};
+  return true;
+}
 function renderInvitation(targetId, allowed) {
   const container = byId(targetId);
   container.hidden = !allowed;
@@ -503,19 +534,24 @@ byId('save-answer').onclick = () => {
     if (answer !== 'yes' || sameDayAnswer) return;
     sameDayAnswer = draftAnswer;
   } else {
-    if (answer) return;
-    answer = draftAnswer;
-    if (answer === 'yes') drawRanks();
+    if (!recordFemaleConfirmation(draftAnswer)) return;
   }
   draftAnswer = null;
   saveWorkflow();
   renderConfirmation();
 };
+function recordFemaleConfirmation(value, random = Math.random) {
+  if (answer || !['yes','no'].includes(value)) return false;
+  answer = value;
+  if (value === 'yes') drawRanks(random);
+  saveWorkflow();
+  return true;
+}
 let activeListing;
 const workflowKey = 'ease-demo-workflow-v1';
 function saveWorkflow() {
   try {
-    sessionStorage.setItem(workflowKey, JSON.stringify({
+    appSessionStore.setItem(workflowKey, JSON.stringify({
       listing: activeListing, applicants: [...applicants], ranks, answer,
       sameDayAnswer, winnerIndex, offerHistory, winnerReply, interviewApproved
     }));
@@ -525,7 +561,7 @@ function saveWorkflow() {
 }
 function restoreWorkflow() {
   try {
-    const saved = JSON.parse(sessionStorage.getItem(workflowKey));
+    const saved = JSON.parse(appSessionStore.getItem(workflowKey));
     if (!saved || JSON.stringify(saved.listing) !== JSON.stringify(activeListing)) return;
     if (!Array.isArray(saved.applicants) || !Array.isArray(saved.offerHistory)) return;
     applicants = new Set(saved.applicants);
@@ -559,14 +595,14 @@ function renderApplicants() {
 }
 function exclusionReason(id) {
   if (penaltyIds.has(id)) return 'ペナルティ対象のため抽選対象外';
-  if (activeListing.certificationRequired && !certifiedDemoIds.has(id)) return '検定合格が未確認のため抽選対象外';
+  if (activeListing.certificationRequired && !certifiedDemoIds.has(id)) return '受検経験が未確認のため抽選対象外';
   return '';
 }
-function drawRanks() {
+function drawRanks(random = Math.random) {
   if (ranks !== null) return;
   ranks = [...applicants].filter(id => !exclusionReason(id));
   for (let index = ranks.length - 1; index > 0; index--) {
-    const other = Math.floor(Math.random() * (index + 1));
+    const other = Math.floor(random() * (index + 1));
     [ranks[index], ranks[other]] = [ranks[other], ranks[index]];
   }
 }
@@ -574,7 +610,7 @@ const prefectureFilter = byId('listing-prefecture');
 const favoritesKey = 'ease-demo-favorite-prefectures';
 let favorites = [];
 try {
-  const saved = JSON.parse(localStorage.getItem(favoritesKey));
+  const saved = JSON.parse(appLocalStore.getItem(favoritesKey));
   const prefectures = [...prefectureFilter.options].map(option => option.value).filter(Boolean);
   if (Array.isArray(saved)) favorites = [...new Set(saved.filter(item => prefectures.includes(item)))];
 } catch {
@@ -605,7 +641,7 @@ byId('toggle-favorite').onclick = () => {
   favorites = remove ? favorites.filter(item => item !== selected) : [...favorites, selected];
   let message = selected + (remove ? 'をお気に入りから外しました。' : 'をお気に入りに追加しました。');
   try {
-    localStorage.setItem(favoritesKey, JSON.stringify(favorites));
+    appLocalStore.setItem(favoritesKey, JSON.stringify(favorites));
   } catch {
     message += ' このタブを開いている間に使えます。';
   }
@@ -650,7 +686,7 @@ function publishListing(openListings = true) {
     pendingListing.publicNote,
     pendingListing.smoking ? '喫煙：' + pendingListing.smoking : '',
     pendingListing.exam ? '依頼者の受検経験：' + pendingListing.exam : '',
-    pendingListing.certificationRequired ? '応募資格：検定合格者限定' : '',
+    pendingListing.certificationRequired ? '応募資格：受検経験者限定' : '',
     pendingListing.ng ? 'NG：' + pendingListing.ng : ''
   ]) {
     if (!line) continue;
@@ -676,16 +712,16 @@ function publishListing(openListings = true) {
   const feedback = document.createElement('p');
   feedback.setAttribute('role', 'status');
   apply.onclick = () => {
-    if (answer) {
-      feedback.textContent = answer === 'no' ? 'この案件は開催できません。' : 'この案件の抽選は終了しました。';
+    if (answer === 'no' || sameDayAnswer === 'no') {
+      feedback.textContent = 'この案件は開催できません。';
       return;
     }
     if (activeListing.certificationRequired && !certifiedDemoIds.has('DEMO-M001')) {
-      feedback.textContent = 'この案件への応募には検定合格の確認が必要です。';
+      feedback.textContent = 'この案件への応募には受検経験の確認が必要です。';
       return;
     }
     if (!confirm(activeListing.prefecture + '・' + activeListing.date + '\n内容と希望条件を確認して応募しますか？\n確認版のため実際の応募は送信されません。')) return;
-    applicants.add('DEMO-M001');
+    if (!recordApplication('DEMO-M001')) { feedback.textContent='応募条件または受付状態を確認してください。'; return; }
     saveWorkflow();
     apply.disabled = true;
     apply.textContent = '応募済み';
@@ -704,7 +740,7 @@ function publishListing(openListings = true) {
   filterListings();
   if (openListings) {
     try {
-      localStorage.setItem(listingKey, JSON.stringify(pendingListing));
+      appLocalStore.setItem(listingKey, JSON.stringify(pendingListing));
       byId('publication-status').textContent = '依頼を募集ページに仮掲載しました。';
     } catch {
       byId('publication-status').textContent = 'この画面に仮掲載しました。ブラウザの設定により再読み込み後は保持されません。';
@@ -714,10 +750,17 @@ function publishListing(openListings = true) {
     show('listings');
   }
 }
+function recordApplication(id) {
+  if(answer==='no'||sameDayAnswer==='no'||applicants.has(id)||(activeListing.certificationRequired&&!certifiedDemoIds.has(id))) return false;
+  applicants.add(id);
+  if(ranks!==null&&!exclusionReason(id)) ranks.push(id);
+  saveWorkflow();
+  return true;
+}
 const pendingKey = 'ease-demo-pending-v1';
 function readPending() {
   try {
-    const item = JSON.parse(localStorage.getItem(pendingKey));
+    const item = JSON.parse(appLocalStore.getItem(pendingKey));
     if (item?.listing && Array.isArray(item.fields)) return item;
   } catch {
     // The preview can still run within this tab when storage is disabled.
@@ -754,7 +797,7 @@ byId('publish-request').onclick = () => {
   };
   let saved = true;
   try {
-    localStorage.setItem(pendingKey, JSON.stringify(awaitingApproval));
+    appLocalStore.setItem(pendingKey, JSON.stringify(awaitingApproval));
   } catch {
     saved = false;
   }
@@ -774,7 +817,7 @@ byId('approve-request').onclick = () => {
   pendingListing = { ...awaitingApproval.listing, certificationRequired: byId('certification-required').checked };
   awaitingApproval = null;
   try {
-    localStorage.removeItem(pendingKey);
+    appLocalStore.removeItem(pendingKey);
   } catch {
     // No saved request exists when storage is disabled.
   }
@@ -839,6 +882,7 @@ pendingListing = readListing() ?? {
 };
 publishListing(false);
 window.addEventListener('storage', event => {
+  if (simulationMode) return;
   if (event.key === pendingKey) {
     awaitingApproval = readPending();
     if (!byId('admin').hidden) renderAdmin();
@@ -862,5 +906,75 @@ window.addEventListener('hashchange', () => {
 });
 const entryRoute = location.hash.slice(1);
 if (Object.hasOwn(routes, entryRoute)) show(entryRoute);
+if (simulationMode) {
+  const banner = document.createElement('p');
+  banner.className = 'note';
+  banner.textContent = 'BOT実行専用：保存はメモリ内のみ。通常の会員データ・通知には接続しません。';
+  document.querySelector('header').after(banner);
+  window.addEventListener('message', event => {
+    if (event.origin !== location.origin || event.source !== parent || event.data?.type !== 'ease-bot-case') return;
+    const { requestId, payload } = event.data;
+    try {
+      const result = runBotCase(payload);
+      parent.postMessage({ type:'ease-bot-result', requestId, result }, location.origin);
+    } catch (error) {
+      parent.postMessage({ type:'ease-bot-result', requestId, error:String(error.message) }, location.origin);
+    }
+  });
+}
+function runBotCase(payload) {
+  if (!simulationMode) throw new Error('Bot mode is required');
+  if (!payload || !Array.isArray(payload.applicants) || payload.applicants.length > 2000) throw new Error('Invalid bot data');
+  const audit = [];
+  const record = (action, data={}) => audit.push({ sequence:audit.length+1, recordedAt:new Date().toISOString(), action, ...data });
+  awaitingApproval = { listing:payload.listing, fields:[['bot ID',payload.id]] };
+  record('request_received');
+  renderAdmin(true);
+  byId('certification-required').checked = Boolean(payload.listing.certificationRequired);
+  byId('approve-request').click();
+  record('admin_approved');
+  applicants = new Set(); certifiedDemoIds.clear(); penaltyIds.clear();
+  const people = new Map(payload.applicants.map(m=>[m.id,m]));
+  for (const m of payload.applicants) {
+    if (m.examExperienced) certifiedDemoIds.add(m.id);
+    if (m.penalty) penaltyIds.add(m.id);
+    if(!recordApplication(m.id)) throw new Error('Application was not accepted: '+m.id);
+    record('application_received',{memberId:m.id});
+  }
+  let n=payload.seed>>>0;
+  const botRandom=()=>{n+=0x6D2B79F5;let t=n;t=Math.imul(t^t>>>15,t|1);t^=t+Math.imul(t^t>>>7,t|61);return((t^t>>>14)>>>0)/4294967296;};
+  if(!recordFemaleConfirmation(payload.available?'yes':'no',botRandom)) throw new Error('Female confirmation failed');
+  record('female_confirmation',{available:payload.available});
+  if (answer === 'yes') {
+    record('lottery_executed',{eligible:ranks.length});
+    for (const id of applicants) record(exclusionReason(id)?'excluded':'ranked',{memberId:id,reason:exclusionReason(id)||'',rank:ranks.indexOf(id)+1});
+    while(ranks.length && winnerIndex < ranks.length) {
+      const id=ranks[winnerIndex], m=people.get(id);
+      const occupied=payload.occupied.includes(id+':'+payload.slot);
+      const response=occupied?'schedule_conflict':m.response;
+      record('winner_contacted',{memberId:id,rank:winnerIndex+1});
+      if(response==='accept') {
+        if (!recordWinnerReply(true,payload.availability)) throw new Error('Participation response failed');
+        record('participation_accepted',{memberId:id,availability:payload.availability});
+        if(!approveWinnerInterview()) throw new Error('Interview approval failed');
+        record('interview_approved',{memberId:id});
+        break;
+      }
+      if(response!=='no_reply') recordWinnerReply(false,'');
+      record(response,{memberId:id});
+      if(!advanceWinner(response)) break;
+    }
+  } else {
+    for(const id of applicants) record('cancelled_before_lottery',{memberId:id,reason:'female_cancelled'});
+  }
+  renderApplicants();renderWinner();show('admin');
+  const expected=[...applicants].filter(id=>!exclusionReason(id));
+  const missing=answer==='yes'?expected.filter(id=>!ranks?.includes(id)):[];
+  const unexpected=(ranks??[]).filter(id=>exclusionReason(id));
+  const unique=new Set(ranks??[]).size===(ranks??[]).length;
+  const passed=missing.length===0&&unexpected.length===0&&unique&&(answer==='no'||ranks!==null);
+  record('audit_completed',{passed,missing,unexpected});
+  return { id:payload.id, ranks:ranks??[],winner:interviewApproved?ranks[winnerIndex]:null,interviewApproved,audit,passed,missing,unexpected,attempts:audit.filter(e=>e.action==='winner_contacted').map(e=>({id:e.memberId,reason:audit.find(x=>x.memberId===e.memberId&&['participation_accepted','no_reply','decline','schedule_conflict'].includes(x.action))?.action??'pending'})) };
+}
 </script>
 </html>
