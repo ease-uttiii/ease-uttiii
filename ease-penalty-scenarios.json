@@ -1,0 +1,553 @@
+{
+  "createdAt": "2026-11-27T10:14:55.973Z",
+  "scope": "Dedicated edge-case demonstrations, separate from 200 monthly cases. Actual demo request, approval and lottery functions used.",
+  "scenarios": [
+    {
+      "title": "3回の当選無効を消化し、4回目から参加できる",
+      "steps": [
+        {
+          "label": "1回目の当選候補",
+          "remaining": 2,
+          "selected": false,
+          "audit": [
+            {
+              "sequence": 1,
+              "recordedAt": "2026-11-27T10:14:55.931Z",
+              "action": "request_form_filled",
+              "memberId": "penalty-test",
+              "nickname": "penalty-test"
+            },
+            {
+              "sequence": 2,
+              "recordedAt": "2026-11-27T10:14:55.934Z",
+              "action": "request_reviewed"
+            },
+            {
+              "sequence": 3,
+              "recordedAt": "2026-11-27T10:14:55.935Z",
+              "action": "request_received"
+            },
+            {
+              "sequence": 4,
+              "recordedAt": "2026-11-27T10:14:55.935Z",
+              "action": "member_profile_loaded"
+            },
+            {
+              "sequence": 5,
+              "recordedAt": "2026-11-27T10:14:55.936Z",
+              "action": "admin_reviewed"
+            },
+            {
+              "sequence": 6,
+              "recordedAt": "2026-11-27T10:14:55.938Z",
+              "action": "admin_approved"
+            },
+            {
+              "sequence": 7,
+              "recordedAt": "2026-11-27T10:14:55.938Z",
+              "action": "application_received",
+              "memberId": "PENALTY-DEMO-001"
+            },
+            {
+              "sequence": 8,
+              "recordedAt": "2026-11-27T10:14:55.938Z",
+              "action": "female_confirmation",
+              "available": true
+            },
+            {
+              "sequence": 9,
+              "recordedAt": "2026-11-27T10:14:55.938Z",
+              "action": "lottery_executed",
+              "eligible": 1
+            },
+            {
+              "sequence": 10,
+              "recordedAt": "2026-11-27T10:14:55.938Z",
+              "action": "ranked",
+              "memberId": "PENALTY-DEMO-001",
+              "reason": "",
+              "rank": 1
+            },
+            {
+              "sequence": 11,
+              "recordedAt": "2026-11-27T10:14:55.938Z",
+              "action": "penalty_win_invalidated",
+              "memberId": "PENALTY-DEMO-001",
+              "remaining": 2,
+              "reason": "当選無効の回数制"
+            },
+            {
+              "sequence": 12,
+              "recordedAt": "2026-11-27T10:14:55.939Z",
+              "action": "audit_completed",
+              "passed": true,
+              "missing": [],
+              "unexpected": []
+            }
+          ]
+        },
+        {
+          "label": "2回目の当選候補",
+          "remaining": 1,
+          "selected": false,
+          "audit": [
+            {
+              "sequence": 1,
+              "recordedAt": "2026-11-27T10:14:55.942Z",
+              "action": "request_form_filled",
+              "memberId": "penalty-test",
+              "nickname": "penalty-test"
+            },
+            {
+              "sequence": 2,
+              "recordedAt": "2026-11-27T10:14:55.943Z",
+              "action": "request_reviewed"
+            },
+            {
+              "sequence": 3,
+              "recordedAt": "2026-11-27T10:14:55.944Z",
+              "action": "request_received"
+            },
+            {
+              "sequence": 4,
+              "recordedAt": "2026-11-27T10:14:55.944Z",
+              "action": "member_profile_loaded"
+            },
+            {
+              "sequence": 5,
+              "recordedAt": "2026-11-27T10:14:55.945Z",
+              "action": "admin_reviewed"
+            },
+            {
+              "sequence": 6,
+              "recordedAt": "2026-11-27T10:14:55.946Z",
+              "action": "admin_approved"
+            },
+            {
+              "sequence": 7,
+              "recordedAt": "2026-11-27T10:14:55.946Z",
+              "action": "application_received",
+              "memberId": "PENALTY-DEMO-001"
+            },
+            {
+              "sequence": 8,
+              "recordedAt": "2026-11-27T10:14:55.946Z",
+              "action": "female_confirmation",
+              "available": true
+            },
+            {
+              "sequence": 9,
+              "recordedAt": "2026-11-27T10:14:55.946Z",
+              "action": "lottery_executed",
+              "eligible": 1
+            },
+            {
+              "sequence": 10,
+              "recordedAt": "2026-11-27T10:14:55.946Z",
+              "action": "ranked",
+              "memberId": "PENALTY-DEMO-001",
+              "reason": "",
+              "rank": 1
+            },
+            {
+              "sequence": 11,
+              "recordedAt": "2026-11-27T10:14:55.946Z",
+              "action": "penalty_win_invalidated",
+              "memberId": "PENALTY-DEMO-001",
+              "remaining": 1,
+              "reason": "当選無効の回数制"
+            },
+            {
+              "sequence": 12,
+              "recordedAt": "2026-11-27T10:14:55.947Z",
+              "action": "audit_completed",
+              "passed": true,
+              "missing": [],
+              "unexpected": []
+            }
+          ]
+        },
+        {
+          "label": "3回目の当選候補",
+          "remaining": 0,
+          "selected": false,
+          "audit": [
+            {
+              "sequence": 1,
+              "recordedAt": "2026-11-27T10:14:55.948Z",
+              "action": "request_form_filled",
+              "memberId": "penalty-test",
+              "nickname": "penalty-test"
+            },
+            {
+              "sequence": 2,
+              "recordedAt": "2026-11-27T10:14:55.949Z",
+              "action": "request_reviewed"
+            },
+            {
+              "sequence": 3,
+              "recordedAt": "2026-11-27T10:14:55.950Z",
+              "action": "request_received"
+            },
+            {
+              "sequence": 4,
+              "recordedAt": "2026-11-27T10:14:55.950Z",
+              "action": "member_profile_loaded"
+            },
+            {
+              "sequence": 5,
+              "recordedAt": "2026-11-27T10:14:55.950Z",
+              "action": "admin_reviewed"
+            },
+            {
+              "sequence": 6,
+              "recordedAt": "2026-11-27T10:14:55.951Z",
+              "action": "admin_approved"
+            },
+            {
+              "sequence": 7,
+              "recordedAt": "2026-11-27T10:14:55.951Z",
+              "action": "application_received",
+              "memberId": "PENALTY-DEMO-001"
+            },
+            {
+              "sequence": 8,
+              "recordedAt": "2026-11-27T10:14:55.951Z",
+              "action": "female_confirmation",
+              "available": true
+            },
+            {
+              "sequence": 9,
+              "recordedAt": "2026-11-27T10:14:55.951Z",
+              "action": "lottery_executed",
+              "eligible": 1
+            },
+            {
+              "sequence": 10,
+              "recordedAt": "2026-11-27T10:14:55.951Z",
+              "action": "ranked",
+              "memberId": "PENALTY-DEMO-001",
+              "reason": "",
+              "rank": 1
+            },
+            {
+              "sequence": 11,
+              "recordedAt": "2026-11-27T10:14:55.951Z",
+              "action": "penalty_win_invalidated",
+              "memberId": "PENALTY-DEMO-001",
+              "remaining": 0,
+              "reason": "当選無効の回数制"
+            },
+            {
+              "sequence": 12,
+              "recordedAt": "2026-11-27T10:14:55.951Z",
+              "action": "penalty_released",
+              "memberId": "PENALTY-DEMO-001"
+            },
+            {
+              "sequence": 13,
+              "recordedAt": "2026-11-27T10:14:55.952Z",
+              "action": "audit_completed",
+              "passed": false,
+              "missing": [],
+              "unexpected": [
+                "PENALTY-DEMO-001"
+              ]
+            }
+          ]
+        },
+        {
+          "label": "4回目の当選候補",
+          "remaining": 0,
+          "selected": true,
+          "audit": [
+            {
+              "sequence": 1,
+              "recordedAt": "2026-11-27T10:14:55.953Z",
+              "action": "request_form_filled",
+              "memberId": "penalty-test",
+              "nickname": "penalty-test"
+            },
+            {
+              "sequence": 2,
+              "recordedAt": "2026-11-27T10:14:55.954Z",
+              "action": "request_reviewed"
+            },
+            {
+              "sequence": 3,
+              "recordedAt": "2026-11-27T10:14:55.955Z",
+              "action": "request_received"
+            },
+            {
+              "sequence": 4,
+              "recordedAt": "2026-11-27T10:14:55.955Z",
+              "action": "member_profile_loaded"
+            },
+            {
+              "sequence": 5,
+              "recordedAt": "2026-11-27T10:14:55.955Z",
+              "action": "admin_reviewed"
+            },
+            {
+              "sequence": 6,
+              "recordedAt": "2026-11-27T10:14:55.957Z",
+              "action": "admin_approved"
+            },
+            {
+              "sequence": 7,
+              "recordedAt": "2026-11-27T10:14:55.957Z",
+              "action": "application_received",
+              "memberId": "PENALTY-DEMO-001"
+            },
+            {
+              "sequence": 8,
+              "recordedAt": "2026-11-27T10:14:55.957Z",
+              "action": "female_confirmation",
+              "available": true
+            },
+            {
+              "sequence": 9,
+              "recordedAt": "2026-11-27T10:14:55.957Z",
+              "action": "lottery_executed",
+              "eligible": 1
+            },
+            {
+              "sequence": 10,
+              "recordedAt": "2026-11-27T10:14:55.957Z",
+              "action": "ranked",
+              "memberId": "PENALTY-DEMO-001",
+              "reason": "",
+              "rank": 1
+            },
+            {
+              "sequence": 11,
+              "recordedAt": "2026-11-27T10:14:55.957Z",
+              "action": "winner_contacted",
+              "memberId": "PENALTY-DEMO-001",
+              "rank": 1
+            },
+            {
+              "sequence": 12,
+              "recordedAt": "2026-11-27T10:14:55.957Z",
+              "action": "participation_accepted",
+              "memberId": "PENALTY-DEMO-001",
+              "availability": "模擬18時"
+            },
+            {
+              "sequence": 13,
+              "recordedAt": "2026-11-27T10:14:55.957Z",
+              "action": "interview_approved",
+              "memberId": "PENALTY-DEMO-001"
+            },
+            {
+              "sequence": 14,
+              "recordedAt": "2026-11-27T10:14:55.959Z",
+              "action": "audit_completed",
+              "passed": true,
+              "missing": [],
+              "unexpected": []
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "title": "運営解除まで参加停止：応募しても参加できない",
+      "steps": [
+        {
+          "label": "参加停止中の応募",
+          "remaining": 3,
+          "selected": false,
+          "audit": [
+            {
+              "sequence": 1,
+              "recordedAt": "2026-11-27T10:14:55.964Z",
+              "action": "request_form_filled",
+              "memberId": "penalty-test",
+              "nickname": "penalty-test"
+            },
+            {
+              "sequence": 2,
+              "recordedAt": "2026-11-27T10:14:55.965Z",
+              "action": "request_reviewed"
+            },
+            {
+              "sequence": 3,
+              "recordedAt": "2026-11-27T10:14:55.966Z",
+              "action": "request_received"
+            },
+            {
+              "sequence": 4,
+              "recordedAt": "2026-11-27T10:14:55.966Z",
+              "action": "member_profile_loaded"
+            },
+            {
+              "sequence": 5,
+              "recordedAt": "2026-11-27T10:14:55.966Z",
+              "action": "admin_reviewed"
+            },
+            {
+              "sequence": 6,
+              "recordedAt": "2026-11-27T10:14:55.967Z",
+              "action": "admin_approved"
+            },
+            {
+              "sequence": 7,
+              "recordedAt": "2026-11-27T10:14:55.967Z",
+              "action": "application_received",
+              "memberId": "PENALTY-DEMO-002"
+            },
+            {
+              "sequence": 8,
+              "recordedAt": "2026-11-27T10:14:55.967Z",
+              "action": "female_confirmation",
+              "available": true
+            },
+            {
+              "sequence": 9,
+              "recordedAt": "2026-11-27T10:14:55.967Z",
+              "action": "lottery_executed",
+              "eligible": 0
+            },
+            {
+              "sequence": 10,
+              "recordedAt": "2026-11-27T10:14:55.967Z",
+              "action": "excluded",
+              "memberId": "PENALTY-DEMO-002",
+              "reason": "ペナルティ対象のため抽選対象外",
+              "rank": 0
+            },
+            {
+              "sequence": 11,
+              "recordedAt": "2026-11-27T10:14:55.968Z",
+              "action": "audit_completed",
+              "passed": true,
+              "missing": [],
+              "unexpected": []
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "title": "複数募集でも、ペナルティ対象者は参加できない",
+      "steps": [
+        {
+          "label": "2人募集・通常会員が次へ進む",
+          "remaining": 2,
+          "selected": false,
+          "audit": [
+            {
+              "sequence": 1,
+              "recordedAt": "2026-11-27T10:14:55.968Z",
+              "action": "request_form_filled",
+              "memberId": "penalty-test",
+              "nickname": "penalty-test"
+            },
+            {
+              "sequence": 2,
+              "recordedAt": "2026-11-27T10:14:55.969Z",
+              "action": "request_reviewed"
+            },
+            {
+              "sequence": 3,
+              "recordedAt": "2026-11-27T10:14:55.970Z",
+              "action": "request_received"
+            },
+            {
+              "sequence": 4,
+              "recordedAt": "2026-11-27T10:14:55.970Z",
+              "action": "member_profile_loaded"
+            },
+            {
+              "sequence": 5,
+              "recordedAt": "2026-11-27T10:14:55.970Z",
+              "action": "admin_reviewed"
+            },
+            {
+              "sequence": 6,
+              "recordedAt": "2026-11-27T10:14:55.971Z",
+              "action": "admin_approved"
+            },
+            {
+              "sequence": 7,
+              "recordedAt": "2026-11-27T10:14:55.971Z",
+              "action": "application_received",
+              "memberId": "PENALTY-DEMO-001"
+            },
+            {
+              "sequence": 8,
+              "recordedAt": "2026-11-27T10:14:55.971Z",
+              "action": "application_received",
+              "memberId": "normal"
+            },
+            {
+              "sequence": 9,
+              "recordedAt": "2026-11-27T10:14:55.971Z",
+              "action": "female_confirmation",
+              "available": true
+            },
+            {
+              "sequence": 10,
+              "recordedAt": "2026-11-27T10:14:55.971Z",
+              "action": "lottery_executed",
+              "eligible": 2
+            },
+            {
+              "sequence": 11,
+              "recordedAt": "2026-11-27T10:14:55.971Z",
+              "action": "ranked",
+              "memberId": "PENALTY-DEMO-001",
+              "reason": "",
+              "rank": 2
+            },
+            {
+              "sequence": 12,
+              "recordedAt": "2026-11-27T10:14:55.971Z",
+              "action": "ranked",
+              "memberId": "normal",
+              "reason": "",
+              "rank": 1
+            },
+            {
+              "sequence": 13,
+              "recordedAt": "2026-11-27T10:14:55.971Z",
+              "action": "winner_contacted",
+              "memberId": "normal",
+              "rank": 1
+            },
+            {
+              "sequence": 14,
+              "recordedAt": "2026-11-27T10:14:55.971Z",
+              "action": "participation_accepted",
+              "memberId": "normal",
+              "availability": "模擬18時"
+            },
+            {
+              "sequence": 15,
+              "recordedAt": "2026-11-27T10:14:55.972Z",
+              "action": "interview_approved",
+              "memberId": "normal"
+            },
+            {
+              "sequence": 16,
+              "recordedAt": "2026-11-27T10:14:55.972Z",
+              "action": "penalty_win_invalidated",
+              "memberId": "PENALTY-DEMO-001",
+              "remaining": 2,
+              "reason": "当選無効の回数制"
+            },
+            {
+              "sequence": 17,
+              "recordedAt": "2026-11-27T10:14:55.973Z",
+              "action": "audit_completed",
+              "passed": true,
+              "missing": [],
+              "unexpected": []
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

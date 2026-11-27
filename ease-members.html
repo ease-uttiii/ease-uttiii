@@ -17,7 +17,7 @@
 <section><h2>男性会員</h2><p>募集ページへ進む</p><button type="button" data-route="listings">募集ページへ</button></section>
 </div>
 <p id="admin-entry"><button type="button" data-route="admin">運営管理（デモ）</button></p>
-<section id="admin" hidden=""><div class="easy-guide"><h2>会員の情報を確認・取り込む</h2><p><a href="ease-roster.html">架空メンバー2,100人の一覧を見る →</a></p><p><a href="ease-roster.html#import">メンバーデータをCSVで取り込む →</a></p></div>
+<section id="admin" hidden=""><div class="easy-guide"><h2>会員の情報を確認・取り込む</h2><p><a href="ease-men.html">男性の架空メンバーを見る →</a></p><p><a href="ease-women.html">女性の架空メンバーを見る →</a></p><p><a href="ease-penalties.html">ペナルティ対象者・回数を確認する →</a></p><p><a href="ease-roster.html#import">メンバーデータをCSVで取り込む →</a></p></div>
 <p><a href="ease-simulation.html">女性100体・男性2,000体のbotシミュレーターを開く</a></p>
 
 <h2>掲載待ちの依頼</h2>
@@ -599,7 +599,7 @@ function exclusionReason(id) {
     if (profile.age > (activeListing.ruleAgeMax ?? 59)) return '希望年齢の条件外';
     if (activeListing.ruleNoSmoking && profile.smoker) return '喫煙の希望条件外';
   }
-  if (penaltyIds.has(id)) return 'ペナルティ対象のため抽選対象外';
+  if (penaltyIds.has(id) && !(profile?.penaltyMode==='count'&&profile.penaltyRemaining>0&&!profile.stealthBan)) return 'ペナルティ対象のため抽選対象外';
   if (activeListing.certificationRequired && !certifiedDemoIds.has(id)) return '受検経験が未確認のため抽選対象外';
   return '';
 }
@@ -945,7 +945,7 @@ function renderSavedRanks(card,c){
  if(!order.length){const p=document.createElement('p');p.textContent=c.state==='開催中止'?'開催中止のため抽選していません。':'抽選対象者はいません。';panel.append(p);card.append(panel);return;}
  const accepted=order.map((id,i)=>selected.has(id)?i:-1).filter(i=>i>=0),lastContact=order.reduce((n,id,i)=>audit.some(e=>e.action==='winner_contacted'&&e.memberId===id)?i:n,-1),cutoff=Math.max(lastContact,...accepted,0)+11;
  const note=document.createElement('p');note.textContent='上から抽選の順位です。当選・連絡済みの人と、その後の次点10人を表示します。「次点」はまだ当選していない候補者です。';panel.append(note);
- const createRows=(ids,offset)=>{const wrap=document.createElement('div');wrap.className='rank-scroll';const table=document.createElement('table');table.className='rank-table';const head=document.createElement('thead'),tr=document.createElement('tr');for(const label of ['抽選順位','登録ニックネーム・ID','現在の状況']){const th=document.createElement('th');th.textContent=label;tr.append(th);}head.append(tr);table.append(head);const body=document.createElement('tbody');ids.forEach((id,j)=>{const index=offset+j,m=botAdminPeople.get(id),events=audit.filter(e=>e.memberId===id),reason=events.find(e=>['no_reply','decline','schedule_conflict','previous_partner'].includes(e.action))?.action;const labels={no_reply:'返信なし・次の候補へ',decline:'辞退・次の候補へ',schedule_conflict:'同日時の重複で対象外',previous_partner:'同じ相手との参加歴があり対象外'};const status=selected.has(id)?'参加確定・面談承認済み':reason?labels[reason]:events.some(e=>e.action==='winner_contacted')?'連絡済み':'次点候補・未連絡';const row=document.createElement('tr');row.dataset.status=selected.has(id)?'selected':'waiting';for(const text of [String(index+1)+'位',(m?.nickname??'登録名未取得')+'（'+id+'）',status]){const td=document.createElement('td');td.textContent=text;row.append(td);}body.append(row);});table.append(body);wrap.append(table);return wrap;};
+ const createRows=(ids,offset)=>{const wrap=document.createElement('div');wrap.className='rank-scroll';const table=document.createElement('table');table.className='rank-table';const head=document.createElement('thead'),tr=document.createElement('tr');for(const label of ['抽選順位','登録ニックネーム・ID','現在の状況']){const th=document.createElement('th');th.textContent=label;tr.append(th);}head.append(tr);table.append(head);const body=document.createElement('tbody');ids.forEach((id,j)=>{const index=offset+j,m=botAdminPeople.get(id),events=audit.filter(e=>e.memberId===id),reason=events.find(e=>['no_reply','decline','schedule_conflict','previous_partner','penalty_win_invalidated'].includes(e.action))?.action;const labels={no_reply:'返信なし・次の候補へ',decline:'辞退・次の候補へ',schedule_conflict:'同日時の重複で対象外',previous_partner:'同じ相手との参加歴があり対象外',penalty_win_invalidated:'ペナルティで当選無効'};const status=selected.has(id)?'参加確定・面談承認済み':reason?labels[reason]:events.some(e=>e.action==='winner_contacted')?'連絡済み':'次点候補・未連絡';const row=document.createElement('tr');row.dataset.status=selected.has(id)?'selected':'waiting';for(const text of [String(index+1)+'位',(m?.nickname??'登録名未取得')+'（'+id+'）',status]){const td=document.createElement('td');td.textContent=text;row.append(td);}body.append(row);});table.append(body);wrap.append(table);return wrap;};
  panel.append(createRows(order.slice(0,cutoff),0));if(order.length>cutoff){const details=document.createElement('details'),summary=document.createElement('summary');summary.textContent='残りの順位もすべて見る（'+(order.length-cutoff)+'人）';details.append(summary,createRows(order.slice(cutoff),cutoff));panel.append(details);}card.append(panel);
 }
 function renderBotAdminResults(){if(!botAdminCases)return;
@@ -1041,6 +1041,7 @@ function runBotCase(payload) {
     for (const id of applicants) record(exclusionReason(id)?'excluded':'ranked',{memberId:id,reason:exclusionReason(id)||'',rank:ranks.indexOf(id)+1});
     while(ranks.length && winnerIndex < ranks.length) {
       const id=ranks[winnerIndex], m=people.get(id);
+      if(m.penaltyMode==='count'&&m.penaltyRemaining>0&&!m.stealthBan){m.penaltyRemaining--;record('penalty_win_invalidated',{memberId:id,remaining:m.penaltyRemaining,reason:m.penaltyReason??'当選無効の回数制'});if(m.penaltyRemaining===0)record('penalty_released',{memberId:id});if(!advanceWinner('ペナルティによる当選無効'))break;continue;}
       const occupied=payload.occupied.includes(id+':'+payload.slot);
       const response=(payload.previousPartners??[]).includes(id)?'previous_partner':occupied?'schedule_conflict':m.response;
       record('winner_contacted',{memberId:id,rank:winnerIndex+1});
@@ -1067,7 +1068,7 @@ function runBotCase(payload) {
   const passed=missing.length===0&&unexpected.length===0&&unique&&(answer==='no'||ranks!==null);
   record('audit_completed',{passed,missing,unexpected});
   const winners=confirmedParticipants.map(p=>p.id),winnerProfiles=winners.map(id=>JSON.parse(JSON.stringify(people.get(id))));
-  return { id:payload.id,listing:EaseArchive.snapshot(activeListing),publication:EaseArchive.isMultiple(activeListing)?null:EaseArchive.snapshot(activeListing),winners,winnerProfiles,winnerProfile:winnerProfiles[0]??null,ranks:ranks??[],winner:winners[0]??null,interviewApproved:winners.length>0,confirmedParticipants:JSON.parse(JSON.stringify(confirmedParticipants)),vacancies:target-winners.length,audit,passed,missing,unexpected,attempts:audit.filter(e=>e.action==='winner_contacted').map(e=>({id:e.memberId,reason:audit.find(x=>x.memberId===e.memberId&&['participation_accepted','no_reply','decline','schedule_conflict','previous_partner'].includes(x.action))?.action??'pending'})) };
+  return { penaltyUpdates:[...people.values()].filter(m=>m.penaltyMode==='count').map(m=>({id:m.id,remaining:m.penaltyRemaining})),id:payload.id,listing:EaseArchive.snapshot(activeListing),publication:EaseArchive.isMultiple(activeListing)?null:EaseArchive.snapshot(activeListing),winners,winnerProfiles,winnerProfile:winnerProfiles[0]??null,ranks:ranks??[],winner:winners[0]??null,interviewApproved:winners.length>0,confirmedParticipants:JSON.parse(JSON.stringify(confirmedParticipants)),vacancies:target-winners.length,audit,passed,missing,unexpected,attempts:audit.filter(e=>e.action==='winner_contacted').map(e=>({id:e.memberId,reason:audit.find(x=>x.memberId===e.memberId&&['participation_accepted','no_reply','decline','schedule_conflict','previous_partner'].includes(x.action))?.action??'pending'})) };
 }
 </script>
 
