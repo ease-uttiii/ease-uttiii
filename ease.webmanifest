@@ -1,13 +1,13 @@
 {
   "id": "./ease-preview.html",
-  "name": "イース 確認用",
-  "short_name": "イース",
-  "start_url": "./ease-integrated.html",
+  "name": "Ease デモアプリ",
+  "short_name": "Ease",
+  "start_url": "./ease-client.html",
   "scope": "./",
   "display": "standalone",
   "lang": "ja",
-  "theme_color": "#67263e",
-  "background_color": "#f8f6f5",
+  "theme_color": "#8e6258",
+  "background_color": "#eee7df",
   "icons": [
     {
       "src": "ease-icon-192.png",
