@@ -24,3 +24,6 @@ body[data-page="simulation"]{--brand:#365d67;--brand-dark:#23464e;--soft:#edf4f4
 .important-notice{display:block;font-size:clamp(19px,2.4vw,23px);font-weight:800;line-height:1.6;color:#b42332;margin:10px 0;padding:12px 16px;background:#fff1f2;border-left:4px solid #b42332;border-radius:8px;overflow-wrap:anywhere}
 
 .back-links{display:flex;gap:12px;flex-wrap:wrap;margin:16px 0}.back-links a{display:inline-flex;padding:8px 14px;border:1px solid var(--line);background:#fff;border-radius:10px;text-decoration:none;font-weight:650}
+
+/* Colored page surfaces; content windows stay white. */
+:root{--page:#e7eeea}body{min-height:100vh}body[data-page="simulation"],body[data-theme="admin"]{--page:#e4eeea}body[data-theme="women"],body[data-directory="women"]{--page:#f2e3e9}body[data-theme="men"],body[data-directory="men"]{--page:#e1ebf6}body[data-directory="penalties"]{--page:#eee6e1}.panel,.portal-card,.metric{background:#fff}@media print{body{background:#fff}}
