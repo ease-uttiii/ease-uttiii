@@ -985,9 +985,10 @@ function runBotCase(payload) {
   show('request');requestForm.reset();
   const source=payload.listing,parts=String(source.date).match(/^(\d{1,2})月(\d{1,2})日\s+(\d{1,2}):(\d{2})/);
   if(!parts)throw new Error('Invalid request date');
-  const publicNote=String(source.publicNote??'')+(source.ruleAgeMax?' 希望年齢：20〜'+source.ruleAgeMax+'歳。':'')+(source.certificationRequired?' 受検経験のある方を希望します。':'');
+  const publicNote=String(source.publicNote??'');
+  const other=String(source.other??'')+(source.ruleAgeMax?' 希望年齢：20〜'+source.ruleAgeMax+'歳。':'')+(source.certificationRequired?' 受検経験のある方を希望します。':'');
   const ng=String(source.ng??'')+(source.ruleNoSmoking&&!String(source.ng??'').includes('喫煙')?'、喫煙者NG':'');
-  const formValues={member:payload.nickname??payload.id,month:parts[1].padStart(2,'0'),day:parts[2].padStart(2,'0'),hour:parts[3].padStart(2,'0'),minute:parts[4],prefecture:source.prefecture,count:String(target),other:source.other??'',items:source.items??'',smoking:source.smoking??'',exam:source.exam??'',publicNote,ng,privateNote:'BOT検証用・運営への非掲載連絡。登録ニックネーム：'+(payload.nickname??payload.id)};
+  const formValues={member:payload.nickname??payload.id,month:parts[1].padStart(2,'0'),day:parts[2].padStart(2,'0'),hour:parts[3].padStart(2,'0'),minute:parts[4],prefecture:source.prefecture,count:String(target),other,items:source.items??'',smoking:source.smoking??'',exam:source.exam??'',publicNote,ng,privateNote:'BOT検証用・運営への非掲載連絡。登録ニックネーム：'+(payload.nickname??payload.id)};
   for(const [name,value] of Object.entries(formValues))requestForm.elements[name].value=value;
   const requested=String(source.preferences??'お任せでいいです').split('、');
   for(const box of requestForm.querySelectorAll('[name="preference"]'))box.checked=requested.includes(box.value);
@@ -1002,12 +1003,12 @@ function runBotCase(payload) {
   record('request_received');
   // These are existing member records held by admin, not public request inputs.
   awaitingApproval.listing.profile=source.profile??demoProfile;
-  const age=awaitingApproval.listing.publicNote.match(/希望年齢[：:]\s*(\d+)\s*[〜~－-]\s*(\d+)歳/);
+  const age=awaitingApproval.listing.other.match(/希望年齢[：:]\s*(\d+)\s*[〜~－-]\s*(\d+)歳/);
   if(age){awaitingApproval.listing.ruleAgeMin=Number(age[1]);awaitingApproval.listing.ruleAgeMax=Number(age[2]);}
   awaitingApproval.listing.ruleNoSmoking=awaitingApproval.listing.ng.includes('喫煙');
   record('member_profile_loaded');
   byId('review-request').click();record('admin_reviewed');
-  byId('certification-required').checked=awaitingApproval.listing.publicNote.includes('受検経験のある方');
+  byId('certification-required').checked=awaitingApproval.listing.other.includes('受検経験のある方');
   byId('approve-request').click();
   if(awaitingApproval)throw new Error('Admin did not approve the request');
   record('admin_approved');
