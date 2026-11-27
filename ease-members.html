@@ -1,121 +1,31 @@
 <!doctype html>
-<html lang="ja">
-<meta charset="utf-8">
+<html lang="ja"><head><meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <link rel="manifest" href="ease.webmanifest">
 <meta name="theme-color" content="#67263e">
 <title>会員入口｜Ease</title>
-<style>
-*{box-sizing:border-box}body{margin:0;background:#f8f6f5;color:#211b21;font:16px/1.65 system-ui,sans-serif}main{max-width:680px;margin:auto;padding:24px 18px 64px}header{display:flex;justify-content:space-between;align-items:center;padding-bottom:16px;border-bottom:1px solid #e6dfe1}header strong{font:700 32px Georgia,serif;color:#67263e}a{color:#67263e}section,article{background:#fff;border:1px solid #e6dfe1;border-radius:16px;padding:20px;margin-top:14px}h1,h2,p{margin:0 0 12px}h1{margin-top:22px}.note{color:#655a63}label{display:block;font-weight:650;margin:12px 0}input,textarea{display:block;width:100%;border:1px solid #a9959e;border-radius:8px;padding:10px;font:inherit}button{font:inherit;border:1px solid #67263e;border-radius:8px;padding:8px 14px;background:#67263e;color:white;cursor:pointer}button:disabled{opacity:.6}button:focus-visible,a:focus-visible,input:focus-visible,textarea:focus-visible{outline:3px solid #67263e;outline-offset:3px}.entry{display:grid;gap:12px}@media(min-width:600px){.entry{grid-template-columns:1fr 1fr}}
-fieldset{margin:18px 0;padding:14px;border:1px solid #e6dfe1;border-radius:10px;min-width:0}legend{font-weight:700;color:#67263e}select{display:block;width:100%;border:1px solid #a9959e;border-radius:8px;padding:10px;background:white;font:inherit}.choice{display:flex;align-items:center;gap:8px}.choice input{width:auto}dt{font-weight:700}dd{margin:0 0 12px;white-space:pre-wrap;overflow-wrap:anywhere}small{color:#655a63}
-.date-parts{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:8px}@media(max-width:450px){.date-parts{grid-template-columns:repeat(2,minmax(0,1fr))}}
-body{background:#f5f3ef;color:#232622}
-main{max-width:760px;padding:28px clamp(18px,5vw,40px) 64px}
-header{border-color:#d9ded6}
-header strong{color:#183c34;letter-spacing:-.04em}
-a,legend{color:#245247}
-h1{font-size:clamp(30px,6vw,42px);letter-spacing:-.045em;margin:28px 0 6px}
-section,article{border-color:#dce0d8;box-shadow:0 4px 18px #253c3010}
-.entry{gap:14px}
-.entry section{display:flex;flex-direction:column;align-items:flex-start;padding:24px}
-.entry section:nth-child(2){background:#e8eee9}
-.entry button{margin-top:auto;width:100%;text-align:left}
-button{min-height:44px;background:#254d42;border-color:#254d42}
-button:focus-visible,a:focus-visible,input:focus-visible,textarea:focus-visible,select:focus-visible{outline-color:#2b6557}
-#admin-entry button,#back,#edit-request,#sample-request{background:transparent;color:#254d42}
-#admin-entry{margin-top:20px}
-#favorite-prefectures{display:flex;flex-wrap:wrap;gap:8px;margin-top:10px}#favorite-prefectures button{background:#fff;color:#254d42}
-.app-nav{display:flex;gap:6px;overflow-x:auto;padding:14px 0 4px}
-.app-nav a{flex:0 0 auto;text-decoration:none;padding:8px 12px;border-radius:8px;min-height:44px}
-.app-nav a[aria-current="page"]{background:#254d42;color:#fff}
 
-:root{--brand:#783e53;--text:#24242c;--muted:#666773;--border:#e7e7ed;--surface:#fff}
-body{background:#f4f5f8;color:var(--text);font:16px/1.7 -apple-system,BlinkMacSystemFont,"Hiragino Sans","Yu Gothic",sans-serif}
-main{max-width:1120px;margin:auto;padding:0 32px 80px}
-header{min-height:84px;border-bottom:1px solid var(--border);background:transparent}
-header strong{font-size:34px;color:var(--brand)}
-header a{font-size:14px;text-decoration:none}
-a,legend{color:var(--brand)}
-h1{font-size:clamp(28px,4vw,38px);margin-top:30px;letter-spacing:-.04em}
-h2{font-size:21px}h3{font-size:17px}
-.app-nav{position:sticky;top:0;z-index:4;background:#f4f5f8ed;backdrop-filter:blur(12px);padding:14px 0;border-bottom:1px solid var(--border);gap:8px}
-.app-nav a{font-size:14px;font-weight:650;padding:10px 18px;border:1px solid transparent;border-radius:10px;color:#555766}
-.app-nav a[aria-current="page"]{background:#fff;color:var(--brand);border-color:var(--border);box-shadow:0 2px 5px #25243908}
-section,article{border:1px solid var(--border);background:#fff;border-radius:18px;padding:28px;box-shadow:0 6px 22px #20203905}
-section section,section article{padding:22px;box-shadow:none;background:#fafafd}
-.entry{gap:20px}
-.entry section,.entry section:nth-child(2){background:white;min-height:220px;border-top:4px solid var(--brand)}
-.entry section:nth-child(2){border-top-color:#48637f}
-.entry p{color:var(--muted)}
-.entry button{margin-top:12px}
-button{min-height:46px;padding:10px 18px;border-radius:10px;border:1px solid var(--brand);background:var(--brand);font-weight:650}
-button:hover{filter:brightness(.94)}
-button:disabled{opacity:.45;cursor:default}
-#admin-entry button,#back,#edit-request,#sample-request{color:var(--brand);border-color:#d8cbd0;background:white}
-label{font-size:15px;margin:18px 0}
-input,textarea,select{font:inherit;border-color:#d5d7e0;background:#fff;border-radius:9px;padding:11px 12px;min-height:46px}
-input[type="checkbox"]{min-height:22px;width:22px;height:22px;accent-color:var(--brand)}
-fieldset{border:1px solid var(--border);padding:24px;border-radius:14px;margin:24px 0}
-legend{padding:0 8px;font-size:17px}
-.choice{padding:10px 12px;background:#f7f7fa;border-radius:8px;font-weight:400;margin:7px 0}
-details{border:1px solid var(--border);border-radius:12px;padding:16px 20px;margin:18px 0}
-summary{cursor:pointer;font-weight:650}
-details p,details li{color:#575966;font-size:15px}
-.note{color:var(--muted)}
-#published-listings article{background:white;border-left:4px solid var(--brand)}
-#published-listings h2{font-size:25px}
-#admin-details,#review-values{display:grid;grid-template-columns:minmax(120px,1fr) 3fr;gap:0 24px}
-#admin-details[hidden],#review-values[hidden]{display:none}
-dt,dd{padding:12px 0;border-bottom:1px solid var(--border);margin:0;font-size:15px}
-dt{color:#626574;font-weight:550}dd{color:#222633}
-#lottery-ranks li,#applicant-list li{padding:12px 8px;border-bottom:1px solid var(--border)}
-#publication-status:not(:empty),#lottery-status:not(:empty),#winner-status:not(:empty),#confirmation-status:not(:empty){padding:14px 18px;border-radius:10px;background:#f3edf0;color:#65364a}
-:focus-visible{outline:3px solid #ad7389!important;outline-offset:3px}
-@media(min-width:800px){#request-form>fieldset:nth-of-type(2)>div[role="group"]{display:grid;grid-template-columns:1fr 1fr;gap:6px 12px}#preferences-label{grid-column:1/-1}}
-@media(max-width:700px){main{padding:0 16px 48px}header{min-height:68px}.app-nav{margin-inline:-16px;padding-inline:16px}.app-nav a{padding:10px 12px}section,article{padding:20px;border-radius:14px}section section,section article{padding:16px}fieldset{padding:16px}.entry{grid-template-columns:1fr}.entry section{min-height:0}#admin-details,#review-values{display:block}dt{border-bottom:0;padding-bottom:0}dd{padding-top:2px}}
-
-[hidden]{display:none!important}
-#prefecture-links{margin:18px 0}#prefecture-links h3{font-size:15px;margin:18px 0 8px}.prefecture-grid{display:grid;grid-template-columns:repeat(7,minmax(0,1fr));gap:7px}.prefecture-grid a{display:flex;min-height:44px;align-items:center;justify-content:center;text-decoration:none;border:1px solid #ddd8df;border-radius:8px;background:#fff;padding:8px 4px;font-size:14px}.prefecture-grid a[aria-current="location"]{background:var(--brand);color:white}.search-grid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:12px}#listing-search{background:#fafafd;border:1px solid var(--border);border-radius:14px;padding:20px;margin:20px 0}#listing-search label{margin:8px 0}#search-error{color:#a02235}@media(max-width:800px){.prefecture-grid{grid-template-columns:repeat(4,minmax(0,1fr))}.search-grid{grid-template-columns:1fr 1fr}}@media(max-width:420px){.prefecture-grid{grid-template-columns:repeat(3,minmax(0,1fr))}.search-grid{grid-template-columns:1fr}}
-.app-nav a[href="#listings"]{order:-1}
-.listing-detail{border:0;padding:0;margin:0;background:transparent}.listing-detail>summary{list-style:none;min-height:100px;padding:8px;cursor:pointer}.listing-detail>summary::-webkit-details-marker{display:none}.listing-detail>summary h3{font-size:21px;margin:0 0 8px}.listing-detail>summary p{font-size:14px;color:var(--muted);margin:6px 0}.detail-hint{display:inline-block;color:var(--brand);font-size:14px;margin-top:8px}.listing-detail[open]>summary{border-bottom:1px solid var(--border);margin-bottom:18px}.listing-detail[open] .detail-hint{font-size:0}.listing-detail[open] .detail-hint::after{content:'詳細を閉じる';font-size:14px}
-#published-listings button{width:100%;margin-top:16px}
-#published-listings dl{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:0 12px}
-#published-listings dt{grid-row:1;font-size:14px;border:0;padding-bottom:0}
-#published-listings dd{grid-row:2;padding-top:0;font-size:16px}
-.mobile-intro{color:var(--muted);margin-bottom:20px}
-@media(max-width:700px){
- main{padding-bottom:calc(110px + env(safe-area-inset-bottom))}
- .app-nav{position:fixed;top:auto;bottom:0;left:0;right:0;margin:0;padding:8px 8px calc(8px + env(safe-area-inset-bottom));background:#fff;border-top:1px solid var(--border);box-shadow:0 -4px 20px #2020390a;display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:3px;overflow:visible}
- .app-nav a{display:flex;align-items:center;justify-content:center;min-height:52px;padding:8px 2px;font-size:14px;white-space:nowrap}
- .app-nav a[aria-current="page"]{background:#f3edf0;box-shadow:none;border-color:transparent}
- #published-listings article{margin-inline:-4px;padding:20px}
- #published-listings h2{font-size:23px}
- #listings{padding:18px}
- #request-form>button,#request-review>button{width:100%;margin:5px 0}
- input,textarea,select{font-size:16px}
-}
-</style>
-<main>
-<header><strong>Ease</strong><a href="ease-integrated.html">表紙に戻る</a></header>
+<link rel="stylesheet" href="ease-ui.css"></head><body data-page="members"><main>
+<header><strong>ease</strong><div style="display:flex;align-items:center;gap:16px"><span id="route-label" class="environment">メンバーアプリ</span><a href="ease-integrated.html">ホーム</a></div></header>
 <nav class="app-nav" aria-label="確認版の画面">
 <a href="#request">依頼</a><a href="#listings">募集・応募</a><a href="#confirmation">開催確認</a><a href="#admin">運営管理</a>
-</nav>
-<h1 id="title" tabindex="-1">会員入口</h1>
-<p class="note">確認用。架空の情報を使ってお試しください。</p>
+</nav><div class="page-heading"><p id="route-category" class="eyebrow">メンバーアプリ</p><h1 id="title" tabindex="-1">会員入口</h1><p class="note">確認用。架空の情報を使ってお試しください。</p></div>
+
+
 <div class="entry" id="entry">
-<section><h2>女性会員</h2><p>依頼ページへ進む</p><button type="button" data-route="request">依頼ページへ</button><button type="button" data-route="confirmation">開催可否を回答（デモ）</button><button type="button" data-route="same-day">当日7時の確認メール（デモ）</button></section>
+<section data-theme="women"><h2>女性会員</h2><p>依頼ページへ進む</p><button type="button" data-route="request">依頼ページへ</button><button type="button" data-route="confirmation">開催可否を回答（デモ）</button><button type="button" data-route="same-day">当日7時の確認メール（デモ）</button></section>
 <section><h2>男性会員</h2><p>募集ページへ進む</p><button type="button" data-route="listings">募集ページへ</button></section>
 </div>
 <p id="admin-entry"><button type="button" data-route="admin">運営管理（デモ）</button></p>
-<section id="admin" hidden>
+<section id="admin" hidden="">
 <p><a href="ease-simulation.html">女性100体・男性2,000体のbotシミュレーターを開く</a></p>
-<section><h3>保存済みのbot検証結果（運営用）</h3><p>架空の案件・当選者情報です。募集時の内容と当選者のプロフィール、面談状況を確認できます。</p><button id="load-bot-admin" type="button">検証結果の案件・当選者一覧を表示</button><p id="bot-admin-status" role="status"></p><div id="bot-admin-results"></div><button id="bot-admin-prev" type="button">前の12件</button> <button id="bot-admin-next" type="button">次の12件</button></section>
+
 <h2>掲載待ちの依頼</h2>
 <p id="admin-status" role="status"></p>
-<button id="review-request" type="button" hidden>依頼内容を確認する</button>
-<dl id="admin-details" tabindex="-1" hidden></dl>
-<label id="certification-rule" hidden><input id="certification-required" type="checkbox" style="display:inline;width:auto"> 受検経験者限定で掲載する</label>
-<button id="approve-request" type="button" hidden>承認して募集ページに掲載する</button>
+<button id="review-request" type="button" hidden="">依頼内容を確認する</button>
+<dl id="admin-details" tabindex="-1" hidden=""></dl>
+<label id="certification-rule" hidden=""><input id="certification-required" type="checkbox" style="display:inline;width:auto"> 受検経験者限定で掲載する</label>
+<button id="approve-request" type="button" hidden="">承認して募集ページに掲載する</button>
 <article>
 <h2>応募者一覧（デモ）</h2>
 <p id="lottery-case"></p>
@@ -126,30 +36,30 @@ dt{color:#626574;font-weight:550}dd{color:#222633}
 <p id="same-day-status"></p>
 <ol id="lottery-ranks"></ol>
 <p id="winner-admin" role="status"></p>
-<section id="winner-profile" hidden><h3>当選候補者の情報（運営用・サンプル）</h3><dl id="winner-profile-values"></dl></section>
-<button id="advance-winner" type="button" hidden>次点に繰り上げる</button>
+<section id="winner-profile" hidden=""><h3>当選候補者の情報（運営用・サンプル）</h3><dl id="winner-profile-values"></dl></section>
+<button id="advance-winner" type="button" hidden="">次点に繰り上げる</button>
 <ul id="offer-history"></ul>
-<button id="approve-interview" type="button" hidden>面談完了を承認する</button>
-<p id="confirmed-participant-status"></p><button id="next-slot" type="button" hidden>次の参加枠の連絡へ</button>
+<button id="approve-interview" type="button" hidden="">面談完了を承認する</button>
+<p id="confirmed-participant-status"></p><button id="next-slot" type="button" hidden="">次の参加枠の連絡へ</button>
 </article>
-</section>
-<section id="confirmation" hidden>
+<section><h3>保存済みのbot検証結果（運営用）</h3><p>架空の案件・当選者情報です。募集時の内容と当選者のプロフィール、面談状況を確認できます。</p><button id="load-bot-admin" type="button">検証結果の案件・当選者一覧を表示</button><p id="bot-admin-status" role="status"></p><div id="bot-admin-results"></div><button id="bot-admin-prev" type="button" disabled="">前の12件</button> <button id="bot-admin-next" type="button" disabled="">次の12件</button></section></section>
+<section id="confirmation" hidden="">
 <p id="confirmation-case"></p>
 <p id="confirmation-status" role="status"></p>
-<div id="female-invitation" hidden></div>
+<div id="female-invitation" hidden=""></div>
 <div id="confirmation-options">
 <button type="button" data-answer="yes">開催できます</button>
 <button type="button" data-answer="no">開催できません</button>
 </div>
-<div id="confirmation-review" hidden>
+<div id="confirmation-review" hidden="">
 <p id="confirmation-summary"></p>
 <button id="save-answer" type="button">この内容で回答する</button>
 <button id="edit-answer" type="button">戻って選び直す</button>
 </div>
 </section>
-<section id="request" hidden>
-<h2>女性用プレイ依頼フォーム</h2>
-<details open><summary>依頼する前に</summary>
+<section id="request" hidden="">
+<h2>女性用プレイ依頼フォーム</h2><div class="request-steps"><span><b>1</b>依頼を入力</span><span><b>2</b>内容を確認</span><span><b>3</b>運営が掲載</span></div>
+<details><summary>依頼する前に</summary>
 <p>申し訳ございませんが、下記のご理解をお願いします。</p>
 <h3>案件の募集期間が短い場合について</h3>
 <p>「男性が決まらない」、または「経験が少ない方」が当選する場合があります。前日に男性を決めますので、前々日なら約1日ということになります。前々日の夜は、ほぼ募集期間がありません。地域によって変わり、応募がない場合に再募集しても、相手が決まらないことがあります。掲載期間が短いと、多くの男性の目に留まる機会も少なくなります。</p>
@@ -168,17 +78,17 @@ dt{color:#626574;font-weight:550}dd{color:#222633}
 <form id="request-form">
 <p class="note">依頼は、事前にサークルの面談を受けてからお願いします。</p>
 <fieldset><legend>依頼の基本情報</legend>
-<label>IDまたは面談依頼で利用したニックネーム <small>必須</small><input name="member" required></label>
+<label>IDまたは面談依頼で利用したニックネーム <small>必須</small><input name="member" required=""></label>
 <p class="note">登録県と異なる場合は、必ずIDでお願いします。</p>
 <strong>プレイ日時 <small>必須</small></strong>
 <div class="date-parts">
-<label>月<select name="month" required></select></label>
-<label>日<select name="day" required></select></label>
-<label>時<select name="hour" required></select></label>
-<label>分<select name="minute" required></select></label>
+<label>月<select name="month" required=""></select></label>
+<label>日<select name="day" required=""></select></label>
+<label>時<select name="hour" required=""></select></label>
+<label>分<select name="minute" required=""></select></label>
 </div>
 <p class="note">3月・4月や12月・1月は仕事の調整が難しい方もいるため、余裕を持って依頼を出していただくと相手が決まる可能性が高まります。</p>
-<label>開催する都道府県 <small>必須</small><select name="prefecture" required><option value="">選択してください</option></select></label>
+<label>開催する都道府県 <small>必須</small><select name="prefecture" required=""><option value="">選択してください</option></select></label>
 </fieldset>
 <fieldset><legend>プレイの希望</legend>
 <div role="group" aria-labelledby="preferences-label"><strong id="preferences-label">当てはまる項目 <small>必須・複数選択可</small></strong>
@@ -206,7 +116,7 @@ dt{color:#626574;font-weight:550}dd{color:#222633}
 </div>
 <p class="note">興味がある程度で大丈夫です。</p>
 <label>上記以外のプレイに関する希望があれば記入してください。<textarea name="other" rows="2"></textarea></label>
-<label>相手の希望人数 <small>必須</small><input name="count" type="number" min="1" max="4" required></label>
+<label>相手の希望人数 <small>必須</small><input name="count" type="number" min="1" max="4" required=""></label>
 <p class="note">現在、複数プレイは要相談としています。監督増員育成中のため、1対1で行うか、森と時間を合わせていただく場合があります。複数プレイは監督の調整が必要で、依頼日に必ず開催されるとは限りません。</p>
 <label>使用して欲しい玩具<input name="items"></label>
 <p class="note">バイブレーター、ローター、電マ、アナルグッズ、ローション、SMグッズ、アイマスク、その他</p>
@@ -227,7 +137,7 @@ dt{color:#626574;font-weight:550}dd{color:#222633}
 <details><summary>《参加者募集中》</summary>
 <ul><li><a href="https://ease-sc.net/mori-event.html">森のお茶会</a></li><li><a href="https://ease-sc.net/entry155.html">プランナーお茶会</a></li><li><a href="https://ease-tv.net/">easeTV</a></li></ul>
 </details>
-<details open><summary>《女性から男性へのNG行動》</summary>
+<details><summary>《女性から男性へのNG行動》</summary>
 <p><strong>※下記は基本です。相手の嫌がる事はなるべく避けてください。</strong></p>
 <h3>連絡先の交換を求める行為</h3><p>会員間の個人情報のやり取りは禁止です。再会を希望する場合は森に相談し、男性の同意が得られた場合に限り運営経由で連絡先を伝えます。その後のやり取りに運営は関与しません。</p>
 <h3>恋愛感情を持ち込む行為</h3><p>恋愛を目的とする場ではありません。「付き合いたい」「会いたい」などの発言は禁止されています。</p>
@@ -240,13 +150,13 @@ dt{color:#626574;font-weight:550}dd{color:#222633}
 <p id="request-error" role="alert"></p>
 <button type="button" id="sample-request">サンプルを入力</button> <button>入力内容を確認する</button>
 </form>
-<section id="request-review" hidden aria-labelledby="review-title">
+<section id="request-review" hidden="" aria-labelledby="review-title">
 <h2 id="review-title" tabindex="-1">依頼内容の確認</h2>
 <dl id="review-values"></dl>
 <button id="edit-request" type="button">入力に戻る</button> <button id="publish-request" type="button">運営に確認を依頼する</button>
 </section>
 </section>
-<section id="listings" hidden>
+<section id="listings" hidden="">
 <p class="mobile-intro">案件の内容と希望条件を確認して応募できます。応募は抽選への申し込みとなります。</p>
 <details><summary>応募要項・抽選について</summary>
 <p>20〜59歳の健康な男性で、サークルのルールへの理解と同意が必要です。案件に記載された希望年齢・NG事項・受検経験などの条件をご確認ください。リモート面談が必要です。</p>
@@ -260,39 +170,39 @@ dt{color:#626574;font-weight:550}dd{color:#222633}
 <form id="listing-search">
 <h2>条件から探す</h2><div class="search-grid">
 <label>開催日・開始<input id="search-from" type="date"></label><label>開催日・終了<input id="search-to" type="date"></label>
-<label>時間帯<select id="search-time"><option value="">すべて</option><option value="morning">午前（12時より前）</option><option value="afternoon">午後（12〜18時より前）</option><option value="evening">夜（18時以降）</option></select></label>
-<label>ご自身の年齢<input id="search-age" type="number" min="20" max="59" placeholder="20〜59歳"></label>
-<label>受検経験の条件<select id="search-exam"><option value="">すべて</option><option value="required">受検経験者限定</option><option value="not-required">指定なし</option></select></label>
-<label>喫煙の条件<select id="search-smoking"><option value="">すべて</option><option value="no-smoking">喫煙者NG</option><option value="not-specified">指定なし</option></select></label>
-<label>案件の種類<select id="search-kind"><option value="">すべて</option><option value="single">1対1</option><option value="multiple">複数</option></select></label>
-<label>案件の状態<select id="search-state"><option value="">すべて</option><option value="open">募集中</option><option value="closed">募集終了</option><option value="cancelled">開催中止</option></select></label>
-</div><label>キーワード<input id="search-keyword" type="search" placeholder="メッセージ・NG事項・女性情報など"></label><p id="search-error" role="alert"></p><button type="submit">この条件で検索</button> <button id="search-clear" type="button">条件をクリア</button>
+
+
+
+
+
+
+</div><details class="advanced-search"><summary>時間帯・年齢などの条件を追加</summary><div class="search-grid"><label>時間帯<select id="search-time"><option value="">すべて</option><option value="morning">午前（12時より前）</option><option value="afternoon">午後（12〜18時より前）</option><option value="evening">夜（18時以降）</option></select></label><label>ご自身の年齢<input id="search-age" type="number" min="20" max="59" placeholder="20〜59歳"></label><label>受検経験の条件<select id="search-exam"><option value="">すべて</option><option value="required">受検経験者限定</option><option value="not-required">指定なし</option></select></label><label>喫煙の条件<select id="search-smoking"><option value="">すべて</option><option value="no-smoking">喫煙者NG</option><option value="not-specified">指定なし</option></select></label><label>案件の種類<select id="search-kind"><option value="">すべて</option><option value="single">1対1</option><option value="multiple">複数</option></select></label><label>案件の状態<select id="search-state"><option value="">すべて</option><option value="open">募集中</option><option value="closed">募集終了</option><option value="cancelled">開催中止</option></select></label></div></details><label>キーワード<input id="search-keyword" type="search" placeholder="メッセージ・NG事項・女性情報など"></label><p id="search-error" role="alert"></p><button type="submit">この条件で検索</button> <button id="search-clear" type="button">条件をクリア</button>
 </form>
 <label for="listing-prefecture">都道府県で絞り込む
 <select id="listing-prefecture"><option value="">すべての都道府県</option></select>
 </label>
-<button id="toggle-favorite" type="button" disabled>お気に入りに追加</button>
+<button id="toggle-favorite" type="button" disabled="">お気に入りに追加</button>
 <div id="favorite-prefectures" aria-label="お気に入りの都道府県"></div>
 <p id="favorite-status" class="note" role="status"></p>
-<p id="listing-empty" class="note" role="status" hidden>この都道府県に募集中の案件はありません。</p>
+<p id="listing-empty" class="note" role="status" hidden="">この都道府県に募集中の案件はありません。</p>
 <div id="published-listings"></div>
 <section id="bot-listings"><h2>検証結果の募集案件</h2><p class="note">保存済みのbot検証で掲載した内容です。検証完了・募集終了のため、この一覧からは応募できません。</p><p id="bot-listing-status" role="status"></p><div id="bot-listing-cards"></div><button id="bot-listing-prev" type="button">前の12件</button> <button id="bot-listing-next" type="button">次の12件</button></section>
-<article id="winner-panel" hidden>
+<article id="winner-panel" hidden="">
 <h2>当選通知・Discord DMの見本</h2>
 <p id="winner-case"></p>
 <form id="winner-form">
-<label>当日の参加可否<select name="decision" required>
+<label>当日の参加可否<select name="decision" required="">
 <option value="">選択してください</option><option value="yes">参加する</option><option value="no">辞退する</option>
 </select></label>
-<label id="availability-label" hidden>遠隔面談が可能な日時・時間帯<input name="availability" placeholder="例：11月22日 18:00〜20:00"></label>
+<label id="availability-label" hidden="">遠隔面談が可能な日時・時間帯<input name="availability" placeholder="例：11月22日 18:00〜20:00"></label>
 <button>回答内容を確認する</button>
 </form>
 <p id="winner-status" role="status"></p>
-<div id="male-invitation" hidden></div>
+<div id="male-invitation" hidden=""></div>
 </article>
 
 </section>
-<p><button id="back" hidden>会員入口に戻る</button></p>
+<p><button id="back" hidden="">会員入口に戻る</button></p>
 </main>
 <script src="ease-archive.js"></script>
 <script>
@@ -305,6 +215,7 @@ function previewStore(storage) {
 const appLocalStore = previewStore(window.localStorage);
 const appSessionStore = previewStore(window.sessionStorage);
 const byId = id => document.getElementById(id);
+function focusSection(id){const node=byId(id);if(!node)return;node.tabIndex=-1;node.focus({preventScroll:true});node.scrollIntoView?.({block:'start',behavior:'instant'});}
 const routes = {
   request: '依頼ページ',
   listings: '募集ページ',
@@ -353,14 +264,15 @@ async function loadBotListings(){
   if(simulationMode||botListingsLoading)return;
   if(botListingCases){renderBotListings();return;}
   botListingsLoading=true;byId('bot-listing-status').textContent='検証結果の募集案件を読み込んでいます。';
-  try{const response=await fetch('ease-bot-result.json');if(!response.ok)throw new Error('取得できませんでした');const data=await response.json();if(data.version!=='ease-bot-v1'||!Array.isArray(data.cases)||data.cases.length>4000)throw new Error('形式を確認してください');botListingCases=data.cases;renderBotListings(true);if(new URLSearchParams(location.search).get("results")==="1"){byId("bot-listings").tabIndex=-1;byId("bot-listings").focus();}}catch(error){byId('bot-listing-status').textContent='表示できませんでした：'+error.message;}finally{botListingsLoading=false;}
+  try{const response=await fetch('ease-bot-result.json');if(!response.ok)throw new Error('取得できませんでした');const data=await response.json();if(data.version!=='ease-bot-v1'||!Array.isArray(data.cases)||data.cases.length>4000)throw new Error('形式を確認してください');botListingCases=data.cases;renderBotListings(true);if(new URLSearchParams(location.search).get("results")==="1"){focusSection('bot-listings');}}catch(error){byId('bot-listing-status').textContent='表示できませんでした：'+error.message;}finally{botListingsLoading=false;}
 }
 byId('bot-listing-prev').onclick=()=>{if(botListingPage>0)botListingPage--;renderBotListings();};
 byId('bot-listing-next').onclick=()=>{botListingPage++;renderBotListings();};
 function show(route) {
+  const women=['request','confirmation','same-day'].includes(route);document.body.dataset.theme=women?'women':route==='listings'?'men':'admin';document.body.dataset.route=route??'entry';byId('route-label').textContent=women?'女性メンバー':route==='listings'?'男性メンバー':'運営・メンバー入口';document.querySelector('meta[name="theme-color"]')?.setAttribute('content',women?'#a14f6a':route==='listings'?'#345d8a':'#365d67');byId('route-category').textContent=women?'女性メンバー / 依頼と開催確認':route==='listings'?'男性メンバー / 募集・応募':route==='admin'?'運営管理 / 掲載と参加者の管理':'メンバーアプリ';
   const nextHash = route ? '#' + route : '';
   if (location.hash !== nextHash) {
-    history.pushState(null, '', location.pathname + location.search + nextHash);
+    history[simulationMode?'replaceState':'pushState'](null, '', location.pathname + location.search + nextHash);
   }
   for (const link of document.querySelectorAll('.app-nav a')) {
     if (link.getAttribute('href') === nextHash) link.setAttribute('aria-current', 'page');
@@ -387,7 +299,8 @@ function show(route) {
   if (route === 'admin') { renderAdmin(); renderApplicants(); }
   if (route === 'admin' || route === 'listings') renderWinner();
   byId('title').textContent = route ? routes[route] : '会員入口';
-  byId('title').focus();
+  byId('title').focus({preventScroll:true});
+  if(!simulationMode)requestAnimationFrame(()=>document.querySelector('header')?.scrollIntoView?.({block:'start',behavior:'instant'}));
 }
 for (const button of document.querySelectorAll('[data-route]')) {
   button.addEventListener('click', () => show(button.dataset.route));
@@ -705,8 +618,8 @@ const regionNames=[['北海道',1],['東北',6],['関東',7],['中部',9],['近�
 let regionOffset=0;
 const allLink=document.createElement('a');allLink.textContent='全国の募集案件';const allUrl=new URL(location.href);allUrl.searchParams.delete('pref');allUrl.hash='listings';allLink.href=allUrl;allLink.dataset.pref='';byId('prefecture-links').append(allLink);
 for(const [label,count] of regionNames){const heading=document.createElement('h3'),grid=document.createElement('div');heading.textContent=label;grid.className='prefecture-grid';for(const pref of allPrefectures.slice(regionOffset,regionOffset+count)){const link=document.createElement('a'),url=new URL(location.href);url.searchParams.set('pref',pref);url.hash='listings';link.href=url;link.textContent=pref;link.dataset.pref=pref;grid.append(link);}regionOffset+=count;byId('prefecture-links').append(heading,grid);}
-byId('prefecture-links').addEventListener('click',event=>{const link=event.target.closest('a[data-pref]');if(!link||event.button||event.metaKey||event.ctrlKey||event.shiftKey||event.altKey)return;event.preventDefault();prefectureFilter.value=link.dataset.pref;syncSearchUrl();filterListings();byId('bot-listings').tabIndex=-1;byId('bot-listings').focus();});
-byId('listing-search').onsubmit=event=>{event.preventDefault();const from=byId('search-from').value,to=byId('search-to').value;if(from&&to&&from>to){byId('search-error').textContent='終了日は開始日以降にしてください。';return;}if(!byId('listing-search').reportValidity())return;byId('search-error').textContent='';syncSearchUrl();filterListings();byId('bot-listings').tabIndex=-1;byId('bot-listings').focus();};
+byId('prefecture-links').addEventListener('click',event=>{const link=event.target.closest('a[data-pref]');if(!link||event.button||event.metaKey||event.ctrlKey||event.shiftKey||event.altKey)return;event.preventDefault();prefectureFilter.value=link.dataset.pref;syncSearchUrl();filterListings();focusSection('bot-listings');});
+byId('listing-search').onsubmit=event=>{event.preventDefault();const from=byId('search-from').value,to=byId('search-to').value;if(from&&to&&from>to){byId('search-error').textContent='終了日は開始日以降にしてください。';return;}if(!byId('listing-search').reportValidity())return;byId('search-error').textContent='';syncSearchUrl();filterListings();focusSection('bot-listings');};
 byId('search-clear').onclick=()=>{byId('listing-search').reset();prefectureFilter.value='';byId('search-error').textContent='';syncSearchUrl();filterListings();};
 prefectureFilter.addEventListener('change',syncSearchUrl);
 window.addEventListener('popstate',()=>{restoreListingSearch();filterListings();});
@@ -1069,11 +982,34 @@ function runBotCase(payload) {
   const target=Number(payload.listing.count);if(!Number.isInteger(target)||target<1||target>4)throw new Error('Recruitment count must be 1 to 4');
   const audit = [];
   const record = (action, data={}) => audit.push({ sequence:audit.length+1, recordedAt:new Date().toISOString(), action, ...data });
-  awaitingApproval = { listing:payload.listing, fields:[['bot ID',payload.id]] };
+  show('request');requestForm.reset();
+  const source=payload.listing,parts=String(source.date).match(/^(\d{1,2})月(\d{1,2})日\s+(\d{1,2}):(\d{2})/);
+  if(!parts)throw new Error('Invalid request date');
+  const publicNote=String(source.publicNote??'')+(source.ruleAgeMax?' 希望年齢：20〜'+source.ruleAgeMax+'歳。':'')+(source.certificationRequired?' 受検経験のある方を希望します。':'');
+  const ng=String(source.ng??'')+(source.ruleNoSmoking&&!String(source.ng??'').includes('喫煙')?'、喫煙者NG':'');
+  const formValues={member:payload.nickname??payload.id,month:parts[1].padStart(2,'0'),day:parts[2].padStart(2,'0'),hour:parts[3].padStart(2,'0'),minute:parts[4],prefecture:source.prefecture,count:String(target),other:source.other??'',items:source.items??'',smoking:source.smoking??'',exam:source.exam??'',publicNote,ng,privateNote:'BOT検証用・運営への非掲載連絡。登録ニックネーム：'+(payload.nickname??payload.id)};
+  for(const [name,value] of Object.entries(formValues))requestForm.elements[name].value=value;
+  const requested=String(source.preferences??'お任せでいいです').split('、');
+  for(const box of requestForm.querySelectorAll('[name="preference"]'))box.checked=requested.includes(box.value);
+  if(!requestForm.querySelector('[name="preference"]:checked'))requestForm.querySelector('[name="preference"]').checked=true;
+  record('request_form_filled',{memberId:payload.id,nickname:payload.nickname??payload.id});
+  if(!requestForm.reportValidity())throw new Error('Request form validation failed');
+  requestForm.requestSubmit();
+  if(byId('request-review').hidden)throw new Error('Request review did not open');
+  record('request_reviewed');
+  byId('publish-request').click();
+  if(!awaitingApproval)throw new Error('Request was not sent to admin');
   record('request_received');
-  renderAdmin(true);
-  byId('certification-required').checked = Boolean(payload.listing.certificationRequired);
+  // These are existing member records held by admin, not public request inputs.
+  awaitingApproval.listing.profile=source.profile??demoProfile;
+  const age=awaitingApproval.listing.publicNote.match(/希望年齢[：:]\s*(\d+)\s*[〜~－-]\s*(\d+)歳/);
+  if(age){awaitingApproval.listing.ruleAgeMin=Number(age[1]);awaitingApproval.listing.ruleAgeMax=Number(age[2]);}
+  awaitingApproval.listing.ruleNoSmoking=awaitingApproval.listing.ng.includes('喫煙');
+  record('member_profile_loaded');
+  byId('review-request').click();record('admin_reviewed');
+  byId('certification-required').checked=awaitingApproval.listing.publicNote.includes('受検経験のある方');
   byId('approve-request').click();
+  if(awaitingApproval)throw new Error('Admin did not approve the request');
   record('admin_approved');
   applicants = new Set(); certifiedDemoIds.clear(); penaltyIds.clear(); botProfiles.clear();
   const people = new Map(payload.applicants.map(m=>[m.id,m]));
@@ -1094,7 +1030,7 @@ function runBotCase(payload) {
     while(ranks.length && winnerIndex < ranks.length) {
       const id=ranks[winnerIndex], m=people.get(id);
       const occupied=payload.occupied.includes(id+':'+payload.slot);
-      const response=occupied?'schedule_conflict':m.response;
+      const response=(payload.previousPartners??[]).includes(id)?'previous_partner':occupied?'schedule_conflict':m.response;
       record('winner_contacted',{memberId:id,rank:winnerIndex+1});
       if(response==='accept') {
         if (!recordWinnerReply(true,payload.availability)) throw new Error('Participation response failed');
@@ -1119,7 +1055,9 @@ function runBotCase(payload) {
   const passed=missing.length===0&&unexpected.length===0&&unique&&(answer==='no'||ranks!==null);
   record('audit_completed',{passed,missing,unexpected});
   const winners=confirmedParticipants.map(p=>p.id),winnerProfiles=winners.map(id=>JSON.parse(JSON.stringify(people.get(id))));
-  return { id:payload.id,listing:EaseArchive.snapshot(activeListing),publication:EaseArchive.isMultiple(activeListing)?null:EaseArchive.snapshot(activeListing),winners,winnerProfiles,winnerProfile:winnerProfiles[0]??null,ranks:ranks??[],winner:winners[0]??null,interviewApproved:winners.length>0,confirmedParticipants:JSON.parse(JSON.stringify(confirmedParticipants)),vacancies:target-winners.length,audit,passed,missing,unexpected,attempts:audit.filter(e=>e.action==='winner_contacted').map(e=>({id:e.memberId,reason:audit.find(x=>x.memberId===e.memberId&&['participation_accepted','no_reply','decline','schedule_conflict'].includes(x.action))?.action??'pending'})) };
+  return { id:payload.id,listing:EaseArchive.snapshot(activeListing),publication:EaseArchive.isMultiple(activeListing)?null:EaseArchive.snapshot(activeListing),winners,winnerProfiles,winnerProfile:winnerProfiles[0]??null,ranks:ranks??[],winner:winners[0]??null,interviewApproved:winners.length>0,confirmedParticipants:JSON.parse(JSON.stringify(confirmedParticipants)),vacancies:target-winners.length,audit,passed,missing,unexpected,attempts:audit.filter(e=>e.action==='winner_contacted').map(e=>({id:e.memberId,reason:audit.find(x=>x.memberId===e.memberId&&['participation_accepted','no_reply','decline','schedule_conflict','previous_partner'].includes(x.action))?.action??'pending'})) };
 }
 </script>
-</html>
+
+
+</body></html>
